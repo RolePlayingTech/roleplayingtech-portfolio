@@ -1,15 +1,14 @@
-# RolePlayingTech Portfolio
+# RolePlayingTech — osobiste portfolio
 
-Publiczne portfolio PL/EN dla GitHub Pages. Zero zależności serwerowych.
+Dwujęzyczna witryna RolePlayingTech na GitHub Pages (`roleplayingtech.com`).
 
-## Struktura
-- `/` i `/pl/`: strona główna w języku polskim
-- `/en/`: wersja angielska
-- `/work/{slug}/`, `/pl/work/{slug}/`, `/en/work/{slug}/`: case studies
+## Co zawiera
+- `/pl/`, `/en/` — polska i angielska strona główna
+- `/pl/work/*`, `/en/work/*` — Mumro, Świadek Dziejów, Crewly i MFC
+- `/docs/` — fundament marki i oryginalny brief v1 oraz kierunek redesignu v2
+- `/assets/` — globalny CSS i autentyczne zdjęcia
 
-## Publikacja
-GitHub → Settings → Pages → Deploy from a branch → `main` → `/(root)`. Custom domain: `roleplayingtech.com`. Włącz HTTPS, gdy certyfikat będzie gotowy.
+## Rozwój
+Prosty statyczny HTML/CSS bez bundlera i frameworków. Zmiany w `main` uruchamiają GitHub Pages. Domenę i pozostałe DNS pozostawiamy bez zmian.
 
-GoDaddy apex `@`: cztery rekordy A GitHub Pages. `www` CNAME: `roleplayingtech.github.io`. **Pozostałe rekordy i subdomeny pozostawić bez zmian.**
-
-Wersja 1.0 jest koncepcją do przeglądu. Grafiki kafelków są ilustracjami CSS, a nie screenshotami rzeczywistych aplikacji. Przed promowaniem portfolio dodaj rzeczywiste screenshoty i potwierdź statystyki.
+Projekt podlega dalszym iteracjom copy i uzupełnieniu rzeczywistych screenshotów Mumro, Crewly i Świadka Dziejów. Bez fikcyjnych referencji i sztucznych makiet.
