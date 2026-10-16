@@ -51,9 +51,15 @@ Dlatego obok budowania oprogramowania są podróże, rower, namiot, żeglowanie 
 
 ### Pisanie i społeczność
 
-Publikuję na **[X / @rpl_0x](https://x.com/rpl_0x)**: testy narzędzi, eksperymenty, opinie i rzeczy, których właśnie się nauczyłem. Czasem piszę też dłuższe teksty — [Substack](https://roleplayinglife.substack.com/).
+Publikuję na **[X / @rpl_0x](https://x.com/rpl_0x)**: testy narzędzi, eksperymenty, opinie i rzeczy, których właśnie się nauczyłem. Jestem też na [Instagramie](https://www.instagram.com/roleplayinglife_0x/) i [LinkedInie](https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/). Czasem piszę dłuższe teksty — [Substack](https://roleplayinglife.substack.com/).
 
-**Założyłem również bezpłatną społeczność twórców AI na Discordzie**, w której wspólnie testujemy narzędzia, rozmawiamy o pomysłach i dzielimy się doświadczeniami. Nie podaję tutaj niepotwierdzonej liczby uczestników ani linku zaproszeniowego, którego jeszcze nie mam w tym repozytorium.
+**Założyłem również bezpłatną społeczność twórców AI na Discordzie**, w której wspólnie testujemy narzędzia, rozmawiamy o pomysłach i dzielimy się doświadczeniami. Nie ma stałego linku — co jakiś czas otwieramy zaproszenia i ogłaszamy to w social mediach.
+
+| Projekt | W sieci |
+| --- | --- |
+| Świadek Dziejów | [Strona](https://swiadek-dziejow.pl/) · [YouTube](https://www.youtube.com/@swiadek_dziejow) · [Instagram](https://www.instagram.com/swiadek_dziejow/) · [Facebook](https://www.facebook.com/profile.php?id=61588448017737) |
+| Crewly | [Strona](https://crewly.pl/) · [Instagram](https://www.instagram.com/crewly.pl/) · [Facebook](https://www.facebook.com/profile.php?id=61573482406605) |
+| Mumro | [Strona](https://mumro.io/pl/) · social media wkrótce |
 
 ### Jeśli chcesz ze mną coś zrobić
 
@@ -107,9 +113,15 @@ That's also why travel, cycling, camping and sailing matter to me. I don't want 
 
 ### Writing and community
 
-I post on **[X / @rpl_0x](https://x.com/rpl_0x)** about tools, experiments, opinions and things I'm learning. Occasionally I write longer pieces on [Substack](https://roleplayinglife.substack.com/).
+I post on **[X / @rpl_0x](https://x.com/rpl_0x)** about tools, experiments, opinions and things I'm learning. I'm also on [Instagram](https://www.instagram.com/roleplayinglife_0x/) and [LinkedIn](https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/). Occasionally I write longer pieces on [Substack](https://roleplayinglife.substack.com/).
 
-**I also founded a free Discord community for AI creators**, where we try tools, discuss ideas and share experiences. I'm not listing unverified member numbers or an invitation link that hasn't been added to this repository.
+**I also founded a free Discord community for AI creators**, where we try tools, discuss ideas and share experiences. There's no permanent invite link — we open invitations from time to time and announce them on social media.
+
+| Project | Elsewhere |
+| --- | --- |
+| Świadek Dziejów | [Website](https://swiadek-dziejow.pl/) · [YouTube](https://www.youtube.com/@swiadek_dziejow) · [Instagram](https://www.instagram.com/swiadek_dziejow/) · [Facebook](https://www.facebook.com/profile.php?id=61588448017737) |
+| Crewly | [Website](https://crewly.pl/) · [Instagram](https://www.instagram.com/crewly.pl/) · [Facebook](https://www.facebook.com/profile.php?id=61573482406605) |
+| Mumro | [Website](https://mumro.io/pl/) · social media coming soon |
 
 ### Working together
 
