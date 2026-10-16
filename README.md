@@ -47,7 +47,7 @@ Często automatyzuję zadania, które już rozumiem i które nie wymagają za ka
 
 **RolePlayingLife** to nazwa mojego podejścia do życia: nie trzymać się przez całe życie jednej roli i nie przestawać próbować nowych rzeczy. Trochę jak rozwijanie postaci w RPG, tylko zamiast jednej ścieżki są różne doświadczenia. **RolePlayingTech** to technologiczna część tej historii.
 
-Dlatego obok budowania oprogramowania są podróże, rower, namiot, żeglowanie i zainteresowania niezwiązane z IT. Nie mam ochoty udawać, że liczy się wyłącznie praca.
+Dlatego obok budowania oprogramowania są wyprawy rowerowe z namiotem i dużo chodzenia po górach. Praca jest ważna, ale to tylko część tego, co lubię robić.
 
 ### Pisanie i społeczność
 
@@ -57,7 +57,7 @@ Publikuję na **[X / @rpl_0x](https://x.com/rpl_0x)**: testy narzędzi, eksperym
 
 | Projekt | W sieci |
 | --- | --- |
-| Świadek Dziejów | [Strona](https://swiadek-dziejow.pl/) · [YouTube](https://www.youtube.com/@swiadek_dziejow) · [Instagram](https://www.instagram.com/swiadek_dziejow/) · [Facebook](https://www.facebook.com/profile.php?id=61588448017737) |
+| Świadek Dziejów | [Strona](https://swiadek-dziejow.pl/) · [TikTok](https://www.tiktok.com/@swiadek_dziejow) · [YouTube](https://www.youtube.com/@swiadek_dziejow) · [Instagram](https://www.instagram.com/swiadek_dziejow/) · [Facebook](https://www.facebook.com/profile.php?id=61588448017737) |
 | Crewly | [Strona](https://crewly.pl/) · [Instagram](https://www.instagram.com/crewly.pl/) · [Facebook](https://www.facebook.com/profile.php?id=61573482406605) |
 | Mumro | [Strona](https://mumro.io/pl/) · social media wkrótce |
 
@@ -109,7 +109,7 @@ I also try to automate repetitive work once I understand it well enough. Not to 
 
 **RolePlayingLife** is what I call my approach to life: I don't want to be locked into a single role forever. It's a bit like developing a character in an RPG, except that you can keep exploring new paths. **RolePlayingTech** is the technology-related part of that idea.
 
-That's also why travel, cycling, camping and sailing matter to me. I don't want work to be the only thing I do.
+That's also why bike trips with a tent and a lot of mountain hiking matter to me. Work matters, but it's only part of what I enjoy.
 
 ### Writing and community
 
@@ -119,7 +119,7 @@ I post on **[X / @rpl_0x](https://x.com/rpl_0x)** about tools, experiments, opin
 
 | Project | Elsewhere |
 | --- | --- |
-| Świadek Dziejów | [Website](https://swiadek-dziejow.pl/) · [YouTube](https://www.youtube.com/@swiadek_dziejow) · [Instagram](https://www.instagram.com/swiadek_dziejow/) · [Facebook](https://www.facebook.com/profile.php?id=61588448017737) |
+| Świadek Dziejów | [Website](https://swiadek-dziejow.pl/) · [TikTok](https://www.tiktok.com/@swiadek_dziejow) · [YouTube](https://www.youtube.com/@swiadek_dziejow) · [Instagram](https://www.instagram.com/swiadek_dziejow/) · [Facebook](https://www.facebook.com/profile.php?id=61588448017737) |
 | Crewly | [Website](https://crewly.pl/) · [Instagram](https://www.instagram.com/crewly.pl/) · [Facebook](https://www.facebook.com/profile.php?id=61573482406605) |
 | Mumro | [Website](https://mumro.io/pl/) · social media coming soon |
 

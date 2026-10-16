@@ -63,6 +63,7 @@
 .links-row p{font-size:14px;color:var(--muted);line-height:1.7}
 .links-row .sub-links{gap:8px 18px;font-weight:600}
 .links-row.is-community{background:var(--pale);box-shadow:-18px 0 0 var(--pale),18px 0 0 var(--pale)}
+.links-note{padding-top:14px;font:11px/1.6 ui-monospace,monospace;color:var(--muted)}
 .soon{font:11px/1.6 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--rust)}
 .contact-grid .contact-alt,.plain-contact .contact-alt{margin-top:22px;font-size:13px;color:var(--muted)}
 .contact-alt a,.discord-note a,.project-links p a{border-bottom:1px solid var(--rule);color:var(--ink)}
