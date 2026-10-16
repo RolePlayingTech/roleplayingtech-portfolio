@@ -31,3 +31,7 @@
 .work-item .arrow{grid-column:4;grid-row:1}
 .work-item .type{font-size:9px}
 }
+
+/* The owner's own camping photo is published at a modest resolution; avoid enlarging it excessively. */
+.scene-photo{width:min(260px,100%)}
+.bio-block figure{max-width:280px}

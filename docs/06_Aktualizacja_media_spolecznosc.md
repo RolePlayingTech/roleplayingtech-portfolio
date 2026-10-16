@@ -5,3 +5,5 @@
 - Dopisano informację, że autor założył bezpłatną społeczność twórców AI na Discordzie. Nie dodawano zaproszenia, bo nie przekazano linku.
 - Kontakt: `stuczynski.g@gmail.com` (mailto).
 - Zmiany dodane zarówno do wersji PL i EN, bez przestawiania koncepcji strony i sprzedażowych nagłówków.
+
+- Zdjęcie wyprawy przysłane 16.10.2026 zostało skompresowane do WebP i ustawione w PL/EN na stronie głównej oraz O mnie (`assets/personal-camp.webp`). Oryginalny obraz zachowano poza repozytorium; wersja w repo jest miniaturą.
