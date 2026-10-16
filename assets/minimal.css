@@ -97,8 +97,11 @@
 .yt-card p{font:400 19px/1.4 Georgia,serif;letter-spacing:-.02em;max-width:430px}
 .yt-card a{font-size:13px;font-weight:700;border-bottom:1px solid var(--ink);padding-bottom:4px;white-space:nowrap}
 .scene-pano{margin:0}
-.scene-pano img{width:100%;max-width:950px;aspect-ratio:950/176;object-fit:cover;filter:saturate(.85)}
+.scene-pano img{width:100%;max-width:950px;height:auto;aspect-ratio:2/1;object-fit:cover;object-position:50% 62%}
 .scene-pano figcaption{font:11px/1.65 ui-monospace,monospace;color:var(--muted);margin-top:10px}
+@media (max-width:580px){.scene-pano img{aspect-ratio:4/3}}
+.bio-block figure.bio-photo{max-width:420px}
+.bio-photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:55% 60%}
 .work-item .work-thumb{transition:filter .3s}
 .work-item>a .work-thumb{filter:saturate(.75)}
 .work-item>a:hover .work-thumb{filter:none}

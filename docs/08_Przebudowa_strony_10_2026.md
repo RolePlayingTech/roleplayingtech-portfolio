@@ -16,7 +16,7 @@
 | — | Pasek dziedzin / Marquee | Wolno przesuwające się pary: Historia × AI, Inżynieria środowiska × elektronika, Kod × treści itd. Zatrzymuje się po najechaniu, nie rusza się przy `prefers-reduced-motion`. |
 | 01 | Projekty / Projects | Cztery projekty, przy każdym rola autora (samodzielnie z AI, współtworzone z bratem, część techniczna cudzych badań). |
 | 02 | W liczbach / In numbers | Animowane liczby obserwujących (orientacyjnie, 10/2026) + karta o dłuższych formatach na YouTubie Świadka Dziejów. |
-| 03 | Osoba / About | Krótka historia, RolePlayingLife, wyprawy rowerowe z namiotem i góry, panorama `assets/camp.jpg`. |
+| 03 | Osoba / About | Krótka historia, RolePlayingLife, wyprawy rowerowe z namiotem i góry, zdjęcie `assets/camp-baltic.webp` (1024×576, bez metadanych; to samo na stronie „O mnie”). |
 | 04 | Współpraca / Work together | Cztery sytuacje „z czym można przyjść” z linkami do projektów-dowodów oraz trzy zasady: styk różnych światów, z sensem, otwarcie o AI. |
 | 05 | W sieci / Elsewhere | Wszystkie profile: autor (X, Instagram, LinkedIn, Substack), Świadek Dziejów (strona, YouTube, TikTok, Instagram, Facebook), Crewly, Mumro (social media wkrótce), Discord (zaproszenia ogłaszane w social mediach, bez stałego linku). |
 | 06 | Kontakt / Contact | E-mail, LinkedIn, X. |
