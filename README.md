@@ -146,13 +146,15 @@ If you have something in mind, just tell me a little about it. You don't need a 
 | O mnie / About | [PL](pl/about/index.html) · [EN](en/about/index.html) |
 | Projekty / Case studies | [PL](pl/work/) · [EN](en/work/) |
 | Styl strony / Active stylesheet | [`assets/minimal.css`](assets/minimal.css) |
+| Animacje (opcjonalne) / Animations (optional) | [`assets/site.js`](assets/site.js) |
+| Opis obecnej struktury strony / Current site structure | [`docs/08_Przebudowa_strony_10_2026.md`](docs/08_Przebudowa_strony_10_2026.md) |
 | Zdjęcia i grafiki / Media assets | [`assets/`](assets/) |
 | Strategia, historia decyzji, briefy / Strategy & design notes | [`docs/`](docs/) |
 | Zasady aktualizowania treści / Editorial & factual reference | [`docs/07_AKTUALNY_KONTEKST_PUBLICZNY.md`](docs/07_AKTUALNY_KONTEKST_PUBLICZNY.md) |
 
-Witryna to proste **HTML + CSS**, bez frameworka i bez procesu budowania. Jest hostowana na **GitHub Pages**, a domena to **[roleplayingtech.com](https://roleplayingtech.com/)**. Zmiany w `main` są publikowane przez GitHub Pages. Pliki `CNAME`, `.nojekyll` i konfiguracja domeny są częścią wdrożenia.
+Witryna to proste **HTML + CSS** z jednym małym własnym skryptem do animacji (strona działa też bez niego), bez frameworka i bez procesu budowania. Jest hostowana na **GitHub Pages**, a domena to **[roleplayingtech.com](https://roleplayingtech.com/)**. Zmiany w `main` są publikowane przez GitHub Pages. Pliki `CNAME`, `.nojekyll` i konfiguracja domeny są częścią wdrożenia.
 
-The site is plain **HTML + CSS** with no framework or build step. It's hosted on **GitHub Pages** at **[roleplayingtech.com](https://roleplayingtech.com/)**. Changes to `main` deploy through GitHub Pages. The `CNAME`, `.nojekyll` and domain setup are part of the deployment.
+The site is plain **HTML + CSS** with one small first-party script for animations (it works without it), no framework and no build step. It's hosted on **GitHub Pages** at **[roleplayingtech.com](https://roleplayingtech.com/)**. Changes to `main` deploy through GitHub Pages. The `CNAME`, `.nojekyll` and domain setup are part of the deployment.
 
 **PL:** Dokumenty w `docs/` zawierają też starsze propozycje stron i haseł. Nie wszystkie są aktualne. Bieżący opis faktów i zasad publikacji jest w pliku `07_AKTUALNY_KONTEKST_PUBLICZNY.md`. Dane i etap projektów mogą się zmieniać; podane liczby są opisane kontekstem czasowym.
 
