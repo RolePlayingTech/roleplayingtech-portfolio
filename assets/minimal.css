@@ -25,11 +25,12 @@
 .work-item .arrow{grid-column:4;grid-row:1}
 }
 @media(max-width:580px){
-.work-item>a{grid-template-columns:38px minmax(0,1fr) 93px 16px;gap:9px}
-.work-item h3{font-size:clamp(24px,6vw,31px)}
-.work-item .work-thumb{grid-column:3;grid-row:1/span 2}
-.work-item .arrow{grid-column:4;grid-row:1}
-.work-item .type{font-size:9px}
+.work-item>a{grid-template-columns:34px minmax(0,1fr) 18px;column-gap:10px;row-gap:10px;padding:24px 0 28px}
+.work-item h3{font-size:clamp(26px,6.8vw,32px)}
+.work-item p{grid-column:2;grid-row:2;margin-top:0;font-size:14px;line-height:1.6}
+.work-item .work-thumb{grid-column:2;grid-row:3;width:100%;max-width:320px;margin-top:4px}
+.work-item .arrow{grid-column:3;grid-row:1;align-self:start;padding-top:4px}
+.work-item .type{font-size:10px;margin-top:10px}
 }
 
 /* The owner's own camping photo is published at a modest resolution; avoid enlarging it excessively. */
@@ -96,12 +97,17 @@
 .yt-card{display:flex;justify-content:space-between;align-items:center;gap:16px 28px;flex-wrap:wrap;background:var(--pale);padding:22px 24px}
 .yt-card p{font:400 19px/1.4 Georgia,serif;letter-spacing:-.02em;max-width:430px}
 .yt-card a{font-size:13px;font-weight:700;border-bottom:1px solid var(--ink);padding-bottom:4px;white-space:nowrap}
-.scene-pano{margin:0}
+.scene-pano{margin:0;max-width:950px;background:#fbfaf5;border:1px solid #d8d3c8;padding:10px 10px 14px;box-shadow:0 6px 20px rgba(34,33,31,.06)}
 .scene-pano img{width:100%;max-width:950px;height:auto;aspect-ratio:2/1;object-fit:cover;object-position:50% 62%}
-.scene-pano figcaption{font:11px/1.65 ui-monospace,monospace;color:var(--muted);margin-top:10px}
-@media (max-width:580px){.scene-pano img{aspect-ratio:4/3}}
-.bio-block figure.bio-photo{max-width:420px}
+.scene-pano figcaption,.bio-block figure.bio-photo figcaption{font:500 17.5px/1.25 'Caveat','Segoe Print','Bradley Hand',cursive;color:#4a4640;margin-top:10px;letter-spacing:0}
+@media (max-width:580px){.scene-pano{padding:7px 7px 11px}.scene-pano img{aspect-ratio:4/3}}
+.bio-block figure.bio-photo{max-width:440px;background:#fbfaf5;border:1px solid #d8d3c8;padding:9px 9px 13px;box-shadow:0 6px 20px rgba(34,33,31,.06)}
 .bio-photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:55% 60%}
+.detail-media-link{display:block;position:relative;overflow:hidden;border:1px solid var(--rule);transition:border-color .25s ease,box-shadow .25s ease}
+.detail-shot .detail-media-link .work-thumb{border:0}
+.detail-media-link .work-thumb,.detail-media-link img{transition:transform .35s ease,filter .35s ease}
+.detail-media-link:hover{border-color:var(--rust);box-shadow:0 6px 20px rgba(34,33,31,.07)}
+.detail-media-link:hover .work-thumb,.detail-media-link:hover img{transform:scale(1.012)}
 .work-item .work-thumb{transition:filter .3s}
 .work-item>a .work-thumb{filter:saturate(.75)}
 .work-item>a:hover .work-thumb{filter:none}
@@ -128,6 +134,9 @@ html.js .reveal{opacity:1;transform:none}
 .project-links{grid-template-columns:1fr;gap:12px}
 }
 @media(max-width:580px){
+.site-head .frame{position:relative}
+.head-nav{margin-top:12px;gap:10px 16px;flex-wrap:wrap}
+.head-nav .switch{position:absolute;top:14px;right:0}
 .offset{margin-left:0}
 .now{grid-template-columns:1fr;gap:6px;margin-top:44px}
 .help-list{grid-template-columns:1fr}
@@ -135,8 +144,107 @@ html.js .reveal{opacity:1;transform:none}
 .links-row{grid-template-columns:1fr;gap:10px}
 .links-row.is-community{box-shadow:-12px 0 0 var(--pale),12px 0 0 var(--pale)}
 .detail-cta{padding:22px 20px}
-.stats{grid-template-columns:1fr}
-.stat,.stat+.stat{padding:22px 0 24px;border-left:0}
-.stat-label{max-width:none}
+.stats{grid-template-columns:1fr 1fr}
+.stat{padding:20px 12px 22px 0}
+.stat+.stat{padding-left:14px;border-left:1px solid var(--rule)}
+.stat:nth-child(3){padding-left:0;border-left:0}
+.stat-num{font-size:clamp(34px,9.5vw,46px)}
+.stat-label{margin-top:10px;font-size:13px;line-height:1.45;max-width:none}
 .marquee{padding:16px 0}
+}
+
+/* Scattered background travel prints (polaroids) with handwritten captions */
+html,body{overflow-x:clip}
+.work-foot{max-width:620px}
+.has-polaroids{position:relative}
+.has-polaroids>*:not(.bg-polaroid):not(.pol-mobile-tray){position:relative;z-index:2}
+.bg-polaroid{margin:0;background:#fbfaf5;border:1px solid #d8d3c8;padding:5px 5px 7px;box-shadow:0 4px 14px rgba(34,33,31,.06);width:128px;opacity:.48;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transform:rotate(var(--rot,-3deg));transition:opacity .26s ease,transform .26s ease,box-shadow .26s ease,border-color .26s ease;z-index:1}
+.bg-polaroid img{display:block;width:100%;height:auto!important;aspect-ratio:4/3;object-fit:cover;background:#e9e6df;filter:saturate(.66) contrast(.96) sepia(.08);transition:filter .26s ease,opacity .18s ease}
+.bg-polaroid.is-swapping img{opacity:.25}
+.bg-polaroid figcaption{font:500 13.5px/1.12 'Caveat','Segoe Print','Bradley Hand',cursive;color:#4a4640;margin-top:5px;letter-spacing:0;text-transform:none;display:flex;justify-content:space-between;align-items:flex-start;gap:4px}
+.bg-polaroid .pol-text{display:block}
+.bg-polaroid .pol-cycle{font:10px/1 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--rust);opacity:0;transition:opacity .2s ease;flex-shrink:0;padding-top:2px}
+@media(hover:hover){
+.bg-polaroid:hover{opacity:.98;transform:rotate(0deg) scale(1.62);box-shadow:0 16px 36px rgba(34,33,31,.2);border-color:#c2baa9;z-index:25}
+.bg-polaroid:hover img{filter:saturate(1) contrast(1) sepia(0)}
+.bg-polaroid:hover .pol-cycle{opacity:.85}
+}
+.bg-polaroid.is-active{opacity:.98;transform:rotate(0deg) scale(1.42);box-shadow:0 14px 32px rgba(34,33,31,.2);border-color:#c2baa9;z-index:25}
+.bg-polaroid.is-active img{filter:saturate(1) contrast(1) sepia(0)}
+.bg-polaroid.is-active .pol-cycle{opacity:.9}
+.bg-polaroid:focus-visible{outline:2px solid var(--rust);outline-offset:3px;opacity:.98;z-index:25}
+
+@media(min-width:961px){
+#work.has-polaroids{padding-bottom:118px}
+.bg-polaroid{position:absolute;width:130px;transform-origin:left center}
+.pol-slot-intro-1,.pol-slot-intro-2,.pol-slot-intro-3,.pol-slot-work-1,.pol-slot-work-2,.pol-slot-work-3{transform-origin:right center}
+.pol-slot-intro-1{top:56px;right:14px;width:134px}
+.pol-slot-intro-2{top:148px;right:186px;width:126px}
+.pol-slot-intro-3{bottom:26px;right:24px;width:128px}
+.pol-slot-work-1{right:304px;bottom:14px;width:122px}
+.pol-slot-work-2{right:154px;bottom:24px;width:124px}
+.pol-slot-work-3{right:6px;bottom:12px;width:128px}
+.pol-slot-numbers-1{left:-165px;top:6px;width:132px}
+.pol-slot-numbers-2{left:-158px;bottom:4px;width:128px}
+.pol-slot-about{left:0;top:48px;width:130px}
+.pol-slot-scene-1,.pol-slot-scene-2{display:none}
+.pol-slot-help-1{left:-165px;top:18px;width:132px}
+.pol-slot-help-2{left:-156px;top:240px;width:128px}
+.pol-slot-help-3{left:-164px;bottom:14px;width:132px}
+.pol-slot-links-1{left:-165px;top:22px;width:132px}
+.pol-slot-links-2{left:-158px;bottom:28px;width:128px}
+.pol-slot-contact-1{left:0;top:48px;width:130px}
+.pol-slot-contact-2{left:165px;bottom:4px;width:128px}
+.pol-slot-bio-1{left:0;top:110px;width:140px}
+.pol-slot-bio-2{left:8px;top:410px;width:138px}
+.pol-slot-bio-3{left:-2px;top:730px;width:140px}
+.pol-slot-bio-4{left:6px;top:1050px;width:138px}
+.pol-slot-detail-1{left:0;top:130px;width:134px}
+.pol-slot-detail-2{left:4px;top:380px;width:132px}
+.pol-mobile-tray{display:contents}
+}
+@media(min-width:961px) and (max-width:1120px){
+.pol-slot-intro-2,.pol-slot-work-1{display:none}
+}
+@media(max-width:960px){
+.bg-polaroid{position:relative;width:118px;opacity:.58;padding:4px 4px 6px;margin-top:22px}
+.bg-polaroid figcaption{font-size:12.5px;margin-top:4px}
+.pol-slot-intro-1{position:absolute;top:116px;right:2px;width:102px;margin-top:0;opacity:.5;transform-origin:right center}
+.pol-slot-intro-2,.pol-slot-intro-3,.pol-slot-work-1,.pol-slot-numbers-2,.pol-slot-about,.pol-slot-help-1,.pol-slot-links-1,.pol-slot-contact-1,.pol-slot-bio-1,.pol-slot-bio-4{display:none}
+.pol-slot-numbers-1,.pol-slot-links-2,.pol-slot-contact-2{margin-left:auto;margin-right:8px;transform-origin:right center}
+.pol-slot-scene-1,.pol-slot-scene-2,.pol-slot-work-2,.pol-slot-work-3,.pol-slot-help-2,.pol-slot-help-3,.pol-slot-bio-2,.pol-slot-bio-3,.pol-slot-detail-1,.pol-slot-detail-2{margin-top:0;width:min(130px,43vw);opacity:.6}
+.pol-mobile-tray{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-top:24px;padding-inline:4px}
+.pol-mobile-tray>.bg-polaroid:first-child{transform-origin:left center}
+.pol-mobile-tray>.bg-polaroid:last-child{transform-origin:right center}
+}
+@media(max-width:390px){
+.pol-slot-intro-1{top:108px;right:0;width:92px}
+}
+.email-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 16px;margin-top:24px}
+.email-row .text-link,.email-row .quiet-link{margin-top:0}
+.copy-email-btn{font:11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);background:transparent;color:var(--muted);padding:5px 10px;cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.copy-email-btn:hover{border-color:var(--ink);color:var(--ink)}
+.copy-email-btn.is-copied{border-color:var(--rust);color:var(--rust);background:var(--pale)}
+.bio-polaroid-strip{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin-top:26px}
+.bio-polaroid-strip .bg-polaroid{position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;width:146px;max-width:none;margin:0;opacity:.88;transform-origin:center center}
+.bio-polaroid-strip .bg-polaroid img{filter:saturate(.82) contrast(.98) sepia(.04)}
+.bio-polaroid-strip .bg-polaroid figcaption{font:500 13.5px/1.12 'Caveat','Segoe Print','Bradley Hand',cursive;color:#4a4640;margin-top:5px}
+.bio-polaroid-note{margin-top:14px!important;font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace!important;color:var(--muted)!important}
+@media(max-width:580px){
+.bio-polaroid-strip{gap:10px}
+.bio-polaroid-strip .bg-polaroid{width:calc(33.333% - 7px);min-width:92px}
+.bio-polaroid-strip .bg-polaroid:first-child{transform-origin:left center}
+.bio-polaroid-strip .bg-polaroid:last-child{transform-origin:right center}
+}
+.detail-note a{color:var(--rust);border-bottom:1px solid var(--rule);padding-bottom:1px;font-weight:600}
+.detail-note a:hover{border-color:var(--rust)}
+.other-works{margin-top:48px;padding-top:26px;border-top:1px solid var(--rule)}
+.other-works>.micro{display:block;color:var(--rust);margin-bottom:14px}
+.other-works-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.other-works-list a{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:1px solid var(--rule);background:var(--bg);font:400 20px/1.2 Georgia,serif;letter-spacing:-.03em;transition:background .2s,border-color .2s}
+.other-works-list a:hover{background:var(--pale);border-color:var(--rust);color:var(--ink)}
+.other-works-list b{font:11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--rust);font-weight:400}
+.other-works-list span{font:11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+@media(max-width:720px){
+.other-works-list{grid-template-columns:1fr;gap:10px}
 }
