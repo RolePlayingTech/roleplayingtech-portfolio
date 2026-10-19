@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f7f6f2">
+<meta name="robots" content="noindex">
+<title>404 — RolePlayingTech</title>
+<link rel="stylesheet" href="/assets/minimal.css">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<script>
+(function () {
+  var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+  var langs = (navigator.languages && navigator.languages.length ? navigator.languages.join(',') : (navigator.language || '')).toLowerCase();
+  var prefix = (!langs || langs.indexOf('pl') !== -1) ? '/pl' : '/en';
+  var map = {
+    '/about': prefix + '/about/',
+    '/o-mnie': '/pl/about/',
+    '/work': prefix + '/#work',
+    '/projekty': '/pl/#work',
+    '/contact': prefix + '/#contact',
+    '/kontakt': '/pl/#contact',
+    '/mumro': prefix + '/work/mumro/',
+    '/work/mumro': prefix + '/work/mumro/',
+    '/crewly': prefix + '/work/crewly/',
+    '/work/crewly': prefix + '/work/crewly/',
+    '/swiadek': prefix + '/work/swiadek-dziejow/',
+    '/swiadek-dziejow': prefix + '/work/swiadek-dziejow/',
+    '/work/swiadek-dziejow': prefix + '/work/swiadek-dziejow/',
+    '/mfc': prefix + '/work/mfc/',
+    '/work/mfc': prefix + '/work/mfc/'
+  };
+  if (map[path]) {
+    window.location.replace(map[path]);
+  }
+})();
+</script>
+</head>
+<body>
+<header class="site-head">
+<div class="frame">
+<a class="logo" href="/pl/">roleplayingtech<i>.</i></a>
+<nav class="head-nav" aria-label="Nawigacja">
+<a href="/pl/#work">Projekty</a>
+<a href="/pl/about/">O mnie</a>
+<a href="/pl/#contact">Kontakt</a>
+<a class="switch" href="/en/">EN</a>
+</nav>
+</div>
+</header>
+<main id="main">
+<section class="detail-top frame">
+<div class="number detail-number">404</div>
+<h1>Nie ma takiej strony.</h1>
+<p class="intro-primary">Pod tym adresem nic nie ma — możliwe, że link był skrócony albo zawiera literówkę.<br><span class="muted" style="font-size:.78em">This page doesn't exist — you can head back to the main page below.</span></p>
+<div class="intro-actions" style="margin-top:32px">
+<a class="jump" href="/pl/">Strona główna (PL)<span>→</span></a>
+<a class="quiet-link" href="/en/">Home page (EN)<span>→</span></a>
+</div>
+<nav class="other-works" aria-label="Projekty" style="margin-top:56px">
+<span class="micro">Projekty / Projects</span>
+<div class="other-works-list" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+<a href="/pl/work/mumro/"><b>01</b>Mumro<span>Software / Automation →</span></a>
+<a href="/pl/work/swiadek-dziejow/"><b>02</b>Świadek Dziejów<span>History / Media →</span></a>
+<a href="/pl/work/crewly/"><b>03</b>Crewly<span>Sailing / Product →</span></a>
+<a href="/pl/work/mfc/"><b>04</b>MFC Monitoring Station<span>Electronics / Research →</span></a>
+</div>
+</nav>
+</section>
+</main>
+<footer class="footer">
+<div class="frame">
+<p>Grzegorz Stuczyński · RolePlayingTech © 2026</p>
+<div class="sub-links">
+<a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X ↗</a>
+<a href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+<a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+<a href="https://github.com/RolePlayingTech" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+<a href="mailto:stuczynski.g@gmail.com">Email ↗</a>
+</div>
+</div>
+</footer>
+</body>
+</html>

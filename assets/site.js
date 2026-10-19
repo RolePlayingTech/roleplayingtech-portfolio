@@ -10,26 +10,10 @@
   if (reduce || !('IntersectionObserver' in window)) {
     showAll();
   } else {
-    function countUp(el) {
-      var target = parseFloat(el.getAttribute('data-count'));
-      var duration = 1600;
-      var start = null;
-      function step(now) {
-        if (start === null) start = now;
-        var progress = Math.min((now - start) / duration, 1);
-        var eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.round(target * eased);
-        if (progress < 1) requestAnimationFrame(step);
-      }
-      el.textContent = '0';
-      requestAnimationFrame(step);
-    }
-
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('is-visible');
-        entry.target.querySelectorAll('[data-count]').forEach(countUp);
         observer.unobserve(entry.target);
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
@@ -185,10 +169,14 @@
       nextImg.src = '/assets/polaroids/' + next.id + '.webp';
     }
 
-    var isTouch = window.matchMedia('(hover: none)').matches;
+    spanCycle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      swapPhoto();
+    });
+
     fig.addEventListener('click', function (e) {
       e.stopPropagation();
-      if (isTouch && !fig.classList.contains('is-active')) {
+      if (!fig.classList.contains('is-active')) {
         document.querySelectorAll('.bg-polaroid.is-active').forEach(function (other) {
           if (other !== fig) other.classList.remove('is-active');
         });
@@ -201,7 +189,13 @@
     fig.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        swapPhoto();
+        if (!fig.classList.contains('is-active')) {
+          fig.classList.add('is-active');
+        } else {
+          swapPhoto();
+        }
+      } else if (e.key === 'Escape') {
+        fig.classList.remove('is-active');
       }
     });
 
@@ -212,6 +206,14 @@
     document.querySelectorAll('.bg-polaroid.is-active').forEach(function (el) {
       el.classList.remove('is-active');
     });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.bg-polaroid.is-active').forEach(function (el) {
+        el.classList.remove('is-active');
+      });
+    }
   });
 
   function mountSingle(selector, slotClass, rotDeg, alignClass) {
