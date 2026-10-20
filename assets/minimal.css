@@ -252,3 +252,21 @@ html,body{overflow-x:clip}
 @media(max-width:720px){
 .other-works-list{grid-template-columns:1fr;gap:10px}
 }
+
+/* Editorial social stamps in the top header navigation */
+.head-nav .switch{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 8px;line-height:1;transition:border-color .2s ease,background .2s ease,color .2s ease}
+.head-nav .switch:hover{border-color:var(--rust);background:var(--pale);color:var(--rust)}
+.head-socials{display:inline-flex;align-items:center;gap:6px;padding-left:18px;margin-left:-8px;border-left:1px solid var(--rule)}
+.soc-link{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border:1px solid var(--rule);background:rgba(238,236,230,.55);color:var(--ink);transition:border-color .2s ease,background .2s ease,color .2s ease,transform .2s ease}
+.soc-link svg{width:14px;height:14px;display:block;overflow:visible}
+.soc-link:hover{border-color:var(--rust);background:var(--pale);color:var(--rust);transform:translateY(-1px)}
+@media(max-width:920px){
+.head-nav{gap:18px}
+.head-socials{padding-left:14px;margin-left:-4px;gap:5px}
+}
+@media(max-width:580px){
+.head-socials{position:absolute;top:14px;right:40px;padding-left:0;margin-left:0;border-left:0;gap:5px}
+.soc-link,.head-nav .switch{height:24px}
+.soc-link{width:24px}
+.soc-link svg{width:13px;height:13px}
+}
