@@ -34,7 +34,7 @@ Każda ma blok „W sieci / Elsewhere” z profilami projektu i na końcu krótk
 ## Technicznie / Technical notes
 
 - Nadal statyczny HTML + CSS na GitHub Pages, bez frameworka i bez kroku budowania. / Still static HTML + CSS.
-- `assets/site.js` — jeden mały, własny skrypt (bez zewnętrznych bibliotek) do łagodnego pojawiania się sekcji i odliczania liczb. Strona działa i pokazuje wszystkie treści także bez JavaScriptu (po 3 s awaryjnie odsłania elementy). / One small first-party script; the page works without it.
+- `assets/site.js` — własny skrypt (bez frameworków) obsługujący łagodne pojawianie się sekcji, interaktywne zdjęcia-polaroidy i opcjonalny przycisk kopiowania e-maila. Strona nadal udostępnia główną treść bez JavaScriptu; animacje to dodatkowe ulepszenie. / First-party JavaScript for reveal effects, interactive polaroid photos and an optional copy-email button; core content remains available without it.
 - Style nowych sekcji są na końcu `assets/minimal.css`.
 
 ## Do aktualizacji / Keep up to date
