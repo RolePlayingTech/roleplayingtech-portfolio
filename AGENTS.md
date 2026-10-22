@@ -4,7 +4,7 @@ This repository is public and deploys a **personal, bilingual static site** to G
 
 ## Read first / Czytaj najpierw
 
-1. [Public README (PL/EN)](README.md)
+1. [Public English README](README.md)
 2. [Current, public factual reference](docs/07_AKTUALNY_KONTEKST_PUBLICZNY.md)
 3. [Documentation index](docs/README.md)
 
