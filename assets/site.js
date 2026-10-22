@@ -240,6 +240,7 @@
   mountSingle('.intro', 'pol-slot-intro-3', 2.8, '');
   mountSingle('#work', 'pol-slot-work-1', -3.4, '');
   mountPair('#work', 'pol-slot-work-2', 3.5, 'pol-slot-work-3', -2.9);
+  mountSingle('#education .offset', 'pol-slot-edu-1', 3.3, '');
   mountSingle('#numbers .offset', 'pol-slot-numbers-1', -3.8, '');
   mountSingle('#numbers .offset', 'pol-slot-numbers-2', 3.4, '');
   mountSingle('#about .about-strip', 'pol-slot-about', 3.1, '');
@@ -264,6 +265,11 @@
 
   // Project detail page slots
   mountPair('.detail-story', 'pol-slot-detail-1', -3.3, 'pol-slot-detail-2', 3.1);
+
+  // Education subpage slots
+  mountSingle('#academy .offset', 'pol-slot-help-1', -3.2, '');
+  mountSingle('#open-source .offset', 'pol-slot-links-1', 3.4, '');
+  mountSingle('#community .about-strip', 'pol-slot-about', -2.9, '');
 
   // One-tap Copy Email button next to main contact links
   var mailLinks = document.querySelectorAll('#contact .text-link[href^="mailto:"], .plain-contact .quiet-link[href^="mailto:"]');

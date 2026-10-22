@@ -1,6 +1,6 @@
 # 08 · Przebudowa strony — październik 2026 / Site rebuild — October 2026
 
-> **Stan / As of:** 16.10.2026. Opis obecnej struktury strony i decyzji podjętych razem z właścicielem. Fakty i ograniczenia nadal są w [07](07_AKTUALNY_KONTEKST_PUBLICZNY.md).
+> **Stan / As of:** 22.10.2026. Opis obecnej struktury strony i decyzji podjętych razem z właścicielem. Fakty i ograniczenia nadal są w [07](07_AKTUALNY_KONTEKST_PUBLICZNY.md).
 
 ## Cel / Goal
 
@@ -13,15 +13,19 @@
 | # | Sekcja / Section | Co zawiera / Contents |
 | --- | --- | --- |
 | — | Hero | Duży napis „RolePlayingTech.”, jedno zdanie o tym, czym się zajmuje autor, linijka „Teraz / jesień 2026”. **Bez imienia i nazwiska** — to świadoma decyzja właściciela. / No name in the hero, on purpose. |
-| — | Pasek dziedzin / Marquee | Wolno przesuwające się pary: Historia × AI, Inżynieria środowiska × elektronika, Kod × treści itd. Zatrzymuje się po najechaniu, nie rusza się przy `prefers-reduced-motion`. |
 | 01 | Projekty / Projects | Cztery projekty, przy każdym rola autora (samodzielnie z AI, współtworzone z bratem, część techniczna cudzych badań). |
-| 02 | W liczbach / In numbers | Animowane liczby obserwujących (orientacyjnie, 10/2026) + karta o dłuższych formatach na YouTubie Świadka Dziejów. |
-| 03 | Osoba / About | Krótka historia, RolePlayingLife, wyprawy rowerowe z namiotem i góry, zdjęcie `assets/camp-baltic.webp` (1024×576, bez metadanych; to samo na stronie „O mnie”). |
-| 04 | Współpraca / Work together | Cztery sytuacje „z czym można przyjść” z linkami do projektów-dowodów oraz trzy zasady: styk różnych światów, z sensem, otwarcie o AI. |
-| 05 | W sieci / Elsewhere | Wszystkie profile: autor (X, Instagram, LinkedIn, Substack), Świadek Dziejów (strona, YouTube, TikTok, Instagram, Facebook), Crewly, Mumro (social media wkrótce), Discord (zaproszenia ogłaszane w social mediach, bez stałego linku). |
-| 06 | Kontakt / Contact | E-mail, LinkedIn, X. |
+| 02 | Edukacja i open source / Learning & open source | Spokojny panel Akademii Mumro (`academy.mumro.io`) + dwa otwarte repozytoria CLI (`agent-harness-kit`, `mcp-surface-kit`), notatka o bezpłatnej społeczności Discord (zaproszenia na X) i link do podstrony `/pl/education/` (`/en/education/`). |
+| 03 | W liczbach / In numbers | Liczby obserwujących (orientacyjnie, 10/2026) + karta o dłuższych formatach na YouTubie Świadka Dziejów. |
+| 04 | Osoba / About | Krótka historia, RolePlayingLife, wyprawy rowerowe z namiotem i góry, link do `/pl/about/`. |
+| 05 | Współpraca / Work together | Cztery sytuacje „z czym można przyjść” z linkami do projektów-dowodów oraz trzy zasady: styk różnych światów, z sensem, otwarcie o AI. |
+| 06 | W sieci / Elsewhere | Wszystkie profile: autor (X, Instagram, LinkedIn, Substack), Świadek Dziejów (strona, YouTube, TikTok, Instagram, Facebook), Crewly, Mumro (strona + Akademia, social media wkrótce), Discord (zaproszenia ogłaszane w social mediach, bez stałego linku). |
+| 07 | Kontakt / Contact | E-mail, LinkedIn, X. |
 
-Imię i nazwisko pojawia się tylko w stopce. / The name only appears in the footer.
+Imię i nazwisko pojawia się tylko w stopce (oraz na podstronie „O mnie”). / The name only appears in the footer (and on the About page).
+
+## Podstrona edukacji i open source (`/pl/education/`, `/en/education/`)
+
+Szerszy przegląd czterech ścieżek tematycznych, playbooków i słownika Akademii Mumro (`academy.mumro.io`), szczegółowy opis otwartych narzędzi CLI (`RolePlayingTech/agent-harness-kit`, `RolePlayingTech/mcp-surface-kit`) i repozytorium Akademii (`RolePlayingTech/mumro-academy`) oraz informacja o społeczności Discord i publikacjach na X / Substacku. Skrót `/education/` przekierowuje do `/pl/education/`.
 
 ## Strony projektów / Project pages
 
