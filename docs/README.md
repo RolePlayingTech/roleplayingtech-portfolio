@@ -6,7 +6,7 @@ This public repository includes both **current references** and **older iteratio
 
 ## Najpierw przeczytaj / Start here
 
-- **[README PL + EN](../README.md)** — publiczny profil, historia zawodowa, projekty, AI, społeczność, kontakt i informacje o kodzie strony. / The main public entry point.
+- **[English README](../README.md)** — projects, open-source work, social links, contact, local setup and website structure. / Główny opis repozytorium jest teraz po angielsku; sama strona pozostaje dwujęzyczna.
 - **[07 · Aktualny kontekst publiczny / Current public context](07_AKTUALNY_KONTEKST_PUBLICZNY.md)** — najważniejsze fakty, zasady komunikacji, ograniczenia i bezpieczeństwo. / Ground truth for facts and editorial decisions.
 - **[08 · Przebudowa strony 10/2026 / Site rebuild](08_Przebudowa_strony_10_2026.md)** — obecna struktura strony, sekcje, decyzje i co aktualizować. / Current site structure and what to keep up to date.
 
