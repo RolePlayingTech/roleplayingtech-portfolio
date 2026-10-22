@@ -76,6 +76,8 @@ From the repository root:
 python3 -m http.server 8000
 ```
 
+On Windows, use `py -m http.server 8000` instead.
+
 Open [localhost:8000/en/](http://localhost:8000/en/) or [localhost:8000/pl/](http://localhost:8000/pl/). Use an HTTP server rather than opening HTML files directly, so root-relative assets resolve correctly.
 
 ### Making changes
