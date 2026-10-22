@@ -3,7 +3,7 @@
 **PL:** Osobiste projekty, eksperymenty, oprogramowanie i rzeczy, których po drodze nauczyłem się robić.  
 **EN:** Personal projects, experiments, software and a few things I've learned to build along the way.
 
-[Strona / Website](https://roleplayingtech.com/) · [Projekty / Projects](https://roleplayingtech.com/pl/#work) · [O mnie / About](https://roleplayingtech.com/pl/about/) · [Kontakt / Contact](mailto:stuczynski.g@gmail.com)
+[Strona / Website](https://roleplayingtech.com/) · [Projekty / Projects](https://roleplayingtech.com/pl/#work) · [Edukacja / Learning](https://roleplayingtech.com/pl/education/) · [O mnie / About](https://roleplayingtech.com/pl/about/) · [Kontakt / Contact](mailto:stuczynski.g@gmail.com)
 
 **[Po polsku](#po-polsku) · [In English](#in-english) · [O tym repo / About this repository](#o-tym-repozytorium--about-this-repository)**
 
@@ -59,7 +59,7 @@ Publikuję na **[X / @rpl_0x](https://x.com/rpl_0x)**: testy narzędzi, eksperym
 | --- | --- |
 | Świadek Dziejów | [Strona](https://swiadek-dziejow.pl/) · [TikTok](https://www.tiktok.com/@swiadek_dziejow) · [YouTube](https://www.youtube.com/@swiadek_dziejow) · [Instagram](https://www.instagram.com/swiadek_dziejow/) · [Facebook](https://www.facebook.com/profile.php?id=61588448017737) |
 | Crewly | [Strona](https://crewly.pl/) · [Instagram](https://www.instagram.com/crewly.pl/) · [Facebook](https://www.facebook.com/profile.php?id=61573482406605) |
-| Mumro | [Strona](https://mumro.io/pl/) · social media wkrótce |
+| Mumro | [Strona](https://mumro.io/pl/) · [Akademia](https://academy.mumro.io/pl/) · social media wkrótce |
 
 ### Jeśli chcesz ze mną coś zrobić
 
@@ -121,7 +121,7 @@ I post on **[X / @rpl_0x](https://x.com/rpl_0x)** about tools, experiments, opin
 | --- | --- |
 | Świadek Dziejów | [Website](https://swiadek-dziejow.pl/) · [TikTok](https://www.tiktok.com/@swiadek_dziejow) · [YouTube](https://www.youtube.com/@swiadek_dziejow) · [Instagram](https://www.instagram.com/swiadek_dziejow/) · [Facebook](https://www.facebook.com/profile.php?id=61588448017737) |
 | Crewly | [Website](https://crewly.pl/) · [Instagram](https://www.instagram.com/crewly.pl/) · [Facebook](https://www.facebook.com/profile.php?id=61573482406605) |
-| Mumro | [Website](https://mumro.io/pl/) · social media coming soon |
+| Mumro | [Website](https://mumro.io/pl/) · [Academy](https://academy.mumro.io/) · social media coming soon |
 
 ### Working together
 
@@ -143,6 +143,7 @@ If you have something in mind, just tell me a little about it. You don't need a 
 | --- | --- |
 | Strona PL / Polish site | [`/pl/`](pl/index.html) |
 | Strona EN / English site | [`/en/`](en/index.html) |
+| Edukacja i open source / Learning & open source | [PL](pl/education/index.html) · [EN](en/education/index.html) |
 | O mnie / About | [PL](pl/about/index.html) · [EN](en/about/index.html) |
 | Projekty / Case studies | [PL](pl/work/) · [EN](en/work/) |
 | Styl strony / Active stylesheet | [`assets/minimal.css`](assets/minimal.css) |
