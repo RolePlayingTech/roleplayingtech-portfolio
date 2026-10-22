@@ -44,9 +44,9 @@
 <div class="edu-lead-box reveal">
 <div class="edu-lead-copy">
 <span class="micro">Skąd wziął się ten materiał</span>
-<h3>Pomysły i decyzje inżynieryjne w jednym miejscu</h3>
-<p>W pracy z treściami i AI najwięcej problemów bierze się stąd, że kontekst gubi się na każdym kroku: strategia leży w zapomnianym pliku PDF, czaty AI startują od pustego okna bez znajomości granic marki, ten sam tekst jest kopiowany na cztery platformy, a strona WWW i social media działają osobno.</p>
-<p>W Akademii opisuję wzorce, które łączą te elementy w jeden spójny proces — na przykładzie realnych zagadnień, nad którymi pracuję przy budowaniu <a href="/pl/work/mumro/">Mumro</a> i prowadzeniu <a href="/pl/work/swiadek-dziejow/">Świadka Dziejów</a>.</p>
+<h3>Notatki z budowania systemów ułożone w otwarty podręcznik</h3>
+<p>Budując <a href="/pl/work/mumro/">Mumro</a> i prowadząc wielokanałowo <a href="/pl/work/swiadek-dziejow/">Świadka Dziejów</a>, ciągle wracałem do tych samych problemów: jak utrzymać spójny ton i fakty bez wklejania tych samych instrukcji do każdego czatu, jak z jednego zbadanego tematu przygotować materiały na kilka platform bez mechanicznego kopiowania i jak dać agentom AI dostęp do narzędzi bez ryzyka przypadkowej publikacji na żywo.</p>
+<p>Zamiast zostawiać te wnioski w prywatnych notatkach, uporządkowałem je w czterech ścieżkach Akademii Mumro. To zapis decyzji architektonicznych, schematów YAML/JSON i prostych symulatorów, które można przełożyć na własny warsztat.</p>
 </div>
 <div class="edu-lead-links">
 <span class="micro">Zasoby Akademii (PL / EN)</span>
@@ -61,33 +61,31 @@
 <article class="help-item reveal">
 <span class="index">ŚCIEŻKA 01</span>
 <h3>Żywe systemy marki i strategia treści</h3>
-<p>Dlaczego statyczne prezentacje PDF szybko przestają działać i jak zastąpić je wersjonowaną strategią (<code>v1 → v2</code>). Kodowanie tonu, słownika i twardych granic marki (czego nie obiecywać) oraz prowadzenie researchu opartego na źródłach (<code>Źródło → Decyzja → Szkic</code>).</p>
-<p class="help-proof">Zakres: Strategia v1→v2 · Architektura głosu marki · Ścieżka dowodowa</p>
+<p>Przy dłuższych projektach statyczny opis marki w PDF szybko ląduje w szufladzie, a każdy czat z modelem startuje od zera. Opisuję tu, jak traktować strategię i granice głosu marki jak wersjonowany kod (<code>v1 → v2</code>) oraz jak prowadzić research, żeby każdy szkic zachował ślad do źródeł.</p>
+<p class="help-proof">Wersjonowana strategia · Granice głosu marki · Ścieżka od źródła do szkicu</p>
+<a class="edu-cta edu-track-cta" href="https://academy.mumro.io/pl/tracks/brand-systems/" target="_blank" rel="noopener noreferrer">Otwórz ścieżkę 01 <span>↗</span></a>
 </article>
 <article class="help-item reveal">
 <span class="index">ŚCIEŻKA 02</span>
 <h3>Wielokanałowa inżynieria treści i publikacja</h3>
-<p>Przekładanie jednego tematu na artykuł WWW, pięcioslajdową karuzelę i publikacje dopasowane do poszczególnych kanałów społecznościowych bez mechanicznego „kopiuj-wklej”. Kolejki publikacji, okna czasowe, idempotentność i potwierdzenia wysyłki per kanał.</p>
-<p class="help-proof">Zakres: Jeden temat, cztery kanały · Struktura karuzeli · Kolejki i potwierdzenia</p>
+<p>Prowadząc Świadka Dziejów w kilku kanałach naraz, przekonałem się, jak szybko męczy ręczne przepisywanie tematu od zera — i jak słabo działa wrzucanie identycznego posta wszędzie. Pokazuję, jak rozłożyć jedną historię na artykuł WWW, karuzelę i posty natywne oraz jak ułożyć idempotentną kolejkę publikacji.</p>
+<p class="help-proof">Jeden temat, wiele formatów · Rytm karuzeli · Kolejki i potwierdzenia</p>
+<a class="edu-cta edu-track-cta" href="https://academy.mumro.io/pl/tracks/multi-format-distribution/" target="_blank" rel="noopener noreferrer">Otwórz ścieżkę 02 <span>↗</span></a>
 </article>
 <article class="help-item reveal">
 <span class="index">ŚCIEŻKA 03</span>
 <h3>Strona WWW, techniczne SEO i pętla rozmów</h3>
-<p>Połączenie systemu CMS z dystrybucją w social mediach, dwujęzyczne techniczne SEO (<code>canonical</code>, <code>hreflang</code>, <code>JSON-LD</code>), asystenci na stronie oparci o zweryfikowaną wiedzę marki oraz analityka kohortowa (7/30/90 dni) zamiast powierzchownych zasięgów.</p>
-<p class="help-proof">Zakres: CMS + social · Dwujęzyczne SEO · Asystenci WWW · Kohorty 7/30/90 dni</p>
+<p>Zasięg w social mediach znika po kilkudziesięciu godzinach, jeśli nie buduje trwałej bazy na własnej domenie. Zebrałem tu rzeczy, których musiałem dopilnować przy dwujęzycznych stronach i integracji CMS: poprawne <code>canonical</code> i <code>hreflang</code>, graf <code>JSON-LD</code>, asystentów opartych na wiedzy projektu oraz analizę kohort 7/30/90 dni.</p>
+<p class="help-proof">CMS i dystrybucja · Dwujęzyczne SEO · Kohorty 7/30/90 dni</p>
+<a class="edu-cta edu-track-cta" href="https://academy.mumro.io/pl/tracks/website-seo-conversations/" target="_blank" rel="noopener noreferrer">Otwórz ścieżkę 03 <span>↗</span></a>
 </article>
 <article class="help-item reveal">
 <span class="index">ŚCIEŻKA 04</span>
 <h3>Agenci AI, MCP i kontrola człowieka</h3>
-<p>Łączenie agentów AI z kontekstem marki przez Model Context Protocol (MCP), dwufazowe bramki <code>Prepare → Confirm</code> chroniące przed przypadkową publikacją, ograniczona autonomia (budżety, godziny ciszy, uprawnienia), budowa harnessu agenta kodującego i projektowanie powierzchni MCP.</p>
-<p class="help-proof">Zakres: MCP w praktyce · Prepare → Confirm · Poziomy autonomii · Narzędzia CLI</p>
+<p>Temat, któremu poświęcam dziś najwięcej czasu w kodzie: jak wpuścić agenta AI do prawdziwego systemu przez Model Context Protocol (MCP) bez oddawania mu niekontrolowanych kluczy do publikacji. Obejmuje wzorzec <code>Prepare → Confirm</code>, poziomy autonomii oraz kulisy dwóch narzędzi CLI opisanych niżej.</p>
+<p class="help-proof">Architektura MCP · Bramki Prepare → Confirm · Harness i kontrakty CLI</p>
+<a class="edu-cta edu-track-cta" href="https://academy.mumro.io/pl/tracks/agents-mcp-governance/" target="_blank" rel="noopener noreferrer">Otwórz ścieżkę 04 <span>↗</span></a>
 </article>
-</div>
-
-<div class="principles reveal">
-<div><span class="micro">Do skopiowania</span><h3>Playbooki operacyjne</h3><p>Gotowe szablony YAML i JSON: od granic głosu marki i rozpisania tematu na kanały, po reguły autonomii, szkielety konfiguracji agenta i kontrakty MCP.</p></div>
-<div><span class="micro">Do sprawdzenia</span><h3>Interaktywne laboratoria</h3><p>W lekcjach zaszyte są proste symulatory pokazujące m.in. warstwy źródeł, rytm karuzeli, analizę kohortową oraz działanie dwufazowej bramki <code>Prepare → Confirm</code>.</p></div>
-<div><span class="micro">Bez zamknięcia</span><h3>Otwarty dostęp</h3><p>Materiały są bezpłatne, dostępne po polsku i po angielsku, bez rejestracji. Wzorce można wdrożyć we własnym zestawie narzędzi.</p></div>
 </div>
 </div>
 </section>
@@ -140,7 +138,7 @@ npx github:RolePlayingTech/agent-harness-kit check</code></pre>
 </div>
 <div class="edu-repo-body">
 <div>
-<p><strong>MCP Surface Kit</strong> nie jest serwerem MCP ani biblioteką uruchomieniową. To narzędzie projektowo-kontrolne, które pomaga uporządkować i sprawdzić kontrakt narzędzi udostępnianych agentowi (<code>.mcp-surface/spec.json</code>) zanim agent zacznie wykonywać operacje na żywych danych.</p>
+<p><strong>MCP Surface Kit</strong> nie jest serwerem MCP ani biblioteką uruchomieniową. To narzędzie projektowo-kontrolne, które pomaga uporządkować i sprawdzić deklarowany kontrakt narzędzi udostępnianych agentowi (<code>.mcp-surface/spec.json</code>) zanim agent zacznie wykonywać operacje na żywych danych. Statyczna walidacja kontraktu nie zastępuje jednak zabezpieczeń po stronie serwera — autoryzację, uprawnienia i żetony potwierdzeń (<code>Prepare → Confirm</code>) musi egzekwować sam backend oraz testy integracyjne.</p>
 <ul class="edu-points">
 <li><strong>Cztery poziomy narzędzi:</strong> wymaga jawnego podziału na <code>read</code>, <code>draft</code>, <code>mutate</code> i <code>delete</code> wraz z odpowiednimi adnotacjami bezpieczeństwa MCP (<code>readOnlyHint</code>, <code>destructiveHint</code>, <code>openWorldHint</code>).</li>
 <li><strong>Bramki Prepare → Confirm:</strong> wymusza, aby każda operacja zmieniająca stan na zewnątrz miała parę <code>prepare</code> i <code>confirm</code>, a operacje usuwania były jawnie zabezpieczone.</li>
@@ -155,7 +153,7 @@ npx github:RolePlayingTech/mcp-surface-kit build --dry-run
 npx github:RolePlayingTech/mcp-surface-kit build</code></pre>
 <div class="edu-repo-links">
 <a href="https://github.com/RolePlayingTech/mcp-surface-kit" target="_blank" rel="noopener noreferrer">GitHub: RolePlayingTech/mcp-surface-kit ↗</a>
-<a href="https://academy.mumro.io/pl/" target="_blank" rel="noopener noreferrer">Ścieżka MCP w Akademii ↗</a>
+<a href="https://academy.mumro.io/pl/lessons/mcp-tools-skills-and-product-surfaces/" target="_blank" rel="noopener noreferrer">Lekcja w Akademii ↗</a>
 </div>
 </div>
 </div>

@@ -25,7 +25,7 @@ Imię i nazwisko pojawia się tylko w stopce (oraz na podstronie „O mnie”). 
 
 ## Podstrona edukacji i open source (`/pl/education/`, `/en/education/`)
 
-Szerszy przegląd czterech ścieżek tematycznych, playbooków i słownika Akademii Mumro (`academy.mumro.io`), szczegółowy opis otwartych narzędzi CLI (`RolePlayingTech/agent-harness-kit`, `RolePlayingTech/mcp-surface-kit`) i repozytorium Akademii (`RolePlayingTech/mumro-academy`) oraz informacja o społeczności Discord i publikacjach na X / Substacku. Skrót `/education/` przekierowuje do `/pl/education/`.
+Autorski przegląd czterech ścieżek tematycznych (z bezpośrednimi odnośnikami do każdej ścieżki), playbooków i słownika Akademii Mumro (`academy.mumro.io`), szczegółowy opis otwartych narzędzi CLI (`RolePlayingTech/agent-harness-kit`, `RolePlayingTech/mcp-surface-kit`) i repozytorium Akademii (`RolePlayingTech/mumro-academy`) oraz informacja o społeczności Discord i publikacjach na X / Substacku. Skrót `/education/` przekierowuje do `/pl/education/`.
 
 ## Strony projektów / Project pages
 

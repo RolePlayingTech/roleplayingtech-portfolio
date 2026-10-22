@@ -44,9 +44,9 @@
 <div class="edu-lead-box reveal">
 <div class="edu-lead-copy">
 <span class="micro">Where it came from</span>
-<h3>Ideas and engineering decisions in one place</h3>
-<p>Most content and AI workflows break down not for lack of writing tools, but because context resets at every step: brand strategy sits in an old PDF, AI chats start from blank prompts without clear claim boundaries, the same caption gets pasted across four channels, and website publishing stays disconnected from social distribution.</p>
-<p>In the Academy, I document the patterns that connect those steps into one working loop — grounded in real problems I deal with while building <a href="/en/work/mumro/">Mumro</a> and running <a href="/en/work/swiadek-dziejow/">Świadek Dziejów</a>.</p>
+<h3>System-building notes turned into an open handbook</h3>
+<p>While building <a href="/en/work/mumro/">Mumro</a> and running <a href="/en/work/swiadek-dziejow/">Świadek Dziejów</a> across several channels, I kept running into the same problems: how to keep tone and facts consistent without pasting the same instructions into every chat, how to turn one researched topic into native formats for different platforms without mechanical copy-paste, and how to give AI agents tool access without risking accidental live publications.</p>
+<p>Instead of leaving those notes scattered across private docs, I organised them into the four tracks of MUMRO Academy. It records the architectural trade-offs, YAML/JSON schemas and small interactive labs behind the systems — written so you can apply them in your own workflow.</p>
 </div>
 <div class="edu-lead-links">
 <span class="micro">Academy resources (EN / PL)</span>
@@ -61,33 +61,31 @@
 <article class="help-item reveal">
 <span class="index">TRACK 01</span>
 <h3>Living Brand Systems</h3>
-<p>Why static strategy PDFs fail in day-to-day work and how to replace them with versioned strategy (<code>v1 → v2</code>). Encoding brand tone, domain vocabulary and negative claim boundaries, plus evidence-led research pipelines (<code>Source → Decision → Draft</code>).</p>
-<p class="help-proof">Focus: Strategy v1→v2 · Brand voice architecture · Source provenance</p>
+<p>In longer projects, static strategy PDFs quickly gather dust while every new AI chat starts from a blank slate. Here I explain how I treat strategy and brand voice boundaries like versioned code (<code>v1 → v2</code>), and how to structure research so every draft keeps a clear trail back to its sources.</p>
+<p class="help-proof">Versioned strategy · Brand voice boundaries · Source-to-draft trail</p>
+<a class="edu-cta edu-track-cta" href="https://academy.mumro.io/tracks/brand-systems/" target="_blank" rel="noopener noreferrer">Explore Track 01 <span>↗</span></a>
 </article>
 <article class="help-item reveal">
 <span class="index">TRACK 02</span>
 <h3>Multi-Format Content Operations</h3>
-<p>Adapting a single story into a canonical website article, a five-slide carousel and channel-native social posts without mechanical copy-paste. Publishing queues, time slots, idempotent retries and per-channel delivery receipts.</p>
-<p class="help-proof">Focus: One story, four channels · Carousel pacing · Queues &amp; receipts</p>
+<p>Running Świadek Dziejów across multiple channels showed me both how exhausting manual rewriting gets and how poorly identical copy-pasted captions perform. I break down how to adapt one researched story into a web article, a carousel and channel-native posts, backed by idempotent publishing queues.</p>
+<p class="help-proof">One story, multiple formats · Carousel pacing · Queues &amp; receipts</p>
+<a class="edu-cta edu-track-cta" href="https://academy.mumro.io/tracks/multi-format-distribution/" target="_blank" rel="noopener noreferrer">Explore Track 02 <span>↗</span></a>
 </article>
 <article class="help-item reveal">
 <span class="index">TRACK 03</span>
 <h3>Website, Technical SEO &amp; Loops</h3>
-<p>Connecting CMS publishing with social distribution, bilingual technical SEO (<code>canonical</code>, reciprocal <code>hreflang</code>, <code>JSON-LD</code>), brand-grounded website assistants and 7/30/90-day cohort analytics instead of vanity likes.</p>
-<p class="help-proof">Focus: CMS + social · Bilingual SEO · Grounded assistants · 7/30/90-day cohorts</p>
+<p>Social reach fades in a couple of days if it doesn't build something permanent on your own domain. I collected the details I had to get right for bilingual sites and CMS delivery: clean <code>canonical</code> and reciprocal <code>hreflang</code> tags, <code>JSON-LD</code> graphs, grounded site assistants and 7/30/90-day cohort analysis.</p>
+<p class="help-proof">CMS &amp; distribution · Bilingual SEO · 7/30/90-day cohorts</p>
+<a class="edu-cta edu-track-cta" href="https://academy.mumro.io/tracks/website-seo-conversations/" target="_blank" rel="noopener noreferrer">Explore Track 03 <span>↗</span></a>
 </article>
 <article class="help-item reveal">
 <span class="index">TRACK 04</span>
 <h3>AI Agents, MCP &amp; Human Control</h3>
-<p>Connecting AI agents to brand context via the Model Context Protocol (MCP), two-phase <code>Prepare → Confirm</code> gates preventing accidental live mutations, bounded autonomy (budgets, quiet hours, permissions), coding-agent harnesses and MCP surface design.</p>
-<p class="help-proof">Focus: MCP in practice · Prepare → Confirm · Bounded autonomy · CLI kits</p>
+<p>The engineering problem I spend the most time on right now: letting AI agents work inside a real product through the Model Context Protocol (MCP) without handing them unchecked live keys. Covers two-phase <code>Prepare → Confirm</code> gates, bounded autonomy and the thinking behind the two CLI kits below.</p>
+<p class="help-proof">MCP architecture · Prepare → Confirm gates · Harness &amp; CLI contracts</p>
+<a class="edu-cta edu-track-cta" href="https://academy.mumro.io/tracks/agents-mcp-governance/" target="_blank" rel="noopener noreferrer">Explore Track 04 <span>↗</span></a>
 </article>
-</div>
-
-<div class="principles reveal">
-<div><span class="micro">Ready to copy</span><h3>Operational playbooks</h3><p>Copy-ready YAML and JSON specifications covering brand voice boundaries, multi-channel decomposition, autonomy governance, agent harness blueprints and MCP surface contracts.</p></div>
-<div><span class="micro">Hands-on</span><h3>Interactive system labs</h3><p>Lessons include interactive simulators for inspecting source provenance layers, carousel pacing, 7/30/90-day cohort windows and two-phase MCP <code>Prepare → Confirm</code> gates.</p></div>
-<div><span class="micro">No lock-in</span><h3>Open access</h3><p>Everything is free to read in English and Polish, with no sign-up wall. You can apply the patterns in your own stack regardless of what tools you use.</p></div>
 </div>
 </div>
 </section>
@@ -140,7 +138,7 @@ npx github:RolePlayingTech/agent-harness-kit check</code></pre>
 </div>
 <div class="edu-repo-body">
 <div>
-<p><strong>MCP Surface Kit</strong> is not an MCP server or runtime SDK. It is a design and validation tool that checks the contract you expose to an agent (<code>.mcp-surface/spec.json</code>) before the agent is allowed to call tools against live data.</p>
+<p><strong>MCP Surface Kit</strong> is not an MCP server or runtime SDK. It is a design and validation tool that checks the declared contract you expose to an agent (<code>.mcp-surface/spec.json</code>) before the agent is allowed to call tools against live data. Static contract validation does not replace server-side security enforcement — authentication, scope checks and <code>Prepare → Confirm</code> tokens still have to be enforced by the backend runtime and verified with integration tests.</p>
 <ul class="edu-points">
 <li><strong>Four explicit tool tiers:</strong> requires tools to be classified as <code>read</code>, <code>draft</code>, <code>mutate</code> or <code>delete</code> with matching MCP safety annotations (<code>readOnlyHint</code>, <code>destructiveHint</code>, <code>openWorldHint</code>).</li>
 <li><strong>Prepare → Confirm gates:</strong> requires every live mutation tool to form a reciprocal <code>prepare</code> and <code>confirm</code> pair, and enforces explicit safety guards on delete operations.</li>
@@ -155,7 +153,7 @@ npx github:RolePlayingTech/mcp-surface-kit build --dry-run
 npx github:RolePlayingTech/mcp-surface-kit build</code></pre>
 <div class="edu-repo-links">
 <a href="https://github.com/RolePlayingTech/mcp-surface-kit" target="_blank" rel="noopener noreferrer">GitHub: RolePlayingTech/mcp-surface-kit ↗</a>
-<a href="https://academy.mumro.io/" target="_blank" rel="noopener noreferrer">MCP track in the Academy ↗</a>
+<a href="https://academy.mumro.io/lessons/mcp-tools-skills-and-product-surfaces/" target="_blank" rel="noopener noreferrer">Academy lesson ↗</a>
 </div>
 </div>
 </div>
