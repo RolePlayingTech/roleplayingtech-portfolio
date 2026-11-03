@@ -15,17 +15,22 @@
 | — | Hero | Duży napis „RolePlayingTech.”, jedno zdanie o tym, czym się zajmuje autor, linijka „Teraz / jesień 2026”. **Bez imienia i nazwiska** — to świadoma decyzja właściciela. / No name in the hero, on purpose. |
 | 01 | Projekty / Projects | Cztery projekty, przy każdym rola autora (samodzielnie z AI, współtworzone z bratem, część techniczna cudzych badań). |
 | 02 | Edukacja i open source / Learning & open source | Spokojny panel Akademii Mumro (`academy.mumro.io`) + dwa otwarte repozytoria CLI (`agent-harness-kit`, `mcp-surface-kit`), notatka o bezpłatnej społeczności Discord (zaproszenia na X) i link do podstrony `/pl/education/` (`/en/education/`). |
-| 03 | W liczbach / In numbers | Liczby obserwujących (orientacyjnie, 10/2026) + karta o dłuższych formatach na YouTubie Świadka Dziejów. |
-| 04 | Osoba / About | Krótka historia, RolePlayingLife, wyprawy rowerowe z namiotem i góry, link do `/pl/about/`. |
-| 05 | Współpraca / Work together | Cztery sytuacje „z czym można przyjść” z linkami do projektów-dowodów oraz trzy zasady: styk różnych światów, z sensem, otwarcie o AI. |
-| 06 | W sieci / Elsewhere | Wszystkie profile: autor (X, Instagram, LinkedIn, Substack), Świadek Dziejów (strona, YouTube, TikTok, Instagram, Facebook), Crewly, Mumro (strona + Akademia, social media wkrótce), Discord (zaproszenia ogłaszane w social mediach, bez stałego linku). |
-| 07 | Kontakt / Contact | E-mail, LinkedIn, X. |
+| 03 | Analizy i dane / Data & essays | Autorskie raporty łączące dłuższy tekst ze zweryfikowanym zbiorem danych i interaktywnym narzędziem (nr 01: przetargi AI w BZP 2024–2026), link do `/pl/lab/` (`/en/lab/`). |
+| 04 | W liczbach / In numbers | Liczby obserwujących (orientacyjnie, 10/2026) + karta o dłuższych formatach na YouTubie Świadka Dziejów. |
+| 05 | Osoba / About | Krótka historia, RolePlayingLife, wyprawy rowerowe z namiotem i góry, link do `/pl/about/`. |
+| 06 | Współpraca / Work together | Cztery sytuacje „z czym można przyjść” z linkami do projektów-dowodów oraz trzy zasady: styk różnych światów, z sensem, otwarcie o AI. |
+| 07 | W sieci / Elsewhere | Wszystkie profile: autor (X, Instagram, LinkedIn, Substack), Świadek Dziejów (strona, YouTube, TikTok, Instagram, Facebook), Crewly, Mumro (strona + Akademia, social media wkrótce), Discord (zaproszenia ogłaszane w social mediach, bez stałego linku). |
+| 08 | Kontakt / Contact | E-mail, LinkedIn, X. |
 
 Imię i nazwisko pojawia się tylko w stopce (oraz na podstronie „O mnie”). / The name only appears in the footer (and on the About page).
 
 ## Podstrona edukacji i open source (`/pl/education/`, `/en/education/`)
 
 Autorski przegląd czterech ścieżek tematycznych (z bezpośrednimi odnośnikami do każdej ścieżki), playbooków i słownika Akademii Mumro (`academy.mumro.io`), szczegółowy opis otwartych narzędzi CLI (`RolePlayingTech/agent-harness-kit`, `RolePlayingTech/mcp-surface-kit`) i repozytorium Akademii (`RolePlayingTech/mumro-academy`) oraz informacja o społeczności Discord i publikacjach na X / Substacku. Skrót `/education/` przekierowuje do `/pl/education/`.
+
+## Sekcja analiz i interaktywnej publicystyki (`/pl/lab/`, `/en/lab/`)
+
+Przegląd raportów łączących tekst, oczyszczone dane z rejestrów publicznych i interaktywne wykresy/wyszukiwarki (`assets/lab/bzp-explorer.css`, `assets/lab/bzp-explorer.js`, `assets/lab/bzp-ai-2024-2026.json`). Pierwsza publikacja: `/pl/lab/przetargi-ai/` i `/en/lab/ai-tenders/` (z trybem `?embed=1` dla redakcji oraz eksportem CSV). Skróty `/lab/`, `/przetargi-ai` i `/ai-tenders` przekierowują do odpowiedniej wersji językowej.
 
 ## Strony projektów / Project pages
 

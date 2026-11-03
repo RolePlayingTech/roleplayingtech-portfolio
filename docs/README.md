@@ -9,6 +9,8 @@ This public repository includes both **current references** and **older iteratio
 - **[English README](../README.md)** — projects, open-source work, social links, contact, local setup and website structure. / Główny opis repozytorium jest teraz po angielsku; sama strona pozostaje dwujęzyczna.
 - **[07 · Aktualny kontekst publiczny / Current public context](07_AKTUALNY_KONTEKST_PUBLICZNY.md)** — najważniejsze fakty, zasady komunikacji, ograniczenia i bezpieczeństwo. / Ground truth for facts and editorial decisions.
 - **[08 · Przebudowa strony 10/2026 / Site rebuild](08_Przebudowa_strony_10_2026.md)** — obecna struktura strony, sekcje, decyzje i co aktualizować. / Current site structure and what to keep up to date.
+- **[09 · Kontekst autora / Author context](09_KONTEKST_AUTORA.md)** — roboczy zapis sposobu pracy i myślenia autora (nie tekst na stronę; w razie kolizji wygrywa `07`). / Decision context, not website copy.
+- **[10 · Publicystyka + Narzędzia i Dane](10_PUBLICYSTYKA.md)** — otwarta notatka robocza o formacie łączącym artykuły z danymi i narzędziami. / Working note on interactive data essays.
 
 ## Historia decyzji / Historical notes
 

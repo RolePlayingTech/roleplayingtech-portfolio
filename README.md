@@ -6,7 +6,7 @@ I'm **Grzegorz Stuczyński**. After years in IT — from technical support and t
 
 This is my **personal portfolio**, not an agency or a catalogue of turnkey products. Some projects are ongoing; the contributions below are intentionally specific.
 
-**[Portfolio](https://roleplayingtech.com/en/)** · **[Projects](https://roleplayingtech.com/en/#work)** · **[Learning & open source](https://roleplayingtech.com/en/education/)** · **[About](https://roleplayingtech.com/en/about/)** · **[Contact](mailto:stuczynski.g@gmail.com)**
+**[Portfolio](https://roleplayingtech.com/en/)** · **[Projects](https://roleplayingtech.com/en/#work)** · **[Learning & open source](https://roleplayingtech.com/en/education/)** · **[Data & interactive essays](https://roleplayingtech.com/en/lab/)** · **[About](https://roleplayingtech.com/en/about/)** · **[Contact](mailto:stuczynski.g@gmail.com)**
 
 ## Featured projects
 
@@ -30,6 +30,12 @@ I publish practical notes and tools from working with AI, coding agents and soft
 | **[MCP Surface Kit](https://github.com/RolePlayingTech/mcp-surface-kit)** | A CLI for describing and validating MCP tool surfaces, contracts and related skills. It does **not** replace server-side authorization. |
 
 Read the [learning & open-source overview](https://roleplayingtech.com/en/education/) for context and examples.
+
+## Data & interactive essays
+
+Longform investigations combining reporting, audited public-registry datasets and interactive browser explorers:
+
+- **[What do Polish public institutions actually buy under the ‘AI’ label? (BZP 2024–2026)](https://roleplayingtech.com/en/lab/ai-tenders/)** · [Polish edition](https://roleplayingtech.com/pl/lab/przetargi-ai/) · [Open JSON dataset](assets/lab/bzp-ai-2024-2026.json)
 
 ## Find me online
 
@@ -61,6 +67,7 @@ It's deliberately lightweight: static HTML, CSS and a small vanilla-JavaScript f
 | --- | --- |
 | [`pl/`](pl/index.html) and [`en/`](en/index.html) | Polish and English pages |
 | [`pl/education/`](pl/education/index.html) and [`en/education/`](en/education/index.html) | Learning & open-source pages |
+| [`pl/lab/`](pl/lab/index.html) and [`en/lab/`](en/lab/index.html) | Data & interactive essays (reports, charts, searchable datasets) |
 | [`pl/about/`](pl/about/index.html) and [`en/about/`](en/about/index.html) | About pages |
 | [`pl/work/`](pl/work/) and [`en/work/`](en/work/) | Project case studies |
 | [`assets/minimal.css`](assets/minimal.css) | Active stylesheet |
