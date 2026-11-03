@@ -5,16 +5,23 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f7f6f2">
-<meta name="description" content="Investigation and interactive database of 171 AI-related public procurement proceedings in Poland's Public Procurement Bulletin (BZP, 2024–2026). Signed hospital, university and municipal contracts, bid competition and registry errors.">
+<meta name="description" content="Investigation and interactive database of 171 AI-related public procurement proceedings in Poland's Public Procurement Bulletin (BZP, 2024–2026): 32.20M PLN in signed core contracts, bid competition, mixed-scope bundles and registry errors.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="What Do Polish Public Institutions Actually Buy Under the ‘AI’ Label? Report & Database (2024–2026)">
-<meta property="og:description" content="I audited 287 official notices across 171 public tenders in Poland (31.97M PLN in signed core contracts). Over 90% of spending goes to software and lab hardware, yet 68% of IT deployments attracted only a single bidder.">
+<meta property="og:title" content="What Do Polish Public Institutions Actually Buy Under the ‘AI’ Label? Report &amp; Database (2024–2026)">
+<meta property="og:description" content="An audit of 304 official BZP notices across 171 public tenders in Poland (32.20M PLN across 110 signed core contracts). Software and lab hardware represent 89.8% of contract value, while 65.9% of AI software deployments attracted only a single bidder.">
 <meta property="og:url" content="https://roleplayingtech.com/en/lab/ai-tenders/">
-<meta property="og:locale" content="en_GB">
-<meta property="og:image" content="https://roleplayingtech.com/assets/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:image" content="https://roleplayingtech.com/assets/lab/og-bzp-2024-2026-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="What Do Polish Public Institutions Actually Buy Under ‘AI’? Report and BZP Database 2024–2026: 32.20M PLN across 110 signed core contracts, 89.8% software and hardware, 65.9% single-bid software deployments">
 <meta property="article:published_time" content="2026-11-03">
 <meta property="article:author" content="Grzegorz Stuczyński">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What Do Polish Public Institutions Actually Buy Under the ‘AI’ Label? Report &amp; BZP Database (2024–2026)">
+<meta name="twitter:description" content="An audit of 304 official BZP notices across 171 public tenders in Poland (32.20M PLN across 110 signed core contracts). Software and lab hardware represent 89.8% of contract value, while 65.9% of AI software deployments attracted only a single bidder.">
+<meta name="twitter:image" content="https://roleplayingtech.com/assets/lab/og-bzp-2024-2026-en.png">
 <title>What Do Polish Institutions Actually Buy Under ‘AI’? Report &amp; BZP Database (2024–2026) — RolePlayingTech</title>
 <script>document.documentElement.classList.add('js');if(location.search.indexOf('embed=1')!==-1)document.documentElement.classList.add('is-embed');</script>
 <link rel="stylesheet" href="/assets/minimal.css">
@@ -32,7 +39,8 @@
       "headline": "What Do Polish Public Institutions Actually Buy Under the ‘AI’ Label? Report & BZP Database (2024–2026)",
       "datePublished": "2026-11-03",
       "dateModified": "2026-11-03",
-      "inLanguage": "en-GB",
+      "inLanguage": "en-US",
+      "image": "https://roleplayingtech.com/assets/lab/og-bzp-2024-2026-en.png",
       "author": {
         "@type": "Person",
         "name": "Grzegorz Stuczyński",
@@ -48,7 +56,7 @@
     {
       "@type": "Dataset",
       "name": "AI-related Public Procurement in Poland's Public Procurement Bulletin (BZP 2024–2026)",
-      "description": "Cleaned, deduplicated dataset of 171 procurement proceedings from ezamowienia.gov.pl (2024–2026), including signed contract values, bid counts, awarded vendors and source URLs.",
+      "description": "Cleaned, deduplicated dataset of 171 procurement proceedings reconstructed from 304 official BZP notices on ezamowienia.gov.pl (2024–2026), including signed gross contract values (32.20M PLN across 110 core contracts), AI scope classification, bid counts, awarded vendors and source URLs.",
       "url": "https://roleplayingtech.com/en/lab/ai-tenders/",
       "temporalCoverage": "2024-01-01/2026-11-03",
       "distribution": {
@@ -75,7 +83,7 @@
       <a href="#vendors">03 · Vendors &amp; EU grants</a>
       <a href="#data-hygiene">04 · Dirty registries</a>
     </div>
-    <a class="lab-subnav-cta" href="#explorer">Search all 171 tenders ↓</a>
+    <a class="lab-subnav-cta" href="#explorer"><span class="cta-full">Search all 171 tenders ↓</span><span class="cta-short">Data (171) ↓</span></a>
   </div>
 </nav>
 
@@ -86,18 +94,18 @@
   <div class="lab-issue-bar micro">
     <span class="lab-tag">ISSUE 01 · INVESTIGATION &amp; DATASET</span>
     <span>Polish Public Procurement (BZP 2024–2026)</span>
-    <span>Published: 3 November 2026 · ~9 min read</span>
+    <span>Snapshot: 3 November 2026 · ~10 min read</span>
   </div>
   <h1>What do Polish public institutions <i>actually</i> buy under the ‘AI’ label?</h1>
 
   <div class="lab-lead-grid">
     <div>
       <p class="lab-lead">As Poland's national AI oversight rules came into effect in late October 2026, public debate split along familiar lines: official optimism about a digital leap on one side, and jokes that public-sector AI begins and ends with two-day ChatGPT workshops on the other.</p>
-      <p class="lab-lead-sub">Instead of arguing from headlines, I pulled 287 official notices from Poland's Public Procurement Bulletin API covering 2024–2026, linked them by proceeding ID, stripped out false positives and clerical errors, and audited every signed contract.</p>
+      <p class="lab-lead-sub">Instead of arguing from headlines, I pulled 304 official notices from Poland's Public Procurement Bulletin API covering January 2024 to 3 November 2026, linked them by proceeding ID into 171 unique tenders, stripped out false positives and clerical errors, and audited every signed contract. All monetary figures below track <strong>signed gross contract values</strong> (often covering 12–36 months of licences, cloud support or phased deliveries) rather than single-year cash outlays.</p>
       <div class="lab-byline-bar">
         <span>Reporting, code &amp; data audit: <strong>Grzegorz Stuczyński</strong></span>
         <span>Source: <a href="https://ezamowienia.gov.pl" target="_blank" rel="noopener noreferrer">ezamowienia.gov.pl</a> (01.01.2024 – 03.11.2026)</span>
-        <span>Open dataset: <a href="/assets/lab/bzp-ai-2024-2026.json" download>JSON (124 KB)</a></span>
+        <span>Open dataset: <a href="/assets/lab/bzp-ai-2024-2026.json" download>JSON (195 KB)</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/bzp-methodology.md" target="_blank" rel="noopener noreferrer">Methodology &amp; audit ↗</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/scripts/audit_bzp_data.py" target="_blank" rel="noopener noreferrer">ETL script ↗</a></span>
       </div>
       <div class="lab-jump-row">
         <a class="jump" href="#market">Read the report &amp; charts<span>↓</span></a>
@@ -106,35 +114,43 @@
     </div>
 
     <aside class="lab-meta-box" aria-label="Dataset scope and caveats">
-      <span class="micro">Read first · Scope of this dataset</span>
+      <span class="micro">Read first · Scope &amp; data hygiene</span>
       <ul>
-        <li><strong>What BZP covers:</strong> Poland's Public Procurement Bulletin (BZP) records domestic public tenders <strong>below EU publication thresholds</strong> (typically from 130,000 PLN net up to roughly 0.6–0.9M PLN for supplies and services, and higher for construction or social services).</li>
-        <li><strong>What sits outside it:</strong> Multi-million-zloty central ministry tenders published in the EU's TED journal form a separate tier. BZP captures everyday reality on the ground: regional hospitals, technical universities, county offices and labour agencies.</li>
-        <li><strong>Data hygiene:</strong> I removed false matches (such as veterinary tests for avian influenza, abbreviated <em>AI</em>), isolated building renovations and catering at university departments with “AI” in their name, and fixed a 10× clerical zero error in one award notice.</li>
+        <li><strong>BZP scope (130k → 170k PLN net):</strong> domestic tenders <strong>below EU thresholds</strong> (central multi-million GPU tenders in TED sit in a separate tier). Contracted value grew 4.8× in 2026 <em>despite</em> the statutory floor rising on 1 January 2026.</li>
+        <li><strong>Contract values, not annual cash:</strong> figures sum signed gross contracts (often 12–36 months), grouped by default by <strong>BZP notice year</strong> (with a <code>Notice / Contract</code> toggle below).</li>
+        <li><strong>Reproducible audit:</strong> stripped veterinary <em>Avian Influenza</em> (<code>AI</code>) kits, isolated AI lots, separated 12 incidental renovations/catering filings (5.22M PLN), and fixed Section 8.2 clerical errors.</li>
       </ul>
+      <details class="lab-meta-more">
+        <summary>Statutory thresholds, signing dates &amp; audit details</summary>
+        <ul>
+          <li><strong>Threshold hike &amp; small lots:</strong> Poland's mandatory BZP threshold rose from 130,000 to 170,000 PLN net on 1 January 2026 (<a href="https://www.gov.pl/web/uzp/podwyzszenie-progu-stosowania-ustawy-prawo-zamowien-publicznych-i-ustawy-o-umowie-koncesji-na-roboty-budowlane-lub-uslugi" target="_blank" rel="noopener noreferrer">Act of 25 July 2025, UZP notice ↗</a>), so 130k–170k PLN purchases no longer required BZP filing in 2026, while small workshops appear as lots of larger annual training plans.</li>
+          <li><strong>Calendar shift:</strong> three awards published in January 2024 (611.4k PLN total, including two at Łukasiewicz–EMAG) were physically signed in December 2023; grouped by signing date (<code>contractDate</code>), 2024→2026 growth is 5.6×.</li>
+          <li><strong>Open code &amp; changelog:</strong> full lot-separation rules and error log in <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/bzp-methodology.md" target="_blank" rel="noopener noreferrer">bzp-methodology.md ↗</a> and <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/scripts/audit_bzp_data.py" target="_blank" rel="noopener noreferrer">audit_bzp_data.py ↗</a>.</li>
+        </ul>
+      </details>
     </aside>
   </div>
 
   <div class="lab-findings" aria-label="Key dataset figures">
     <div class="lab-finding">
-      <span class="lab-finding-num">31.97<small>M PLN</small></span>
-      <span class="lab-finding-label">total value of <strong>99 signed core contracts</strong> (excluding building renovations, furniture and catering).</span>
-      <span class="lab-finding-note">159 core proceedings</span>
+      <span class="lab-finding-num">32.20<small>M PLN</small></span>
+      <span class="lab-finding-label">gross value of <strong>110 signed core contracts</strong> (multi-year contract totals, not annual cash outlays; <a href="?pure=1#explorer" data-bzp-preset="pure=1">19.63M PLN in 97 pure-AI contracts</a> + 12.57M PLN in 13 mixed-scope bundles).</span>
+      <span class="lab-finding-note">159 core proceedings (+ 12 incidental: 5.22M PLN)</span>
     </div>
     <div class="lab-finding">
-      <span class="lab-finding-num">3.8<small>× growth</small></span>
-      <span class="lab-finding-label">rise in annual contracted spend: from <strong>4.99M PLN</strong> across 2024 to <strong>19.01M PLN</strong> by early November 2026.</span>
-      <span class="lab-finding-note">52 contracts signed in 2026</span>
+      <span class="lab-finding-num">4.8<small>× growth</small></span>
+      <span class="lab-finding-label">rise in signed contract value by BZP notice year: from <strong>4.05M PLN</strong> in 2024 to <strong>19.59M PLN</strong> through 3 November 2026.</span>
+      <span class="lab-finding-note">57 signed contracts from 2026 notices</span>
     </div>
     <div class="lab-finding">
-      <span class="lab-finding-num">90.8<small>% of spend</small></span>
-      <span class="lab-finding-label">goes to <strong>software and lab hardware</strong> (29.02M PLN). Trainings make up 22.6% of notices, yet only <strong>6.5% of money</strong>.</span>
-      <span class="lab-finding-note">median workshop: 36.5k PLN</span>
+      <span class="lab-finding-num">89.8<small>% of value</small></span>
+      <span class="lab-finding-label">concentrated in <strong>software and lab hardware</strong> (28.92M PLN). Workshops make up 22.6% of notices, yet only <strong>7.6% of contract value</strong>.</span>
+      <span class="lab-finding-note">median workshop contract: 47.0k PLN</span>
     </div>
     <div class="lab-finding">
-      <span class="lab-finding-num">68.4<small>% single-bid</small></span>
-      <span class="lab-finding-label">share of AI software deployments where <strong>only one vendor</strong> submitted a bid (26 of 38 contracts).</span>
-      <span class="lab-finding-note">44.1% across all core contracts</span>
+      <span class="lab-finding-num">65.9<small>% single-bid</small></span>
+      <span class="lab-finding-label">share of AI software deployments where <strong>only one vendor</strong> submitted a bid (27 of 41 with disclosed bid counts).</span>
+      <span class="lab-finding-note">43.3% (45 of 104) across all core contracts</span>
     </div>
   </div>
 </header>
@@ -147,21 +163,23 @@
     </div>
     <div class="lab-prose">
       <h2>Why public AI looks like endless prompt workshops on the surface, while the money goes to hospitals and labs</h2>
-      <p class="has-dropcap">Scroll through raw tender titles in the Public Procurement Bulletin without opening the award protocols, and it is easy to conclude that Polish institutions mostly buy introductory AI workshops. Courses for regional civil servants, teacher trainings and two-day generative AI seminars appear almost every week. In my cleaned dataset, they account for <strong>36 of the 159 core proceedings</strong>, or <strong>22.6 per cent</strong> of all procurement attempts (<a href="?cat=training#explorer" data-bzp-preset="cat=training">inspect all 36 training tenders below ↓</a>).</p>
-      <p>That impression flips as soon as you add up the signed contract values instead of counting notice titles. The median training contract in BZP is worth <strong>36,531 PLN gross</strong> (around €8,500), and several workshops closed below 2,000 PLN. All 21 awarded training contracts across nearly three years add up to <strong>2.06M PLN</strong>, just <strong>6.5 per cent</strong> of core spending.</p>
-      <p>More than nine out of every ten zlotys flow into two very different places: hospital IT departments and university research laboratories.</p>
-      <p>The largest bucket is <strong>operational software and clinical or administrative integrations (15.72M PLN across 42 signed contracts, median 268.8k PLN)</strong>. Reading the specifications chronologically from 2024 to late 2026 shows a clear shift away from generic chat toys towards narrow operational tools. Within a single week of March 2026, the Children's Memorial Health Institute in Warsaw signed two separate contracts: <strong>365k PLN</strong> with Siemens Healthcare for AI-assisted medical imaging software, and <strong>916.5k PLN</strong> with Orange Polska for five interactive AI reception avatars. The Regional Children's Rehabilitation Hospital in Ameryka near Olsztynek contracted <strong>1.28M PLN</strong> for hardware and AI tools supporting clinical documentation and patient phone scheduling. Meanwhile, Łowicz County awarded a <strong>680.7k PLN</strong> contract in August 2026 for a municipal task workflow and intranet RAG chatbot grounded strictly in internal county records (<a href="?cat=software_deploy#explorer" data-bzp-preset="cat=software_deploy">filter all software deployments ↓</a>).</p>
-      <p>The second pillar is <strong>GPU compute servers, diagnostic gear and lab robotics (13.30M PLN across 27 contracts, median 199k PLN)</strong>. Technical faculties, national institutes and regional branches of the National Health Fund (NFZ) are buying multi-GPU servers for local LLM inference, automated fluorescence microscopes (620k PLN at the National Marine Fisheries Research Institute in Gdynia), AI-assisted ultrasound platforms (199k PLN at the hospital in Nowa Sól) and humanoid research robots in Częstochowa and Poznań. The single largest core contract in the dataset, worth <strong>4.94M PLN</strong>, was signed in March 2026 by Jan Długosz University in Częstochowa to equip a new Laboratory for Artificial Intelligence in Diagnostic Imaging (<a href="?cat=hardware_lab#explorer" data-bzp-preset="cat=hardware_lab">filter hardware &amp; lab contracts ↓</a>).</p>
+      <p class="has-dropcap">Scroll through raw tender titles in the Public Procurement Bulletin without opening the award protocols, and it is easy to conclude that Polish institutions mostly buy introductory AI workshops. Courses for regional civil servants, teacher trainings and two-day generative AI seminars appear almost every week. In the audited dataset, they account for <strong>36 of the 159 core proceedings</strong>, or <strong>22.6 per cent</strong> of all procurement attempts (<a href="?cat=training#explorer" data-bzp-preset="cat=training">inspect all 36 training tenders below ↓</a>).</p>
+      <p>That impression flips as soon as you sum the signed gross contract values instead of counting notice titles. The median training contract in BZP is worth <strong>47,000 PLN gross</strong> (around €11,000), and small individual lots closed below 2,000 PLN (1,482 PLN for a teaching workshop lot at the Polish Naval Academy in Gdynia; 1,750 PLN in Lubusz). All <strong>26 signed training contracts</strong> across nearly three years add up to <strong>2.46M PLN</strong> — just <strong>7.6 per cent</strong> of core contract value. Another <strong>9 research and advisory contracts</strong> add <strong>0.82M PLN</strong> (<strong>2.6%</strong>, median 51.0k PLN).</p>
+      <p>Nearly nine out of every ten contracted zlotys — <strong>89.8 per cent (28.92M PLN across 75 signed contracts)</strong> — go into two very different places: hospital IT departments and university research laboratories.</p>
+      <p>The largest bucket is <strong>AI software and operational deployments (17.17M PLN across 45 signed contracts, 53.3% of core value, median 255.3k PLN)</strong>. Reading specifications chronologically from 2024 to November 2026 shows a shift from generic chat pilots toward narrow clinical and administrative systems. In February 2026 (award notices filed in early March), the Children's Memorial Health Institute in Warsaw signed two separate contracts: <strong>365.3k PLN</strong> with Siemens Healthcare for AI-assisted MRI software, and <strong>916.5k PLN</strong> with Orange Polska for interactive AI reception avatars (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de792a-076e-d9e4-056e-e50001ac1d95" target="_blank" rel="noopener"><code>2026/BZP 00137744</code> ↗</a>). The Regional Children's Rehabilitation Hospital in Ameryka near Olsztynek contracted a <strong>1.28M PLN</strong> six-lot KPO package (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de72da-ba70-a72d-056e-e50001abc365" target="_blank" rel="noopener"><code>2026/BZP 00124082</code> ↗</a>) led by clinical documentation AI (490.8k PLN) and a virtual phone receptionist (165.0k PLN) alongside a dedicated AI server (471.3k PLN) and IT admin training. In Gliwice, the National Institute of Oncology paid <strong>485.9k PLN</strong> to integrate its Agfa imaging archive with the national Intelligent Services Platform (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de9958-93d1-c716-5fad-950001198a59" target="_blank" rel="noopener"><code>2026/BZP 00195811</code> ↗</a>). Meanwhile, Łowicz County signed a <strong>680.7k PLN</strong> lump-sum contract with Agentic P.S.A. (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08def384-e932-a592-962b-1200019cd315" target="_blank" rel="noopener"><code>2026/BZP 00379906</code> ↗</a>, 5 bids) bundling a broader municipal Task Management System, Intranet portal, and staff trainings with a RAG chatbot designed to retrieve answers from internal county documents (<a href="?cat=software_deploy#explorer" data-bzp-preset="cat=software_deploy">filter all 62 software proceedings ↓</a>).</p>
+      <p>The second pillar is <strong>GPU compute servers, diagnostic gear and lab robotics (11.74M PLN across 30 signed contracts, 36.5% of core value, median 171.4k PLN)</strong>. Technical faculties, national institutes and regional branches of the National Health Fund (NFZ) are buying multi-GPU servers for local LLM inference (such as 622.4k PLN at the Wrocław NFZ branch), automated fluorescence microscopes (620.0k PLN at MIR-PIB in Gdynia), AI-assisted clinical ultrasound systems (332.0k PLN in Sochaczew, 199.0k PLN in Nowa Sól) and humanoid research robots in Częstochowa and Poznań (<a href="?cat=hardware_lab#explorer" data-bzp-preset="cat=hardware_lab">filter hardware &amp; lab contracts ↓</a>).</p>
+      <p>Because public buyers sometimes bundle AI into larger turnkey contracts, every core record carries an explicit scope tag. <strong>Pure-scope AI procurements account for 97 signed contracts worth 19.63M PLN (61.0% of core value</strong>, median 154.2k PLN; <a href="?pure=1#explorer" data-bzp-preset="pure=1">filter pure-AI contracts ↓</a>). The remaining <strong>13 mixed-scope contracts total 12.57M PLN (39.0%)</strong>, where an inseparable lump sum or hybrid KPO package combines AI with construction works, heavy clinical equipment, physical services or general enterprise IT. The single largest core contract in the dataset — <strong>4.94M PLN</strong> at Jan Długosz University in Częstochowa (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de85bd-7fd4-2c48-056e-e500011b8885" target="_blank" rel="noopener"><code>2026/BZP 00163288</code> ↗</a>) — is a design-and-build contract bundling architectural works, room construction and a CT scanner for its new Laboratory for AI in Diagnostic Imaging; the second-largest mixed contract, <strong>2.16M PLN</strong> at Łukasiewicz–WIT in Warsaw (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de277f-3072-ee6a-592a-d10001151d64" target="_blank" rel="noopener"><code>2025/BZP 00543355</code> ↗</a>), combines 37 months of physical security guard services with AI-assisted access control.</p>
+      <p>Grouped by BZP notice publication year, signed core contract value rose <strong>4.8×</strong>: from <strong>4.05M PLN</strong> in 2024 (18 contracts across 24 proceedings) to <strong>8.56M PLN</strong> in 2025 (35 across 41) and <strong>19.59M PLN</strong> across the first ten months of 2026 (57 signed contracts across 94 proceedings to 3 November). Measured by physical contract-signing date instead — shifting three awards published in January 2024 (611.4k PLN) back to December 2023 — annual totals move from <strong>0.61M PLN</strong> (Dec 2023, 3 contracts) and <strong>3.44M PLN</strong> (2024, 15) to <strong>8.95M PLN</strong> (2025, 37) and <strong>19.19M PLN</strong> (2026, 55), a <strong>5.6×</strong> jump between 2024 and 2026.</p>
     </div>
 
     <aside class="lab-aside-col">
       <div class="lab-aside-note">
-        <strong>Who spends the most</strong>
-        Universities and research institutes account for <strong>15.96M PLN</strong> (45 contracts), followed closely by hospitals and healthcare providers at <strong>10.38M PLN</strong> (27 contracts). Together they represent <strong>82.4%</strong> of signed BZP spend.
+        <strong>Who contracts the most</strong>
+        Universities and research institutes lead with <strong>15.24M PLN</strong> (47 signed contracts across 71 proceedings, 47.3%), followed by hospitals and healthcare providers at <strong>11.36M PLN</strong> (31 contracts across 38 proceedings, 35.3%). Together they account for <strong>26.60M PLN (82.6%)</strong> across 78 contracts — ahead of local governments and labour offices (2.70M PLN, 21 contracts), central agencies (2.70M PLN, 8) and schools (0.21M PLN, 3).
       </div>
       <div class="lab-aside-note">
-        <strong>Silesia matches Warsaw's region</strong>
-        Below EU thresholds, Warsaw has no monopoly. The Silesian voivodeship (Częstochowa, Katowice, Gliwice, Cieszyn) generated <strong>9.82M PLN</strong> in signed contracts, virtually tied with Mazovia's <strong>9.84M PLN</strong> (<a href="?prov=%C5%9Al%C4%85skie#explorer" data-bzp-preset="prov=Śląskie">view Silesia in the explorer ↓</a>).
+        <strong>Silesia holds a strong #2 behind Masovia</strong>
+        After fixing a 3× repeated Section 8.2 clerical total at Katowice's EMAG institute and isolating the AI lab lot at a school in Pawłowice, <strong>Masovia</strong> leads with <strong>10.69M PLN</strong> (30 contracts, 33.2%) and <strong>Silesia</strong> stands a strong second at <strong>8.66M PLN</strong> (14 contracts, 26.9% of the national total — well ahead of Lower Silesia's 2.00M PLN and Opole's 1.73M PLN), showing there is no Warsaw monopoly thanks to universities and hospitals in Częstochowa, Gliwice and Katowice (<a href="?prov=%C5%9Al%C4%85skie#explorer" data-bzp-preset="prov=Śląskie">view Silesia in the explorer ↓</a>).
       </div>
     </aside>
   </div>
@@ -169,23 +187,23 @@
   <figure class="lab-figure" aria-labelledby="fig1-title">
     <div class="lab-fig-head">
       <div>
-        <span class="lab-fig-kicker">Figure 01 · Spending structure (2024–2026)</span>
-        <h3 class="lab-fig-title" id="fig1-title">Volume of tender notices versus actual contracted money</h3>
-        <p class="lab-fig-sub">Comparison of each core category's share of total proceedings (159) against its share of signed gross contract value (31.97M PLN). Click any category button to filter the full database below.</p>
+        <span class="lab-fig-kicker">Figure 01 · Contract structure (2024–2026)</span>
+        <h3 class="lab-fig-title" id="fig1-title">Volume of tender notices versus signed gross contract value</h3>
+        <p class="lab-fig-sub">Comparison of each core category's share of total proceedings (n = 159) against its share of signed gross contract value (32.20M PLN across 110 contracts, median 170.7k PLN). Click any category button to filter the full database below.</p>
       </div>
       <div class="lab-fig-legend">
-        <span><i class="lab-swatch" style="background:#9c9589"></i> Share of notices (%)</span>
+        <span><i class="lab-swatch" style="background:#9c9589"></i> Share of proceedings (%)</span>
         <span><i class="lab-swatch" style="background:#98513c"></i> Share of contract value (%)</span>
       </div>
     </div>
     <div id="fig-illusion">
       <noscript>
-        <p style="font-size:14px;color:#514e49">AI software &amp; deployments: 39.6% of notices (63) and 49.2% of value (15.72M PLN, median 269k PLN). GPU servers &amp; lab hardware: 29.6% of notices (47) and 41.6% of value (13.30M PLN, median 199k PLN). Trainings &amp; workshops: 22.6% of notices (36), yet only 6.5% of value (2.06M PLN, median 36.5k PLN). Research &amp; advisory: 8.2% of notices (13) and 2.8% of value (0.88M PLN). Annual signed value: 2024 — 4.99M PLN; 2025 — 7.96M PLN; 2026 (to Nov 3) — 19.01M PLN.</p>
+        <p style="font-size:14px;color:#514e49">AI software &amp; deployments: 39.0% of proceedings (62), 53.3% of contract value (17.17M PLN, median 255.3k PLN). GPU servers &amp; lab hardware: 30.2% of proceedings (48), 36.5% of contract value (11.74M PLN, median 171.4k PLN). Trainings &amp; workshops: 22.6% of proceedings (36), 7.6% of contract value (2.46M PLN, median 47.0k PLN). Research &amp; advisory: 8.2% of proceedings (13), 2.6% of contract value (0.82M PLN). Annual signed contract value by BZP notice year: 2024 — 4.05M PLN, 2025 — 8.56M PLN, 2026 (to Nov 3) — 19.59M PLN.</p>
       </noscript>
     </div>
     <figcaption class="lab-fig-foot">
-      <span>Source: author's calculations across 159 core BZP proceedings (excluding 12 incidental renovation and catering tenders).</span>
-      <span>Gross PLN · data through 03.11.2026</span>
+      <span>Denominator: n = 159 core proceedings, n = 110 signed core contracts (32,202,163 PLN gross; excludes 12 incidental renovation/catering proceedings worth 5.22M PLN across 11 contracts). Annual totals by BZP notice year: 2024 — 4.05M PLN (18), 2025 — 8.56M PLN (35), 2026 — 19.59M PLN (57); by contract signing date: Dec 2023 — 0.61M PLN (3), 2024 — 3.44M PLN (15), 2025 — 8.95M PLN (37), 2026 — 19.19M PLN (55).</span>
+      <span>Signed gross PLN · snapshot 2026-11-03</span>
     </figcaption>
   </figure>
 </article>
@@ -197,25 +215,25 @@
       <strong>The bidding divide</strong>
     </div>
     <div class="lab-prose">
-      <h2>Twenty-three bidders for a slide deck, one bidder for a hospital server</h2>
-      <p>The most revealing column in the dataset turned out not to be contract price, but the number of bids submitted per tender. It draws a sharp line between the crowded surface of Poland's AI market and its underserved engineering floor.</p>
-      <p>When Kielce University of Technology posted tender <code>2026/BZP 00465518</code> in autumn 2026 for a staff training course worth <strong>7,200 PLN</strong>, <strong>23 separate vendors</strong> competed for the job. An online AI training tender for Lower Silesian civil servants worth 29,750 PLN drew <strong>22 bids</strong>, and a 1,750 PLN workshop for teachers in Lubusz attracted <strong>14 bidders</strong>. Across the entire training category, the median tender receives <strong>seven competing offers</strong> (<a href="?cat=training&amp;sort=bids_desc#explorer" data-bzp-preset="cat=training&amp;sort=bids_desc">sort trainings by bid count ↓</a>).</p>
-      <p>Step down into clinical software integrations, hospital pharmacy decision support, PACS imaging archives or on-premise security deployments, and the crowd vanishes. Across signed AI software deployments, the median bid count drops to <strong>one</strong>. Out of 38 awarded software contracts that reported bid numbers, <strong>26 (68.4%) had only a single bidder</strong>, leaving the public buyer with zero price competition (<a href="?cat=software_deploy&amp;single=1#explorer" data-bzp-preset="cat=software_deploy&amp;single=1">view all 26 single-bid software contracts ↓</a>).</p>
-      <p>Some buyers find nobody at all, or receive quotes far above budget. In March 2026, the 5th Military Clinical Hospital in Kraków had to cancel tender <code>2026/BZP 00155059</code> for laboratory diagnostics AI software after <strong>zero bids</strong> arrived by the deadline. Overall, <strong>27 of the 171 proceedings</strong> ended in cancellation, frequently on first attempts to procure GPU servers or specialized medical integrations.</p>
-      <p>Earlier this year I wrote an essay (in Polish, <a href="https://roleplayinglife.substack.com/p/bekitne-oceany-sztucznej-inteligencji" target="_blank" rel="noopener noreferrer">“Blue Oceans of Artificial Intelligence”</a>) arguing that the middle of the AI map, generic text generation, chat wrappers and introductory slide decks, is saturated, while the real shortage sits where software meets clinics, lab benches and legacy infrastructure. Plotting all 93 signed contracts below turns that observation into hard procurement numbers.</p>
+      <h2>Twenty-three bidders for a workshop lot, one bidder for a hospital deployment</h2>
+      <p>The sharpest contrast in the dataset sits not in contract prices, but in the number of competing offers submitted per proceeding. It separates a crowded market for general trainings from a thin vendor pool in clinical and infrastructure deployments.</p>
+      <p>When Kielce University of Technology tendered a three-lot staff AI training worth <strong>7,200 PLN</strong> in September 2026 (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08df1f96-063c-dfa1-647d-de000103450d" target="_blank" rel="noopener"><code>2026/BZP 00465518</code> ↗</a>), its individual lots drew <strong>23, 15 and 22 competing bids</strong> — a peak of <strong>23 bidders on a single lot</strong>. (Because the same training firms routinely bid on parallel lots, the dataset records the maximum bid count on any single AI lot rather than summing bids across lots; non-AI lots in multi-topic tenders were likewise stripped out, such as removing burnout and Norma Pro courses from Lower Silesia's <code>2026/BZP 00304575</code> to leave AI Lot 2 at 16,684 PLN and 10 bids, or excluding a renewable-energy lab in Pawłowice's <code>2025/BZP 00133931</code> to leave the AI lab lot at 143.7k PLN and 6 bids.) An online AI course for Lower Silesian civil servants worth <strong>29,750 PLN</strong> (<code>2026/BZP 00428993</code>) drew <strong>22 bids</strong>, and a 1,750 PLN workshop in Lubusz attracted <strong>14 bidders</strong>. Across all 24 competitive training contracts with disclosed bid counts, the median tender received <strong>six offers</strong>, and only <strong>3 of 24 (12.5%)</strong> had a single bidder (<a href="?cat=training&amp;sort=bids_desc#explorer" data-bzp-preset="cat=training&amp;sort=bids_desc">sort trainings by bid count ↓</a>).</p>
+      <p>Move into clinical software integrations, hospital pharmacy decision support, PACS imaging archives or on-premise security deployments, and the crowd disappears. Across signed AI software deployments with disclosed competitive bid counts, the median bid count drops to <strong>one</strong>: <strong>27 of 41 contracts (65.9%) attracted only a single bidder</strong> (<a href="?cat=software_deploy&amp;single=1#explorer" data-bzp-preset="cat=software_deploy&amp;single=1">view all 27 single-bid software contracts ↓</a>). Even the rare software exception underscores the pattern — when the Kraków Academy of Fine Arts tendered a standalone admissions chatbot for candidates (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08df18ac-026d-a248-db89-6a00017db3b5" target="_blank" rel="noopener"><code>2026/BZP 00450838</code> ↗</a>, <strong>74.8k PLN</strong>), <strong>19 vendors</strong> competed, whereas across healthcare as a whole <strong>20 of 27 competitive contracts (74.1%)</strong> drew just one offer (and adding 4 sole-source awards, <strong>24 of 31 signed hospital contracts worth 8.19M PLN faced zero competing bids</strong>).</p>
+      <p>Other buyers receive no bids at all or quotes above their grant ceiling. In March 2026, the 5th Military Clinical Hospital in Kraków cancelled tender <code>2026/BZP 00155059</code> for laboratory diagnostics AI software after <strong>zero bids</strong> arrived by the deadline. Overall, <strong>31 of the 159 core proceedings (19.5%)</strong> — and <strong>32 across all 171 proceedings</strong> — ended in cancellation, often on first attempts to buy GPU servers or clinical integrations.</p>
+      <p>Earlier this year I wrote an essay (in Polish, <a href="https://roleplayinglife.substack.com/p/bekitne-oceany-sztucznej-inteligencji" target="_blank" rel="noopener noreferrer">“Blue Oceans of Artificial Intelligence”</a>) arguing that generic text wrappers and introductory slide decks are saturated while specialized clinical, laboratory and infrastructure integrations remain scarce. Plotting all <strong>104 competitive core contracts</strong> below shows how starkly that split appears in official procurement filings: overall, <strong>45 of 104 (43.3%)</strong> drew just one bid.</p>
     </div>
 
     <aside class="lab-aside-col">
       <div class="lab-aside-note">
-        <strong>Median bids by category</strong>
-        Trainings &amp; workshops: <strong>7 bids</strong>.<br>
-        Research &amp; audits: <strong>5 bids</strong>.<br>
-        GPU servers &amp; lab gear: <strong>2 bids</strong>.<br>
-        AI software deployments: <strong>1 bid</strong>.
+        <strong>Median bids &amp; single-bid rate</strong>
+        Trainings &amp; workshops: <strong>6 bids</strong> (3/24 = 12.5% single-bid).<br>
+        Research &amp; advisory: <strong>3 bids</strong> (1/9 = 11.1%).<br>
+        GPU servers &amp; lab gear: <strong>2 bids</strong> (14/30 = 46.7%).<br>
+        AI software deployments: <strong>1 bid</strong> (27/41 = 65.9%).
       </div>
       <div class="lab-aside-note">
         <strong>Why single bids happen</strong>
-        In several hospital tenders, buyers are extending an existing clinical system (HIS or PACS) to connect to the national Intelligent Services Platform, giving the incumbent vendor a natural edge. Elsewhere, strict on-premise and public-sector reference rules narrow the field.
+        Several hospital tenders upgrade an existing clinical system (HIS or PACS/RIS) to exchange studies with the national Intelligent Services Platform, giving the incumbent supplier a structural advantage. Another 6 contracts (1.33M PLN) were awarded sole-source without an open tender under Art. 214 PZP (<a href="?sole=1#explorer" data-bzp-preset="sole=1">inspect all 6 sole-source awards ↓</a>).
       </div>
     </aside>
   </div>
@@ -223,9 +241,9 @@
   <figure class="lab-figure" aria-labelledby="fig2-title">
     <div class="lab-fig-head">
       <div>
-        <span class="lab-fig-kicker">Figure 02 · Interactive competition map (93 contracts)</span>
-        <h3 class="lab-fig-title" id="fig2-title">The harder and pricier the integration, the rarer the competition</h3>
-        <p class="lab-fig-sub">Every dot represents a signed core BZP contract with disclosed bid counts. Horizontal position shows gross contract value (log scale); vertical position shows submitted bids. Hover or click any dot to inspect the contract on the right.</p>
+        <span class="lab-fig-kicker">Figure 02 · Interactive competition map (n = 104 competitive contracts)</span>
+        <h3 class="lab-fig-title" id="fig2-title">Crowded bidding on trainings, single bids on software deployments</h3>
+        <p class="lab-fig-sub">Every dot represents a signed core BZP contract awarded in a competitive procedure with disclosed bid counts (n = 104). Horizontal position shows gross contract value (log scale); vertical position shows submitted bids (maximum single-lot bid count for multi-lot tenders). Hover or click any dot to inspect the contract.</p>
       </div>
       <div class="lab-fig-legend">
         <span><i class="lab-swatch" style="background:#98513c"></i> AI software</span>
@@ -236,12 +254,12 @@
     </div>
     <div id="fig-competition">
       <noscript>
-        <p style="font-size:14px;color:#514e49">Out of 93 signed core contracts with disclosed bid counts, 41 (44.1%) received only one bid (including 26 of 38 software deployments). By contrast, small training tenders drew up to 23 bids for a 7,200 PLN contract at Kielce University of Technology and 22 bids for a 29,750 PLN course in Wrocław.</p>
+        <p style="font-size:14px;color:#514e49">Out of 104 signed core contracts with disclosed bid counts, 45 (43.3%) received only one bid (including 27 of 41 AI software deployments). By contrast, training tenders drew up to 23 bids for a 7,200 PLN contract at Kielce University of Technology (max on a single lot across 3 lots) and 22 bids for a 29,750 PLN course at the Lower Silesian Marshal's Office.</p>
       </noscript>
     </div>
     <figcaption class="lab-fig-foot">
-      <span>Note: 6 of the 99 signed core contracts omitted bid counts in their award notices and are excluded from this scatter plot.</span>
-      <span>Click any dot to inspect the vendor &amp; official BZP record</span>
+      <span>Denominator: n = 104 signed core contracts with disclosed bid counts (45 single-bid = 43.3%); excludes 6 single-source awards under Art. 214 PZP (bids: null; 4 in software, 2 in training) out of n = 110 signed core contracts. Multi-lot tenders plot the maximum bid count on a single AI lot, never summed across lots.</span>
+      <span>Snapshot 2026-11-03 · click any dot to inspect vendor &amp; BZP record</span>
     </figcaption>
   </figure>
 </article>
@@ -254,23 +272,24 @@
     </div>
     <div class="lab-prose">
       <h2>Who keeps winning Polish public AI contracts, and what happens when EU recovery grants expire</h2>
-      <p>Normalizing company names across award notices shows a fragmented market overall, punctuated by a handful of specialized vendors who have quietly built repeatable niches in public healthcare and research.</p>
-      <p>The most frequent winner in the entire dataset is <strong>Krajowy Operator Chmury Medycznej Sp. z o.o.</strong> (National Medical Cloud Operator), which signed <strong>six hospital contracts worth 1.81M PLN</strong> across Poznań, Zamość, Legnica, Opole and Cieszyn for cloud VoiceBots and Chatbots handling outpatient appointment lines. In hospital pharmacy software, <strong>Pharmdiver</strong> won two single-bid clinical contracts in 2026 (at the University Clinical Hospital in Opole for 203k PLN and Rydygier Specialist Hospital in Kraków for 159k PLN) to assist doctors and pharmacists with drug selection.</p>
-      <p>Individual filings also capture unusual projects beyond routine back-office automation. In January 2026, Poland's national research network <strong>NASK-PIB</strong> paid press publisher <strong>Gremi Media S.A.</strong> (publisher of the daily <em>Rzeczpospolita</em>) <strong>356.7k PLN</strong> for licensed text corpora to train Polish large language models (<code>2026/BZP 00032576</code>). In Wrocław, the regional branch of the National Health Fund spent <strong>622.4k PLN</strong> expanding its server cluster to host an internal LLM, while the state folk ensemble <strong>“Mazowsze”</strong> contracted a 378.7k PLN AI-assisted educational media platform. Among open proceedings awaiting award, Poland's competition watchdog <strong>UOKiK</strong> is procuring a vision-language model (VLM) system (<code>2025/BZP 00411633</code>), and Częstochowa University of Technology is buying seven additional humanoid robots.</p>
+      <p>Canonicalizing company names and stripping pasted tax IDs across award notices reveals a fragmented market overall, punctuated by a dozen specialized vendors who have built repeatable niches in public healthcare, research institutes and academic trainings.</p>
+      <p>The most frequent winner in the core dataset is <strong>Krajowy Operator Chmury Medycznej Sp. z o.o.</strong> (National Medical Cloud Operator), which signed <strong>seven hospital contracts worth 1.96M PLN</strong> across Cieszyn, Opole, Poznań (twice), Zamość, Siedlce and Legnica for cloud VoiceBots and Chatbots handling outpatient appointment lines. Not one of those seven awards faced a rival bid: <strong>four contracts worth 1.28M PLN</strong> (Cieszyn, Zamość and two stages in Poznań) were awarded <strong>sole-source</strong> under Art. 214 PZP — with hospital Section 3 filings citing the vendor's exclusive copyright and authorization to integrate voicebots with Asseco Poland's <code>HIS AMMS</code> hospital system — while the remaining three open tenders (Opole, Siedlce, Legnica) each drew a single bid. In hospital pharmacy software, <strong>Pharmdiver Sp. z o.o.</strong> won two single-bid clinical contracts worth <strong>362.2k PLN</strong> in 2026 (203.0k PLN in Opole and 159.3k PLN at Rydygier Specialist Hospital in Kraków) assisting clinicians with pharmacotherapy selection.</p>
+      <p>Individual filings also document domain-specific procurements well outside generic office chat. Poland's national research network <strong>NASK-PIB</strong> paid press publisher <strong>Gremi Media S.A.</strong> (publisher of <em>Rzeczpospolita</em>) <strong>356.7k PLN</strong> for licensed press text corpora to train Polish large language models (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de535a-71c8-eb39-d6d3-f500016a6814" target="_blank" rel="noopener"><code>2026/BZP 00032576</code> ↗</a>, Lot II). Poland's competition and consumer watchdog <strong>UOKiK</strong> awarded a <strong>209.1k PLN</strong> contract in October 2025 (4 bids, won by Firstscore Sp. z o.o., <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de1c60-b4cb-2009-6f2a-fc000173d783" target="_blank" rel="noopener"><code>2025/BZP 00517087</code> ↗</a>) to build a vision- and language-model (VLM/LLM) system detecting e-commerce <em>dark patterns</em>. Meanwhile, the state folk ensemble <strong>“Mazowsze”</strong> contracted <strong>378.7k PLN</strong> (<code>2025/BZP 00462052</code>) for AI-assisted stage audio monitoring and studio transducer hardware.</p>
+      <p>As of the <strong>3 November 2026</strong> snapshot, <strong>18 core proceedings (11.3%)</strong> had no published BZP award notice yet — split between <a href="?status=open_or_pending&amp;sub=open_for_bids#explorer" data-bzp-preset="status=open_or_pending&amp;sub=open_for_bids"><strong>4 tenders actively open for bids ↓</strong></a> in early November (Pontifical University of John Paul II in Kraków's AI &amp; immersive lab <code>2026/BZP 00510375</code>, PARP's AI-driven EDR subscription <code>2026/BZP 00513349</code>, City of Łódź AI workstations <code>2026/BZP 00513721</code>, and Regional Labour Office in Poznań trainings <code>2026/BZP 00517146</code>) and <strong>14 proceedings past their bid deadline awaiting result publication</strong>, including Częstochowa University of Technology's October robotics tenders (<code>2026/BZP 00462652</code> for seven humanoid robots and <code>2026/BZP 00474618</code> for a research robot and manipulator).</p>
 
       <h3>A maintenance bill deferred to 2028</h3>
-      <p>One structural thread runs through most of these purchases: European Union funding. Exactly <strong>60 of the 99 signed core contracts (60.6%)</strong>, representing <strong>20.26M PLN</strong>, declare EU co-financing in Section 2.11 of their notices, led by National Recovery Plan (KPO) hospital digitization grants and FERS skills programmes (<a href="?eu=1#explorer" data-bzp-preset="eu=1">filter all 60 EU co-financed contracts ↓</a>).</p>
-      <p>Grants cover 24- or 36-month software licences, GPU racks and initial deployment smoothly. The real stress test arrives in 2028–2029 once project durability windows close. VoiceBots, LLM servers and PACS integrations carry ongoing variable costs: cloud inference and telephony usage, connector maintenance whenever legacy hospital software updates, and compliance oversight under the new regulatory regime. Tools that genuinely clear patient registration queues or radiology backlogs will earn a line item in hospital operating budgets. Systems bought mainly because grant money was available risk quietly going dark when the initial licence expires.</p>
+      <p>What the BZP registry establishes directly is the scale of European Union support: <strong>70 of the 110 signed core contracts (63.6%)</strong>, worth <strong>21.10M PLN (65.5% of core contract value)</strong>, are carried out within EU co-financed projects declared in Sections 2.11 or 2.14 of their notices — led by National Recovery Plan (KPO) hospital digitization grants and FERS skills programmes (<a href="?eu=1#explorer" data-bzp-preset="eu=1">filter all EU co-financed contracts ↓</a>).</p>
+      <p>What follows from those filings is a forward-looking budget hypothesis rather than a settled outcome. KPO and structural grants cover 24- or 36-month software subscriptions, GPU racks and initial integration, but ongoing operation carries recurring telephony, cloud inference and HIS/PACS connector costs once project durability windows close around <strong>2028–2029</strong>. On the regulatory side, obligations under the <a href="https://eur-lex.europa.eu/eli/reg/2024/1689" target="_blank" rel="noopener noreferrer">EU AI Act (Regulation 2024/1689) ↗</a> depend strictly on system classification: ordinary outpatient appointment voicebots and informational chatbots mainly face Article 50 transparency duties, whereas full high-risk compliance rules apply conditionally and — under the <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener noreferrer">European Commission's regulatory framework and Digital Omnibus on AI ↗</a> — take effect on <strong>2 December 2027</strong> (Annex III use cases) and <strong>2 August 2028</strong> (Annex I regulated products, including clinical medical-device software). That compliance calendar converges directly with the post-grant renewal cliff: tools that measurably clear registration queues or imaging backlogs should earn permanent hospital budget lines, while grant-driven pilots risk quietly lapsing when initial licences expire.</p>
     </div>
 
     <aside class="lab-aside-col">
       <div class="lab-aside-note">
-        <strong>63.4% of money tied to EU funds</strong>
-        Measured by contract value rather than tender count, EU co-financed awards represent nearly two-thirds of all core BZP spending (20.26M of 31.97M PLN).
+        <strong>65.5% of contract value in EU projects</strong>
+        Measured by signed gross value, 70 EU co-financed awards account for 21.10M of 32.20M PLN (65.5%). EU funding appears in 81.6% of healthcare proceedings (31 of 38) and 83.3% of training proceedings (30 of 36).
       </div>
       <div class="lab-aside-note">
         <strong>Connecting to the national radiology hub</strong>
-        Spring 2026 brought a wave of parallel hospital contracts (Opole, Gliwice, Siedlce) upgrading local PACS/RIS imaging archives to exchange studies with the e-Health Centre's national Intelligent Services Platform.
+        Spring 2026 brought a wave of parallel hospital contracts — including Gliwice Oncology (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de9958-93d1-c716-5fad-950001198a59" target="_blank" rel="noopener"><code>2026/BZP 00195811</code> ↗</a>), Opole, Siedlce and Kraków — upgrading local PACS/RIS archives to exchange imaging studies with the e-Health Centre's Intelligent Services Platform (PUI).
       </div>
     </aside>
   </div>
@@ -280,7 +299,7 @@
       <div>
         <span class="lab-fig-kicker">Ledger 03 · Recurring vendors &amp; notable awards</span>
         <h3 class="lab-fig-title" id="fig3-title">Repeat winners and standout domain contracts in BZP (2024–2026)</h3>
-        <p class="lab-fig-sub">Selected vendors with multiple signed core contracts (after normalizing company name casing) alongside notable single-domain procurements.</p>
+        <p class="lab-fig-sub">Selected vendors with multiple signed core contracts (after canonicalizing company names) alongside NASK-PIB's licensed LLM corpus purchase. Snapshot: 2026-11-03.</p>
       </div>
     </div>
     <table class="lab-ledger" id="fig-vendors">
@@ -295,15 +314,9 @@
       <tbody>
         <tr>
           <td><strong>Krajowy Operator Chmury Medycznej Sp. z o.o.</strong></td>
-          <td>Cloud VoiceBot and Chatbot patient registration systems at hospitals in Cieszyn, Opole, Poznań (twice), Zamość and Legnica.</td>
-          <td class="num-col">6 contracts · 1,805,948 PLN</td>
-          <td><a class="preset-link" href="?q=Chmury+Medycznej#explorer" data-bzp-preset="q=Chmury Medycznej">View 6 →</a></td>
-        </tr>
-        <tr>
-          <td><strong>net-o-logy Sp. z o.o.</strong></td>
-          <td>Server and client compute infrastructure for AI/ML workloads at the Łukasiewicz-EMAG Institute in Katowice (both single-bid).</td>
-          <td class="num-col">2 contracts · 1,546,971 PLN</td>
-          <td><a class="preset-link" href="?q=net-o-logy#explorer" data-bzp-preset="q=net-o-logy">View 2 →</a></td>
+          <td>Cloud VoiceBot and Chatbot patient registration systems at hospitals in Cieszyn, Opole, Poznań (twice), Zamość, Siedlce and Legnica.</td>
+          <td class="num-col">7 contracts · 1,960,190 PLN</td>
+          <td><a class="preset-link" href="?q=Chmury+Medycznej#explorer" data-bzp-preset="q=Chmury Medycznej">View 7 →</a></td>
         </tr>
         <tr>
           <td><strong>Stinet Sp. z o.o.</strong></td>
@@ -313,19 +326,25 @@
         </tr>
         <tr>
           <td><strong>E4I Sp. z o.o.</strong></td>
-          <td>Humanoid robots, mobile robotic platforms and motion-capture equipment for the AI Department at Częstochowa University of Technology.</td>
+          <td>Humanoid robots, mobile robotic platforms and motion-capture equipment for Częstochowa University of Technology.</td>
           <td class="num-col">3 contracts · 734,932 PLN</td>
           <td><a class="preset-link" href="?q=E4I#explorer" data-bzp-preset="q=E4I">View 3 →</a></td>
         </tr>
         <tr>
+          <td><strong>net-o-logy Sp. z o.o.</strong></td>
+          <td>Server and network infrastructure for AI/ML workloads at the Łukasiewicz–EMAG Institute in Katowice (both single-bid; after correcting a 3× repeated section 8.2 total).</td>
+          <td class="num-col">2 contracts · 609,957 PLN</td>
+          <td><a class="preset-link" href="?q=net-o-logy#explorer" data-bzp-preset="q=net-o-logy">View 2 →</a></td>
+        </tr>
+        <tr>
           <td><strong>Pharmdiver Sp. z o.o.</strong></td>
-          <td>Clinical AI software assisting hospital pharmacies and ward pharmacotherapy in Opole and Kraków (both single-bid).</td>
+          <td>Clinical AI software assisting hospital pharmacies and ward pharmacotherapy at hospitals in Opole and Kraków (both single-bid).</td>
           <td class="num-col">2 contracts · 362,239 PLN</td>
           <td><a class="preset-link" href="?q=Pharmdiver#explorer" data-bzp-preset="q=Pharmdiver">View 2 →</a></td>
         </tr>
         <tr>
           <td><strong>Gremi Media S.A. for NASK-PIB</strong></td>
-          <td>Licensed press text datasets supplied to train Polish large language models (<code>2026/BZP 00032576</code>, Lot II).</td>
+          <td>Licensed press corpora for Polish LLMs (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de535a-71c8-eb39-d6d3-f500016a6814" target="_blank" rel="noopener"><code>2026/BZP 00032576</code> ↗</a>, Lot II).</td>
           <td class="num-col">1 contract · 356,700 PLN</td>
           <td><a class="preset-link" href="?q=00032576#explorer" data-bzp-preset="q=00032576">View 1 →</a></td>
         </tr>
@@ -341,22 +360,22 @@
       <strong>Dirty registries</strong>
     </div>
     <div class="lab-prose">
-      <h2>Why an automated AI summary of raw registry data would be wrong by over 10 million PLN</h2>
-      <p>Putting this dataset together also served as a practical test of something that rarely makes it into AI demos: the gap between asking a language model to summarize a public topic and doing the engineering work required to stand behind every figure.</p>
-      <p>The BZP API does not hand out a clean table of contracts. It serves separate HTML notices (<code>ContractNotice</code>, amendments and <code>TenderResultNotice</code>) that must be linked by <code>tenderId</code> and parsed section by section. Asking an unverified script or chatbot to pull and sum notices matching “artificial intelligence” and “AI” would inflate Polish public AI spending by over ten million zlotys for three mundane reasons.</p>
-      <p>First, in veterinary institutes, the abbreviation <code>AI</code> stands for <em>Avian Influenza</em> (bird flu) diagnostic kits. Full-text search also catches substring collisions in Polish proper names, such as preschool catering for a kindergarten named “Tęczowa KrAIna”.</p>
-      <p>Second, once Polish universities established Faculties and Departments of Artificial Intelligence, every routine purchase by those units inherited the phrase in its header. Without filtering by CPV procurement codes and actual scope, “Poland's AI budget” absorbs a <strong>4.63M PLN</strong> civil construction renovation of faculty rooms, <strong>156k PLN</strong> in general legal counsel, swivel chairs, student travel and conference catering. Those 12 proceedings (<strong>5.20M PLN</strong> in signed contracts) are kept in the JSON file for transparency, excluded by default, and available via a single toggle below (<a href="?incidental=1&amp;cat=incidental#explorer" data-bzp-preset="incidental=1&amp;cat=incidental">include &amp; inspect all 12 incidental tenders ↓</a>).</p>
-      <p>Third, official procurement forms contain plain human typos. Cross-checking estimated values against winning bids and final contract fields flagged notice <code>2026/BZP 00009631</code> from the e-Health Centre (CeZ). Two sections of the filing show roughly half a million PLN; the third adds an accidental trailing zero, turning 544,000 PLN into 5.44 million PLN. Left unchecked, that single keystroke would have nearly tripled Poland's reported spending on AI training.</p>
+      <h2>Why an unverified summary of raw BZP filings would be off by more than 11 million PLN</h2>
+      <p>Putting this dataset together also served as a practical test of the gap between asking a language model to summarize a public topic and doing the data engineering required to stand behind every figure.</p>
+      <p>The BZP API does not serve a clean table of contracts. Worse, its public endpoint silently ignores the <code>TenderId</code> query parameter and caps batches at <code>PageSize=500</code>, so naive queries either truncate results or fail to link initial tender notices with later award filings. Reconstructing all 171 proceedings from <strong>304 official notices</strong> required a deterministic Python pipeline (<a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/scripts/audit_bzp_data.py" target="_blank" rel="noopener noreferrer"><code>scripts/audit_bzp_data.py</code> ↗</a>) that recursively splits date windows and joins <code>ContractNotice</code>, amendments and <code>TenderResultNotice</code> records by <code>tenderId</code> in Python — uncovering 17 outcome notices (12 signed contracts and 5 cancellations) that surface searches miss (<a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/bzp-methodology.md" target="_blank" rel="noopener noreferrer">full methodology &amp; audit log ↗</a>).</p>
+      <p>Even after linking notices, summing raw BZP matches for “artificial intelligence” and “AI” would distort Polish public AI spending by over 11 million PLN for three mundane reasons. First, in veterinary institutes, <code>AI</code> stands for <em>Avian Influenza</em> diagnostic kits, while substring searches catch proper names such as catering for a preschool called “Tęczowa KrAIna”.</p>
+      <p>Second, once universities established Faculties and Departments of Artificial Intelligence, every routine purchase by those units inherited the phrase in its header — alongside multi-lot tenders where only one lot involves AI. Without CPV and lot-level auditing, “Poland's AI budget” absorbs a <strong>4.63M PLN</strong> civil renovation of faculty rooms in Częstochowa (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08ded82d-68a6-64c3-92be-eb0001746b03" target="_blank" rel="noopener"><code>2026/BZP 00320127</code> ↗</a>), <strong>156k PLN</strong> in general legal counsel, office chairs and conference catering, plus non-AI lots such as renewable-energy labs and burnout courses. All <strong>12 incidental proceedings (5.22M PLN across 11 signed contracts)</strong> remain in the JSON file for auditability, excluded by default and available via a single toggle below (<a href="?incidental=1&amp;cat=incidental#explorer" data-bzp-preset="incidental=1&amp;cat=incidental">include &amp; inspect all 12 incidental tenders ↓</a>).</p>
+      <p>Third, official award notices contain human clerical errors in Section 8.2. Cross-checking Section 6.4 winning bids against Section 8.2 contract values caught two major distortions totaling <strong>5.83M PLN</strong>: at the e-Health Centre (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de4ded-90a3-9604-d6d3-f5000169f1af" target="_blank" rel="noopener"><code>2026/BZP 00009631</code> ↗</a>), an extra trailing zero turned a <strong>544,000 PLN</strong> training award into <strong>5,440,000 PLN</strong>; at Łukasiewicz–EMAG in Katowice (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08dc0eba-0392-b93a-42c6-d30011511295" target="_blank" rel="noopener"><code>2024/BZP 00014936</code> ↗</a>), the authority pasted the combined three-lot contract total of <strong>468,507 PLN</strong> into Section 8.2 of every single lot, inflating the filing to <strong>1,405,521 PLN</strong> (+937k PLN).</p>
     </div>
 
     <aside class="lab-aside-col">
       <div class="lab-aside-note">
         <strong>Verification pipeline</strong>
-        1. Harvest notices from <code>ezamowienia.gov.pl</code> API (01.01.2024 – 03.11.2026).<br>
-        2. Strip veterinary and substring collisions.<br>
-        3. Link lifecycle notices by <code>tenderId</code> (287 filings → 171 proceedings).<br>
-        4. Cross-validate HTML Sections 4.3, 6.4 and 8.2.<br>
-        5. Audit CPV codes and edge-case scopes manually.
+        1. Harvest <code>ezamowienia.gov.pl</code> API with recursive <code>&lt;500</code> window splitting (01.01.2024 – 03.11.2026).<br>
+        2. Strip veterinary (<em>Avian Influenza</em>) and word-boundary collisions.<br>
+        3. Join 304 notices into 171 proceedings by <code>tenderId</code> in Python (bypassing BZP's broken <code>TenderId</code> filter).<br>
+        4. Cross-check HTML Sections 2.11/2.14, 4.x, 6.1, 6.4 and 8.2; isolate AI lots in multi-topic tenders.<br>
+        5. Validate every figure via automated gate <code>verify_bzp_report.py</code>.
       </div>
     </aside>
   </div>
@@ -365,34 +384,47 @@
     <div class="lab-fig-head">
       <div>
         <span class="lab-fig-kicker">Source filing specimens · Why cross-validation matters</span>
-        <h3 class="lab-fig-title" id="fig4-title">Two official BZP filings that severely distort naive totals</h3>
+        <h3 class="lab-fig-title" id="fig4-title">Official BZP filings that severely distort naive totals</h3>
       </div>
     </div>
     <div class="specimen-grid">
       <div class="specimen-card">
         <div class="specimen-head">
-          <strong>Specimen A · A 4.90M PLN trailing-zero typo</strong>
+          <strong>Specimen A · Extra trailing zero (+4.90M PLN)</strong>
           <span>2026/BZP 00009631 · e-Health Centre (CeZ)</span>
         </div>
         <div class="specimen-lines">
-          <div class="specimen-line"><span>Section 4.3 (estimated net value):</span><strong>494 260.00 PLN</strong></div>
-          <div class="specimen-line"><span>Section 6.4 (winning bid, BUZZcenter):</span><strong>544 000.00 PLN</strong></div>
-          <div class="specimen-line is-error"><span>Section 8.2 (entered contract value):</span><b>5 440 000.00 PLN (!?)</b></div>
+          <div class="specimen-line"><span>Section 4.3 (estimated net value):</span><strong>494,260.00 PLN</strong></div>
+          <div class="specimen-line"><span>Section 6.4 (winning bid, BUZZcenter):</span><strong>544,000.00 PLN</strong></div>
+          <div class="specimen-line is-error"><span>Section 8.2 (entered contract value):</span><b>5,440,000.00 PLN (!?)</b></div>
         </div>
-        <p class="specimen-note">In this online AI healthcare training award notice, Section 8.2 added an extra zero. The cleaned dataset records the verified winning bid from Section 6.4 (<code>544,000 PLN</code>) and flags the correction. <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de4db4-ae41-5a40-f3d2-0500019b7d65" target="_blank" rel="noopener noreferrer">Inspect original filing on BZP ↗</a></p>
+        <p class="specimen-note">In this healthcare AI training award notice, Section 8.2 accidentally added a trailing zero. The audited dataset uses the verified Section 6.4 bid (<code>544,000 PLN</code>) and flags the record. <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de4ded-90a3-9604-d6d3-f5000169f1af" target="_blank" rel="noopener">Inspect CeZ award notice on BZP ↗</a></p>
       </div>
 
       <div class="specimen-card">
         <div class="specimen-head">
-          <strong>Specimen B · ‘AI’ only in the faculty name</strong>
-          <span>2026/BZP 00320127 · Częstochowa Univ. of Tech.</span>
+          <strong>Specimen B · Total pasted 3× (+0.94M PLN)</strong>
+          <span>2024/BZP 00014936 · Łukasiewicz–EMAG Katowice</span>
         </div>
         <div class="specimen-lines">
-          <div class="specimen-line"><span>CPV code:</span><strong>45000000-7 (Construction work)</strong></div>
-          <div class="specimen-line"><span>Scope:</span><strong>Renovation of AI Faculty rooms</strong></div>
-          <div class="specimen-line"><span>Signed contract value:</span><strong>4 627 000.00 PLN</strong></div>
+          <div class="specimen-line"><span>Sum of 3 awarded lots (Section 6.4):</span><strong>468,507.00 PLN</strong></div>
+          <div class="specimen-line"><span>Section 8.2 entered on each lot:</span><strong>3 × 468,507.00 PLN</strong></div>
+          <div class="specimen-line is-error"><span>Raw sum across the notice:</span><b>1,405,521.00 PLN (!?)</b></div>
         </div>
-        <p class="specimen-note">Civil renovation of rooms belonging to the Faculty of Computer Science and Artificial Intelligence (part of <code>5.20M PLN</code> in renovations, furniture and catering across universities). Separated from core tech spend by default. <a href="?incidental=1&amp;cat=incidental#explorer" data-bzp-preset="incidental=1&amp;cat=incidental">Inspect in database ↓</a></p>
+        <p class="specimen-note">Vendor <code>net-o-logy</code> won three AI/ML hardware lots worth <code>468,507 PLN</code> combined, but the buyer pasted that full three-lot contract value into Section 8.2 of every individual lot (+937k PLN). <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08dc0eba-0392-b93a-42c6-d30011511295" target="_blank" rel="noopener">Inspect EMAG award notice on BZP ↗</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Specimen C · ‘AI’ in faculty name (+5.22M PLN)</strong>
+          <span>2026/BZP 00320127 · Częstochowa Univ. of Tech. + 10 awards</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Primary CPV code:</span><strong>45000000-7 (Construction work)</strong></div>
+          <div class="specimen-line"><span>Renovation of AI Faculty rooms:</span><strong>4,627,000.00 PLN</strong></div>
+          <div class="specimen-line is-error"><span>All 11 incidental awards combined:</span><b>5,216,219.04 PLN</b></div>
+        </div>
+        <p class="specimen-note">Civil renovation of rooms belonging to the Faculty of Computer Science and Artificial Intelligence (plus office chairs, general legal counsel and catering across 11 other proceedings). Together with Specimens A &amp; B, raw totals overshoot by <code>11.05M PLN</code>. <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08ded82d-68a6-64c3-92be-eb0001746b03" target="_blank" rel="noopener">BZP filing ↗</a> · <a href="?incidental=1&amp;cat=incidental#explorer" data-bzp-preset="incidental=1&amp;cat=incidental">Inspect 12 in database ↓</a></p>
       </div>
     </div>
   </figure>
@@ -402,16 +434,16 @@
   <div class="frame">
     <div class="lab-tool-head">
       <div>
-        <span class="number">Full searchable database · 171 BZP proceedings (01.2024 – 11.2026)</span>
+        <span class="number">Full searchable database · 171 BZP proceedings (01.2024 – 03.11.2026)</span>
         <h2>Search and verify every tender at the source</h2>
       </div>
-      <p>Click any year, category or sector bar (or switch to Polish regions), filter for single-bid or EU-funded contracts, export CSV, or open the original filing directly on <code>ezamowienia.gov.pl</code>.</p>
+      <p>Click any year (with Notice / Contract year toggle), category or sector bar, switch to Polish regions, filter for pure-AI scope, single-bid or EU-funded contracts, export CSV, or open each filing directly on <code>ezamowienia.gov.pl</code>.</p>
     </div>
     <div id="bzp-explorer" data-src="/assets/lab/bzp-ai-2024-2026.json">
       <noscript>
         <div class="lab-callout">
           <span class="micro">JavaScript is required for interactive filtering</span>
-          <p>You can download the complete, verified dataset of all 171 proceedings (including official BZP links, contract values, vendors and CPV codes) directly as <a href="/assets/lab/bzp-ai-2024-2026.json">bzp-ai-2024-2026.json</a>.</p>
+          <p>You can download the complete, verified dataset of all 171 proceedings (159 core proceedings, including 110 signed contracts worth 32.20M PLN gross, plus 12 incidental tenders) directly as <a href="/assets/lab/bzp-ai-2024-2026.json">bzp-ai-2024-2026.json</a>.</p>
         </div>
       </noscript>
     </div>

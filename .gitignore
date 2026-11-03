@@ -1,2 +1,6 @@
 # Raw high-resolution source photos with EXIF/GPS (web uses optimized /assets/polaroids/*.webp)
 /assets/photos/
+
+# Python bytecode
+__pycache__/
+*.py[cod]

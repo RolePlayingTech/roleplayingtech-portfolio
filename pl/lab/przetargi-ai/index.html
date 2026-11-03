@@ -5,16 +5,23 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f7f6f2">
-<meta name="description" content="Analiza i interaktywna baza 171 postępowań przetargowych związanych ze sztuczną inteligencją w Biuletynie Zamówień Publicznych (2024–2026). Realne umowy szpitali, uczelni i urzędów, liczba ofert oraz błędy w rejestrach.">
+<meta name="description" content="Analiza i interaktywna baza 171 postępowań przetargowych związanych ze sztuczną inteligencją (zrekonstruowanych z 304 powiązanych ogłoszeń BZP z lat 2024–2026): 32,20 mln zł brutto w 110 podpisanych umowach podstawowych, liczba ofert oraz korekty błędów w rejestrze.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Na co polskie instytucje naprawdę wydają pieniądze pod hasłem AI? Raport i baza BZP (2024–2026)">
-<meta property="og:description" content="Sprawdziłem 287 ogłoszeń i 171 postępowań z Biuletynu Zamówień Publicznych (31,97 mln zł w podpisanych umowach podstawowych). Ponad 90% kwoty trafia na wdrożenia i sprzęt, ale przy 68% systemów IT startował tylko jeden wykonawca.">
+<meta property="og:description" content="Sprawdziłem 304 ogłoszenia połączone w 171 postępowań z BZP (32,20 mln zł brutto w 110 podpisanych umowach podstawowych). 89,8% kwoty trafia na oprogramowanie i sprzęt, ale w 65,9% wdrożeń systemów AI startował tylko jeden wykonawca.">
 <meta property="og:url" content="https://roleplayingtech.com/pl/lab/przetargi-ai/">
 <meta property="og:locale" content="pl_PL">
-<meta property="og:image" content="https://roleplayingtech.com/assets/og-image.png">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://roleplayingtech.com/assets/lab/og-bzp-2024-2026-pl.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Raport BZP 2024–2026: 32,20 mln zł brutto w 110 podpisanych umowach podstawowych AI, 89,8% kwoty na wdrożenia i sprzęt, 65,9% wdrożeń z 1 ofertą">
 <meta property="article:published_time" content="2026-11-03">
 <meta property="article:author" content="Grzegorz Stuczyński">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Na co polskie instytucje naprawdę wydają pieniądze pod hasłem AI? Raport i baza BZP (2024–2026)">
+<meta name="twitter:description" content="Sprawdziłem 304 ogłoszenia połączone w 171 postępowań z BZP (32,20 mln zł brutto w 110 podpisanych umowach podstawowych). 89,8% kwoty trafia na oprogramowanie i sprzęt, ale w 65,9% wdrożeń systemów AI startował tylko jeden wykonawca.">
+<meta name="twitter:image" content="https://roleplayingtech.com/assets/lab/og-bzp-2024-2026-pl.png">
 <title>Na co polskie instytucje naprawdę wydają pieniądze pod hasłem AI? Baza i analiza BZP (2024–2026) — RolePlayingTech</title>
 <script>document.documentElement.classList.add('js');if(location.search.indexOf('embed=1')!==-1)document.documentElement.classList.add('is-embed');</script>
 <link rel="stylesheet" href="/assets/minimal.css">
@@ -30,6 +37,7 @@
     {
       "@type": "NewsArticle",
       "headline": "Na co polskie instytucje naprawdę wydają pieniądze pod hasłem AI? Analiza i baza BZP (2024–2026)",
+      "image": "https://roleplayingtech.com/assets/lab/og-bzp-2024-2026-pl.png",
       "datePublished": "2026-11-03",
       "dateModified": "2026-11-03",
       "inLanguage": "pl-PL",
@@ -48,7 +56,7 @@
     {
       "@type": "Dataset",
       "name": "Zamówienia publiczne związane z AI w Biuletynie Zamówień Publicznych (2024–2026)",
-      "description": "Oczyszczony, zdeduplikowany zbiór 171 postępowań przetargowych z API ezamowienia.gov.pl z lat 2024–2026 wraz z kwotami umów, liczbą ofert, wykonawcami i linkami źródłowymi.",
+      "description": "Oczyszczony, zdeduplikowany zbiór 171 postępowań przetargowych (zrekonstruowany z 304 powiązanych ogłoszeń z API ezamowienia.gov.pl z lat 2024–2026, w tym 159 postępowań podstawowych i 110 podpisanych umów na 32,20 mln zł brutto) wraz z kwotami umów, zakresem AI, liczbą ofert, wykonawcami i linkami źródłowymi.",
       "url": "https://roleplayingtech.com/pl/lab/przetargi-ai/",
       "temporalCoverage": "2024-01-01/2026-11-03",
       "distribution": {
@@ -75,7 +83,7 @@
       <a href="#wykonawcy">03 · Wykonawcy i KPO</a>
       <a href="#warsztat">04 · Błędy w rejestrze</a>
     </div>
-    <a class="lab-subnav-cta" href="#explorer">Wyszukiwarka 171 przetargów ↓</a>
+    <a class="lab-subnav-cta" href="#explorer"><span class="cta-full">Wyszukiwarka 171 przetargów ↓</span><span class="cta-short">Baza (171) ↓</span></a>
   </div>
 </nav>
 
@@ -93,11 +101,11 @@
   <div class="lab-lead-grid">
     <div>
       <p class="lab-lead">Kiedy pod koniec października wchodziły w życie krajowe przepisy o nadzorze nad sztuczną inteligencją, w komentarzach wróciły dwie znajome klisze: opowieść o cyfrowym skoku państwa i drwina, że publiczne AI w Polsce kończy się na dwudniowych szkoleniach z ChatGPT.</p>
-      <p class="lab-lead-sub">Zamiast zgadywać z nagłówków prasowych, pobrałem przez API Biuletynu Zamówień Publicznych 287 ogłoszeń z lat 2024–2026, połączyłem je po identyfikatorach postępowań, odsiałem błędy w formularzach i sprawdziłem każdą podpisaną umowę.</p>
+      <p class="lab-lead-sub">Zamiast zgadywać z nagłówków prasowych, pobrałem przez API Biuletynu Zamówień Publicznych 304 powiązane ogłoszenia z lat 2024–2026, zrekonstruowałem z nich 171 postępowań po identyfikatorach <code>tenderId</code>, odseparowałem błędy i części nie-AI oraz policzyłem pełną wartość brutto wszystkich 110 podpisanych umów podstawowych (często wieloletnich, 12–36-miesięcznych — a nie jednorocznych wydatków kasowych).</p>
       <div class="lab-byline-bar">
         <span>Tekst, kod i weryfikacja danych: <strong>Grzegorz Stuczyński</strong></span>
-        <span>Źródło: <a href="https://ezamowienia.gov.pl" target="_blank" rel="noopener noreferrer">ezamowienia.gov.pl</a> (01.01.2024 – 03.11.2026)</span>
-        <span>Otwarty zbiór: <a href="/assets/lab/bzp-ai-2024-2026.json" download>JSON (124 KB)</a></span>
+        <span>Źródło: <a href="https://ezamowienia.gov.pl" target="_blank" rel="noopener noreferrer">ezamowienia.gov.pl</a> (stan na 03.11.2026)</span>
+        <span>Otwarty zbiór: <a href="/assets/lab/bzp-ai-2024-2026.json" download>JSON (195 KB)</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/bzp-methodology.md" target="_blank" rel="noopener noreferrer">Metodologia ↗</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/scripts/audit_bzp_data.py" target="_blank" rel="noopener noreferrer">Skrypt ETL ↗</a></span>
       </div>
       <div class="lab-jump-row">
         <a class="jump" href="#rynek">Czytaj raport z wykresami<span>↓</span></a>
@@ -106,35 +114,43 @@
     </div>
 
     <aside class="lab-meta-box" aria-label="Zakres i ograniczenia danych">
-      <span class="micro">Zanim przejdziesz do liczb · Ważna granica zbioru</span>
+      <span class="micro">Zanim przejdziesz do liczb · Zakres i higiena danych</span>
       <ul>
-        <li><strong>Co widzi BZP:</strong> Biuletyn Zamówień Publicznych obejmuje krajowe zamówienia <strong>poniżej tzw. progów unijnych</strong> (zwykle od 130 tys. zł netto do ok. 0,6–0,9 mln zł dla dostaw i usług, a do ok. 23 mln zł dla robót budowlanych i części usług społecznych).</li>
-        <li><strong>Czego tu nie ma:</strong> wielomilionowe przetargi centralnych ministerstw czy COI publikowane w unijnym dzienniku TED tworzą osobny segment rynku. BZP pokazuje za to codzienną praktykę: zakupy szpitali powiatowych i klinicznych, politechnik, starostw i wojewódzkich urzędów pracy.</li>
-        <li><strong>Higiena danych:</strong> ze zbioru usunąłem fałszywe trafienia (m.in. testy weterynaryjne na ptasią grypę <em>AI</em>), wydzieliłem osobno remonty i catering na wydziałach z „AI” w nazwie oraz skorygowałem omyłkę o jedno zero w sekcji 8.2 jednego z ogłoszeń.</li>
+        <li><strong>Zakres BZP (130 → 170 tys. zł netto):</strong> krajowe zamówienia <strong>poniżej progów unijnych</strong> (centralne przetargi z dziennika TED tworzą osobny segment). Wzrost 4,8× w 2026 r. nastąpił <em>mimo</em> podniesienia dolnego progu Pzp od 1.01.2026 r.</li>
+        <li><strong>Wartość umów brutto, nie kasowo:</strong> liczę łączne kwoty zawartych umów (często na 12–36 mies.), domyślnie wg <strong>roku publikacji ogłoszenia w BZP</strong> (w bazie poniżej jest przełącznik <code>Ogłoszenie / Umowa</code>).</li>
+        <li><strong>Audyt i korekty:</strong> odrzucono weterynaryjną grypę ptaków (<em>AI</em>), wydzielono 12 wydatków pobocznych (5,22 mln zł), oznaczono pakiety mieszane i naprawiono błędy pisarskie w sekcji 8.2.</li>
       </ul>
+      <details class="lab-meta-more">
+        <summary>Szczegóły progów Pzp, dat umów i audytu</summary>
+        <ul>
+          <li><strong>Próg ustawowy i drobne części:</strong> nowelizacja z 25.07.2025 r. (<a href="https://www.gov.pl/web/uzp/podwyzszenie-progu-stosowania-ustawy-prawo-zamowien-publicznych-i-ustawy-o-umowie-koncesji-na-roboty-budowlane-lub-uslugi" target="_blank" rel="noopener noreferrer">komunikat UZP ↗</a>) podniosła próg z 130 do 170 tys. zł netto — zakupy z przedziału 130–170 tys. zł mogły od 2026 r. wypaść poza obowiązkowy BZP, natomiast drobne szkolenia trafiają do rejestru jako części większych planów rocznych.</li>
+          <li><strong>Przesunięcie roczne:</strong> trzy umowy ogłoszone w styczniu 2024 r. (łącznie 611,4 tys. zł, w tym dwie w Łukasiewicz–EMAG) fizycznie zawarto w grudniu 2023 r.; licząc wg daty umowy (<code>contractDate</code>), wzrost 2024→2026 wynosi 5,6×.</li>
+          <li><strong>Jawny kod i rejestr zmian:</strong> pełna dokumentacja korekt i separacji części nie-AI w <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/bzp-methodology.md" target="_blank" rel="noopener noreferrer">bzp-methodology.md ↗</a> oraz <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/scripts/audit_bzp_data.py" target="_blank" rel="noopener noreferrer">audit_bzp_data.py ↗</a>.</li>
+        </ul>
+      </details>
     </aside>
   </div>
 
   <div class="lab-findings" aria-label="Najważniejsze liczby ze zbioru">
     <div class="lab-finding">
-      <span class="lab-finding-num">31,97<small>mln zł</small></span>
-      <span class="lab-finding-label">łączna wartość <strong>99 podpisanych umów podstawowych</strong> (po oddzieleniu remontów, mebli i cateringu).</span>
-      <span class="lab-finding-note">159 postępowań podstawowych</span>
+      <span class="lab-finding-num">32,20<small>mln zł</small></span>
+      <span class="lab-finding-label">wartość zawartych umów brutto w <strong>110 podpisanych umowach podstawowych</strong> (mediana 170,7 tys. zł): w tym 19,63 mln zł (97 umów) to czysty zakres AI (<a href="?pure=1#explorer" data-bzp-preset="pure=1">filtruj czyste AI</a>), a 12,57 mln zł (13 umów) to zamówienia mieszane.</span>
+      <span class="lab-finding-note">159 postępowań podstawowych (+ 12 wydatków pobocznych na 5,22 mln zł)</span>
     </div>
     <div class="lab-finding">
-      <span class="lab-finding-num">3,8<small>× więcej</small></span>
-      <span class="lab-finding-label">wzrost rocznych wydatków: z <strong>4,99 mln zł</strong> w całym 2024 roku do <strong>19,01 mln zł</strong> do początku listopada 2026 r.</span>
-      <span class="lab-finding-note">52 umowy podpisane w 2026 r.</span>
+      <span class="lab-finding-num">4,8<small>× więcej</small></span>
+      <span class="lab-finding-label">wzrost wartości podpisanych umów wg roku publikacji ogłoszenia: z <strong>4,05 mln zł</strong> (2024) do <strong>19,59 mln zł</strong> (do 3.11.2026).</span>
+      <span class="lab-finding-note">57 podpisanych umów z ogłoszeń z 2026 r.</span>
     </div>
     <div class="lab-finding">
-      <span class="lab-finding-num">90,8<small>% budżetu</small></span>
-      <span class="lab-finding-label">trafia na <strong>oprogramowanie i sprzęt</strong> (29,02 mln zł). Szkolenia to aż 22,6% ogłoszeń, ale tylko <strong>6,5% kwoty</strong>.</span>
-      <span class="lab-finding-note">mediana kursu: 36,5 tys. zł</span>
+      <span class="lab-finding-num">89,8<small>% kwoty</small></span>
+      <span class="lab-finding-label">przypada na <strong>oprogramowanie i sprzęt</strong> (28,92 mln zł). Szkolenia to 22,6% ogłoszeń, ale tylko <strong>7,6% kwoty</strong>.</span>
+      <span class="lab-finding-note">mediana szkolenia: 47,0 tys. zł</span>
     </div>
     <div class="lab-finding">
-      <span class="lab-finding-num">68,4<small>% z 1 ofertą</small></span>
-      <span class="lab-finding-label">odsetek wdrożeń oprogramowania AI, w których wystartował <strong>tylko jeden wykonawca</strong> (26 z 38 umów).</span>
-      <span class="lab-finding-note">w całym zbiorze: 44,1% (41 z 93)</span>
+      <span class="lab-finding-num">65,9<small>% z 1 ofertą</small></span>
+      <span class="lab-finding-label">odsetek wdrożeń oprogramowania AI, w których wystartował <strong>tylko jeden wykonawca</strong> (27 z 41 z podaną liczbą ofert).</span>
+      <span class="lab-finding-note">w całym zbiorze podstawowym: 43,3% (45 z 104)</span>
     </div>
   </div>
 </header>
@@ -148,20 +164,21 @@
     <div class="lab-prose">
       <h2>Skąd wziął się mit o „samych szkoleniach z promptów” i gdzie naprawdę idą pieniądze</h2>
       <p class="has-dropcap">Gdy przegląda się surową listę nowych ogłoszeń w Biuletynie Zamówień Publicznych bez zaglądania do protokołów wyboru oferty, łatwo uwierzyć, że polski sektor publiczny głównie się ze sztucznej inteligencji szkoli. Warsztaty dla urzędników marszałkowskich, kursy dla nauczycieli czy dwudniowe szkolenia z narzędzi generatywnych pojawiają się na tablicy regularnie. W zebranym przeze mnie zbiorze stanowią <strong>36 ze 159 postępowań podstawowych</strong>, czyli <strong>22,6 procent</strong> wszystkich prób zakupu (<a href="?cat=training#explorer" data-bzp-preset="cat=training">zobacz 36 postępowań szkoleniowych w bazie ↓</a>).</p>
-      <p>Ta proporcja rozpada się w chwili, gdy zamiast liczyć wiersze w tabeli, zsumujemy podpisane umowy. Mediana kontraktu szkoleniowego w BZP wynosi <strong>36,5 tysiąca złotych brutto</strong>, a zdarzają się zamówienia rozstrzygane za niecałe dwa tysiące złotych. Wszystkie 21 podpisanych umów szkoleniowych z lat 2024–2026 zamyka się w kwocie <strong>2,06 mln zł</strong>. To zaledwie <strong>6,5 procent</strong> wydanych pieniędzy.</p>
-      <p>Ponad dziewięć na dziesięć złotych płynie w dwa zupełnie inne miejsca: do działów IT oraz pracowni diagnostycznych w szpitalach i na uczelniach.</p>
-      <p>Pierwszy strumień to <strong>wdrożenia oprogramowania i systemów dziedzinowych (15,72 mln zł w 42 umowach, mediana 268,8 tys. zł)</strong>. Dobrze widać w nich, jak bardzo zmienił się język zamówień między 2024 a 2026 rokiem. Zamiast ogólnikowych asystentów zamawiający kupują narzędzia wpięte w konkretny proces. W marcu 2026 roku warszawskie Centrum Zdrowia Dziecka rozstrzygnęło w odstępie sześciu dni dwa osobne przetargi: jeden na oprogramowanie Siemens Healthcare wspierające ocenę badań obrazowych za <strong>365 tys. zł</strong>, drugi na pięć interaktywnych awatarów AI do punktów informacyjnych i rejestracji za <strong>916,5 tys. zł</strong>. Wojewódzki Szpital Rehabilitacyjny dla Dzieci w Ameryce pod Olsztynkiem wydał <strong>1,28 mln zł</strong> na sprzęt i usługi wspomagające lekarzy przy tworzeniu dokumentacji medycznej oraz obsłudze rozmów z pacjentami. Z kolei Starostwo Powiatowe w Łowiczu zakontraktowało w sierpniu 2026 roku za <strong>680,7 tys. zł</strong> obieg zadań i intranetowego chatbota opartego na architekturze RAG, czyli odpowiadającego wyłącznie na podstawie wewnętrznych dokumentów urzędu (<a href="?cat=software_deploy#explorer" data-bzp-preset="cat=software_deploy">filtruj wszystkie wdrożenia oprogramowania ↓</a>).</p>
-      <p>Drugi strumień to <strong>infrastruktura obliczeniowa, aparatura medyczna i laboratoria (13,30 mln zł w 27 umowach, mediana 199 tys. zł)</strong>. Uczelnie techniczne, instytuty badawcze oraz oddziały NFZ kupują wielokartowe serwery GPU do lokalnego uruchamiania modeli językowych, skanujące mikroskopy fluorescencyjne (620 tys. zł w Morskim Instytucie Rybackim w Gdyni), aparaty USG z analizą obrazu w czasie rzeczywistym (199 tys. zł w szpitalu w Nowej Soli) czy platformy robotów humanoidalnych na Politechnice Częstochowskiej i Poznańskiej. Największy pojedynczy kontrakt w całym zestawieniu podstawowym, wart <strong>4,94 mln zł</strong>, podpisał w marcu 2026 roku Uniwersytet Jana Długosza w Częstochowie na budowę Laboratorium Sztucznej Inteligencji w Diagnostyce Obrazowej (<a href="?cat=hardware_lab#explorer" data-bzp-preset="cat=hardware_lab">zobacz zakupy sprzętowe i laboratoryjne ↓</a>).</p>
+      <p>Ta proporcja rozpada się w chwili, gdy zamiast liczyć wiersze w tabeli, zsumujemy wartość podpisanych umów. Mediana kontraktu szkoleniowego w BZP wynosi <strong>47,0 tys. zł brutto</strong>, a zdarzają się części szkoleniowe rozstrzygane poniżej dwóch tysięcy złotych. Wszystkie <strong>26 podpisanych umów szkoleniowych</strong> z lat 2024–2026 zamyka się w kwocie <strong>2,46 mln zł</strong>, czyli <strong>7,6 procent</strong> łącznej wartości zakontraktowanych umów podstawowych (kolejne <strong>0,82 mln zł</strong> w 9 umowach — <strong>2,6 procent</strong> kwoty przy medianie 51,0 tys. zł — stanowią badania rynku, audyty i doradztwo).</p>
+      <p>Blisko 90 procent wartości umów — dokładnie <strong>89,8% (28,92 mln zł w 75 podpisanych kontraktach ze 110 postępowań)</strong> — płynie w dwa zupełnie inne miejsca: do działów IT oraz pracowni diagnostycznych i badawczych w szpitalach, instytutach i na uczelniach.</p>
+      <p>Pierwszy strumień to <strong>wdrożenia oprogramowania i systemów AI (17,17 mln zł w 45 umowach z 62 postępowań, czyli 53,3% kwoty podstawowej; mediana 255,3 tys. zł)</strong>. Dobrze widać w nich, jak zmienił się język zamówień między 2024 a 2026 rokiem: zamiast ogólnikowych asystentów zamawiający kupują narzędzia wpięte w konkretny proces kliniczny lub administracyjny. W lutym 2026 roku (ogłoszenia o wyniku z początku marca) warszawskie Centrum Zdrowia Dziecka podpisało dwie osobne umowy: jedną z Siemens Healthcare na oprogramowanie wspierające ocenę badań obrazowych za <strong>365,3 tys. zł</strong>, drugą z Orange Polska na pięć interaktywnych awatarów AI do punktów informacyjnych i rejestracji za <strong>916,5 tys. zł</strong> (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de792a-076e-d9e4-056e-e50001ac1d95" target="_blank" rel="noopener"><code>2026/BZP 00137744</code> ↗</a>). Wojewódzki Szpital Rehabilitacyjny dla Dzieci w Ameryce pod Olsztynkiem zawarł 6-częściowy pakiet KPO wart łącznie <strong>1,28 mln zł</strong> (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de72da-ba70-a72d-056e-e50001abc365" target="_blank" rel="noopener"><code>2026/BZP 00124082</code> ↗</a>), łączący systemy AI wspierające tworzenie dokumentacji medycznej i wirtualną rejestratorkę (663,7 tys. zł z chmurą) z dedykowanym serwerem AI (471,3 tys. zł) oraz szkoleniami dla administratorów IT. Z kolei Starostwo Powiatowe w Łowiczu podpisało w lipcu 2026 roku (ogłoszenie o wyniku z sierpnia, <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08def384-e932-a592-962b-1200019cd315" target="_blank" rel="noopener"><code>2026/BZP 00379906</code> ↗</a>, 5 ofert, wykonawca Agentic P.S.A.) kontrakt na <strong>680,7 tys. zł</strong> obejmujący szerszy pakiet wdrożenia Systemu Zarządzania Zadaniami, portalu Intranet i szkoleń wraz z chatbotem w architekturze RAG projektowanym do wyszukiwania odpowiedzi na bazie wewnętrznych dokumentów urzędu (<a href="?cat=software_deploy#explorer" data-bzp-preset="cat=software_deploy">filtruj wszystkie wdrożenia oprogramowania ↓</a>).</p>
+      <p>Drugi strumień to <strong>serwery GPU, aparatura i laboratoria (11,74 mln zł w 30 umowach z 48 postępowań, czyli 36,5% kwoty podstawowej; mediana 171,4 tys. zł)</strong>. Uczelnie techniczne, instytuty badawcze oraz oddziały NFZ kupują wielokartowe serwery GPU do lokalnego uruchamiania modeli językowych, badawcze mikroskopy fluorescencyjne (620 tys. zł w Morskim Instytucie Rybackim w Gdyni), aparaty USG z modułami AI (332 tys. zł w szpitalu w Sochaczewie i 199 tys. zł w Nowej Soli) czy platformy robotów humanoidalnych na Politechnice Częstochowskiej i Poznańskiej (<a href="?cat=hardware_lab#explorer" data-bzp-preset="cat=hardware_lab">zobacz zakupy sprzętowe i laboratoryjne ↓</a>).</p>
+      <p>Przy interpretacji łącznych <strong>32,20 mln zł</strong> warto przy tym pilnować granicy między czystym zakupem technologii AI a dużymi ryczałtami wielobranżowymi. W zbiorze wydzieliłem jawnie <strong>97 podpisanych umów o czystym zakresie AI na 19,63 mln zł (61,0% kwoty podstawowej, 139 postępowań)</strong> oraz <strong>13 kontraktów o zakresie mieszanym na 12,57 mln zł (39,0%, 20 postępowań)</strong> (<a href="?pure=1#explorer" data-bzp-preset="pure=1">przełącz na samo czyste AI ↓</a>). W tej drugiej grupie jeden niepodzielny ryczałt lub wspólny pakiet łączy AI z robotami budowlanymi, ciężką aparaturą lub usługami fizycznymi — jak największa umowa w całej bazie, zawarta w marcu 2026 r. przez <strong>Uniwersytet Jana Długosza w Częstochowie na 4,94 mln zł</strong> (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de85bd-7fd4-2c48-056e-e500011b8885" target="_blank" rel="noopener"><code>2026/BZP 00163288</code> ↗</a>) w formule „zaprojektuj i wybuduj” obejmującej roboty budowlane i zakup tomografu komputerowego dla Laboratorium AI w Diagnostyce Obrazowej, czy kontrakt <strong>Łukasiewicz–WIT na 2,16 mln zł</strong> (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de277f-3072-ee6a-592a-d10001151d64" target="_blank" rel="noopener"><code>2025/BZP 00543355</code> ↗</a>) łączący 37-miesięczną fizyczną ochronę obiektów z systemem kontroli dostępu AI. Niezależnie od przekroju widać wyraźne przyspieszenie: licząc wg roku publikacji ogłoszenia w BZP, wartość podpisanych umów podstawowych urosła z <strong>4,05 mln zł</strong> w 2024 r. (18 umów z 24 postępowań) i <strong>8,56 mln zł</strong> w 2025 r. (35 z 41) do <strong>19,59 mln zł</strong> do 3 listopada 2026 r. (57 z 94), czyli <strong>4,8-krotnie</strong> (a wg daty fizycznego podpisania kontraktu <code>contractDate</code>: grudzień 2023 r. — 0,61 mln zł w 3 umowach ogłoszonych w styczniu 2024 r., 2024 r. — 3,44 mln zł [15], 2025 r. — 8,95 mln zł [37], 2026 r. — 19,19 mln zł [55], czyli mnożnik <strong>5,6×</strong>).</p>
     </div>
 
     <aside class="lab-aside-col">
       <div class="lab-aside-note">
-        <strong>Kto wydaje najwięcej</strong>
-        Uczelnie i instytuty naukowe odpowiadają za <strong>15,96 mln zł</strong> (45 umów), a szpitale i ochrona zdrowia za <strong>10,38 mln zł</strong> (27 umów). Razem dają <strong>82,4%</strong> wszystkich podpisanych kontraktów w BZP.
+        <strong>Kto kontraktuje najwięcej</strong>
+        Uczelnie i nauka odpowiadają za <strong>15,24 mln zł</strong> (47 umów z 71 postępowań, 47,3%), a szpitale i ochrona zdrowia za <strong>11,36 mln zł</strong> (31 umów z 38 postępowań, 35,3%). Razem dają 78 umów na <strong>26,60 mln zł (82,6%)</strong>; za nimi idą samorządy i WUP (2,70 mln zł, 21 umów, 8,4%), administracja centralna i agencje (2,70 mln zł, 8 umów, 8,4%) oraz szkoły (0,21 mln zł, 3 umowy, 0,6%).
       </div>
       <div class="lab-aside-note">
-        <strong>Śląskie idzie równo z Mazowszem</strong>
-        Pod progami unijnymi Warszawa nie ma monopolu. Województwo śląskie (Częstochowa, Katowice, Gliwice, Cieszyn) zebrało w podpisanych umowach <strong>9,82 mln zł</strong> wobec <strong>9,84 mln zł</strong> na Mazowszu (<a href="?prov=%C5%9Al%C4%85skie#explorer" data-bzp-preset="prov=Śląskie">zobacz Śląskie w bazie ↓</a>).
+        <strong>Śląskie mocnym numerem dwa (26,9%)</strong>
+        Pod progami unijnymi nie ma warszawskiego monopolu. Prowadzi Mazowieckie z <strong>10,69 mln zł</strong> (30 umów, 33,2%), ale mocne drugie miejsce zajmuje <strong>Śląskie z 8,66 mln zł</strong> (14 umów, 26,9% krajowej kwoty — po korekcie 3× wpisanej wartości w katowickim EMAG i wydzieleniu pracowni OZE w Pawłowicach) dzięki uczelniom i szpitalom w Częstochowie, Gliwicach i Katowicach, przed Dolnośląskim (2,00 mln zł), Opolskim (1,73 mln zł), Wielkopolskim (1,57 mln zł) i Małopolskim (1,54 mln zł) (<a href="?prov=%C5%9Al%C4%85skie#explorer" data-bzp-preset="prov=Śląskie">zobacz Śląskie w bazie ↓</a>).
       </div>
     </aside>
   </div>
@@ -169,9 +186,9 @@
   <figure class="lab-figure" aria-labelledby="fig1-title">
     <div class="lab-fig-head">
       <div>
-        <span class="lab-fig-kicker">Wykres 01 · Struktura zamówień (2024–2026)</span>
-        <h3 class="lab-fig-title" id="fig1-title">Szum w liczbie ogłoszeń kontra realnie zakontraktowane złotówki</h3>
-        <p class="lab-fig-sub">Porównanie udziału czterech głównych kategorii w ogólnej liczbie postępowań (159) oraz w łącznej wartości podpisanych umów brutto (31,97 mln zł). Kliknięcie przycisku przy kategorii przenosi do przefiltrowanej listy przetargów.</p>
+        <span class="lab-fig-kicker">Wykres 01 · Struktura zamówień podstawowych (2024–2026)</span>
+        <h3 class="lab-fig-title" id="fig1-title">Szum w liczbie ogłoszeń kontra wartość podpisanych umów</h3>
+        <p class="lab-fig-sub">Porównanie udziału czterech kategorii podstawowych w liczbie postępowań (n = 159) oraz w łącznej wartości zawartych umów brutto (n = 110 umów, 32,20 mln zł; ujęcie domyślne wg roku publikacji ogłoszenia w BZP). Kliknięcie kategorii filtruje tabelę poniżej.</p>
       </div>
       <div class="lab-fig-legend">
         <span><i class="lab-swatch" style="background:#9c9589"></i> Udział w liczbie postępowań (%)</span>
@@ -180,12 +197,12 @@
     </div>
     <div id="fig-illusion">
       <noscript>
-        <p style="font-size:14px;color:#514e49">Wdrożenia i systemy AI: 39,6% postępowań (63) i 49,2% kwoty (15,72 mln zł, mediana 269 tys. zł). Sprzęt GPU i laboratoria: 29,6% postępowań (47) i 41,6% kwoty (13,30 mln zł, mediana 199 tys. zł). Szkolenia i kursy: 22,6% postępowań (36), ale tylko 6,5% kwoty (2,06 mln zł, mediana 36,5 tys. zł). Badania i audyty: 8,2% postępowań (13) i 2,8% kwoty (0,88 mln zł). Dynamika roczna podpisanych umów: 2024 — 4,99 mln zł; 2025 — 7,96 mln zł; 2026 (do 3.11) — 19,01 mln zł.</p>
+        <p style="font-size:14px;color:#514e49">Wdrożenia i systemy AI: 39,0% postępowań (62), 53,3% kwoty (17,17 mln zł, mediana 255,3 tys. zł). Sprzęt GPU i laboratoria: 30,2% postępowań (48), 36,5% kwoty (11,74 mln zł, mediana 171,4 tys. zł). Szkolenia i kursy: 22,6% postępowań (36), 7,6% kwoty (2,46 mln zł, mediana 47,0 tys. zł). Badania i audyty: 8,2% postępowań (13), 2,6% kwoty (0,82 mln zł). Dynamika roczna podpisanych umów wg roku ogłoszenia: 2024 — 4,05 mln zł, 2025 — 8,56 mln zł, 2026 (do 3.11) — 19,59 mln zł.</p>
       </noscript>
     </div>
     <figcaption class="lab-fig-foot">
-      <span>Źródło: obliczenia własne na podstawie 159 postępowań podstawowych BZP (bez 12 zamówień pobocznych na remonty i catering).</span>
-      <span>Kwoty brutto w PLN · stan na 03.11.2026</span>
+      <span>Źródło: obliczenia własne na podstawie n = 159 postępowań podstawowych BZP i n = 110 podpisanych umów na 32,20 mln zł brutto (bez 12 zamówień pobocznych: 11 umów na 5,22 mln zł). Ujęcie wg rzeczywistego roku zawarcia umowy (contractDate): XII 2023 — 0,61 mln zł (3 umowy ogłoszone w I 2024), 2024 — 3,44 mln zł (15), 2025 — 8,95 mln zł (37), 2026 — 19,19 mln zł (55), mnożnik 5,6×.</span>
+      <span>Wartość zawartych umów brutto w PLN · stan na 03.11.2026</span>
     </figcaption>
   </figure>
 </article>
@@ -197,25 +214,25 @@
       <strong>Pęknięty rynek</strong>
     </div>
     <div class="lab-prose">
-      <h2>23 firmy chętne do poprowadzenia kursu i jedna do szpitalnego serwera</h2>
-      <p>Najciekawszą kolumną w całym arkuszu okazała się nie cena, lecz liczba ofert składanych w poszczególnych postępowaniach. Rzadko widać na tak twardych danych, gdzie w polskiej branży wokół AI panuje ścisk, a gdzie zaczyna się pustka.</p>
-      <p>Kiedy Politechnika Świętokrzyska ogłosiła jesienią 2026 roku przetarg <code>2026/BZP 00465518</code> na przygotowanie i poprowadzenie szkolenia ze sztucznej inteligencji o ostatecznej wartości <strong>7 200 zł</strong>, do zamówienia zgłosiło się <strong>23 wykonawców</strong>. Na szkolenie online dla urzędników Dolnego Śląska za 29 750 zł wpłynęły <strong>22 oferty</strong>, a na kurs dla nauczycieli organizowany przez Związek Powiatów Lubuskich za 1 750 zł zgłosiło się <strong>14 firm</strong>. W całej kategorii szkoleniowej mediana wynosi <strong>siedem ofert na jeden przetarg</strong> (<a href="?cat=training&amp;sort=bids_desc#explorer" data-bzp-preset="cat=training&amp;sort=bids_desc">zobacz rekordzistów liczby ofert ↓</a>).</p>
-      <p>Wystarczy jednak zejść piętro niżej, tam gdzie kod musi bezpiecznie zintegrować się ze szpitalnym systemem HIS lub archiwum obrazowym PACS, działać na lokalnej infrastrukturze instytutu badawczego albo wziąć na siebie odpowiedzialność wdrożeniową. W kategorii wdrożeń oprogramowania mediana liczby ofert spada do <strong>jednej</strong>. Spośród 38 rozstrzygniętych umów wdrożeniowych z podaną liczbą oferentów aż w <strong>26 przypadkach (68,4%) zamawiający nie miał żadnego wyboru cenowego</strong>, bo wpłynęła pojedyncza oferta (<a href="?cat=software_deploy&amp;single=1#explorer" data-bzp-preset="cat=software_deploy&amp;single=1">zobacz 26 wdrożeń IT z 1 ofertą ↓</a>).</p>
-      <p>Część instytucji nie znajduje wykonawcy wcale albo dostaje wyceny przekraczające budżet. W marcu 2026 roku 5. Wojskowy Szpital Kliniczny w Krakowie musiał unieważnić przetarg <code>2026/BZP 00155059</code> na narzędzie AI do diagnostyki laboratoryjnej, ponieważ do terminu składania ofert nie zgłosił się nikt. Łącznie w badanym okresie unieważniono <strong>27 ze 171 postępowań</strong>, często przy pierwszym podejściu do zakupu serwerów GPU lub integracji systemów klinicznych.</p>
-      <p>Wiosną pisałem w tekście <a href="https://roleplayinglife.substack.com/p/bekitne-oceany-sztucznej-inteligencji" target="_blank" rel="noopener noreferrer">„Błękitne oceany sztucznej inteligencji”</a>, że środek mapy AI, czyli generowanie tekstu, proste doradztwo i kolejne nakładki na czat, jest zatłoczony do granic możliwości, podczas gdy na styku z medycyną, laboratorium czy sprzętem wciąż brakuje ludzi rozumiejących obie strony naraz. Wykres poniżej pokazuje ten sam podział nie jako publicystyczną metaforę, tylko jako rozkład wszystkich 93 podpisanych umów w BZP.</p>
+      <h2>23 firmy chętne do poprowadzenia kursu i pojedyncze oferty przy wdrożeniach IT</h2>
+      <p>Najciekawszą kolumną w całym arkuszu okazała się nie cena, lecz liczba ofert składanych w poszczególnych postępowaniach. Rzadko widać na tak twardych danych, w których segmentach rynku wokół AI panuje ścisk, a gdzie zamawiający nie ma z czego wybierać.</p>
+      <p>Kiedy Politechnika Świętokrzyska rozstrzygnęła jesienią 2026 roku przetarg <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08df1f96-063c-dfa1-647d-de000103450d" target="_blank" rel="noopener"><code>2026/BZP 00465518</code> ↗</a> na przygotowanie i poprowadzenie szkoleń ze sztucznej inteligencji o łącznej wartości <strong>7 200 zł</strong> w trzech częściach, na najliczniej obsadzoną część wpłynęły aż <strong>23 oferty</strong> (rozkład w trzech częściach wyniósł <code>23 / 15 / 22</code> — w całym zbiorze zapisuję maksymalną liczbę ofert złożonych na pojedynczą część AI, bez sztucznego sumowania części, na które startują ci sami wykonawcy). Na szkolenie online dla urzędników Dolnego Śląska w UMWD we Wrocławiu (<code>2026/BZP 00428993</code>, 29 750 zł) wpłynęły <strong>22 oferty</strong>, a na kurs dla nauczycieli organizowany przez Związek Powiatów Lubuskich za 1 750 zł zgłosiło się <strong>14 firm</strong>. W przetargach wielotematycznych części niezwiązane z AI zostały odseparowane — przykładowo w innym zamówieniu UMWD we Wrocławiu (<code>2026/BZP 00304575</code>) wyłączono szkolenia z wypalenia zawodowego i programu Norma Pro, zostawiając wyłącznie Zadanie 2 AI za 16 684 zł z 10 ofertami, a w ZSO w Pawłowicach (<code>2025/BZP 00133931</code>) wydzielono wyposażenie pracowni AI za 143,7 tys. zł z 6 ofertami. W całej kategorii szkoleniowej mediana wynosi <strong>sześć ofert na postępowanie</strong>, a tylko 3 z 24 konkurencyjnych umów (12,5%) zakończyły się jedną ofertą (<a href="?cat=training&amp;sort=bids_desc#explorer" data-bzp-preset="cat=training&amp;sort=bids_desc">zobacz rekordzistów liczby ofert ↓</a>).</p>
+      <p>Zupełnie inaczej wyglądają wdrożenia systemów IT. Co prawda samodzielny chatbot do obsługi kandydatów na krakowskiej ASP (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08df18ac-026d-a248-db89-6a00017db3b5" target="_blank" rel="noopener"><code>2026/BZP 00450838</code> ↗</a>, 74,8 tys. zł) przyciągnął aż <strong>19 ofert</strong>, ale tam, gdzie oprogramowanie musi spiąć się z istniejącym systemem klinicznym HIS lub archiwum obrazowym PACS — jak przy podłączeniu posiadanego środowiska AGFA EI do centralnej Platformy Usług Inteligentnych Centrum e-Zdrowia w gliwickim oddziale Narodowego Instytutu Onkologii (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de9958-93d1-c716-5fad-950001198a59" target="_blank" rel="noopener"><code>2026/BZP 00195811</code> ↗</a>, 485,9 tys. zł) — pojawia się dokładnie jeden wykonawca. W całej kategorii wdrożeń oprogramowania mediana liczby ofert wynosi <strong>jedną</strong>: spośród <strong>41 rozstrzygniętych umów wdrożeniowych z podaną liczbą ofert</strong> (na 45 podpisanych; 4 zawarto z wolnej ręki) w <strong>27 przypadkach (65,9%) zamawiający nie miał wyboru cenowego</strong> (<a href="?cat=software_deploy&amp;single=1#explorer" data-bzp-preset="cat=software_deploy&amp;single=1">zobacz 27 wdrożeń IT z 1 ofertą ↓</a>). W całym zbiorze podstawowym jedną ofertą zakończyło się <strong>45 ze 104 konkurencyjnych umów (43,3%)</strong>, a w samej ochronie zdrowia — 20 z 27 (74,1%; doliczając 4 umowy z wolnej ręki, <strong>24 z 31 kontraktów szpitalnych na 8,19 mln zł zawarto bez ani jednej konkurencyjnej oferty</strong>).</p>
+      <p>Część instytucji nie znajduje wykonawcy wcale albo otrzymuje wyceny przekraczające budżet. W marcu 2026 roku 5. Wojskowy Szpital Kliniczny w Krakowie unieważnił przetarg <code>2026/BZP 00155059</code> na narzędzie AI do diagnostyki laboratoryjnej, ponieważ do terminu składania ofert nie zgłosił się nikt. Łącznie w badanym okresie unieważniono <strong>31 ze 159 postępowań podstawowych (19,5%)</strong> — oraz 32 ze 171 w całym zbiorze — często przy pierwszym podejściu do zakupu serwerów GPU lub integracji klinicznych.</p>
+      <p>Wiosną pisałem w tekście <a href="https://roleplayinglife.substack.com/p/bekitne-oceany-sztucznej-inteligencji" target="_blank" rel="noopener noreferrer">„Błękitne oceany sztucznej inteligencji”</a>, że wokół prostych kursów, doradztwa i gotowych nakładek na czat panuje duży tłok, podczas gdy przy integracjach dziedzinowych, aparaturze i lokalnej infrastrukturze chętnych wykonawców jest znacznie mniej. Wykres poniżej pokazuje tę różnicę na rozkładzie wszystkich 104 konkurencyjnych umów podstawowych w BZP.</p>
     </div>
 
     <aside class="lab-aside-col">
       <div class="lab-aside-note">
-        <strong>Mediana liczby ofert według kategorii</strong>
-        Szkolenia i warsztaty: <strong>7 ofert</strong>.<br>
-        Badania i analizy: <strong>5 ofert</strong>.<br>
-        Sprzęt GPU i laboratoria: <strong>2 oferty</strong>.<br>
-        Wdrożenia oprogramowania: <strong>1 oferta</strong>.
+        <strong>Mediana i udział 1 oferty wg kategorii</strong>
+        Szkolenia i kursy: mediana <strong>6 ofert</strong> (1 oferta: 3 z 24, 12,5%).<br>
+        Badania i audyty: mediana <strong>3 oferty</strong> (1 z 9, 11,1%).<br>
+        Sprzęt GPU i laboratoria: mediana <strong>2 oferty</strong> (14 z 30, 46,7%).<br>
+        Wdrożenia systemów AI: mediana <strong>1 oferta</strong> (27 z 41, 65,9%).
       </div>
       <div class="lab-aside-note">
         <strong>Skąd bierze się jedna oferta</strong>
-        W części przetargów szpitalnych wynika to z rozbudowy już posiadanego systemu dziedzinowego (HIS lub PACS), gdzie integrację z Platformą Usług Inteligentnych najłatwiej wycenić dotychczasowemu dostawcy. W innych barierą są wymogi wdrożenia lokalnego i referencji w sektorze publicznym.
+        W przetargach szpitalnych często wynika to z rozbudowy posiadanego już systemu dziedzinowego (HIS lub PACS), gdzie integrację wycenia dotychczasowy dostawca oprogramowania. Sześć kolejnych umów (1,33 mln zł) zawarto wprost bez przetargu z art. 214 Pzp (<a href="?sole=1#explorer" data-bzp-preset="sole=1">zobacz 6 umów z wolnej ręki ↓</a>).
       </div>
     </aside>
   </div>
@@ -223,9 +240,9 @@
   <figure class="lab-figure" aria-labelledby="fig2-title">
     <div class="lab-fig-head">
       <div>
-        <span class="lab-fig-kicker">Wykres 02 · Interaktywna mapa konkurencji (93 umowy)</span>
-        <h3 class="lab-fig-title" id="fig2-title">Im droższe i trudniejsze technicznie zamówienie, tym rzadziej widać konkurencję</h3>
-        <p class="lab-fig-sub">Każda kropka to jedna podpisana umowa podstawowa w BZP z jawną liczbą ofert. Oś pozioma pokazuje wartość kontraktu brutto (skala logarytmiczna), a pionowa liczbę złożonych ofert. Najedź lub kliknij dowolny punkt, aby podejrzeć szczegóły umowy po prawej stronie.</p>
+        <span class="lab-fig-kicker">Wykres 02 · Interaktywna mapa konkurencji (n = 104 umowy)</span>
+        <h3 class="lab-fig-title" id="fig2-title">Tłok ofertowy na szkoleniach, pojedyncze oferty przy wdrożeniach systemów IT</h3>
+        <p class="lab-fig-sub">Każda kropka to jedna podpisana umowa podstawowa w BZP z jawną liczbą ofert (n = 104 ze 110 umów). Oś pozioma pokazuje wartość kontraktu brutto (skala logarytmiczna), a pionowa — maksymalną liczbę ofert złożonych na pojedynczą część AI. Kliknij punkt, aby podejrzeć szczegóły umowy.</p>
       </div>
       <div class="lab-fig-legend">
         <span><i class="lab-swatch" style="background:#98513c"></i> Wdrożenia IT</span>
@@ -236,12 +253,12 @@
     </div>
     <div id="fig-competition">
       <noscript>
-        <p style="font-size:14px;color:#514e49">Wśród 93 podpisanych umów podstawowych z podaną liczbą ofert aż 41 (44,1%) rozstrzygnięto przy jednej ofercie (w tym 26 z 38 wdrożeń oprogramowania). Najwięcej ofert spływa na drobne szkolenia: 23 oferty przy umowie na 7 200 zł (Politechnika Świętokrzyska) oraz 22 oferty przy umowie na 29 750 zł (UMWD Wrocław).</p>
+        <p style="font-size:14px;color:#514e49">Wśród 104 podpisanych umów podstawowych z podaną liczbą ofert aż 45 (43,3%) rozstrzygnięto przy jednej ofercie (w tym 27 z 41 wdrożeń oprogramowania, tj. 65,9%). Najwięcej ofert spływa na drobne szkolenia: 23 oferty przy umowie na 7 200 zł (Politechnika Świętokrzyska, maks. w pojedynczej części przy rozkładzie 23 / 15 / 22) oraz 22 oferty przy umowie na 29 750 zł (UMWD Wrocław).</p>
       </noscript>
     </div>
     <figcaption class="lab-fig-foot">
-      <span>Uwaga: 6 z 99 rozstrzygniętych umów podstawowych nie miało wypełnionego pola liczby ofert w ogłoszeniu wynikowym i pominięto je na wykresie punktowym.</span>
-      <span>Kliknij kropkę, aby sprawdzić wykonawcę i kartę BZP</span>
+      <span>Źródło: n = 104 podpisane umowy podstawowe z jawną liczbą ofert w sekcji 6.1 BZP; pominięto 6 ze 110 umów zawartych z wolnej ręki (art. 214 Pzp, brak konkurencyjnego naboru ofert). Dla zamówień wieloczęściowych podano maksymalną liczbę ofert w pojedynczej części AI (bez sumowania części).</span>
+      <span>Stan na 03.11.2026 · kliknij kropkę, aby sprawdzić kartę BZP</span>
     </figcaption>
   </figure>
 </article>
@@ -254,23 +271,23 @@
     </div>
     <div class="lab-prose">
       <h2>Kto regularnie wygrywa publiczne kontrakty AI i co stanie się po wygaśnięciu dotacji</h2>
-      <p>Po znormalizowaniu pisowni nazw spółek w ogłoszeniach o udzieleniu zamówienia widać wyraźnie, że rynek podprogowych zamówień AI w Polsce jest mocno rozdrobniony, ale w kilku niszach zdążyli już wyrosnąć wyspecjalizowani liderzy.</p>
-      <p>Najczęściej powtarzającym się wykonawcą w całym zbiorze jest <strong>Krajowy Operator Chmury Medycznej Sp. z o.o.</strong>, który w latach 2024–2026 podpisał <strong>sześć umów na łączną kwotę 1,81 mln zł</strong> (w Poznaniu, Zamościu, Legnicy, Opolu i Cieszynie) na chmurowe systemy VoiceBot oraz Chatbot do telefonicznej rejestracji pacjentów. W zupełnie innej niszy medycznej spółka <strong>Pharmdiver</strong> zdobyła w 2026 roku dwa kontrakty szpitalne (w Uniwersyteckim Szpitalu Klinicznym w Opolu za 203 tys. zł oraz w Szpitalu im. Rydygiera w Krakowie za 159 tys. zł) na oprogramowanie wspierające dobór farmakoterapii i pracę apteki szpitalnej.</p>
-      <p>Wśród ciekawszych pojedynczych umów i otwartych postępowań widać też projekty wykraczające poza typową automatyzację biura. W styczniu 2026 roku <strong>NASK-PIB</strong> zapłacił wydawnictwu prasowemu <strong>Gremi Media S.A.</strong> (wydawcy m.in. „Rzeczpospolitej”) <strong>356,7 tys. zł</strong> za pakiet danych tekstowych do trenowania dużych modeli językowych (<code>2026/BZP 00032576</code>). We Wrocławiu Dolnośląski Oddział <strong>NFZ</strong> przeznaczył <strong>622,4 tys. zł</strong> na rozbudowę własnego środowiska serwerowego pod wdrożenie modelu LLM, a w Otrębusach zespół <strong>„Mazowsze”</strong> wydał 378,7 tys. zł na zintegrowaną platformę technologiczną z narzędziami AI do materiałów edukacyjnych. Z kolei wśród postępowań jeszcze nierozstrzygniętych wyróżnia się zamówienie <strong>UOKiK</strong> (<code>2025/BZP 00411633</code>) na system wykorzystujący duże modele językowo-wizyjne (VLM) oraz październikowe przetargi Politechniki Częstochowskiej na dostawę siedmiu kolejnych robotów humanoidalnych.</p>
+      <p>Po oczyszczeniu i ujednoliceniu nazw spółek w ogłoszeniach o udzieleniu zamówienia widać, że rynek krajowych zamówień AI w Polsce pozostaje mocno rozdrobniony, ale w kilku wyspecjalizowanych niszach ukształtowali się już powtarzalni dostawcy.</p>
+      <p>Najczęściej powtarzającym się wykonawcą w całym zbiorze jest <strong>Krajowy Operator Chmury Medycznej Sp. z o.o.</strong>, który w latach 2024–2026 podpisał <strong>siedem umów szpitalnych na łączną kwotę 1,96 mln zł</strong> (w Cieszynie, Opolu, dwukrotnie w Poznaniu, Zamościu, Siedlcach i Legnicy) na chmurowe systemy VoiceBot oraz Chatbot do telefonicznej rejestracji pacjentów. W żadnym z tych siedmiu postępowań nie pojawił się konkurent: <strong>cztery umowy na 1,28 mln zł</strong> (Cieszyn, Zamość i dwa etapy w Poznaniu) zawarto <strong>z wolnej ręki</strong> z art. 214 Pzp, powołując się w uzasadnieniach sekcji 3 BZP na wyłączne prawa autorskie i autoryzację spółki do integracji botów z posiadanym przez szpitale systemem <code>HIS AMMS</code> firmy Asseco Poland, a w pozostałych trzech przetargach otwartych (Opole, Siedlce, Legnica) wpłynęła po jednej ofercie. W innej niszy szpitalnej spółka <strong>Pharmdiver Sp. z o.o.</strong> zdobyła dwa kontrakty z jedną ofertą na łącznie <strong>362,2 tys. zł</strong> (w Uniwersyteckim Szpitalu Klinicznym w Opolu za 203 tys. zł oraz w Szpitalu im. Rydygiera w Krakowie za 159,3 tys. zł) na oprogramowanie wspierające dobór farmakoterapii i pracę apteki szpitalnej.</p>
+      <p>Wśród pojedynczych rozstrzygnięć widać też zakupy wykraczające poza typową automatyzację biura. W styczniu 2026 roku opublikowano wynik zamówienia <strong>NASK-PIB</strong>, w którym <strong>Gremi Media S.A.</strong> (wydawca m.in. „Rzeczpospolitej”) otrzymała <strong>356,7 tys. zł</strong> za licencjonowany korpus prasowy do trenowania dużych modeli językowych (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de535a-71c8-eb39-d6d3-f500016a6814" target="_blank" rel="noopener"><code>2026/BZP 00032576</code> ↗</a>, zakres II). We Wrocławiu Dolnośląski Oddział <strong>NFZ</strong> przeznaczył <strong>622,4 tys. zł</strong> na rozbudowę środowiska serwerowego pod wdrożenie modelu LLM, a w Otrębusach zespół <strong>„Mazowsze”</strong> zakontraktował za <strong>378,7 tys. zł</strong> (<code>2025/BZP 00462052</code>) studyjny system odsłuchu, przetwarzania dźwięku z wykorzystaniem AI oraz przetworników elektroakustycznych. Swoje postępowanie na system wykrywający nieuczciwe wzorce interfejsów (<em>dark patterns</em>) przy użyciu modeli wizyjno-językowych VLM/LLM rozstrzygnął również <strong>UOKiK</strong>: w październiku 2025 r. spośród 4 ofert wybrano spółkę Firstscore Sp. z o.o. za <strong>209,1 tys. zł</strong> (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de1c60-b4cb-2009-6f2a-fc000173d783" target="_blank" rel="noopener"><code>2025/BZP 00517087</code> ↗</a>). Natomiast wśród <strong>18 postępowań podstawowych bez opublikowanego wyniku na 3 listopada 2026 r. (11,3%)</strong> trzeba odróżnić <a href="?status=open_or_pending&amp;sub=open_for_bids#explorer" data-bzp-preset="status=open_or_pending&amp;sub=open_for_bids"><strong>4 aktualnie otwarte nabory ofert ↓</strong></a> z listopadowymi terminami — m.in. wyposażenie i klaster laboratorium AI na UPJPII w Krakowie (<code>2026/BZP 00510375</code>), oprogramowanie EDR z AI dla PARP (<code>2026/BZP 00513349</code>), stacje robocze dla UM Łodzi (<code>2026/BZP 00513721</code>) oraz szkolenia WUP w Poznaniu (<code>2026/BZP 00517146</code>) — od <strong>14 postępowań po otwarciu ofert oczekujących na publikację rozstrzygnięcia w BZP</strong>, w tym październikowych przetargów Politechniki Częstochowskiej na roboty humanoidalne i manipulatory (m.in. <code>2026/BZP 00474618</code>) oraz wdrożeń awatarów 3D i stacji GPU.</p>
 
       <h3>Rachunek odroczony do 2028 roku</h3>
-      <p>Wszystkie te zakupy łączy jeszcze jeden parametr zaszyty w sekcji 2.11 ogłoszeń: udział funduszy europejskich. W analizowanej próbie <strong>60 z 99 podpisanych umów podstawowych (60,6%)</strong>, o łącznej wartości <strong>20,26 mln zł</strong>, korzysta z finansowania unijnego, przede wszystkim z Krajowego Planu Odbudowy w szpitalach oraz programu FERS na uczelniach i w urzędach pracy (<a href="?eu=1#explorer" data-bzp-preset="eu=1">filtruj 60 umów ze wsparciem UE ↓</a>).</p>
-      <p>Dotacja pozwala stosunkowo łatwo sfinansować sam zakup licencji na 24 lub 36 miesięcy, postawić serwer albo uruchomić bota głosowego na infolinii przychodni. Znacznie trudniejszy test przyjdzie w latach 2028–2029, po zakończeniu okresu rozliczeniowego projektów. Systemy oparte na modelach językowych i głosowych generują stały koszt zmienny: opłaty za ruch chmurowy i tokeny, aktualizacje integracji po każdej większej zmianie w systemie szpitalnym HIS, a od jesieni 2026 roku także koszty audytu i nadzoru nad systemami wyższego ryzyka. Tam, gdzie wdrożenie rozwiązuje realny zator w rejestracji albo radiologii, dyrektor placówki znajdzie pieniądze na utrzymanie w budżecie bieżącym. Tam, gdzie system kupiono głównie dlatego, że pasował do kryteriów naboru grantowego, za dwa lata zostaną nieprzedłużone licencje.</p>
+      <p>Większość tych zakupów łączy jeszcze jeden parametr z sekcji 2.11 i 2.14 formularzy BZP: udział funduszy europejskich. W analizowanym zbiorze <strong>70 z 110 podpisanych umów podstawowych (63,6%)</strong>, o łącznej wartości <strong>21,10 mln zł (65,5% kwoty umów podstawowych)</strong>, jest realizowanych w projektach współfinansowanych ze środków UE — przede wszystkim z Krajowego Planu Odbudowy w szpitalach oraz programu FERS na uczelniach i w urzędach pracy (<a href="?eu=1#explorer" data-bzp-preset="eu=1">filtruj zamówienia ze wsparciem UE ↓</a>).</p>
+      <p>Dotacja pozwala sfinansować zakup licencji na 24 lub 36 miesięcy, postawić serwer albo uruchomić bota głosowego na infolinii przychodni. Również koszty regulacyjne rozkładają się w czasie inaczej, niż sugerowały skrótowe komentarze prasowe: zgodnie z <a href="https://eur-lex.europa.eu/eli/reg/2024/1689" target="_blank" rel="noopener noreferrer">unijnym rozporządzeniem AI Act (2024/1689) ↗</a> zwykłe boty informacyjne i rejestracyjne podlegają głównie obowiązkom przejrzystości (art. 50), natomiast pełne wymogi oceny zgodności i nadzoru dla systemów <strong>wysokiego ryzyka</strong> wchodzą warunkowo — zależnie od klasyfikacji systemu — i po korekcie harmonogramu w unijnym pakiecie <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener noreferrer">Digital Omnibus on AI Komisji Europejskiej ↗</a> przypadają na <strong>2 grudnia 2027 r.</strong> (Załącznik III) oraz <strong>2 sierpnia 2028 r.</strong> (Załącznik I, obejmujący m.in. oprogramowanie będące wyrobem medycznym). Te terminy zbiegają się z wygasaniem okresów trwałości projektów KPO w latach 2028–2029. Same dane BZP pokazują oczywiście wyłącznie początkową wartość zawartych umów, a nie późniejsze wykorzystanie wdrożeń; moja własna prognoza jest taka, że po wygaśnięciu finansowania grantowego (gdy opłaty chmurowe, tokeny i aktualizacje integracji z HIS/PACS trzeba będzie pokryć z budżetu bieżącego) przetrwają narzędzia rozwiązujące realny zator w rejestracji lub diagnostyce obrazowej, a wygasną licencje kupione głównie pod kryteria naboru.</p>
     </div>
 
     <aside class="lab-aside-col">
       <div class="lab-aside-note">
-        <strong>63,4% kwoty z udziałem UE</strong>
-        W przeliczeniu na złotówki umowy współfinansowane ze środków europejskich odpowiadają za prawie dwie trzecie całego budżetu podstawowego w BZP (20,26 z 31,97 mln zł).
+        <strong>65,5% kwoty umów w projektach z UE</strong>
+        W przeliczeniu na złotówki 70 kontraktów realizowanych w projektach współfinansowanych ze środków europejskich odpowiada za blisko dwie trzecie wartości umów podstawowych w BZP (21,10 z 32,20 mln zł).
       </div>
       <div class="lab-aside-note">
         <strong>Integracje PACS i Platforma Usług Inteligentnych</strong>
-        Wiosną 2026 r. widoczna jest fala bliźniaczych zamówień szpitali (m.in. Opole, Gliwice, Siedlce) na podłączenie lokalnych systemów obrazowania PACS/RIS do centralnej Platformy Usług Inteligentnych Centrum e-Zdrowia.
+        W 2026 r. widoczna jest fala bliźniaczych zamówień szpitali (m.in. Opole, Gliwice, Siedlce, Kraków) na podłączenie lokalnych systemów obrazowania PACS/RIS do centralnej Platformy Usług Inteligentnych Centrum e-Zdrowia.
       </div>
     </aside>
   </div>
@@ -280,7 +297,7 @@
       <div>
         <span class="lab-fig-kicker">Zestawienie 03 · Powtarzający się wykonawcy i wybrane kontrakty</span>
         <h3 class="lab-fig-title" id="fig3-title">Przykłady firm z wieloma umowami oraz nietypowych zakupów w BZP</h3>
-        <p class="lab-fig-sub">Wybrane podmioty, które podpisały więcej niż jedną umowę podstawową w latach 2024–2026 (po ujednoliceniu wielkości liter w nazwach spółek), oraz trzy charakterystyczne kontrakty jednostkowe.</p>
+        <p class="lab-fig-sub">Pięć podmiotów z wieloma podpisanymi umowami podstawowymi w latach 2024–2026 (po kanonizacji nazw wykonawców) oraz pojedynczy kontrakt na korpusy prasowe dla modeli LLM.</p>
       </div>
     </div>
     <table class="lab-ledger" id="fig-vendors">
@@ -295,37 +312,37 @@
       <tbody>
         <tr>
           <td><strong>Krajowy Operator Chmury Medycznej Sp. z o.o.</strong></td>
-          <td>Systemy chmurowe VoiceBot i Chatbot do rejestracji pacjentów w szpitalach w Cieszynie, Opolu, Poznaniu (dwukrotnie), Zamościu i Legnicy.</td>
-          <td class="num-col">6 umów · 1 805 948 zł</td>
-          <td><a class="preset-link" href="?q=Chmury+Medycznej#explorer" data-bzp-preset="q=Chmury Medycznej">Pokaż 6 →</a></td>
-        </tr>
-        <tr>
-          <td><strong>net-o-logy Sp. z o.o.</strong></td>
-          <td>Infrastruktura serwerowa i kliencka pod obliczenia AI/ML dla Instytutu Technik Innowacyjnych Łukasiewicz-EMAG w Katowicach (obie umowy z 1 ofertą).</td>
-          <td class="num-col">2 umowy · 1 546 971 zł</td>
-          <td><a class="preset-link" href="?q=net-o-logy#explorer" data-bzp-preset="q=net-o-logy">Pokaż 2 →</a></td>
+          <td>Chmurowe systemy VoiceBot i Chatbot dla szpitali: Cieszyn, Opole, Poznań (dwukrotnie), Zamość, Siedlce i Legnica.</td>
+          <td class="num-col">7 umów · 1 960 190 zł</td>
+          <td><a class="preset-link" href="?q=Chmury+Medycznej#explorer" data-bzp-preset="q=Chmury Medycznej">Pokaż 7 →</a></td>
         </tr>
         <tr>
           <td><strong>Stinet Sp. z o.o.</strong></td>
-          <td>Coroczne utrzymanie i wsparcie systemu detekcji zagrożeń sieciowych opartego na uczeniu maszynowym w Narodowym Centrum Badań Jądrowych w Otwocku.</td>
+          <td>Coroczne utrzymanie i wsparcie systemu detekcji zagrożeń sieciowych ML w Narodowym Centrum Badań Jądrowych w Otwocku.</td>
           <td class="num-col">3 umowy · 1 292 423 zł</td>
           <td><a class="preset-link" href="?q=Stinet#explorer" data-bzp-preset="q=Stinet">Pokaż 3 →</a></td>
         </tr>
         <tr>
           <td><strong>E4I Sp. z o.o.</strong></td>
-          <td>Dostawy robotów humanoidalnych, platform mobilnych i systemu przechwytywania ruchu dla Katedry i Wydziału Sztucznej Inteligencji Politechniki Częstochowskiej.</td>
+          <td>Dostawy robotów humanoidalnych, platform mobilnych i systemów motion capture dla Politechniki Częstochowskiej.</td>
           <td class="num-col">3 umowy · 734 932 zł</td>
           <td><a class="preset-link" href="?q=E4I#explorer" data-bzp-preset="q=E4I">Pokaż 3 →</a></td>
         </tr>
         <tr>
+          <td><strong>net-o-logy Sp. z o.o.</strong></td>
+          <td>Infrastruktura sieciowa i serwerowa AI/ML dla Łukasiewicz–EMAG w Katowicach (obie z 1 ofertą; kwota po korekcie 3× powtórzonej wartości w sekcji 8.2).</td>
+          <td class="num-col">2 umowy · 609 957 zł</td>
+          <td><a class="preset-link" href="?q=net-o-logy#explorer" data-bzp-preset="q=net-o-logy">Pokaż 2 →</a></td>
+        </tr>
+        <tr>
           <td><strong>Pharmdiver Sp. z o.o.</strong></td>
-          <td>Specjalistyczne oprogramowanie AI wspierające dobór leków i pracę apteki szpitalnej w USK w Opolu oraz Szpitalu im. Rydygiera w Krakowie (obie z 1 ofertą).</td>
+          <td>Oprogramowanie AI wspierające dobór farmakoterapii w USK w Opolu i Szpitalu im. Rydygiera w Krakowie (obie z 1 ofertą).</td>
           <td class="num-col">2 umowy · 362 239 zł</td>
           <td><a class="preset-link" href="?q=Pharmdiver#explorer" data-bzp-preset="q=Pharmdiver">Pokaż 2 →</a></td>
         </tr>
         <tr>
           <td><strong>Gremi Media S.A. dla NASK-PIB</strong></td>
-          <td>Zakup licencjonowanych korpusów prasowych do trenowania polskich dużych modeli językowych (<code>2026/BZP 00032576</code>, zakres II).</td>
+          <td>Korpusy prasowe dla LLM (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de535a-71c8-eb39-d6d3-f500016a6814" target="_blank" rel="noopener"><code>2026/BZP 00032576</code> ↗</a>, zakres II).</td>
           <td class="num-col">1 umowa · 356 700 zł</td>
           <td><a class="preset-link" href="?q=00032576#explorer" data-bzp-preset="q=00032576">Pokaż 1 →</a></td>
         </tr>
@@ -341,22 +358,22 @@
       <strong>Brudne rejestry</strong>
     </div>
     <div class="lab-prose">
-      <h2>Dlaczego automatyczne streszczenie rejestru bez sprawdzania źródeł zawyżyłoby wynik o 10 milionów złotych</h2>
+      <h2>Dlaczego automatyczne streszczenie rejestru bez sprawdzania źródeł zawyżyłoby wynik o ponad 11 milionów złotych</h2>
       <p>Budując ten zbiór, chciałem też sprawdzić w praktyce granicę, o której rzadko mówi się w dyskusjach o agentach AI: różnicę między wygenerowaniem gładkiego podsumowania a policzeniem publicznych pieniędzy tak, żeby można było podpisać się pod każdą liczbą własnym nazwiskiem.</p>
-      <p>Surowe API Biuletynu Zamówień Publicznych nie oddaje gotowej tabeli z kontraktami. Zwraca osobne dokumenty HTML (ogłoszenia o zamówieniu <code>ContractNotice</code>, zmiany i ogłoszenia o wyniku <code>TenderResultNotice</code>), które trzeba najpierw połączyć po identyfikatorze postępowania <code>tenderId</code>, a potem wyciągnąć z nich ustrukturyzowane sekcje formularza. Gdybym poprosił model językowy o proste pobranie i zsumowanie wyników dla haseł „sztuczna inteligencja” oraz „AI”, raport skłamałby o ponad dziesięć milionów złotych z trzech zupełnie przyziemnych powodów.</p>
+      <p>Surowe API Biuletynu Zamówień Publicznych nie oddaje gotowej tabeli z kontraktami. Zwraca osobne dokumenty HTML (ogłoszenia o zamówieniu <code>ContractNotice</code>, zmiany <code>NoticeUpdateNotice</code> i ogłoszenia o wyniku <code>TenderResultNotice</code>), a sam parametr zapytania <code>TenderId</code> jest po stronie serwera BZP ignorowany — dlatego deterministyczne łączenie wszystkich <strong>304 powiązanych ogłoszeń w 171 postępowań</strong> po identyfikatorze <code>tenderId</code> wykonałem bezpośrednio w Pythonie (dzieląc przy tym przedziały dat tak, by żadna paczka nie ucięła rekordów na limicie <code>PageSize=500</code>). Gdybym poprosił model językowy o proste pobranie i zsumowanie wyników dla haseł „sztuczna inteligencja” oraz „AI”, raport przestrzeliłby wynik o ponad jedenaście milionów złotych z trzech zupełnie przyziemnych powodów.</p>
       <p>Po pierwsze, skrót <code>AI</code> w zamówieniach publicznych oznacza dla instytutów weterynaryjnych wirusa grypy ptaków (<em>Avian Influenza</em>). Pełnotekstowa wyszukiwarka wyłapuje też zbitki liter w nazwach własnych, choćby zamówienia cateringowe dla przedszkola „Tęczowa KrAIna”.</p>
-      <p>Po drugie, od kiedy polskie uczelnie powołały Wydziały i Katedry Sztucznej Inteligencji, nazwa jednostki trafia do nagłówka każdego ich przetargu. W ten sposób pod hasłem AI znajduje się przebudowa budowlana sal dydaktycznych za <strong>4,63 mln zł</strong>, stała obsługa prawna instytutu badawczego za <strong>156 tys. zł</strong>, dostawa krzeseł obrotowych, wyjazdy studenckie i obsługa gastronomiczna konferencji. Razem to 12 postępowań i <strong>5,20 mln zł</strong> w podpisanych umowach. Nie wyrzuciłem ich do kosza, bo komuś badającemu pełne koszty zaplecza akademickiego mogą się przydać, ale w bazie poniżej są domyślnie oddzielone od właściwych wydatków technologicznych (<a href="?incidental=1&amp;cat=incidental#explorer" data-bzp-preset="incidental=1&amp;cat=incidental">włącz i przejrzyj 12 wydatków pobocznych ↓</a>).</p>
-      <p>Po trzecie wreszcie, urzędowe formularze zawierają zwykłe ludzkie literówki. Skrypt porównujący krzyżowo szacowaną wartość zamówienia z ceną wybranej oferty i kwotą wpisaną przy zawarciu umowy zatrzymał się na ogłoszeniu Centrum e-Zdrowia <code>2026/BZP 00009631</code>. W dwóch miejscach dokumentu widnieje kwota około pół miliona złotych, a w trzecim, przez dopisane jedno zero, robi się z niej ponad pięć milionów. Bez tej jednej korekty łączne wydatki na szkolenia AI w Polsce wyglądałyby w raporcie na niemal trzykrotnie wyższe niż w rzeczywistości.</p>
+      <p>Po drugie, od kiedy polskie uczelnie powołały Wydziały i Katedry Sztucznej Inteligencji, nazwa jednostki trafia do nagłówka każdego ich przetargu. W ten sposób pod hasłem AI znajduje się przebudowa budowlana sal dydaktycznych Politechniki Częstochowskiej za <strong>4,63 mln zł</strong> (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08ded82d-68a6-64c3-92be-eb0001746b03" target="_blank" rel="noopener"><code>2026/BZP 00320127</code> ↗</a>), stała obsługa prawna instytutu badawczego za <strong>156 tys. zł</strong>, dostawa krzeseł obrotowych, wyjazdy studenckie i obsługa gastronomiczna konferencji. Razem to <strong>12 postępowań pobocznych i 5,22 mln zł w 11 podpisanych umowach</strong>. Zostawiłem je w pliku źródłowym dla pełnej przejrzystości, ale w bazie poniżej są domyślnie oddzielone od właściwych zamówień technologicznych (<a href="?incidental=1&amp;cat=incidental#explorer" data-bzp-preset="incidental=1&amp;cat=incidental">włącz i przejrzyj 12 wydatków pobocznych ↓</a>). Podobnie w przetargach wielozadaniowych wyłączyłem części niezwiązane z AI — od pracowni OZE i standardowych tabletów po szkolenia z wypalenia zawodowego czy SZBI.</p>
+      <p>Po trzecie wreszcie, urzędowe formularze w sekcji 8.2 zawierają błędy pisarskie i powielenia kwot. W ogłoszeniu Centrum e-Zdrowia <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de4ded-90a3-9604-d6d3-f5000169f1af" target="_blank" rel="noopener"><code>2026/BZP 00009631</code> ↗</a> przy wpisywaniu wartości umowy omyłkowo dopisano jedno zero (<code>5 440 000 zł</code> zamiast wybranej oferty <code>544 000 zł</code> — zawyżenie o 4,90 mln zł). Z kolei w trzyczęściowym zamówieniu instytutu Łukasiewicz–EMAG w Katowicach (<a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08dc0eba-0392-b93a-42c6-d30011511295" target="_blank" rel="noopener"><code>2024/BZP 00014936</code> ↗</a>) wykonawca wygrał trzy części na łącznie <code>468 507 zł</code>, ale zamawiający wpisał tę łączną kwotę całego kontraktu trzykrotnie w sekcji 8.2 każdej części, zawyżając sumę o kolejne <strong>937 tys. zł</strong>. Pełny rejestr wszystkich korekt oraz reguły klasyfikacji udostępniam otwarcie w repozytorium: <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/bzp-methodology.md" target="_blank" rel="noopener noreferrer">metodologia i raport audytu (<code>bzp-methodology.md</code>) ↗</a> oraz <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/scripts/audit_bzp_data.py" target="_blank" rel="noopener noreferrer">skrypt audytowy w Pythonie (<code>audit_bzp_data.py</code>) ↗</a>.</p>
     </div>
 
     <aside class="lab-aside-col">
       <div class="lab-aside-note">
         <strong>Ścieżka weryfikacji danych</strong>
-        1. Pobranie ogłoszeń z API <code>ezamowienia.gov.pl</code> (01.01.2024 – 03.11.2026).<br>
-        2. Odfiltrowanie weterynarii i przypadkowych zrostów literowych.<br>
-        3. Łączenie ogłoszeń po <code>tenderId</code> (287 dokumentów → 171 postępowań).<br>
-        4. Krzyżowe porównanie sekcji 4.3, 6.4 i 8.2 w dokumentach HTML.<br>
-        5. Ręczny przegląd kodów CPV i granicznych opisów przedmiotu.
+        1. Pobranie ogłoszeń z API <code>ezamowienia.gov.pl</code> z podziałem okien poniżej <code>PageSize=500</code> (stan na 03.11.2026).<br>
+        2. Odfiltrowanie weterynarii (<em>Avian Influenza</em>) i zrostów literowych na granicach słów.<br>
+        3. Deterministyczne łączenie po <code>tenderId</code> w Pythonie (304 ogłoszenia → 171 postępowań).<br>
+        4. Walidacja sekcji 2.11/2.14, 4.3, 6.1, 6.4 i 8.2 oraz odseparowanie części nie-AI.<br>
+        5. Jawny kod i opis korekt: <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/bzp-methodology.md" target="_blank" rel="noopener noreferrer">metodologia ↗</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/scripts/audit_bzp_data.py" target="_blank" rel="noopener noreferrer">ETL ↗</a>.
       </div>
     </aside>
   </div>
@@ -365,34 +382,47 @@
     <div class="lab-fig-head">
       <div>
         <span class="lab-fig-kicker">Dowód z dokumentów źródłowych · Dlaczego walidacja ma znaczenie</span>
-        <h3 class="lab-fig-title" id="fig4-title">Dwa rekordy z BZP, które bez weryfikacji całkowicie przekrzywiają statystykę</h3>
+        <h3 class="lab-fig-title" id="fig4-title">Przykłady rekordów z BZP, które bez weryfikacji całkowicie przekrzywiają statystykę</h3>
       </div>
     </div>
     <div class="specimen-grid">
       <div class="specimen-card">
         <div class="specimen-head">
-          <strong>Przypadek A · Czeski błąd o 4,90 mln zł</strong>
+          <strong>Przypadek A · Dopisane zero (+4,90 mln zł)</strong>
           <span>2026/BZP 00009631 · Centrum e-Zdrowia</span>
         </div>
         <div class="specimen-lines">
           <div class="specimen-line"><span>Sekcja 4.3 (wartość szacunkowa netto):</span><strong>494 260,00 PLN</strong></div>
-          <div class="specimen-line"><span>Sekcja 6.4 (cena wybranej oferty BUZZcenter):</span><strong>544 000,00 PLN</strong></div>
+          <div class="specimen-line"><span>Sekcja 6.4 (wybrana oferta BUZZcenter):</span><strong>544 000,00 PLN</strong></div>
           <div class="specimen-line is-error"><span>Sekcja 8.2 (wpisana wartość umowy):</span><b>5 440 000,00 PLN (!?)</b></div>
         </div>
-        <p class="specimen-note">W ogłoszeniu o wyniku na organizację szkoleń online dla pracowników ochrony zdrowia w polu 8.2 omyłkowo dopisano jedno zero. W oczyszczonym zbiorze przyjąłem kwotę z sekcji 6.4 (<code>544 000 zł</code>), oznaczając rekord flagą korekty. <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de4db4-ae41-5a40-f3d2-0500019b7d65" target="_blank" rel="noopener noreferrer">Sprawdź oryginalny wpis w BZP ↗</a></p>
+        <p class="specimen-note">W ogłoszeniu o wyniku na szkolenia online dla pracowników ochrony zdrowia w polu 8.2 omyłkowo dopisano jedno zero. W oczyszczonym zbiorze przyjąłem zweryfikowaną kwotę z sekcji 6.4 (<code>544 000 zł</code>), oznaczając rekord flagą korekty. <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08de4ded-90a3-9604-d6d3-f5000169f1af" target="_blank" rel="noopener">Karta wyniku w BZP ↗</a></p>
       </div>
 
       <div class="specimen-card">
         <div class="specimen-head">
-          <strong>Przypadek B · „AI” wyłącznie w nazwie wydziału</strong>
-          <span>2026/BZP 00320127 · Politechnika Częstochowska</span>
+          <strong>Przypadek B · Kwota wklejona 3× (+0,94 mln zł)</strong>
+          <span>2024/BZP 00014936 · Łukasiewicz–EMAG Katowice</span>
         </div>
         <div class="specimen-lines">
-          <div class="specimen-line"><span>Kod CPV:</span><strong>45000000-7 (Roboty budowlane)</strong></div>
-          <div class="specimen-line"><span>Przedmiot:</span><strong>Przebudowa pomieszczeń WIiSI</strong></div>
-          <div class="specimen-line"><span>Wartość podpisanej umowy:</span><strong>4 627 000,00 PLN</strong></div>
+          <div class="specimen-line"><span>Suma 3 wygranych części (sekcja 6.4):</span><strong>468 507,00 PLN</strong></div>
+          <div class="specimen-line"><span>Sekcja 8.2 wpisana w każdej części:</span><strong>3 × 468 507,00 PLN</strong></div>
+          <div class="specimen-line is-error"><span>Surowa suma z ogłoszenia:</span><b>1 405 521,00 PLN (!?)</b></div>
         </div>
-        <p class="specimen-note">Pełnoprawny remont budowlany pomieszczeń Wydziału Informatyki i Sztucznej Inteligencji (wraz z powiązanymi zamówieniami na meble biurowe i catering na innych uczelniach: łącznie <code>5,20 mln zł</code>). Wydzielone do osobnej warstwy, aby nie udawały zakupów technologii. <a href="?incidental=1&amp;cat=incidental#explorer" data-bzp-preset="incidental=1&amp;cat=incidental">Zobacz w bazie ↓</a></p>
+        <p class="specimen-note">Wykonawca (<code>net-o-logy</code>) wygrał trzy części dostawy sprzętu AI/ML łącznie na <code>468 507 zł</code>, ale zamawiający wkleił tę łączną wartość całego kontraktu do sekcji 8.2 każdej z trzech części z osobna (+937 tys. zł). <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08dc0eba-0392-b93a-42c6-d30011511295" target="_blank" rel="noopener">Karta wyniku w BZP ↗</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Przypadek C · „AI” w nazwie wydziału (+5,22 mln zł)</strong>
+          <span>2026/BZP 00320127 · Politechnika Częstochowska + 10 umów</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Kod CPV głównego zamówienia:</span><strong>45000000-7 (Roboty budowlane)</strong></div>
+          <div class="specimen-line"><span>Przebudowa pomieszczeń WIiSI:</span><strong>4 627 000,00 PLN</strong></div>
+          <div class="specimen-line is-error"><span>Łącznie 11 umów pobocznych:</span><b>5 216 219,04 PLN</b></div>
+        </div>
+        <p class="specimen-note">Remont budowlany sal Wydziału Informatyki i Sztucznej Inteligencji (plus meble biurowe, obsługa prawna i catering konferencyjny w 11 innych postępowaniach). Razem z przypadkami A i B daje to <code>11,05 mln zł</code> zawyżenia surowego rejestru. <a href="https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08ded82d-68a6-64c3-92be-eb0001746b03" target="_blank" rel="noopener">Karta BZP ↗</a> · <a href="?incidental=1&amp;cat=incidental#explorer" data-bzp-preset="incidental=1&amp;cat=incidental">Zobacz 12 w bazie ↓</a></p>
       </div>
     </div>
   </figure>
@@ -402,16 +432,16 @@
   <div class="frame">
     <div class="lab-tool-head">
       <div>
-        <span class="number">Pełna baza danych · 171 postępowań BZP (01.2024 – 11.2026)</span>
+        <span class="number">Pełna baza danych · 171 postępowań BZP (01.2024 – 03.11.2026)</span>
         <h2>Przeszukaj i sprawdź każdy przetarg w źródle</h2>
       </div>
-      <p>Kliknij słupek roku, kategorii albo sektora (możesz też przełączyć widok na województwa), filtruj umowy z jedną ofertą lub dotacją UE i przejdź jednym kliknięciem do oryginalnej karty na <code>ezamowienia.gov.pl</code>.</p>
+      <p>Kliknij słupek roku (z przełącznikiem <code>Ogłoszenie / Umowa</code>), kategorii albo sektora, odfiltruj czysty zakres AI, zamówienia z jedną ofertą lub dotacją UE i przejdź jednym kliknięciem do karty na <code>ezamowienia.gov.pl</code>.</p>
     </div>
     <div id="bzp-explorer" data-src="/assets/lab/bzp-ai-2024-2026.json">
       <noscript>
         <div class="lab-callout">
           <span class="micro">Interaktywna tabela wymaga włączonego JavaScriptu</span>
-          <p>Pełny, oczyszczony zbiór wszystkich 171 postępowań (wraz z linkami do kart BZP, kwotami, wykonawcami i kodami CPV) możesz pobrać bezpośrednio jako plik <a href="/assets/lab/bzp-ai-2024-2026.json">bzp-ai-2024-2026.json</a>.</p>
+          <p>Pełny, oczyszczony zbiór wszystkich 171 postępowań (159 podstawowych, 110 podpisanych umów na 32,20 mln zł brutto oraz 12 wydatków pobocznych, wraz z linkami do kart BZP, wykonawcami i kodami CPV) możesz pobrać bezpośrednio jako plik <a href="/assets/lab/bzp-ai-2024-2026.json">bzp-ai-2024-2026.json</a>.</p>
         </div>
       </noscript>
     </div>

@@ -12,6 +12,12 @@ This public repository includes both **current references** and **older iteratio
 - **[09 · Kontekst autora / Author context](09_KONTEKST_AUTORA.md)** — roboczy zapis sposobu pracy i myślenia autora (nie tekst na stronę; w razie kolizji wygrywa `07`). / Decision context, not website copy.
 - **[10 · Publicystyka + Narzędzia i Dane](10_PUBLICYSTYKA.md)** — otwarta notatka robocza o formacie łączącym artykuły z danymi i narzędziami. / Working note on interactive data essays.
 
+## Raporty i analizy (`docs/lab/`) / Lab & Report Documentation
+
+- **[Metodologia i audyt zbioru BZP AI (2024–2026)](lab/bzp-methodology.md)** — replikowalna metodyka, reguły łączenia po `tenderId`, rejestr korekt przed→po oraz pełne tabele KPI PL/EN.
+- **[Pakiet redakcyjny i prasowy BZP AI](lab/bzp-press-kit.md)** — jednostronicowe streszczenie, instrukcja osadzenia `?embed=1`, eksport PDF/CSV i kąty współpracy dla redakcji.
+- **[Plan pogłębienia: skąd bierze się jedna oferta w publicznym IT?](lab/bzp-single-bid-investigation.md)** — próba 11 postępowań (7 z jedną ofertą + 4 kontrolne), arkusz weryfikacji SWZ i pytania badawcze.
+
 ## Historia decyzji / Historical notes
 
 - [01 · Strategia marki — wersja 1](01_Strategia_marki_RolePlayingTech_v1.md)
