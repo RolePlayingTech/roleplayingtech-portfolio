@@ -35,7 +35,10 @@ Read the [learning & open-source overview](https://roleplayingtech.com/en/educat
 
 Longform investigations combining reporting, audited public-registry datasets and interactive browser explorers:
 
-- **[What do Polish public institutions actually buy under the ‘AI’ label? (BZP 2024–2026)](https://roleplayingtech.com/en/lab/ai-tenders/)** · [Polish edition](https://roleplayingtech.com/pl/lab/przetargi-ai/) · [Open JSON dataset](assets/lab/bzp-ai-2024-2026.json)
+- **[Shutting Off Cheap Sun While Power Is Expensive: Inside 73,924 Intervals of Poland's Grid (PSE 2024–2026)](https://roleplayingtech.com/en/lab/polish-grid-curtailment/)** · [Polish edition](https://roleplayingtech.com/pl/lab/redysponowanie-oze-pse/) · [Open JSON dataset](assets/lab/pse-grid-2026.json) · [Methodology](docs/lab/pse-grid-methodology.md) · [Press kit & UDIP questions (PL)](docs/lab/pse-grid-press-kit.md)
+- **[1.48B PLN for “Cybersecure Local Government,” Yet One in Four Polish Councils Leaves Email Open to Spoofing (All 2,809 JSTs)](https://roleplayingtech.com/en/lab/municipal-cybersecurity/)** · [Polish edition](https://roleplayingtech.com/pl/lab/cyberbezpieczny-samorzad/) · [Open JSON dataset](assets/lab/jst-cyber-2026.json) · [Methodology](docs/lab/jst-cyber-methodology.md) · [Press kit & UDIP questions (PL)](docs/lab/jst-cyber-press-kit.md)
+- **[How Polish State Registries and .gov.pl Portals Funnel Traffic to Unlicensed Casinos (RSPO / RPWDL2 / MF)](https://roleplayingtech.com/en/lab/state-registries-casinos/)** · [Polish edition](https://roleplayingtech.com/pl/lab/panstwo-linkuje-do-kasyna/) · [Open defanged JSON dataset](assets/lab/casino-state-2026.json) · [Methodology](docs/lab/casino-state-methodology.md) · [Press kit & UDIP questions (PL)](docs/lab/casino-state-press-kit.md)
+- **[60.7% of the money, zero surviving rivals: How Polish public institutions actually buy AI (BZP 2024–2026)](https://roleplayingtech.com/en/lab/ai-tenders/)** · [Polish edition](https://roleplayingtech.com/pl/lab/przetargi-ai/) · [Open JSON dataset](assets/lab/bzp-ai-2024-2026.json) · [Methodology](docs/lab/bzp-methodology.md) · [Press kit & UDIP questions (PL)](docs/lab/bzp-press-kit.md)
 
 ## Find me online
 

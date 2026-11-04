@@ -14,9 +14,19 @@ This public repository includes both **current references** and **older iteratio
 
 ## Raporty i analizy (`docs/lab/`) / Lab & Report Documentation
 
-- **[Metodologia i audyt zbioru BZP AI (2024–2026)](lab/bzp-methodology.md)** — replikowalna metodyka, reguły łączenia po `tenderId`, rejestr korekt przed→po oraz pełne tabele KPI PL/EN.
-- **[Pakiet redakcyjny i prasowy BZP AI](lab/bzp-press-kit.md)** — jednostronicowe streszczenie, instrukcja osadzenia `?embed=1`, eksport PDF/CSV i kąty współpracy dla redakcji.
-- **[Plan pogłębienia: skąd bierze się jedna oferta w publicznym IT?](lab/bzp-single-bid-investigation.md)** — próba 11 postępowań (7 z jedną ofertą + 4 kontrolne), arkusz weryfikacji SWZ i pytania badawcze.
+- **Raport NR 04 — Redysponowanie OZE i 73 924 kwadranse pracy sieci PSE (2024–2026):**
+  - **[Metodologia i audyt telemetrii PSE 15-min](lab/pse-grid-methodology.md)** — reguły łączenia `poze-redoze`, `his-wlk-cal`, `gen-jw` (106 bloków w 37 elektrowniach), `przeplywy-mocy` i `rce-pln`, wrażliwość progów RCE oraz audyt reformy SDAC 15-min.
+  - **[Pakiet redakcyjny i prasowy PSE OZE](lab/pse-grid-press-kit.md)** — streszczenie śledcze, 6 pytań UDIP do PSE / MKiŚ / URE, instrukcja `?embed=1` i kąty pod redakcje energetyczno-gospodarcze.
+- **Raport NR 03 — „Cyberbezpieczny Samorząd” (1,48 mld zł) i pełny spis 2 809 polskich JST:**
+  - **[Metodologia pełnego spisu 2 809 JST i CPPC](lab/jst-cyber-methodology.md)** — uzgodnienie 2 511 grantów CPPC co do grosza (`1 483 979 072,49 zł`), klasyfikacja DNS/MX/SPF/DMARC/TLS, benchmark `1 124` domen `.gov.pl` oraz protokół stealth Chromium `0s` Zero-Click.
+  - **[Pakiet redakcyjny i prasowy Cyberbezpieczny Samorząd](lab/jst-cyber-press-kit.md)** — streszczenie ustaleń w 16 województwach, pytania UDIP do MC / CPPC / NASK / UODO oraz instrukcja osadzania wyszukiwarki 2 809 urzędów.
+- **Raport NR 02 — Rejestry państwowe (RSPO, RPWDL2, Żłobki), strony `.gov.pl` i nielegalny hazard:**
+  - **[Metodologia i protokół bezpieczeństwa `casino-state-2026`](lab/casino-state-methodology.md)** — krzyżowanie 35 583 domen z trzema rejestrami publicznymi i 59 376 wpisami MF, reguły defangowania `[.]` oraz estymator Kaplana–Meiera.
+  - **[Pakiet redakcyjny i prasowy Rejestry vs Hazard](lab/casino-state-press-kit.md)** — streszczenie 5 silosów państwowych, 8 pytań UDIP do MF / MEN / MZ / MRPiPS / MC / NASK oraz instrukcja `?embed=1`.
+- **Raport NR 01 — Zamówienia publiczne na AI w BZP (2024–2026):**
+  - **[Metodologia i audyt zbioru BZP AI (2024–2026)](lab/bzp-methodology.md)** — replikowalna metodyka, reguły łączenia po `tenderId`, rejestr korekt przed→po oraz pełne tabele KPI PL/EN.
+  - **[Pakiet redakcyjny i prasowy BZP AI](lab/bzp-press-kit.md)** — streszczenie śledcze, Top 10 udokumentowanych przypadków, 6 pytań UDIP, instrukcja osadzenia `?embed=1` i kąty pod konkretne redakcje.
+  - **[Raport śledczy z audytu 159 protokołów BZP, KRS i CEIDG](lab/bzp-single-bid-investigation.md)** — pełny rozkład przyczyn 60,7% wydatków bez rywala, blokada HIS/PACS/PUI, ślepa plamka `6.2 = 6.4`, błędy sekcji VII/MŚP i 31 unieważnień.
 
 ## Historia decyzji / Historical notes
 

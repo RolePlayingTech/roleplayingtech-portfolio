@@ -70,6 +70,8 @@ VERIFIED_COMPANION_NOTICE_UUIDS: dict[str, str] = {
     "08dec07f-348e-b2c2-5fad-9500015c71a7": "2026/BZP 00271902 (TenderResultNotice, Szpital Specjalistyczny im. L. Rydygiera w Krakowie — companion notice)",
     "08decb83-1f9e-bca5-5fad-9500015f51db": "2026/BZP 00291854 (TenderResultNotice, WUP w Kielcach — excluded boundary notice cited in methodology)",
     "08ded376-5681-c34c-92be-eb0001c25126": "2026/BZP 00310877 (TenderResultNotice, Uniwersytet Jagielloński — companion notice cited in methodology)",
+    "08de63e1-aa9a-d0bd-056e-e50001ab09a0": "2026/BZP 00094988 (ContractNotice, MSW w Siedlcach — companion to 2026/BZP 00141601)",
+    "08de3be1-9043-3686-d6d3-f50001cebb6a": "2025/BZP 00600276 (ContractNotice, IPCZD w Warszawie — companion to 2026/BZP 00137744)",
 }
 
 # Forensic benchmarks deterministically extracted from the 159-notice BZP HTML protocol audit

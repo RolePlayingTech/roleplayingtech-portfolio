@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f7f6f2">
+<meta name="description" content="Ogólnopolski audyt wszystkich 2 809 gmin, miast, powiatów i województw 34 dni po zakończeniu programu „Cyberbezpieczny Samorząd” (1,48 mld zł): 26,4% domen urzędowych nie blokuje spoofingu poczty, efekt grantu na brak DMARC jest statystycznie zerowy (p = 0,28), a 336 z 346 stron ze skryptami Mety wysyła dane mieszkańców bez zgody.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1,48 mld zł na „Cyberbezpieczny Samorząd”, a poczta co czwartego urzędu stoi otworem">
+<meta property="og:description" content="Przebadałem 100% z 2 809 polskich samorządów 34 dni po rozliczeniu 1,48 mld zł grantów CPPC: 734 urzędy nie blokują podszywania pod e-maile (w tym 62 gminy z maks. dotacją ~850 tys. zł bez DMARC), 30 gmin działa na freemailu, a 336 stron śle dane do Mety bez zgody.">
+<meta property="og:url" content="https://roleplayingtech.com/pl/lab/cyberbezpieczny-samorzad/">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://roleplayingtech.com/assets/lab/og-jst-cyber-2026-pl.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Raport RolePlayingTech Nr 03: audyt wszystkich 2 809 samorządów w Polsce po programie Cyberbezpieczny Samorząd (26,4% podatnej poczty, p = 0,28 dla braku DMARC, 336/346 stron wysyłających dane do Mety bez zgody)">
+<meta property="article:published_time" content="2026-11-04">
+<meta property="article:author" content="Grzegorz Stuczyński">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="1,48 mld zł na „Cyberbezpieczny Samorząd”, a poczta co czwartego urzędu stoi otworem">
+<meta name="twitter:description" content="Audyt wszystkich 2 809 gmin, miast, powiatów i województw RP 34 dni po rozliczeniu 1,48 mld zł dotacji: sprawdź swój urząd w wyszukiwarce.">
+<meta name="twitter:image" content="https://roleplayingtech.com/assets/lab/og-jst-cyber-2026-pl.png">
+<title>1,48 mld zł na „Cyberbezpieczny Samorząd”, a poczta co czwartego urzędu stoi otworem — RolePlayingTech</title>
+<script>document.documentElement.classList.add('js');if(location.search.indexOf('embed=1')!==-1)document.documentElement.classList.add('is-embed');</script>
+<link rel="stylesheet" href="/assets/minimal.css">
+<link rel="stylesheet" href="/assets/lab/bzp-explorer.css">
+<link rel="stylesheet" href="/assets/lab/jst-explorer.css">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="canonical" href="https://roleplayingtech.com/pl/lab/cyberbezpieczny-samorzad/">
+<link rel="alternate" hreflang="pl" href="https://roleplayingtech.com/pl/lab/cyberbezpieczny-samorzad/">
+<link rel="alternate" hreflang="en" href="https://roleplayingtech.com/en/lab/municipal-cybersecurity/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "headline": "1,48 mld zł na „Cyberbezpieczny Samorząd”, a poczta co czwartego urzędu stoi otworem",
+      "image": "https://roleplayingtech.com/assets/lab/og-jst-cyber-2026-pl.png",
+      "datePublished": "2026-11-04",
+      "dateModified": "2026-11-04",
+      "inLanguage": "pl-PL",
+      "author": {
+        "@type": "Person",
+        "name": "Grzegorz Stuczyński",
+        "url": "https://roleplayingtech.com/pl/about/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "RolePlayingTech",
+        "url": "https://roleplayingtech.com/pl/"
+      },
+      "mainEntityOfPage": "https://roleplayingtech.com/pl/lab/cyberbezpieczny-samorzad/"
+    },
+    {
+      "@type": "Dataset",
+      "name": "Ogólnopolski audyt poczty urzędowej (SPF/DMARC/DNSSEC), HTTPS i trackerów Zero-Click wszystkich 2 809 jednostek samorządu terytorialnego w Polsce (listopad 2026)",
+      "description": "Pełna populacja 2 809 ustawowych JST (2 479 gmin, 314 powiatów, 16 województw) połączona co do grosza z 2 511 wnioskami grantowymi CPPC FERC.02.02 „Cyberbezpieczny Samorząd” (1 483 979 072,49 zł), zapytaniami DNS-over-HTTPS dla stref pocztowych, 1 124 domenami .gov.pl oraz sesjami przeglądarki Chromium badającymi śledzenie bez zgody.",
+      "url": "https://roleplayingtech.com/pl/lab/cyberbezpieczny-samorzad/",
+      "temporalCoverage": "2026-11-03/2026-11-04",
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://roleplayingtech.com/assets/lab/jst-cyber-2026.json"
+      }
+    }
+  ]
+}
+</script>
+<script src="/assets/site.js" defer></script>
+<script src="/assets/lab/jst-explorer.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Przejdź do treści</a>
+<header class="site-head"><div class="frame"><a class="logo" href="/pl/">roleplayingtech<i>.</i></a><nav class="head-nav" aria-label="Nawigacja"><a href="/pl/#work">Projekty</a><a href="/pl/education/">Edukacja</a><a href="/pl/lab/" aria-current="page">Analizy</a><a href="/pl/about/">O mnie</a><a href="/pl/#help">Współpraca</a><a href="/pl/#links">W sieci</a><a href="/pl/#contact">Kontakt</a><div class="head-socials" aria-label="Profile społecznościowe"><a class="soc-link" href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer" aria-label="X (@rpl_0x)" title="X · @rpl_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="soc-accent" d="M12.9 2.5L9.1 6.9M6.9 9.1L3.1 13.5" fill="none" stroke="var(--rust)" stroke-width="1.45" stroke-linecap="round"/><path d="M2.6 2.5h2.7l8.1 11h-2.7Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="soc-accent" cx="4.2" cy="3.9" r="1.15" fill="var(--rust)"/><path d="M4.2 6.6v5.9M7.6 12.5V6.6m0 2.2c0-1.4 1.1-2.3 2.4-2.3 1.4 0 2.2.9 2.2 2.4v3.6" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (@roleplayinglife_0x)" title="Instagram · @roleplayinglife_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.2" y="2.2" width="11.6" height="11.6" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.7" fill="none" stroke="currentColor" stroke-width="1.4"/><circle class="soc-accent" cx="11.3" cy="4.7" r="1" fill="var(--rust)"/></svg></a></div><a class="switch" href="/en/lab/municipal-cybersecurity/" hreflang="en">EN</a></nav></div></header>
+
+<nav class="lab-subnav" aria-label="Spis rozdziałów raportu">
+  <div class="frame lab-subnav-inner">
+    <div class="lab-subnav-links">
+      <a href="#poczta">01 · 1,48 mld zł i otwarta poczta</a>
+      <a href="#architektura">02 · Freemaile, chmury i sądy</a>
+      <a href="#sledzenie">03 · Zero-Click Meta na stronach JST</a>
+      <a href="#rozliczenie">04 · Diagnoza NIK i 3 poprawki</a>
+    </div>
+    <a class="lab-subnav-cta" href="#explorer"><span class="cta-full">Sprawdź swój urząd (2 809 JST) ↓</span><span class="cta-short">2 809 JST ↓</span></a>
+  </div>
+</nav>
+
+<main id="main">
+
+<header class="lab-hero frame">
+  <div class="back"><a class="quiet-link" href="/pl/lab/">← Analizy i narzędzia</a></div>
+  <div class="lab-issue-bar micro">
+    <span class="lab-tag">NR 03 · CYBERBEZPIECZEŃSTWO PUBLICZNE I OCHRONA DANYCH</span>
+    <span>Wszystkie 2 809 gmin, miast, powiatów i województw RP</span>
+    <span>Pomiar: 03–04.11.2026 (34 dni po końcu programu CPPC) · lektura ok. 13 min</span>
+  </div>
+  <h1>1,48 mld zł na „Cyberbezpieczny Samorząd”, a poczta co czwartego urzędu <i>stoi otworem</i></h1>
+
+  <div class="lab-lead-grid">
+    <div>
+      <p class="lab-lead">Trzydzieści cztery dni po twardym terminie zakończenia i rozliczenia największego w historii programu cyberbezpieczeństwa dla polskich samorządów — <strong>„Cyberbezpieczny Samorząd” (1,48 mld zł z funduszy FERC dla 2 511 jednostek, termin końcowy 30 września 2026 r.)</strong> — oraz prawie trzy lata po wejściu w życie ustawowego obowiązku ochrony poczty podmiotów publicznych (<strong>25 grudnia 2023 r.</strong>), <strong>734 z 2 779 domen urzędowych (26,41%)</strong> wciąż nie blokują sfałszowanych wiadomości wysyłanych w ich imieniu do mieszkańców i księgowości. Dokładnie <strong>362 urzędy (13,03%) nie mają żadnego działającego rekordu DMARC</strong> — w tym <strong>62 gminy z maksymalnym grantem ~850 tys. zł</strong> oraz miasta na prawach powiatu <strong>Słupsk, Bytom i Gorzów Wielkopolski</strong> — a odsetek ten wśród laureatów miliardowego programu (<strong>12,77%</strong>) jest statystycznie nieodróżnialny od samorządów, które nie wzięły ani złotówki (<strong>15,20%, test χ² Yatesa p = 0,28</strong>).</p>
+      <p class="lab-lead-sub">Żeby sprawdzić realny, widoczny z zewnątrz stan higieny technicznej samorządów po zamknięciu programu, zbudowałem pełną bazę <strong>100% z 2 809 ustawowych jednostek samorządu terytorialnego w Polsce</strong> (2 479 gmin, 314 powiatów i 16 województw), skrzyżowałem ją co do grosza z listą rankingową CPPC (<code>1 483 979 072,49 zł</code>), odpytałem serwery DNS wszystkich stref pocztowych i <strong>1 124 aktywnych domen <code>.gov.pl</code></strong>, a na <strong>470 portalach urzędów</strong> uruchomiłem czystą przeglądarkę Chromium, rejestrując ruch sieciowy w 0. sekundzie przed kliknięciem banera cookies.</p>
+      <div class="lab-byline-bar">
+        <span>Analiza, kod i weryfikacja danych: <strong>Grzegorz Stuczyński</strong></span>
+        <span>Źródła: <a href="https://www.gov.pl/web/cppc/cyberbezpieczny-samorzad" target="_blank" rel="noopener noreferrer">CPPC FERC.02.02</a> · <a href="https://www.nik.gov.pl/aktualnosci/cyberbezpieczny-samorzad.html" target="_blank" rel="noopener noreferrer">NIK P/25/003</a> · <a href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20230001703" target="_blank" rel="noopener noreferrer">Dz.U. 2023 poz. 1703</a> · <a href="https://dane.gov.pl" target="_blank" rel="noopener noreferrer">MSWiA / GUS TERYT</a></span>
+        <span>Dane i kod: <a href="/assets/lab/jst-cyber-2026.json" download>JSON (772 KB)</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/jst-cyber-methodology.md" target="_blank" rel="noopener noreferrer">Metodologia i testy ↗</a></span>
+      </div>
+      <div class="jst-note-box" role="note">
+        <span class="micro">Granica uczciwości pomiaru · Co widać z publicznego internetu, a czego ten audyt nie mierzy</span>
+        Badanie jest w 100% pasywnym, nieinwazyjnym pomiarem publicznej powierzchni technicznej urzędów (rekordów DNS <code>MX/SPF/DMARC/DNSSEC</code> zgodnie z RFC 7489 i 7208, certyfikatów TLS oraz żądań przeglądarki przy zwykłym wejściu na stronę). Audyt <strong>nie ocenia wewnętrznych zakupów z grantu</strong> — takich jak segmentacja sieci LAN, zapory ogniowe, kopie zapasowe offline, systemy EDR czy szkolenia pracowników — których z zewnątrz nie widać i które realnie podnoszą odporność na ransomware. Pokazuje natomiast, że miliardowy program nie wymusił darmowej, pięciominutowej konfiguracji DNS wymaganej wprost przez polskie prawo od grudnia 2023 roku.
+      </div>
+      <div class="lab-jump-row">
+        <a class="jump" href="#explorer">Sprawdź swoją gminę, miasto lub powiat<span>↓</span></a>
+        <a class="quiet-link" href="#poczta">Czytaj pełne śledztwo i wykresy ↓</a>
+      </div>
+    </div>
+
+    <aside class="lab-meta-box" aria-label="Zakres audytu i podstawa prawna">
+      <span class="micro">Zanim przejdziesz do liczb · Trzy twarde punkty odniesienia</span>
+      <ul>
+        <li><strong>100% populacji RP (2 809 z 2 809 JST):</strong> po uzupełnieniu 2 gmin miejsko-wiejskich pominiętych w arkuszu teleadresowym MSWiA (Włoszczowa i Baborów) oraz usunięciu fałszywego dopasowania sąsiedzkiej gminy w pow. głubczyckim baza pokrywa wszystkie <code>2 511</code> wniosków CPPC co do grosza (<code>1 483 979 072,49 zł</code> na liście rankingowej; <code>2 495</code> podpisanych umów na <code>1 474 312 573,61 zł</code>).</li>
+        <li><strong>Obowiązek ustawowy od 25.12.2023 r.:</strong> <code>art. 24 ust. 1 i 2</code> ustawy z 28 lipca 2023 r. o zwalczaniu nadużyć w komunikacji elektronicznej (<code>Dz.U. 2023 poz. 1703</code>) nałożył na każdy podmiot publiczny obowiązek stosowania <code>SPF</code>, <code>DMARC</code> i <code>DKIM</code> (z 3-miesięcznym okresem przejściowym z <code>art. 40 ust. 1</code> i karą Prezesa UKE z <code>art. 27 ust. 7</code>).</li>
+        <li><strong>Kontrola NIK P/25/003 (lipiec 2026):</strong> Najwyższa Izba Kontroli wykazała, że wskaźniki programu CPPC mierzyły wyłącznie zakupy i szkolenia, a nie faktyczny wzrost bezpieczeństwa. Nasz pomiar DNS dostarcza ogólnopolskiego dowodu empirycznego tej tezy na wszystkich 2 809 jednostkach.</li>
+      </ul>
+      <details class="lab-meta-more">
+        <summary>Czym różni się brak DMARC od polityki p=none i p=quarantine/reject</summary>
+        <ul>
+          <li><strong>Brak rekordu DMARC (lub duplikat PermError):</strong> łamie wprost nakaz z art. 24 ust. 2 ustawy — każdy przestępca może wysłać e-mail z adresem nadawcy <code>podatki@twoja-gmina.pl</code>, a serwery odbiorców nie dostają od urzędu żadnej instrukcji weryfikacji.</li>
+          <li><strong>Polityka <code>p=none</code> (sam monitoring):</strong> urząd opublikował rekord tekstowy w DNS (często spełniając literalne minimum „posiadania mechanizmu”), ale instruuje w nim Gmaila, WP i Onet: <em>„nawet jeśli list jest podrobiony, dostarcz go normalnie do skrzynki mieszkańca”</em>.</li>
+          <li><strong>Polityka <code>p=quarantine</code> lub <code>p=reject</code>:</strong> realna tarcza anty-spoofingowa — nieautoryzowane wiadomości podszywające się pod domenę urzędu trafiają do spamu lub są odrzucane na bramce.</li>
+        </ul>
+      </details>
+    </aside>
+  </div>
+
+  <div class="lab-findings" aria-label="Najważniejsze ustalenia analizy">
+    <div class="lab-finding">
+      <span class="micro">01 · Poczta otwarta na podszycie</span>
+      <strong>26,41<small>%</small></strong>
+      <p><strong>734 z 2 779</strong> urzędowych domen pocztowych nie blokuje sfałszowanych e-maili (<code>362</code> bez DMARC + <code>372</code> na <code>p=none</code>), mimo że <code>632</code> z nich należą do laureatów grantów na <strong>356,07 mln zł</strong>.</p>
+    </div>
+    <div class="lab-finding">
+      <span class="micro">02 · Zerowy efekt na brak DMARC</span>
+      <strong>p = 0,28</strong>
+      <p>Brak rekordu DMARC występuje u <strong>12,77%</strong> beneficjentów programu wobec <strong>15,20%</strong> samorządów bez grantu — różnica losowa, w tym u <a href="#explorer" data-jst-preset="preset=max_nodmarc">62 gmin z maks. dotacją ~850 tys. zł</a>.</p>
+    </div>
+    <div class="lab-finding">
+      <span class="micro">03 · Skrzynki komercyjne i chmury</span>
+      <strong>30<small>gmin</small></strong>
+      <p>Nadal obsługuje obywateli z komercyjnych skrzynek (<code>@post.pl</code>, <code>@onet.pl</code>, <code>@wp.pl</code>, <code>@gmail.com</code>, współdzielone <code>@home.pl</code>; <strong>12,61 mln zł</strong> dotacji), a <code>92</code> JST trzymają pocztę w chmurze USA wobec <code>55</code> w NASK/COI.</p>
+    </div>
+    <div class="lab-finding">
+      <span class="micro">04 · Śledzenie mieszkańców w 0. sekundzie</span>
+      <strong>336 / 346</strong>
+      <p><strong>97,11%</strong> osiągalnych stron JST ze skryptami Mety wysyła IP i adres czytanej podstrony przed wyrażeniem zgody (<code>331</code> wtyczek SDK + <a href="#explorer" data-jst-preset="preset=pixel_tr">5 pełnych Meta Pixeli /tr</a> u grantobiorców za <strong>4,11 mln zł</strong>).</p>
+    </div>
+  </div>
+</header>
+
+<article class="lab-essay frame" id="poczta">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 01
+      <strong>Miliard na sprzęt, zero na DNS</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>34 dni po zamknięciu programu 62 gminy z maksymalnym grantem ~850 tys. zł nie mają nawet darmowego wpisu DMARC</h2>
+      <p class="has-dropcap">Gdyby mieszkaniec Bytomia, Słupska albo Gorzowa Wielkopolskiego dostał dziś rano wiadomość z adresu <code>podatki@um.bytom.pl</code>, <code>wydzial@um.slupsk.pl</code> lub <code>sekretariat@um.gorzow.pl</code> z informacją o zmianie numeru rachunku do opłaty za odpady, żaden z tych trzech urzędów miejskich nie daje serwerom pocztowym instrukcji odrzucenia fałszywki. Wszystkie trzy miasta na prawach powiatu odebrały pełne lub niemal pełne granty z programu „Cyberbezpieczny Samorząd” — odpowiednio <strong>790 959 zł</strong>, <strong>849 915 zł</strong> i <strong>850 000 zł</strong> — i żadne z nich na początku listopada 2026 roku nie opublikowało w DNS rekordu <code>_dmarc</code>.</p>
+      <p>W jeszcze szerszej grupie dużych jednostek rekord DMARC formalnie istnieje, ale ustawiono w nim wyłącznie bierny tryb obserwacji <code>p=none</code>, który przepuszcza podrobione wiadomości prosto do głównej skrzynki odbiorczej obywatela lub kontrahenta. Tak skonfigurowane są <strong>cztery z szesnastu urzędów marszałkowskich w Polsce</strong> — <strong>Województwo dolnośląskie</strong> (<code>dolnyslask.pl</code>, grant 850 tys. zł), <strong>lubelskie</strong> (<code>lubelskie.pl</code>, 779 972 zł), <strong>podkarpackie</strong> (<code>podkarpackie.pl</code>, 850 tys. zł) i <strong>wielkopolskie</strong> (<code>umww.pl</code>, 849 717 zł) — a także <strong>pięć kolejnych miast na prawach powiatu</strong>: <strong>Wrocław</strong> (<code>um.wroc.pl</code>, 845 750 zł), <strong>Zielona Góra</strong> (<code>um.zielona-gora.pl</code>, 790 500 zł), <strong>Jelenia Góra</strong> (<code>jeleniagora.pl</code>, 850 tys. zł), <strong>Piotrków Trybunalski</strong> (<code>piotrkow.pl</code>, 804 714 zł) oraz <strong>Przemyśl</strong> (<code>um.przemysl.pl</code>, 850 tys. zł). <a href="#explorer" data-jst-preset="preset=big_spoof">Zobacz wszystkie 12 dużych miast i województw w wyszukiwarce →</a></p>
+      <p>Najciekawszy wniosek pojawia się jednak dopiero wtedy, gdy zestawimy <strong>2 483 grantobiorców posiadających własną domenę instytucjonalną</strong> z naturalną grupą kontrolną <strong>296 samorządów, które do programu nie przystąpiły lub nie otrzymały dofinansowania</strong>. Gdyby wydanie blisko półtora miliarda złotych realnie porządkowało podstawowe bezpieczeństwo komunikacji elektronicznej, różnica w wypełnieniu ustawowego obowiązku z <strong>art. 24 ust. 1 i 2 ustawy z dnia 28 lipca 2023 r. o zwalczaniu nadużyć w komunikacji elektronicznej (Dz.U. 2023 poz. 1703)</strong> powinna bić w oczy. Tymczasem całkowity brak skutecznego rekordu DMARC dotyczy <strong>12,77% beneficjentów programu (317 z 2 483, łączna kwota grantów 171,85 mln zł)</strong> wobec <strong>15,20% jednostek bez grantu (45 z 296)</strong>. Różnica <code>2,44 pkt proc.</code> nie przekracza progu szumu losowego (<strong>test χ² z poprawką Yatesa p = 0,2777; dokładny test Fishera p = 0,2357</strong>) — i pozostaje nieistotna statystycznie w każdym z czterech testowanych wariantów mianownika.</p>
+      <p>Dopiero po doliczeniu polityki <code>p=none</code> łączny odsetek domen podatnych na podszycie jest u grantobiorców umiarkowanie niższy niż u nie-grantobiorców (<strong>25,45% wobec 34,46%, p = 0,0011</strong>). Tyle że nawet ta różnica w dużej mierze odzwierciedla wcześniejszy potencjał kadrowy większych urzędów, które częściej składały wnioski do CPPC — a sam fakt, że <strong>632 urzędy z rozliczonymi grantami na 356,07 mln zł</strong> (w tym aż <strong>150 jednostek z maksymalną dotacją ~850 tys. zł</strong>) wciąż pozwalają dowolnemu nadawcy w internecie podszyć się pod wójta, burmistrza lub skarbnika, obnaża lukę w konstrukcji programu.</p>
+      <p>Na dokładkę trzy urzędy z grantami (m.in. <strong>Miasto Aleksandrów Kujawski</strong> — <code>aleksandrowkujawski.pl</code>, 850 tys. zł dotacji — oraz <strong>Miasto i Gmina Sztum</strong> — <code>sztum.pl</code>, 850 tys. zł) opublikowały rekordy SPF przekraczające limit 10 zapytań DNS z normy RFC 7208 (<code>PermError</code>), co unieważnia ich politykę SPF na serwerach odbiorczych, a trzy kolejne domeny urzędowe wstawiły dwa osobne rekordy <code>v=DMARC1</code> naraz, co według sekcji 6.6.3 standardu RFC 7489 zmusza serwery pocztowe do całkowitego zignorowania ochrony DMARC.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Sam operator grantów nie świeci przykładem</strong>
+        Domena Centrum Projektów Polska Cyfrowa (<code>cppc.gov.pl</code>), które rozdzieliło i rozliczyło 1,48 mld zł na cyberbezpieczeństwo JST, publikuje w DNS rekord <code>v=DMARC1; p=quarantine; sp=quarantine; pct=10</code> — co oznacza, że aż <strong>90% sfałszowanych wiadomości podszywających się pod @cppc.gov.pl</strong> jest wyłączonych z kwarantanny.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig1-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Wykres 01 · Progi grantowe CPPC, szczeble samorządu i porównanie z 1 124 domenami .gov.pl</span>
+        <h3 class="lab-fig-title" id="fig1-title">Brak rekordu DMARC nie zależy od wysokości dotacji — zależy od tego, czy ktoś zarządza pocztą centralnie</h3>
+      </div>
+    </div>
+    <div id="fig-jst-grants">
+      <noscript>
+        <p>Wśród 2 779 instytucjonalnych domen pocztowych JST 362 (13,03%) nie mają działającego rekordu DMARC (12,77% z grantem vs 15,20% bez grantu, p = 0,28), a kolejne 372 (13,39%) mają wyłącznie p=none (łącznie 734 = 26,41% podatnych na spoofing).</p>
+      </noscript>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="architektura">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 02
+      <strong>Freemaile, chmury i sądy</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>30 urzędów gmin na komercyjnych skrzynkach @post.pl, @onet.pl, @gmail.com i @home.pl — oraz dlaczego polskie sądy wypadają 10 razy lepiej</h2>
+      <p class="has-dropcap">Zanim zaklasyfikowałem którykolwiek urząd jako korzystający z darmowej lub współdzielonej skrzynki komercyjnej, odrzuciłem poleganie w ciemno na rządowym wykazie teleadresowym MSWiA i sprawdziłem aktualne strony podmiotowe oraz BIP każdego kandydata. Trzy gminy figurujące w pliku ministerstwa ze starymi adresami <code>@wp.pl</code> i <code>@ns.onet.pl</code> przeszły już na własne domeny z aktywną kwarantanną DMARC — w naszym zbiorze są więc liczone jako prawidłowo zabezpieczone domeny instytucjonalne.</p>
+      <p>Po tej weryfikacji na żywo zostało jednak <strong>dokładnie 30 urzędów gmin w Polsce</strong>, które w listopadzie 2026 roku na własnych stronach głównych i w BIP podają mieszkańcom jako oficjalny kontakt adres w komercyjnym serwisie pocztowym lub we współdzielonej domenie dostawcy hostingu — z czego <strong>20 nie posiada żadnej własnej domeny pocztowej</strong>, a <strong>28 z 30 odebrało granty „Cyberbezpieczny Samorząd” na łączną kwotę 12,61 mln zł</strong>. W tej grupie są dwie jednostki z maksymalną dotacją <strong>850 000 zł</strong>: <strong>Gmina Ostrów Mazowiecka</strong> (<code>gminaostrowmaz@home.pl</code>) oraz <strong>Gmina Pisz</strong> (<code>pisz@home.pl</code>). Jest <strong>Miasto Kolno</strong> (grant <strong>814 377 zł</strong>), które na stronie głównej podaje <code>kolno@home.pl</code>, a równolegle utrzymuje domenę <code>mkolno.pl</code> pozbawioną rekordu DMARC. Jest <strong>Gmina Godkowo</strong> (<code>sekretariat.godkowo@gmail.com</code>, 226 700 zł), <strong>Gmina Zawidz</strong> (<code>ug.zawidz@wp.pl</code>, 490 166 zł), <strong>Gmina Leoncin</strong> (<code>ug.leoncin@tlen.pl</code>, 457 563 zł), pięć gmin na <code>@pro.onet.pl</code>, jedenaście na <code>@post.pl</code> i trzy na <code>@data.pl</code>. W takiej architekturze wójt lub burmistrz z definicji nie ma żadnej kontroli nad kluczami DKIM, polityką DMARC ani logami bezpieczeństwa domeny należącej do prywatnego portalu. <a href="#explorer" data-jst-preset="preset=freemail">Sprawdź pełną listę 30 gmin na skrzynkach zewnętrznych →</a></p>
+      <p>Równie wymowna jest mapa fizycznej infrastruktury serwerów <code>MX</code> dla wszystkich <strong>2 779 instytucjonalnych domen samorządowych</strong>. Choć państwo od lat rozwija rządowe systemy pocztowe i chmurowe, z sieci państwowych i akademickich (<strong>NASK / COI / PIONIER</strong>) korzysta zaledwie <strong>55 samorządów (1,98%)</strong>. W tym samym czasie <strong>92 urzędy (3,31%)</strong> wyprowadziły oficjalną korespondencję bezpośrednio do amerykańskich chmur Big Tech — <strong>74 do Microsoft 365 / Azure</strong> (m.in. Warszawa, Gdańsk, Katowice, Kielce, Gliwice, Toruń, Płock i Koszalin) oraz <strong>18 do Google Workspace</strong> — a trzon polskiej poczty lokalnej spoczywa u komercyjnych operatorów hostingowych: <strong>home.pl / IONOS (597 urzędów)</strong>, <strong>nazwa.pl (297)</strong> oraz <strong>OVHcloud (128)</strong>.</p>
+      <p>Żeby sprawdzić, czy wysoki odsetek niezabezpieczonych domen to specyfika wyłącznie samorządów, przeskanowałem tą samą metodą wszystkie <strong>1 395 zarejestrowanych domen w strefie <code>.gov.pl</code></strong> z oficjalnego rejestru KPRM, wyodrębniając <strong>1 124 domeny z aktywnymi serwerami pocztowymi MX</strong> (przełącz zakładkę <code>03 · Benchmark .gov.pl</code> na Wykresie 01 powyżej). Kontrast jest uderzający: <strong>Sądy i Prokuratura (365 domen)</strong> mają zaledwie <strong>2,47% domen podatnych na spoofing (9 z 365; brak DMARC tylko 2,19%)</strong>, ponieważ niemal cała poczta wymiaru sprawiedliwości przechodzi przez centralnie administrowane bramki <code>ms.gov.pl</code> (326 sądów) i <code>prokuratura.gov.pl</code> (35 jednostek), gdzie jeden zespół inżynierów wdrożył <code>p=quarantine</code> hurtowo. Gdziekolwiek natomiast administracja rządowa zostawia konfigurację DNS pojedynczym placówkom, wraca dokładnie ten sam chaos co w gminach: w <strong>ministerstwach i agencjach centralnych</strong> podatnych na podszycie jest <strong>28,75% domen (117 z 407)</strong>, w <strong>administracji terenowej na <code>.gov.pl</code> — 36,76%</strong>, a w stacjach <strong>Sanepidu na <code>.gov.pl</code> — 3 z 4 aktywnych domen</strong>.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Co z podpisem kryptograficznym DNSSEC?</strong>
+        Zweryfikowany kryptograficznie podpis strefy DNS (<code>DNSSEC AD=True</code>) posiada zaledwie <strong>376 z 2 779 domen samorządowych (13,53%)</strong>, a poprawny plik kontaktu dla zgłoszeń luk <code>/.well-known/security.txt</code> (RFC 9116) — dokładnie <strong>1 urząd na 2 809 w całej Polsce</strong> (Urząd Miasta Płocka).
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig2-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Wykres 02 · Zróżnicowanie regionalne w 16 województwach oraz suwerenność infrastruktury pocztowej</span>
+        <h3 class="lab-fig-title" id="fig2-title">Od 19,2% podatnej poczty na Mazowszu do 33,0% w Wielkopolsce i ponad 30% błędów HTTPS w skali kraju</h3>
+      </div>
+    </div>
+    <div id="fig-jst-map">
+      <noscript>
+        <p>Wśród 2 362 osiągalnych stron WWW samorządów 726 (30,74%) nie ma poprawnego certyfikatu HTTPS/TLS przy domyślnym wejściu. Kliknij dowolne województwo w wersji interaktywnej, aby przefiltrować listę urzędów.</p>
+      </noscript>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="sledzenie">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 03
+      <strong>Śledzenie obywatela w 0. sekundzie</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>336 z 346 stron ze skryptami Mety wysyła IP i czytaną podstronę urzędu zanim mieszkaniec dotknie banera cookies</h2>
+      <p class="has-dropcap">Cyberbezpieczeństwo i ochrona danych obywatela mają dwie strony: pierwsza to nie dać przestępcy podszyć się pod urząd, druga — nie wynosić komercyjnym brokerom reklamowym informacji o tym, czego mieszkaniec szuka na stronie urzędu gminy lub starostwa (od dodatków mieszkaniowych i orzeczeń o niepełnosprawności po umorzenia podatkowe). W pierwszym, statycznym skanie kodu HTML wszystkich osiągalnych witryn JST wykryłem ślad skryptów Mety na <strong>350 stronach</strong>. Sam kod w HTML mógłby jednak być uczciwie zablokowany przez menedżer zgód (CMP) aż do kliknięcia przycisku „Akceptuję”.</p>
+      <p>Żeby oddzielić pozór od twardego dowodu sieciowego, uruchomiłem czystą przeglądarkę Chromium (z zamaskowaną flagą automatyzacji <code>navigator.webdriver</code>, pustym profilem i <strong>zerową interakcją z banerem cookies</strong>) na wszystkich 350 witrynach ze śladem Mety oraz na losowej próbie kontrolnej 100 portali używających wyłącznie Google Tag Managera. Z <strong>346 osiągalnych stron z kodem Mety aż 336 (97,11% — w tym 293 laureatów „Cyberbezpiecznego Samorządu” z dotacjami na 176,43 mln zł)</strong> nawiązało w 0. sekundzie aktywne połączenie z serwerami <code>facebook.com</code> lub <code>connect.facebook.net</code>, przekazując adres IP obywatela, pełny adres URL przeglądanej podstrony i parametry przeglądarki bez jakiejkolwiek zgody.</p>
+      <p>Rzetelność wymaga tu precyzyjnego rozdzielenia dwóch zupełnie różnych mechanizmów technicznych, których nie wolno wrzucać do jednego worka:</p>
+      <p><strong>1. Niezablokowane wtyczki społecznościowe Mety (331 urzędów).</strong> Zdecydowana większość (<code>331 z 336</code>) nie kupuje reklam śledzących, lecz osadza na stronie głównej żywy widżet osi czasu Facebooka (<code>sdk.js</code> / <code>page.php</code>) bez blokady przed zgodą. Z punktu widzenia prawa skutek dla prywatności mieszkańca jest jednak przesądzony: już w wyroku Wielkiej Izby <strong>TSUE z 29 lipca 2019 r. w sprawie C-40/17 (<em>Fashion ID</em>, pkt 75–85 i 102)</strong> Trybunał orzekł, że sam operator strony ładujący wtyczkę przekazującą IP i ciąg przeglądarki przy wejściu staje się współadministratorem tego transferu i potrzebuje uprzedniej podstawy prawnej przed załadowaniem skryptu. W przypadku polskiego urzędu publicznego dochodzi podwójna blokada: <strong>art. 399–400 Prawa komunikacji elektronicznej (Dz.U. 2024 poz. 1221)</strong> zabrania zapisu i odczytu danych w urządzeniu końcowym bez uprzedniej zgody, a <strong>art. 6 ust. 1 akapit 2 RODO</strong> wprost wyklucza powoływanie się przez organy publiczne na „prawnie uzasadniony interes” (<code>lit. f</code>) przy wykonywaniu zadań publicznych.</p>
+      <p><strong>2. Pełny, komercyjny piksel reklamowy Meta Pixel (<code>fbevents.js</code> + beacon <code>facebook.com/tr</code>) odpalany bez zgody (5 samorządów — 100% grantobiorców na 4,11 mln zł).</strong> Pięć urzędów ładuje na swoich oficjalnych portalach pełny skrypt reklamowy Mety i wysyła zdarzenie <code>PageView</code> z identyfikatorem śledzącym <code>_fbp</code> w 0. sekundzie przed jakąkolwiek zgodą użytkownika: <strong>Województwo lubuskie</strong> (<code>lubuskie.pl</code>, grant <strong>850 000 zł</strong>, gdzie równocześnie bez zgody uruchamia się nagrywanie sesji <strong>Hotjar</strong> <code>_hjSession</code>), <strong>Miasto Gdynia</strong> (<code>gdynia.pl</code>, grant <strong>849 960,40 zł</strong>), <strong>Miasto Tarnów</strong> (<code>tarnow.pl</code>, grant <strong>848 240,03 zł</strong>), <strong>Gmina Polkowice</strong> (<code>polkowice.eu</code>, grant <strong>833 452,10 zł</strong>) oraz <strong>Powiat Świdnicki w woj. lubelskim</strong> (<code>powiatswidnik.pl</code>, grant <strong>724 298,14 zł</strong>). W przypadku <strong>Tarnowa</strong> audyt sieciowy wychwycił dodatkowo aktywny moduł <strong>Automatic Advanced Matching (<code>udwv[em]</code>)</strong> — skrypt Mety nasłuchujący pól formularzy na stronie urzędu miejskiego, gotowy haszować wpisywane adresy e-mail mieszkańców algorytmem SHA-256 i wysyłać je do Mety w celu powiązania wizyty z profilem na Facebooku. Co więcej, w osobnej próbie 99 osiągalnych stron z samym kontenerem GTM aż <strong>54 (54,55%)</strong> odpaliły bez zgody telemetrię <strong>Google Analytics 4 (<code>g/collect</code>)</strong>.</p>
+      <p>Najlepszym dowodem na to, że nie jest to żadna „techniczna konieczność”, jest <strong>9 samorządów z naszej próby Mety</strong> — m.in. <strong>Pruszcz Gdański, Trzebownisko, Mrągowo, Kożuchów, Iłowa, Nowe Ostrowy, Rudnik nad Sanem, Stawiguda i Ustronie Morskie</strong> — które mają na swoich stronach integrację społecznościową lub analityczną, lecz prawidłowo wstrzymały jej ładowanie w menedżerze zgód (<code>0</code> połączeń z Metą i Googlem przed kliknięciem). Z kolei <strong>86 samorządów korzystających z rządowego portalu <code>samorzad.gov.pl</code></strong> ma wzorcowe <strong>0 trackerów Mety i 100% nagłówków HSTS</strong> na stronie WWW — ale aż <strong>26 z tych samych 86 gmin (30,23%)</strong> pozostawiło swoją pocztę na starych domenach <code>.pl</code> podatną na podszycie. Nawet sama domena <code>samorzad.gov.pl</code> ma w rekordzie DMARC błędną składnię adresów raportowych bez wymaganego prefiksu <code>mailto:</code> (<code>rua=dmarc@coi.gov.pl; ruf=security@coi.gov.pl</code>), przez co zgodne z RFC 7489 serwery pocztowe ignorują wysyłkę raportów o atakach do COI.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>30,7% stron z błędem HTTPS przy wejściu</strong>
+        Spośród <strong>2 362 osiągalnych witryn samorządowych</strong> aż <strong>726 (30,74%)</strong> kończy domyślne połączenie HTTPS błędem weryfikacji certyfikatu TLS (wygasły certyfikat, certyfikat wystawiony na inną domenę współdzielonego hostingu lub brak łańcucha pośredniego).
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig3-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Wykres 03 · Pomiar w czystej przeglądarce Chromium (0 s, zero kliknięć) oraz paradoks delegowanego bezpieczeństwa</span>
+        <h3 class="lab-fig-title" id="fig3-title">331 wtyczek społecznościowych, 5 komercyjnych Meta Pixeli i 9 gmin pokazujących, że blokada przed zgodą działa</h3>
+      </div>
+    </div>
+    <div id="fig-jst-privacy">
+      <noscript>
+        <p>W czystej sesji Chromium 336 z 346 osiągalnych witryn z kodem Mety (97,11%) wysłało zapytania do serwerów Mety bez zgody użytkownika (331 przez wtyczki SDK, 5 przez pełny Meta Pixel fbevents.js + /tr), natomiast 9 urzędów prawidłowo zablokowało skrypty do czasu wyrażenia zgody.</p>
+      </noscript>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="rozliczenie">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 04
+      <strong>Diagnoza NIK i naprawa</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Dlaczego 1,48 mld zł mogło zostać rozliczone co do grosza bez wdrożenia DMARC — i jak zamknąć tę lukę w 30 dni</h2>
+      <p class="has-dropcap">Jak to możliwe, że gmina odbiera 850 tys. zł na cyberbezpieczeństwo, przechodzi audyt końcowy systemu zarządzania bezpieczeństwem informacji (SZBI), rozlicza wniosek przed 30 września 2026 roku i nadal nie ma rekordu DMARC ani poprawnego certyfikatu HTTPS? Odpowiedź znajdziemy na ósmej stronie wystąpienia pokontrolnego <strong>Najwyższej Izby Kontroli z lipca 2026 roku (<em>Realizacja projektu Cyberbezpieczny Samorząd</em>, kontrola P/25/003, nr ewid. 98/2025/P/25/003/KAP)</strong>:</p>
+      <blockquote>
+        <p>„Zdefiniowane przez CPPC wskaźniki realizacji projektów grantowych, tak produktu, jak i rezultatu, nie były powiązane z faktycznym wzrostem poziomu cyberbezpieczeństwa u grantobiorców (jst), a jedynie z liczbą dokonanych zakupów i przeszkolonych osób.”</p>
+      </blockquote>
+      <p>NIK udokumentowała w tym samym raporcie opóźnienia naboru, zmiany dokumentacji konkursowej oraz wydatki trudne do obrony pod hasłem odporności cyfrowej (jak refundowanie zakupu prądotwórczego agregatu spalinowego ze środków na cyberbezpieczeństwo). Nasz skan wszystkich 2 809 samorządów dopisuje do diagnozy NIK brakujące ogniwo ilościowe: pokazuje w skali 1:1 całego państwa, że <strong>system grantowy oparty wyłącznie na fakturach i papierowych ankietach jest całkowicie ślepy na twardą, weryfikowalną w ułamku sekundy konfigurację techniczną</strong>.</p>
+      <p>Co najważniejsze, wszystkie trzy wykryte tu słabości — w przeciwieństwie do wielomilionowych wymian serwerowni — nie wymagają kolejnego miliardowego programu dotacyjnego. Można je naprawić w ciągu jednego miesiąca trzema prostymi ruchami regulacyjno-inżynieryjnymi:</p>
+      <p><strong>1. Automatyczna bramka DNS/TLS przy rozliczaniu każdego publicznego grantu IT.</strong> Zanim CPPC, NASK lub urząd marszałkowski przeleje ostatnią transzę jakiejkolwiek dotacji cyfrowej, prosty skrypt walidacyjny powinien automatycznie sprawdzać cztery publiczne warunki brzegowe: poprawny rekord <code>SPF</code> bez błędów <code>PermError</code>, aktywny rekord <code>DMARC</code> z polityką egzekucyjną co najmniej <code>p=quarantine; pct=100</code> i poprawnym adresem <code>mailto:</code>, ważny certyfikat HTTPS z nagłówkiem <code>HSTS</code> oraz brak komercyjnych skrzynek freemail w BIP.</p>
+      <p><strong>2. Hurtowa ochrona w modelu Sądów i Prokuratury dla mniejszych gmin.</strong> Skoro 365 sądów i prokuratur osiągnęło <code>97,5%</code> ochrony przed spoofingiem dzięki centralnej bramce pocztowej, dokładnie taki sam opcjonalny, darmowy przekaźnik pocztowy w domenie <code>samorzad.gov.pl</code> (z gotowym podpisem <code>DKIM</code>, <code>DNSSEC</code> i <code>p=reject</code>) powinien być dostępny „pod klucz” dla 30 gmin działających dziś na <code>@post.pl</code>, <code>@onet.pl</code> czy współdzielonym <code>@home.pl</code> oraz dla kilkuset małych gmin wiejskich bez własnego etatu administratora bezpieczeństwa.</p>
+      <p><strong>3. Czyszczenie stron urzędowych ze skryptów reklamowych i niezablokowanych wtyczek Zero-Click.</strong> Zastąpienie żywej ramki Facebooka zwykłym statycznym linkiem (lub jej warunkowe ładowanie dopiero po kliknięciu „Włącz widżet społecznościowy”, tak jak robi to już 9 wzorcowych gmin w Polsce) oraz usunięcie komercyjnych pikseli reklamowych <code>fbevents.js</code> ze stron urzędów miast i marszałków zajmuje webmasterowi piętnaście minut — i natychmiast kończy przekazywanie historii lektury mieszkańców na serwery reklamowe poza jurysdykcją RP.</p>
+
+      <div class="jst-disclosure-box" role="note">
+        <span class="micro">Standard redakcyjny i prawo do odpowiedzi · Stan na 4 listopada 2026 r.</span>
+        Wszystkie opisane w raporcie ustalenia pochodzą z pasywnych zapytań do publicznego systemu DNS, jawnych rejestrów CPPC, MSWiA i GUS oraz standardowych odwiedzin stron głównych w przeglądarce bez logowania i bez testów penetracyjnych. W dniu publikacji (<code>04.11.2026</code>) redakcja nie dysponowała jeszcze stanowiskami wymienionych instytucji (<strong>0 otrzymanych odpowiedzi w momencie publikacji</strong>). Każdemu samorządowi oraz operatorom centralnym (CPPC, COI, NASK, UKE i UODO) przysługuje pełne prawo do sprostowania lub poinformowania o wdrożeniu poprawki w DNS/WWW pod adresem <a href="mailto:stuczynski.g@gmail.com">stuczynski.g@gmail.com</a> — po weryfikacji rekordu zaktualizuję status jednostki w publicznej bazie wraz z datą poprawki.
+      </div>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Jak sprawdzić swój urząd w 10 sekund</strong>
+        Wpisz w wyszukiwarce poniżej nazwę swojej gminy, miasta lub powiatu (obsługuje polskie znaki i bezogonkowe odpowiedniki) albo użyj gotowych filtrów nad tabelą. Możesz też pobrać przefiltrowany wycinek jako plik CSV.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig4-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Dowód z dokumentów i rekordów · Trzy konkretne karty z audytu 2 809 jednostek</span>
+        <h3 class="lab-fig-title" id="fig4-title">Od maksymalnych dotacji bez DMARC, przez komercyjne skrzynki, po aktywne piksele reklamowe</h3>
+      </div>
+    </div>
+    <div class="specimen-grid">
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Karta A · Maksymalne granty bez ochrony poczty</strong>
+          <span>62 gminy z dotacją ~850 tys. zł bez DMARC</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Gorzów Wlkp. / Słupsk / Bytom:</span><strong>791–850 tys. zł · brak DMARC</strong></div>
+          <div class="specimen-line"><span>Włoszczowa (gmina-wloszczowa.pl):</span><strong>850 000 zł · brak DMARC</strong></div>
+          <div class="specimen-line is-error"><span>4 urzędy marszałkowskie (W):</span><b>780–850 tys. zł · p=none</b></div>
+        </div>
+        <p class="specimen-note">Wszystkie 62 gminy z maksymalnym grantem zweryfikowałem dodatkowo na żywych stronach WWW/BIP i przez dwa niezależne serwery DoH (Google + Cloudflare). <a href="#explorer" data-jst-preset="preset=max_nodmarc">Pokaż wszystkie 62 w bazie →</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Karta B · Oficjalna poczta urzędu na freemailu</strong>
+          <span>30 gmin potwierdzonych na żywych stronach</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Ostrów Mazowiecka (GW) / Pisz:</span><strong>po 850 000 zł · @home.pl</strong></div>
+          <div class="specimen-line"><span>Miasto Kolno (+ mkolno.pl brak):</span><strong>814 377 zł · kolno@home.pl</strong></div>
+          <div class="specimen-line is-error"><span>Godkowo / Zawidz / 11 gmin:</span><b>@gmail / @wp.pl / @post.pl</b></div>
+        </div>
+        <p class="specimen-note">28 z 30 gmin działających na zewnętrznych skrzynkach to beneficjenci programu (łącznie 12,61 mln zł grantów); 20 z nich nie ma żadnej własnej domeny pocztowej. <a href="#explorer" data-jst-preset="preset=freemail">Pokaż wszystkie 30 →</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Karta C · Komercyjny Meta Pixel na stronach JST</strong>
+          <span>5 grantobiorców (4,11 mln zł) · 0 s przed zgodą</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Woj. lubuskie (lubuskie.pl):</span><strong>850 000 zł · Pixel + Hotjar</strong></div>
+          <div class="specimen-line"><span>Gdynia / Polkowice / Świdnik:</span><strong>724–850 tys. zł · Pixel /tr</strong></div>
+          <div class="specimen-line is-error"><span>Tarnów (tarnow.pl · 848 tys. zł):</span><b>Pixel + Advanced Matching</b></div>
+        </div>
+        <p class="specimen-note">Na portalu Tarnowa skrypt Mety ładuje moduł udwv[em] skanujący pola e-mail bez kliknięcia zgody. Równocześnie 9 innych gmin dowodzi, że poprawna blokada CMP jest prosta. <a href="#explorer" data-jst-preset="preset=pixel_tr">Pokaż w bazie →</a></p>
+      </div>
+    </div>
+  </figure>
+</article>
+
+<section class="lab-tool-section" id="explorer">
+  <div class="frame">
+    <div class="lab-tool-head">
+      <div>
+        <span class="number">Pełna baza ogólnopolska · Wszystkie 2 809 gmin, miast, powiatów i województw RP (100% populacji GUS TERYT)</span>
+        <h2>Sprawdź swój urząd: grant CPPC, poczta, DMARC i śledzenie na stronie WWW</h2>
+      </div>
+      <p>Wpisz nazwę dowolnej miejscowości, powiatu, kod TERYT lub domenę pocztową albo wybierz jeden z gotowych filtrów nad tabelą. Możesz pobrać wyfiltrowaną listę do CSV lub bezpłatnie osadzić wyszukiwarkę w artykule prasowym za pomocą kodu <code>iframe</code>.</p>
+    </div>
+    <div id="jst-explorer" data-src="/assets/lab/jst-cyber-2026.json">
+      <noscript>
+        <div class="lab-callout">
+          <span class="micro">Interaktywna wyszukiwarka 2 809 samorządów wymaga włączonego JavaScriptu</span>
+          <p>Pełny, zweryfikowany zbiór danych obejmujący wszystkie 2 809 JST w Polsce możesz pobrać bezpośrednio jako otwarty plik <a href="/assets/lab/jst-cyber-2026.json">jst-cyber-2026.json</a>.</p>
+        </div>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<section class="plain-contact">
+  <div class="frame about-strip">
+    <span class="number">05 / Kontakt, aktualizacje rekordów DNS i osadzanie dla redakcji</span>
+    <h2>Zajmujesz się bezpieczeństwem w samorządzie albo piszesz tekst lokalny o swoim regionie?</h2>
+    <div>
+      <p>Jeśli Twój urząd wdrożył po publikacji rekord <code>DMARC</code> z polityką <code>p=quarantine</code> lub <code>p=reject</code> albo zablokował skrypty zewnętrzne przed wyrażeniem zgody, napisz — sprawdzę rekord w DNS/Chromium i zaktualizuję wpis w bazie. Redakcje ogólnopolskie i lokalne mogą bezpłatnie osadzać wyszukiwarkę przez przycisk <code>Osadź (iframe)</code> z podaniem źródła.</p>
+      <a class="quiet-link" href="mailto:stuczynski.g@gmail.com?subject=Raport%20NR%2003%20%E2%80%94%20Cyberbezpieczny%20Samorz%C4%85d%20(2809%20JST)">stuczynski.g@gmail.com ↗</a>
+      <p class="contact-alt">Krótsze wątki i wykresy publikuję na <a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X (@rpl_0x)</a> oraz <a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedInie</a>.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="footer"><div class="frame"><p>Grzegorz Stuczyński · RolePlayingTech © 2026</p><div class="sub-links"><a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/RolePlayingTech" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://roleplayinglife.substack.com/" target="_blank" rel="noopener noreferrer">Substack ↗</a><a href="mailto:stuczynski.g@gmail.com">Email ↗</a></div></div></footer>
+</body>
+</html>

@@ -24,6 +24,7 @@
 <script>document.documentElement.classList.add('js')</script>
 <link rel="stylesheet" href="/assets/minimal.css">
 <link rel="stylesheet" href="/assets/lab/bzp-explorer.css">
+<link rel="stylesheet" href="/assets/lab/casino-explorer.css">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="canonical" href="https://roleplayingtech.com/pl/lab/">
 <link rel="alternate" hreflang="pl" href="https://roleplayingtech.com/pl/lab/">
@@ -41,8 +42,8 @@
   <h1>Analizy i dane</h1>
   <p class="intro-primary">Zamiast samych opinii wolę formaty, w których tekst idzie w parze z policzonym zbiorem danych i narzędziem do samodzielnego sprawdzenia każdego wiersza w źródle.</p>
   <div class="intro-actions">
-    <a class="jump" href="/pl/lab/przetargi-ai/">Otwórz najnowszy raport (BZP AI)<span>→</span></a>
-    <a class="quiet-link" href="#warsztat">Jak powstają te materiały<span>↓</span></a>
+    <a class="jump" href="/pl/lab/cyberbezpieczny-samorzad/">Sprawdź swój urząd w raporcie NR 03 (2 809 JST)<span>→</span></a>
+    <a class="quiet-link" href="#publikacje">Wszystkie 4 raporty i bazy danych<span>↓</span></a>
   </div>
 </section>
 
@@ -56,11 +57,101 @@
     <article class="lab-hub-feature reveal">
       <div>
         <div class="edu-meta">
+          <span class="index">NR 04 · LISTOPAD 2026</span>
+          <span class="project-meta">ENERGETYKA · TELEMETRIA SIECI PSE (2024–2026)</span>
+        </div>
+        <h3><a href="/pl/lab/redysponowanie-oze-pse/">Wyłączamy tanie słońce, gdy prąd jest drogi. Co pokazały 73 924 kwadranse pracy sieci PSE</a></h3>
+        <p>Analiza pełnego, ciągłego szeregu 73 924 kwadransów z sześciu strumieni API Polskich Sieci Elektroenergetycznych (24.09.2024–02.11.2026), profili mocy 106 bloków wytwórczych w 37 elektrowniach (<code>gen-jw</code>) oraz przepływów na 6 granicach. Pokazuje, że w 2026 r. aż 66,57% nierynkowych wyłączeń OZE (1 201,57 z 1 805,05 GWh) zaszło przy dodatnich cenach giełdowych, a 27,56% (497,42 GWh) przy drogim prądzie <code>RCE ≥ 250 zł/MWh</code> — bo w południe w sieci musi kręcić się średnio 7,98 GW bloków węglowych i gazowych czekających na wieczorną rampę do 13,63 GW o 20:00, podczas gdy 96,75% dużych skoków redukcji (≥ 200 MW) uderza sztywno o pełnej godzinie zegarowej (<code>:00</code>).</p>
+        <p class="edu-topics">3 moduły interaktywne (reżimy cenowe i gilotyna <code>:00</code>, krzywa kacza 12:00→20:00, przepływy kołowe i kable HVDC) · baza 37 elektrowni i 140 dób · CSV/JSON · kod iframe</p>
+        <div class="edu-actions">
+          <a class="edu-cta" href="/pl/lab/redysponowanie-oze-pse/">Czytaj analizę i sprawdź elektrownie <span>→</span></a>
+          <a class="edu-source" href="/pl/lab/redysponowanie-oze-pse/#explorer">Baza 37 elektrowni i 140 dób ↓</a>
+        </div>
+      </div>
+      <div class="lab-issue2-stats">
+        <div class="lab-issue2-stat">
+          <strong>497,42<small>GWh</small></strong>
+          <span>czystej energii ściętej w 2026 r. przy drogim prądzie <code>RCE ≥ 250 zł/MWh</code> (27,6% z 1 805,05 GWh)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>+5,64<small>GW</small></strong>
+          <span>wieczorna rampa czystych bloków cieplnych między 12:00 (7,98 GW) a 20:00 (13,63 GW; z ESP +7,11 GW)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>96,75<small>%</small></strong>
+          <span>skoków redukcji ≥ 200 MW pada równo w minucie <code>:00</code> (100% przy skokach ≥ 500 MW)</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="lab-hub-feature reveal">
+      <div>
+        <div class="edu-meta">
+          <span class="index">NR 03 · LISTOPAD 2026</span>
+          <span class="project-meta">SAMORZĄDY · AUDYT WSZYSTKICH 2 809 JST</span>
+        </div>
+        <h3><a href="/pl/lab/cyberbezpieczny-samorzad/">1,48 mld zł na „Cyberbezpieczny Samorząd”, a poczta co czwartego urzędu stoi otworem</a></h3>
+        <p>Ogólnopolski spis z natury 100% z 2 809 gmin, miast, powiatów i województw przeprowadzony 34 dni po twardym terminie rozliczenia programu grantowego CPPC (1 483,98 mln zł dla 2 511 jednostek). Wykazuje, że 734 z 2 779 urzędowych domen pocztowych (26,41%) nie blokuje podszywania pod e-maile (w tym 62 gminy z maks. grantem ~850 tys. zł bez żadnego rekordu DMARC oraz 4 urzędy marszałkowskie i Wrocław na biernym <code>p=none</code>), efekt grantu na brak DMARC jest statystycznie zerowy (<code>p = 0,28</code>), 30 gmin nadal działa na zewnętrznych skrzynkach komercyjnych, a 336 z 346 stron ze skryptami Mety wysyła dane mieszkańców w 0. sekundzie bez zgody (w tym 5 pełnych komercyjnych Meta Pixeli u grantobiorców).</p>
+        <p class="edu-topics">3 moduły wizualne (progi grantowe i benchmark 1 124 domen <code>.gov.pl</code>, mapa 16 województw i chmur, lejek Zero-Click Chromium) · wyszukiwarka wszystkich 2 809 JST · CSV/JSON · iframe</p>
+        <div class="edu-actions">
+          <a class="edu-cta" href="/pl/lab/cyberbezpieczny-samorzad/">Czytaj śledztwo i sprawdź swoją gminę <span>→</span></a>
+          <a class="edu-source" href="/pl/lab/cyberbezpieczny-samorzad/#explorer">Wyszukiwarka 2 809 samorządów ↓</a>
+        </div>
+      </div>
+      <div class="lab-issue2-stats">
+        <div class="lab-issue2-stat">
+          <strong>26,41<small>%</small></strong>
+          <span>urzędowych domen pocztowych podatnych na spoofing (734 z 2 779; w tym 356,07 mln zł grantów)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>p = 0,28</strong>
+          <span>brak statystycznie istotnej różnicy w braku DMARC między laureatami grantów (12,8%) a grupą bez dotacji (15,2%)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>336 / 346</strong>
+          <span>stron JST ze skryptami Mety wysyła IP i czytaną podstronę w 0. sekundzie przed kliknięciem zgody</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="lab-hub-feature reveal">
+      <div>
+        <div class="edu-meta">
+          <span class="index">NR 02 · LISTOPAD 2026</span>
+          <span class="project-meta">REJESTRY PUBLICZNE · CYBERBEZPIECZEŃSTWO</span>
+        </div>
+        <h3><a href="/pl/lab/panstwo-linkuje-do-kasyna/">Jak państwowe rejestry i strony .gov.pl napędzają ruch nielegalnym kasynom</a></h3>
+        <p>Audyt 35 583 unikalnych domen szkół, szpitali i żłobków z RSPO, RPWDL2 oraz Rejestru Żłobków skrzyżowany z 59 376 wpisami Rejestru Domen Służących do Oferowania Gier Hazardowych Niezgodnie z Ustawą. Dokumentuje 291 aktywnych, niezablokowanych domen kierujących z Polski do kasyn (287 od początku do końca poza blokadą DNS), 158 wciąż widocznych w oficjalnych kartach placówek (plus 137 w Wykazie MC), 9 stron <code>.gov.pl</code>, starostw i BIP z 10 linkami <code>dofollow</code> oraz 26,2-krotny skok udziału <code>.pl</code> w rejestrze MF (z 0,82% w 2023 r. do 21,51% w 2026 r.). Rozdziela też trzy wektory przejęć — w tym 8 działających serwerów publicznych szkół i szpitali z wstrzykniętym spamem PHP, których wpisanie na listę MF z mocy art. 15f ust. 5 odcięłoby pacjentów i rodziców od całej domeny w 48 h.</p>
+        <p class="edu-topics">3 moduły wizualne (silosy, 3 wektory, infrastruktura i krzywa przeżycia Kaplana–Meiera) · 4-widokowa zanonimizowana baza <code>[.]</code> · CSV/JSON · kod iframe</p>
+        <div class="edu-actions">
+          <a class="edu-cta" href="/pl/lab/panstwo-linkuje-do-kasyna/">Czytaj śledztwo i sprawdź rejestry <span>→</span></a>
+          <a class="edu-source" href="/pl/lab/panstwo-linkuje-do-kasyna/#explorer">Sama wyszukiwarka rekordów ↓</a>
+        </div>
+      </div>
+      <div class="lab-issue2-stats">
+        <div class="lab-issue2-stat">
+          <strong>291<small>domen</small></strong>
+          <span>aktywnych i niezablokowanych (z 35 583 zbadanych); 158 nadal wisi w żywych rejestrach RSPO, RPWDL2 i Żłobków</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>26,2<small>×</small></strong>
+          <span>skok udziału domen <code>.pl</code> w rejestrze MF (z 0,82% w 2023 r. do 21,51% w 2026 r. po deduplikacji PSL)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>94,5<small>%</small></strong>
+          <span>przejętych domen omija blokadę DNS przez ≥ 90 dni (estymator Kaplana–Meiera, <code>N = 101</code>)</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="lab-hub-feature reveal">
+      <div>
+        <div class="edu-meta">
           <span class="index">NR 01 · LISTOPAD 2026</span>
           <span class="project-meta">ZAMÓWIENIA PUBLICZNE · RAPORT + WYSZUKIWARKA</span>
         </div>
-        <h3><a href="/pl/lab/przetargi-ai/">Na co polskie instytucje naprawdę wydają pieniądze pod hasłem AI?</a></h3>
-        <p>Analiza 304 powiązanych ogłoszeń i pełnych protokołów HTML połączonych w 171 unikalnych postępowań z Biuletynu Zamówień Publicznych z lat 2024–2026 (159 podstawowych, 110 podpisanych umów na 32,20 mln zł brutto). Pokazuje, dlaczego kursy robią tłok w liczbie ogłoszeń (22,6% postępowań przy 7,6% kwoty), jak 89,8% środków trafia na systemy kliniczne, laboratoria i serwery GPU — oraz dlaczego powyżej 170 tys. zł konkurencja załamuje się tak, że 56,0% kwoty bez kontroferty rośnie po odrzuceniach do 53,6% umów i 60,7% pieniędzy (19,54 mln zł) bez żadnego ważnego konkurenta, podczas gdy MŚP zdobywają 93,8% wartości, 72,2% przetargów na oprogramowanie AI nie bada jakości, a 31 postępowań upada.</p>
+        <h3><a href="/pl/lab/przetargi-ai/">60,7% pieniędzy bez konkurenta. Jak polskie instytucje naprawdę kupują sztuczną inteligencję</a></h3>
+        <p>Śledztwo na 304 ogłoszeniach i pełnych protokołach HTML połączonych w 171 unikalnych postępowań z Biuletynu Zamówień Publicznych (2024–2026; 159 podstawowych, 110 podpisanych umów na 32,20 mln zł brutto) skrzyżowanych z odpisami KRS i wpisami CEIDG. Pokazuje, dlaczego 60,7% zakontraktowanych pieniędzy (19,54 mln zł w 59 umowach) oraz 17 z 17 kontraktów wszystkich sześciu liderów czystego AI trafiło do firm bez ani jednego ocalałego rywala — od 100% spółki-córki Asseco wpisanej w BZP jako „mikroprzedsiębiorca”, przez 20-dniową firmę z CEIDG wdrażającą konektor KPO za 285 tys. zł i system lekarski kupiony pod kodem „Gazety i czasopisma”, po 12 z 12 zablokowanych wdrożeń szpitalnych HIS/PACS.</p>
         <p class="edu-topics">2 interaktywne wykresy (3-widokowy moduł konkurencji i unieważnień) · wyszukiwarka 171 przetargów · eksport CSV/JSON · kod iframe dla redakcji</p>
         <div class="edu-actions">
           <a class="edu-cta" href="/pl/lab/przetargi-ai/">Czytaj raport i przeglądaj bazę <span>→</span></a>

@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f7f6f2">
+<meta name="description" content="Śledztwo na danych z RSPO, RPWDL, Rejestru Żłobków, Wykazu MC i Rejestru Hazardowego MF (stan na 3–4.11.2026): 291 przejętych lub zainfekowanych domen szkół, szpitali i żłobków poza blokadą MF oraz 68 zablokowanych domen wciąż obecnych w publicznych bazach.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jak państwowe rejestry i strony .gov.pl napędzają ruch nielegalnym kasynom — śledztwo i baza danych">
+<meta property="og:description" content="Przeskanowałem 35 583 domeny z RSPO, RPWDL i Rejestru Żłobków. 291 prowadzi do nielegalnych kasyn poza Rejestrem MF (158 wciąż widnieje w żywych rejestrach), a 68 już zablokowanych domen nadal wisi na rspo.gov.pl, w RPWDL2, Wykazie MC i na gov.pl.">
+<meta property="og:url" content="https://roleplayingtech.com/pl/lab/panstwo-linkuje-do-kasyna/">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://roleplayingtech.com/assets/lab/og-casino-state-2026-pl.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Raport RolePlayingTech Nr 02: 291 nieblokowanych domen szkół, szpitali i żłobków z kasynami, 158 wciąż w żywych rejestrach, 26,2x wzrost udziału domen .pl w Rejestrze MF">
+<meta property="article:published_time" content="2026-11-04">
+<meta property="article:author" content="Grzegorz Stuczyński">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jak państwowe rejestry i strony .gov.pl napędzają ruch nielegalnym kasynom">
+<meta name="twitter:description" content="291 domen polskich szkół, szpitali i żłobków promuje nielegalne kasyna poza Rejestrem MF, a 68 już zablokowanych domen nadal figuruje w publicznych bazach i na stronach .gov.pl.">
+<meta name="twitter:image" content="https://roleplayingtech.com/assets/lab/og-casino-state-2026-pl.png">
+<title>Jak państwowe rejestry i strony .gov.pl napędzają ruch nielegalnym kasynom — RolePlayingTech</title>
+<script>document.documentElement.classList.add('js');if(location.search.indexOf('embed=1')!==-1)document.documentElement.classList.add('is-embed');</script>
+<link rel="stylesheet" href="/assets/minimal.css">
+<link rel="stylesheet" href="/assets/lab/bzp-explorer.css">
+<link rel="stylesheet" href="/assets/lab/casino-explorer.css">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="canonical" href="https://roleplayingtech.com/pl/lab/panstwo-linkuje-do-kasyna/">
+<link rel="alternate" hreflang="pl" href="https://roleplayingtech.com/pl/lab/panstwo-linkuje-do-kasyna/">
+<link rel="alternate" hreflang="en" href="https://roleplayingtech.com/en/lab/state-registries-casinos/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "headline": "Jak państwowe rejestry i strony .gov.pl napędzają ruch nielegalnym kasynom",
+      "image": "https://roleplayingtech.com/assets/lab/og-casino-state-2026-pl.png",
+      "datePublished": "2026-11-04",
+      "dateModified": "2026-11-04",
+      "inLanguage": "pl-PL",
+      "author": {
+        "@type": "Person",
+        "name": "Grzegorz Stuczyński",
+        "url": "https://roleplayingtech.com/pl/about/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "RolePlayingTech",
+        "url": "https://roleplayingtech.com/pl/"
+      },
+      "mainEntityOfPage": "https://roleplayingtech.com/pl/lab/panstwo-linkuje-do-kasyna/"
+    },
+    {
+      "@type": "Dataset",
+      "name": "Domeny polskich instytucji edukacyjnych i medycznych przejęte lub zainfekowane przez nielegalny hazard online (2025–2026)",
+      "description": "Zneutralizowany (defanged) zbiór 291 nieblokowanych domen z RSPO, RPWDL i Rejestru Żłobków, 68 domen zablokowanych w Rejestrze Hazardowym MF nadal obecnych w publicznych bazach oraz 9 oficjalnych stron .gov.pl i BIP z aktywnymi linkami dofollow (stan na 03–04.11.2026).",
+      "url": "https://roleplayingtech.com/pl/lab/panstwo-linkuje-do-kasyna/",
+      "temporalCoverage": "2017-04-26/2026-11-04",
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://roleplayingtech.com/assets/lab/casino-state-2026.json"
+      }
+    }
+  ]
+}
+</script>
+<script src="/assets/site.js" defer></script>
+<script src="/assets/lab/casino-explorer.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Przejdź do treści</a>
+<header class="site-head"><div class="frame"><a class="logo" href="/pl/">roleplayingtech<i>.</i></a><nav class="head-nav" aria-label="Nawigacja"><a href="/pl/#work">Projekty</a><a href="/pl/education/">Edukacja</a><a href="/pl/lab/" aria-current="page">Analizy</a><a href="/pl/about/">O mnie</a><a href="/pl/#help">Współpraca</a><a href="/pl/#links">W sieci</a><a href="/pl/#contact">Kontakt</a><div class="head-socials" aria-label="Profile społecznościowe"><a class="soc-link" href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer" aria-label="X (@rpl_0x)" title="X · @rpl_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="soc-accent" d="M12.9 2.5L9.1 6.9M6.9 9.1L3.1 13.5" fill="none" stroke="var(--rust)" stroke-width="1.45" stroke-linecap="round"/><path d="M2.6 2.5h2.7l8.1 11h-2.7Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="soc-accent" cx="4.2" cy="3.9" r="1.15" fill="var(--rust)"/><path d="M4.2 6.6v5.9M7.6 12.5V6.6m0 2.2c0-1.4 1.1-2.3 2.4-2.3 1.4 0 2.2.9 2.2 2.4v3.6" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (@roleplayinglife_0x)" title="Instagram · @roleplayinglife_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.2" y="2.2" width="11.6" height="11.6" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.7" fill="none" stroke="currentColor" stroke-width="1.4"/><circle class="soc-accent" cx="11.3" cy="4.7" r="1" fill="var(--rust)"/></svg></a></div><a class="switch" href="/en/lab/state-registries-casinos/" hreflang="en">EN</a></nav></div></header>
+
+<nav class="lab-subnav" aria-label="Spis rozdziałów raportu">
+  <div class="frame lab-subnav-inner">
+    <div class="lab-subnav-links">
+      <a href="#silos">01 · Pięć ślepych rejestrów</a>
+      <a href="#wektory">02 · Przejęcia kontra włamania</a>
+      <a href="#infrastruktura">03 · Hurtownie domen i czas reakcji</a>
+      <a href="#reforma">04 · Higiena danych i naprawa</a>
+    </div>
+    <a class="lab-subnav-cta" href="#explorer"><span class="cta-full">Zneutralizowana baza (359) ↓</span><span class="cta-short">Baza (359) ↓</span></a>
+  </div>
+</nav>
+
+<main id="main">
+
+<header class="lab-hero frame">
+  <div class="back"><a class="quiet-link" href="/pl/lab/">← Analizy i narzędzia</a></div>
+  <div class="lab-issue-bar micro">
+    <span class="lab-tag">NR 02 · ŚLEDZTWO I BAZA DANYCH</span>
+    <span>Rejestry publiczne i hazard (RSPO · RPWDL · MC · MF)</span>
+    <span>Stan weryfikacji: 3–4 listopada 2026 · lektura ok. 14 min</span>
+  </div>
+  <h1>Jak państwowe rejestry i strony <i>.gov.pl</i> napędzają ruch nielegalnym kasynom</h1>
+
+  <div class="lab-lead-grid">
+    <div>
+      <p class="lab-lead">Na oficjalnej stronie Starostwa Powiatowego w Kłodzku w zakładce szkół muzycznych widnieje odnośnik do Szkoły Muzycznej II stopnia w Bystrzycy Kłodzkiej. Kliknięcie uruchamia przekierowanie <code>HTTP 301</code> na domenę <code>learningpassport[.]pl</code> — jeszcze wiosną 2025 roku polską witrynę szkoleniową programu prowadzonego przez Biuro UNICEF, Ministerstwo Edukacji, Instytut Badań Edukacyjnych, Fundację SOK i Microsoft, a od 527 dni nieblokowaną witrynę kasyna VOX z wpłatami BLIK.</p>
+      <p class="lab-lead-sub">Żeby sprawdzić, czy to pojedyncze przeoczenie, pobrałem i przeskanowałem <strong>35 583 unikalne domeny główne</strong> z czterech publicznych rejestrów oświatowych i medycznych (RSPO, RPWDL, Rejestru Żłobków MRPiPS) oraz skrzyżowałem je z ustawowym Wykazem stron publicznych Ministerstwa Cyfryzacji, pełnym plikiem XML Rejestru Domen Hazardowych Ministerstwa Finansów (59 376 wpisów z lat 2017–2026), rekordami DNS/RDAP i przypisami polskiej Wikipedii.</p>
+      <div class="lab-byline-bar">
+        <span>Śledztwo, kod i audyt danych: <strong>Grzegorz Stuczyński</strong></span>
+        <span>Źródła: <a href="https://rspo.gov.pl" target="_blank" rel="noopener noreferrer">rspo.gov.pl</a> · <a href="https://dane.gov.pl/pl/dataset/2138" target="_blank" rel="noopener noreferrer">RPWDL</a> · <a href="https://dane.gov.pl/pl/dataset/1875" target="_blank" rel="noopener noreferrer">MC poz. 1875</a> · <a href="https://hazard.mf.gov.pl" target="_blank" rel="noopener noreferrer">MF XML</a> (03–04.11.2026)</span>
+        <span>Dane i dokumentacja: <a href="/assets/lab/casino-state-2026.json" download>JSON (572 KB, defanged)</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/casino-state-methodology.md" target="_blank" rel="noopener noreferrer">Metodologia ↗</a></span>
+      </div>
+      <div class="cas-disclosure-box" role="note">
+        <span class="micro">Nota redakcyjna · Odpowiedzialne ujawnienie i prawo do odpowiedzi</span>
+        Stan audytu technicznego w raporcie i bazie: <strong>3–4 listopada 2026 r.</strong> Zgodnie z art. 29 ustawy o grach hazardowych w całym serwisie i pliku JSON zastosowałem notację nawiasową <code>[.]</code> bez aktywnych odnośników do domen hazardowych, a z publicznej bazy usunąłem ścieżki wstrzykniętych podstron i wersje oprogramowania 22 zainfekowanych serwerów (Wektor B1), przygotowując pełną dokumentację techniczną do zgłoszenia incydentu w <strong>CERT Polska (CSIRT NASK)</strong>. W momencie publikacji zewnętrzne odpowiedzi instytucji nie wpłynęły jeszcze do redakcji (<code>0</code> otrzymanych stanowisk) — każde potwierdzone oczyszczenie wpisu lub serwera oznaczę w bazie statusem <code>CLEANED_AFTER_NOTIFICATION</code> po kontakcie na <a href="mailto:stuczynski.g@gmail.com">stuczynski.g@gmail.com</a>.
+      </div>
+      <div class="lab-jump-row">
+        <a class="jump" href="#silos">Czytaj śledztwo z wykresami<span>↓</span></a>
+        <a class="quiet-link" href="#explorer">Przejdź od razu do bazy 359 domen ↓</a>
+      </div>
+    </div>
+
+    <aside class="lab-meta-box" aria-label="Zakres, higiena danych i bezpieczeństwo">
+      <span class="micro">Zanim przejdziesz do liczb · Zakres i higiena prawna</span>
+      <ul>
+        <li><strong>Zero aktywnych linków do hazardu (art. 29 u.g.h.):</strong> wszystkie przejęte, afiliacyjne i zainfekowane domeny podaję wyłącznie w notacji <code>przyklad[.]pl</code>; klikalne przyciski prowadzą tylko do urzędowych kart (<code>rspo.gov.pl</code>, <code>dane.gov.pl</code>, <code>gov.pl</code>, <code>BIP</code>).</li>
+        <li><strong>Rozdzielone kohorty aktywne i archiwalne:</strong> nie łączę w jedną stopę procentową czynnych szkół z 2025/2026 r. (<code>0,73%</code>) z domenami wycofanymi w latach 2018–2023 (<code>1,70%</code> po wygaśnięciu starych adresów).</li>
+        <li><strong>Ochrona serwerów-ofiar (Wektor B1):</strong> dla 22 żywych serwerów po włamaniu do CMS zredagowałem wersje wtyczek/PHP i dokładne ścieżki wstrzykniętych podstron.</li>
+      </ul>
+      <details class="lab-meta-more">
+        <summary>Szczegóły deduplikacji, progów i weryfikacji</summary>
+        <ul>
+          <li><strong>35 583 unikalne domeny główne:</strong> z 35 730 skanów w czterech rejestrach odjąłem 147 domen wspólnych dla RPWDL i rejestrów oświatowych (0 wspólnych trafień) oraz wykluczyłem subdomeny darmowych platform (<code>edupage.org</code>, <code>szkolnastrona.pl</code>, <code>bip.net.pl</code>, <code>gov.pl</code>).</li>
+          <li><strong>Pełna lista sufiksów PSL i sortowanie MF XML:</strong> udział domen <code>.pl</code> w Rejestrze MF policzyłem po posortowaniu wszystkich 59 376 wpisów rosnąco wg <code>DataWpisu</code> z użyciem pełnej listy sufiksów NASK i ICANN/PSL (m.in. <code>edu.pl</code>, <code>waw.pl</code>, <code>vercel.app</code>, <code>co.uk</code>).</li>
+          <li><strong>287 z 291 w pełni otwarte w Polsce:</strong> 4 z 291 nieblokowanych domen instytucji wykonują przekierowanie <code>HTTP 301</code> do domeny-hubu figurującej już w XML MF; wszystkie 291 pozostają poza samym Rejestrem MF i przekazują autorytet SEO robotom indeksującym spoza Polski.</li>
+        </ul>
+      </details>
+    </aside>
+  </div>
+
+  <div class="lab-findings" aria-label="Najważniejsze ustalenia śledztwa">
+    <div class="lab-finding">
+      <span class="lab-finding-num">291<small>domen</small></span>
+      <span class="lab-finding-label">przejętych lub zainfekowanych domen szkół, szpitali, przychodni i żłobków działających <strong>poza Rejestrem Hazardowym MF</strong> (<code>0,82%</code> z 35 583 domen; w tym <strong>166 publicznych</strong> — <a href="?view=unblocked&amp;public=1#explorer" data-cas-preset="view=unblocked&amp;public=1">filtruj sektor publiczny ↓</a>).</span>
+      <span class="lab-finding-note">242 przejęcia (A) · 27 atrap SEO (B2) · 22 włamania do CMS (B1)</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">158<small>w rejestrach</small></span>
+      <span class="lab-finding-label">nieblokowanych domen kasynowych, na które <strong>nadal wskazują żywe rejestry państwowe</strong> (<code>54,3%</code> — 113 w RSPO, 37 w RPWDL2, 8 w Rejestrze Żłobków; <a href="?view=unblocked&amp;live=1#explorer" data-cas-preset="view=unblocked&amp;live=1">zobacz aktywne ↓</a>).</span>
+      <span class="lab-finding-note">plus 137 nieblokowanych domen w ustawowym Wykazie MC</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">68<small>po blokadzie</small></span>
+      <span class="lab-finding-label">domen <strong>już zablokowanych przez MF</strong> (31 instytucji/rejestrów publicznych i 37 domen <code>.pl</code> z Wikipedii), które nadal wiszą na żywym <code>rspo.gov.pl</code> (9), w RPWDL2 (1 / 70 wierszy), Wykazie MC (22) i na <code>gov.pl</code> (<a href="?view=banned#explorer" data-cas-preset="view=banned">sprawdź 68 ↓</a>).</span>
+      <span class="lab-finding-note">rekord na gov.pl: 657 dni po dacie zakazu MF</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">26,2<small>× skok .pl</small></span>
+      <span class="lab-finding-label">wzrost udziału domen <code>.pl</code> wśród nowych domen głównych wpisywanych do Rejestru MF: z <strong>0,82%</strong> w 2023 r. do <strong>21,51%</strong> w 2026 r. (w surowych wpisach XML wzrost <strong>33,0×</strong>: z 0,70% do 23,11%).</span>
+      <span class="lab-finding-note">ponad 570 przejętych domen o niehazardowych nazwach (2025–2026)</span>
+    </div>
+  </div>
+</header>
+
+<article class="lab-essay frame" id="silos">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 01
+      <strong>Ślepe silosy</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Dlaczego kasyna z Curaçao porzuciły tanie końcówki .xyz i zaczęły skupować domeny polskich szkół, przychodni oraz kampanii rządowych</h2>
+      <p class="has-dropcap">Między czerwcem 2023 a kwietniem 2025 roku pod adresem <code>learningpassport[.]pl</code> działała polska strona szkoleniowa programu <em>Learning Passport</em> — bezpłatnych kursów dla nauczycieli i uczniów z doświadczeniem uchodźczym, prowadzonych wspólnie przez Biuro UNICEF ds. Reagowania na Potrzeby Uchodźców w Polsce, Ministerstwo Edukacji, Instytut Badań Edukacyjnych, Fundację SOK i Microsoft (główna międzynarodowa platforma kursowa nadal działa pod adresem <code>poland.learningpassport.org</code>). Kiedy wiosną 2025 roku opłata abonamentowa za krajową domenę <code>.pl</code> wygasła, adres nie trafił do żadnej kwarantanny ochronnej. Czterdzieści pięć dni po ostatnim zrzucie w Internet Archive, <strong>25 maja 2025 roku</strong>, domenę zarejestrowano ponownie za pośrednictwem giełdy przechwytywania <code>Aftermarket.pl Limited</code>, ukryto za serwerami nazw Cloudflare (<code>dom + zainab</code>) i postawiono na niej polskojęzyczną stronę kasyna VOX z ofertą bonusu 10 000 zł. Później dokupiono też wygasłą domenę publicznej szkoły muzycznej z Bystrzycy Kłodzkiej (<code>sm2bystrzyca[.]pl</code>), by przekierować na kasyno ruch i wagę linku prosto z urzędowej podstrony <a href="https://powiat.klodzko.pl/92/szkoly-muzyczne.html" target="_blank" rel="noopener noreferrer"><code>powiat.klodzko.pl/92/szkoly-muzyczne.html</code> ↗</a>. Na dzień 3 listopada 2026 roku — po <strong>527 dniach od przejęcia</strong> — żadnej z tych dwóch domen nadal nie ma w Rejestrze Domen Służących do Oferowania Gier Hazardowych Niezgodnie z Ustawą.</p>
+      <p>Przez siedem pierwszych lat działania rejestru Ministerstwa Finansów (od kwietnia 2017 do końca 2024 roku) operatorzy nielegalnych kasyn grali w prostą grę objętościową: rejestrowali tysiące jednorazowych domen z końcówkami <code>.com</code>, <code>.xyz</code>, <code>.top</code> czy <code>.bet</code>, a gdy resort dopisywał subdomenę z numerem <code>74</code>, automat przełączał graczy na <code>75</code>. W 2023 roku wśród <strong>4 391 unikalnych nowych domen głównych</strong> (liczonych po pełnej liście sufiksów PSL i dacie pierwszego wpisu) krajowa końcówka <code>.pl</code> stanowiła zaledwie <strong>0,82% (36 domen)</strong>, a w surowych pozycjach XML — <strong>0,70% (76 z 10 932 wpisów)</strong>. Dla wyszukiwarek był to jednak model coraz droższy: świeża domena z losowym numerem w nazwie nie ma żadnej historii i latami nie przebija się w wynikach Google na konkurencyjne frazy kasynowe.</p>
+      <p>W 2025 roku model się odwrócił. Udział <code>.pl</code> wśród nowych domen głównych w Rejestrze MF skoczył w 2025 r. do <strong>5,60% (124 z 2 216)</strong>, a między 1 stycznia a 3 listopada 2026 r. osiągnął <strong>21,51% (931 z 4 328 nowych domen głównych — wzrost 26,2-krotny względem 2023 r.)</strong>; licząc wszystkie surowe wpisy XML z subdomenami, było to aż <strong>23,11% (1 731 z 7 491 wpisów — wzrost 33,0-krotny)</strong>. Co ważniejsze, przegląd nazw z lat 2025–2026 ujawnia <strong>ponad 570 zablokowanych domen <code>.pl</code> pozbawionych jakichkolwiek słów kojarzonych z grami losowymi</strong>: dawne adresy szkół podstawowych, miejskich ośrodków pomocy społecznej, domów kultury, basenów miejskich, powiatowych inspektoratów i szpitali. Z punktu widzenia algorytmu wyszukiwarki taka domena jest gotowym kapitałem: od kilkunastu lat prowadzą do niej linki <code>dofollow</code> z portali <code>.gov.pl</code>, Biuletynów Informacji Publicznej, kuratoriów i Wikipedii.</p>
+      <p>Skoro ponad pięćset takich domen zdążyło już wpaść do rejestru MF, naturalne było pytanie odwrócone: <strong>ile przejętych lub zainfekowanych domen szkół, szpitali i żłobków działa w tej chwili w najlepsze poza jakąkolwiek blokadą, podczas gdy państwowe bazy nadal kierują na nie obywateli?</strong> Żeby to policzyć bez opierania się na cudzych listach, pobrałem dane z czterech rejestrów źródłowych i po odfiltrowaniu darmowych platform współdzielonych sprawdziłem <strong>35 583 unikalne domeny główne</strong>:</p>
+      <p>W kohorcie <strong>aktywnych szkół i placówek oświatowych RSPO z roku szkolnego 2025/2026</strong> na 14 286 dedykowanych domen niefigurujących w Rejestrze MF aktywne treści kasynowe znalazłem na <strong>105 domenach, czyli 0,73%</strong> (dokładnie <code>0,735%</code>; 95% przedział ufności: <code>0,61%–0,89%</code>; licząc łącznie z 4 domenami już zablokowanymi w MF: <code>0,76%</code>). Rozbicie wg organu prowadzącego obala intuicyjne przypuszczenie, że problem dotyczy głównie małych szkół prywatnych: w placówkach <strong>publicznych odsetek wyniósł 0,78% (64 z 8 210 domen)</strong> wobec <strong>0,67% w niepublicznych (41 z 6 076)</strong> — różnica jest statystycznie nieistotna (dokładny test Fishera: <code>p = 0,49</code>). W drugiej kohorcie — <strong>8 198 historycznych domen z archiwalnych zrzutów RSPO/SIO z lat 2018–2023</strong> — odsetek nieblokowanych kasyn był ponaddwukrotnie wyższy i wyniósł <strong>1,70% (139 domen)</strong>. Kiedy rozłożyłem te 139 przypadków na czynniki pierwsze w żywym API <code>rspo.gov.pl</code>, okazało się, że tylko <strong>20,9% (29 domen)</strong> należało do faktycznie zlikwidowanych szkół. Aż <strong>66,9% (93 domeny)</strong> to szkoły, które normalnie uczą dzieci, ale przeprowadziły stronę na <code>edupage.org</code>, <code>szkolnastrona.pl</code> albo miejski portal (tylko 3 przeszły na <code>gov.pl</code>) i pozwoliły starej domenie wygasnąć. W <strong>Rejestrze Podmiotów Wykonujących Działalność Leczniczą (RPWDL)</strong> nieblokowane kasyna działały na <strong>41 z 11 860 zbadanych domen medycznych (0,35%)</strong>, a w <strong>Rejestrze Żłobków MRPiPS</strong> — na <strong>10 z 2 304 dedykowanych domen żłobkowych łącznie (0,43%</strong>: 6 z 1 386 domen występujących wyłącznie w rejestrze żłobków oraz 4 żłobki współdzielące wpis z RSPO).</p>
+      <p>Najbardziej uderzające odkrycie pojawiło się jednak dopiero wtedy, gdy sprawdziłem, co dzieje się w bazach innych resortów <em>po tym</em>, gdy Ministerstwo Finansów oficjalnie wpisze domenę do rejestru nielegalnego hazardu. Okazuje się, że polski rejestr blokad działa jak jednokierunkowy silos — żaden z pozostałych rejestrów państwowych nie odpytuje go automatycznie (<a href="?view=banned#explorer" data-cas-preset="view=banned">przejrzyj 68 zablokowanych domen nadal widocznych w publicznych źródłach ↓</a>):</p>
+      <p>Po pierwsze, na samym portalu rządowym <a href="https://www.gov.pl/web/klimat/badz-odkrywca-parkow-narodowych" target="_blank" rel="noopener noreferrer"><code>gov.pl/web/klimat/badz-odkrywca-parkow-narodowych</code> ↗</a> oraz w serwisie Biebrzańskiego Parku Narodowego (<a href="https://bbpn.gov.pl/promocja-parkow-narodowych" target="_blank" rel="noopener noreferrer"><code>bbpn.gov.pl/promocja-parkow-narodowych</code> ↗</a>) nadal wiszą aktywne linki <code>dofollow</code> prowadzące do domeny <code>odkrywcaparkownarodowych[.]pl</code> — <strong>657 dni po tym, jak 16 stycznia 2025 r. Ministerstwo Finansów wpisało ją do Rejestru Hazardowego</strong>. Po drugie, w żywym API <code>rspo.gov.pl</code> Ministerstwa Edukacji znalazłem <strong>9 zablokowanych przez MF domen przypiętych do 16 publicznie dostępnych kart placówek</strong> — mimo ustawowego obowiązku aktualizacji danych RSPO w terminie 7 dni od zmiany (art. 7 ust. 1 pkt 10 oraz art. 36 ust. 1 pkt 1 i ust. 2–3 ustawy o systemie informacji oświatowej, Dz.U. 2026 poz. 803). Obejmuje to <strong>dwie aktywne publiczne szkoły podstawowe</strong>: Szkołę Podstawową im. Jana Pawła II w Różankach (<a href="https://rspo.gov.pl/institutions/93026" target="_blank" rel="noopener noreferrer"><code>RSPO 93026</code> ↗</a>, domena <code>zsrozanki[.]pl</code> zablokowana 21.08.2026) oraz Szkołę Podstawową im. Jana III Sobieskiego w Woli Rasztowskiej (<a href="https://rspo.gov.pl/institutions/48899" target="_blank" rel="noopener noreferrer"><code>RSPO 48899</code> ↗</a>, <code>spwolarasztowska[.]pl</code> zablokowana 13.08.2026), jedną aktywną niepubliczną placówkę kształcenia ustawicznego (<code>dzierzno[.]pl</code>, <a href="https://rspo.gov.pl/institutions/48079" target="_blank" rel="noopener noreferrer"><code>RSPO 48079</code> ↗</a> — 390 dni po blokadzie MF) oraz 13 kart zlikwidowanych szkół (samo bezterminowe przechowywanie kart zlikwidowanych jednostek wynika z art. 7 ust. 2 u.s.i.o., lecz publikowanie na nich wygasłych domen jako klikalnych linków <code>dofollow</code> bez walidacji z Rejestrem MF karmi pozycjonowanie kasyn). Po trzecie, w nocnym zrzucie <code>RPWDL2</code> Centrum e-Zdrowia z 3 listopada 2026 r. (<code>CSV_Rpm_aktywne</code>) zablokowana 4 marca 2026 r. domena dawnego szpitala powiatowego <code>pzzoz[.]bedzin[.]pl</code> została wprawdzie usunięta z głównego pliku <code>podmioty.csv</code>, ale pod aktywną księgą rejestrową <code>000000014475</code> (<em>Zagłębiowski Szpital Kliniczny</em>) nadal jest rozsyłana w <strong>70 rekordach podrzędnych</strong>: 2 historycznych wierszach zakładów leczniczych (<code>zaklady.csv</code>) i 68 rekordach zamkniętych komórek klinicznych (<code>komorki.csv</code> — od okulistyki po punkt podawania cytostatyków). Po czwarte wreszcie, ustawowy <em>Wykaz stron internetowych podmiotów publicznych</em> publikowany przez Ministerstwo Cyfryzacji na podstawie art. 14 ust. 4 ustawy o dostępności cyfrowej (<a href="https://dane.gov.pl/pl/dataset/1875" target="_blank" rel="noopener noreferrer"><code>dane.gov.pl</code> poz. 1875 ↗</a>, najnowszy opublikowany zasób <code>65294</code> z 13.03.2025 r., stan danych na 30.04.2024 r., 98 048 wierszy) zawiera dziś <strong>159 zweryfikowanych domen kasynowych: 22 już zablokowane przez MF</strong> (m.in. <code>pzzoz[.]bedzin[.]pl</code>, warszawski Specjalny Ośrodek Wychowawczy „Dom Przy Rynku” <code>sow[.]waw[.]pl</code>, <code>zsrozanki[.]pl</code>, <code>gopssrokowo[.]pl</code> i <code>mgopspleszew[.]pl</code>) oraz <strong>137 nieblokowanych</strong>.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Dlaczego dostawca internetu nie ratuje SEO</strong>
+        Polscy operatorzy telekomunikacyjni przekierowują domeny z Rejestru MF na stronę ostrzegawczą KAS. Roboty indeksujące Googlebota i Bingbota odpytują jednak sieć z serwerów w USA i Irlandii, gdzie polska blokada DNS nie obowiązuje — widzą więc pełną stronę kasyna zasilaną linkiem <code>dofollow</code> z domeny <code>.gov.pl</code>, <code>BIP</code> lub Wikipedii (39 zablokowanych domen <code>.pl</code> w 72 hasłach).
+      </div>
+      <div class="lab-aside-note">
+        <strong>9 oficjalnych stron z aktywnym HTML</strong>
+        Oprócz rekordów w bazach RSPO, RPWDL2 i Wykazie MC potwierdziłem w kodzie HTML <strong>9 urzędowych podstron</strong> (<code>gov.pl/web/klimat</code>, <code>bbpn.gov.pl</code>, <code>powiat.klodzko.pl</code> i 6 stron <code>BIP</code> w Warszawie, Kłodzku i Cegłowie) łącznie <strong>10 aktywnych znaczników <code>&lt;a href&gt;</code></strong> bez atrybutu <code>nofollow</code> (<a href="?view=govlinks#explorer" data-cas-preset="view=govlinks">zobacz wszystkie 9 podstron ↓</a>).
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" id="fig-silos" aria-labelledby="fig1-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Wykres 01 · Architektura rozłączonych rejestrów i zwrot ku domenom .pl</span>
+        <h3 class="lab-fig-title" id="fig1-title">Pięć państwowych baz danych nie rozmawia z Rejestrem Hazardowym MF — podczas gdy udział .pl skoczył 26,2×</h3>
+        <p class="lab-fig-sub">Po lewej: przepływ między Rejestrem MF a publicznymi rejestrami oświaty, zdrowia, cyfryzacji i stronami <code>.gov.pl</code>/<code>BIP</code> (stan na 03–04.11.2026). Po prawej: udział domen <code>.pl</code> w nowych domenach głównych Rejestru MF (pełna lista PSL, 2017–2026) oraz częstość trafień w czterech zbadanych kohortach.</p>
+      </div>
+    </div>
+
+    <div class="silo-grid">
+      <div class="silo-panel">
+        <div class="silo-panel-head">
+          <h4>Brak walidacji krzyżowej między rejestrami państwa</h4>
+          <p>Wpisanie domeny do pliku XML Ministerstwa Finansów nie wywołuje żadnego alertu w RSPO, RPWDL2, Wykazie MC ani w redakcjach <code>gov.pl</code> i <code>BIP</code>.</p>
+        </div>
+        <div class="silo-arch" role="img" aria-label="Schemat braku synchronizacji między Rejestrem Hazardowym MF a rejestrami RSPO, RPWDL2, Wykazem MC i stronami gov.pl/BIP">
+          <div class="silo-arch-top">
+            <span class="silo-arch-top-kicker">Rejestr Domen Hazardowych MF (hazard.mf.gov.pl · XML)</span>
+            <span class="silo-arch-top-desc">59 376 wpisów (2017–2026) · 931 nowych domen głównych .pl w 2026 r. · 0 webhooków do innych resortów</span>
+          </div>
+          <div class="silo-arch-gap">
+            <span class="silo-arch-badge">Brak automatycznej synchronizacji</span>
+          </div>
+          <div class="silo-arch-cards">
+            <div class="silo-arch-card">
+              <span class="silo-arch-kicker">01 · MEN / CIE — rspo.gov.pl</span>
+              <strong class="silo-arch-val">113 nieblokowanych</strong>
+              <span class="silo-arch-line">+ 9 domen zablokowanych w MF na 16 kartach</span>
+              <span class="silo-arch-sub">w tym 2 aktywne publiczne szkoły podstawowe</span>
+            </div>
+            <div class="silo-arch-card">
+              <span class="silo-arch-kicker">02 · MZ / CeZ — RPWDL2 + Żłobki</span>
+              <strong class="silo-arch-val">37 w RPWDL2 + 8 żłobków</strong>
+              <span class="silo-arch-line">+ pzzoz[.]bedzin[.]pl (70 wierszy po blokadzie)</span>
+              <span class="silo-arch-sub">szpitale powiatowe, SPZOZ, żłobki gminne</span>
+            </div>
+            <div class="silo-arch-card">
+              <span class="silo-arch-kicker">03 · MC — Wykaz stron (#1875)</span>
+              <strong class="silo-arch-val">159 domen kasynowych</strong>
+              <span class="silo-arch-line">137 nieblokowanych + 22 już zablokowane w MF</span>
+              <span class="silo-arch-sub">art. 14 ust. 4 u.d.c. (zasób 65294 · 98 048 wierszy)</span>
+            </div>
+            <div class="silo-arch-card">
+              <span class="silo-arch-kicker">04 · .gov.pl, BIP i Wikipedia</span>
+              <strong class="silo-arch-val">9 stron urzędowych (10 href)</strong>
+              <span class="silo-arch-line">gov.pl/web/klimat (657d po zakazie) + 6 BIP</span>
+              <span class="silo-arch-sub">+ 39 zablokowanych domen .pl w 72 hasłach Wiki</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="silo-panel">
+        <div>
+          <div class="silo-panel-head">
+            <h4>Udział domen .pl w nowych wpisach MF (2017–2026, pełny PSL)</h4>
+            <p>Odsetek krajowych domen głównych <code>.pl</code> wśród po raz pierwszy blokowanych domen <code>eTLD+1</code> (posortowane chronologicznie).</p>
+          </div>
+          <div class="silo-surge-bars" role="img" aria-label="Wykres słupkowy udziału domen .pl w Rejestrze MF od 2017 do 2026: skok z 0,82% w 2023 r. do 21,51% w 2026 r.">
+            <div class="silo-yr-col"><span class="silo-yr-pct">1,4%</span><div class="silo-yr-bar" style="height:7%"></div><span class="silo-yr-lbl">17</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">1,1%</span><div class="silo-yr-bar" style="height:5%"></div><span class="silo-yr-lbl">18</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">0,4%</span><div class="silo-yr-bar" style="height:3%"></div><span class="silo-yr-lbl">19</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">0,1%</span><div class="silo-yr-bar" style="height:2%"></div><span class="silo-yr-lbl">20</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">3,3%</span><div class="silo-yr-bar" style="height:15%"></div><span class="silo-yr-lbl">21</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">2,2%</span><div class="silo-yr-bar" style="height:10%"></div><span class="silo-yr-lbl">22</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">0,8%</span><div class="silo-yr-bar" style="height:4%"></div><span class="silo-yr-lbl">23</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">0,9%</span><div class="silo-yr-bar" style="height:4%"></div><span class="silo-yr-lbl">24</span></div>
+            <div class="silo-yr-col is-2025"><span class="silo-yr-pct">5,6%</span><div class="silo-yr-bar" style="height:26%"></div><span class="silo-yr-lbl">25</span></div>
+            <div class="silo-yr-col is-peak"><span class="silo-yr-pct">21,5%</span><div class="silo-yr-bar" style="height:100%"></div><span class="silo-yr-lbl">26</span></div>
+          </div>
+        </div>
+
+        <div class="silo-cohorts">
+          <button type="button" class="silo-cohort-btn" data-cas-preset="view=unblocked&amp;cohort=ACTIVE_RSPO_2025_2026">
+            <div class="silo-cohort-top"><strong>Aktywne RSPO (2025/2026)</strong><span class="silo-cohort-rate">0,73% (105 / 14 286)</span></div>
+            <div class="silo-cohort-track"><div class="silo-cohort-fill" style="width:43.5%"></div></div>
+            <div class="silo-cohort-sub"><span>publiczne 0,78% vs niepubliczne 0,67% (p=0,49)</span><span>filtruj 105 →</span></div>
+          </button>
+          <button type="button" class="silo-cohort-btn" data-cas-preset="view=unblocked&amp;cohort=ABANDONED_RSPO_2018_2023">
+            <div class="silo-cohort-top"><strong>Historyczne domeny RSPO (2018–2023)</strong><span class="silo-cohort-rate">1,70% (139 / 8 198)</span></div>
+            <div class="silo-cohort-track"><div class="silo-cohort-fill is-hist" style="width:100%"></div></div>
+            <div class="silo-cohort-sub"><span>66,9% to aktywne szkoły po zmianie domeny</span><span>filtruj 139 →</span></div>
+          </button>
+          <button type="button" class="silo-cohort-btn" data-cas-preset="view=unblocked&amp;cohort=ACTIVE_REJESTR_ZLOBKOW_2026">
+            <div class="silo-cohort-top"><strong>Rejestr Żłobków MRPiPS (łącznie)</strong><span class="silo-cohort-rate">0,43% (10 / 2 304)</span></div>
+            <div class="silo-cohort-track"><div class="silo-cohort-fill" style="width:25.5%"></div></div>
+            <div class="silo-cohort-sub"><span>6 wyłącznie w żłobkach + 4 wspólne z RSPO</span><span>filtruj 10 →</span></div>
+          </button>
+          <button type="button" class="silo-cohort-btn" data-cas-preset="view=unblocked&amp;cohort=ACTIVE_RPWDL_PODMIOTY_LECZNICZE_2026">
+            <div class="silo-cohort-top"><strong>Podmioty lecznicze RPWDL</strong><span class="silo-cohort-rate">0,35% (41 / 11 860)</span></div>
+            <div class="silo-cohort-track"><div class="silo-cohort-fill" style="width:20.4%"></div></div>
+            <div class="silo-cohort-sub"><span>37 nadal aktywnych w nocnym RPWDL2 (03.11)</span><span>filtruj 41 →</span></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Źródło: obliczenia własne na bazie RSPO (2018–2026), RPWDL/RPWDL2, Rejestru Żłobków, Wykazu MC (#1875) i pliku XML MF (stan na 03–04.11.2026).</span>
+      <span>Kliknij dowolną kohortę po prawej, aby odfiltrować rekordy w bazie poniżej.</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="wektory">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 02
+      <strong>Przejęcia i ofiary</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Dlaczego wrzucenie wszystkich 291 domen na czarną listę DNS odcięłoby pacjentów od szpitali powiatowych z mocy art. 15f ust. 5 ustawy hazardowej</h2>
+      <p class="has-dropcap">Kiedy ktoś wpisuje dziś adres internetowy publicznej przychodni w Cegłowie pod Mińskiem Mazowieckim (<code>spzozceglow[.]pl</code>, podlinkowany bezpośrednio z gminnego Biuletynu Informacji Publicznej <a href="https://bip.ceglow.pl/ceg/spzoz-w-ceglowie/informacje/18278,Informacje-ogolne.html" target="_blank" rel="noopener noreferrer"><code>bip.ceglow.pl</code> ↗</a>), widzi normalną witrynę ośrodka zdrowia: grafik trzynastu poradni i pracowni, telefony do rejestracji oraz opublikowane 23 października 2026 roku zapytanie ofertowe na dostawę ambulansu transportowego typu A1. Dopiero inspekcja drzewa DOM strony głównej i statycznych podstron odsłania drugie dno: osiem dni przed ogłoszeniem przetargu na karetkę ktoś z zewnątrz wykorzystał lukę w nieaktualizowanym systemie CMS i wstrzyknął na serwer przychodni zestaw polskojęzycznych podstron reklamujących bonusy kasynowe bez depozytu.</p>
+      <p>Identyczny obraz zastałem na serwerze <strong>Samodzielnego Publicznego Zespołu Zakładów Opieki Zdrowotnej w Żurominie</strong> (<code>szpital-zuromin[.]pl</code> — szpital powiatowy wykazujący w księdze RPWDL <strong>61 aktywnych oddziałów, poradni i pracowni diagnostycznych</strong>), <strong>Samorządowego Żłobka Gminy Puck w Starzynie</strong> (<code>zlobekstarzyno[.]pl</code> — 38 miejsc, 33 zapisanych dzieci), aktywnego zespołu czterech warszawskich szkół publicznych (<code>zslie1[.]edu[.]pl</code> — <strong>976 uczniów</strong> i bieżące komunikaty dyrekcji z 26 października 2026 r.), <strong>Przedszkola nr 337 w Warszawie</strong> (<code>przedszkole337[.]pl</code>, podpiętego do <a href="https://przedszkole337.bip.warszawa.pl/" target="_blank" rel="noopener noreferrer"><code>przedszkole337.bip.warszawa.pl</code> ↗</a> — gdzie obok zaproszenia na jesienne warsztaty z rodzicami z 30 października w kodzie strony głównej ukryto 67 linków afiliacyjnych), <strong>Przedszkola nr 2 w Kłodzku</strong> (<code>przedszkole2[.]klodzko[.]pl</code> — 191 dzieci, ukryta podstrona celująca w hasła o <em>anulowaniu samowykluczenia</em> przez osoby uzależnione), <strong>Przedszkola Publicznego w Mochach</strong> oraz <strong>Szkoły Podstawowej im. Arkadego Fiedlera w Gułtowach</strong>.</p>
+      <p>Ręczny i skryptowy audyt wszystkich 291 nieblokowanych domen pokazał, że pod pozornie jednorodnym zjawiskiem kryją się <strong>trzy zupełnie odmienne wektory techniczne</strong>, które wymagają rozdzielnych działań państwa:</p>
+      <p><strong>Wektor A (242 z 291 domen — 83,2%)</strong> to klasyczne przejęcia wygasłych adresów (<em>drop-catching</em>). Instytucja zamknęła działalność albo przeniosła stronę na inną domenę, nie przedłużyła abonamentu, a nowy właściciel postawił pod starym adresem pełny lejek rejestracyjny kasyna online z płatnościami BLIK i kryptowalutami bądź przekierowanie <code>HTTP 301</code> do jednej z 31 domen-hubów (np. w warszawskim BIP na karcie <a href="https://sp109.bip.warszawa.pl/-/kontakt" target="_blank" rel="noopener noreferrer"><code>sp109.bip.warszawa.pl/-/kontakt</code> ↗</a> wisi od 552 dni przejęta domena <code>sp109[.]waw[.]pl</code>, podczas gdy sama szkoła uczy pod <code>sp109warszawa.edupage.org</code>). Aż <strong>97,9% tych domen (237 z 242)</strong> ukryto za chmurą Cloudflare.</p>
+      <p><strong>Wektor B2 (27 z 291 domen — 9,3%)</strong> to bardziej wyrafinowana odmiana przejęcia po wygaśnięciu (<strong>100% za Cloudflare</strong>). Zamiast wstawiać jaskrawy baner z ruletką, operatorzy odtworzyli w <strong>15 przypadkach archiwalny wygląd dawnej szkoły z kopii Wayback Machine</strong> — zostawiając nazwiska dawnych dyrektorów, statut czy kronikę apeli, a między szkolne aktualności wpletli wygenerowane artykuły z linkami do kasyn (tak działają m.in. <code>spnoskow[.]pl</code>, <code>spniemica[.]edu[.]pl</code>, <code>zsradzymin[.]pl</code> i <code>sp10szczecin[.]pl</code>). Pozostałe <strong>12 domen Wektora B2</strong> zamieniono w blogi recenzujące sloty i gry typu crash, jak warszawskie <code>przedszkole384[.]pl</code> reklamujące grę „Aviator”, na które nadal kierują dwie zakładki <a href="https://przedszkole384.bip.warszawa.pl/" target="_blank" rel="noopener noreferrer"><code>przedszkole384.bip.warszawa.pl</code> ↗</a>.</p>
+      <p><strong>Wektor B1 (22 z 291 domen — 7,6%)</strong> to zupełnie inna kategoria prawna i techniczna (<a href="?view=victims#explorer" data-cas-preset="view=victims">zobacz wszystkie 22 żywe serwery-ofiary w bazie ↓</a>). Domeny te <strong>nie wygasły i nie zmieniły właściciela</strong>: aż <strong>95,5% z nich (21 z 22)</strong> stoi na polskim i europejskim hostingu współdzielonym (<code>cyber_Folks</code>, <code>home.pl</code>, <code>LH.pl</code>, <code>Hekko</code>), a włamywacze ukryli linki przez style CSS (<code>display: none</code>, ujemne współrzędne poza ekranem, zerowa przezroczystość) w przestarzałych instalacjach WordPressa i Joomli. Obejmuje on <strong>9 serwerów jednostek publicznych (8 aktywnie działających dziś placówek i 1 dawny serwer zlikwidowanej szkoły <code>pspsycyna[.]pl</code>)</strong> oraz 13 prywatnych przychodni, szkół i żłobków.</p>
+
+      <div class="lab-callout">
+        <span class="micro">Kluczowy skutek ustawowy · Art. 15f ust. 4 i ust. 5 ustawy o grach hazardowych</span>
+        <p>Wszystkie <strong>269 przejętych domen (Wektor A + Wektor B2) oraz 31 domen-hubów</strong> służą dziś wyłącznie do oferowania i reklamowania nielegalnych gier hazardowych — kwalifikują się wprost do wpisu do Rejestru MF (art. 15f ust. 4 pkt 1). Natomiast wpisanie tam <strong>22 żywych serwerów z Wektora B1</strong> uruchomiłoby automatyczny rygor <strong>art. 15f ust. 5</strong>, który działa wyłącznie na poziomie <em>całej nazwy domeny</em> (bez możliwości wycięcia pojedynczej podstrony): operatorzy telekomunikacyjni musieliby w ciągu 48 godzin zablokować całą witrynę szpitala powiatowego w Żurominie lub przychodni w Cegłowie i przekierować pacjentów na ekran ostrzegawczy o odpowiedzialności karnej skarbowej (a art. 15g ust. 2 odciąłby obsługę płatniczą, pozostawiając dyrekcji jedynie następczy sprzeciw z art. 15f ust. 7). Poszkodowane włamaniem instytucje nie prowadzą reklamy hazardu (art. 29 ust. 4 u.g.h.) — właściwą ścieżką jest dla nich interwencja naprawcza <strong>CERT Polska / CSIRT NASK</strong> w trybie ustawy o krajowym systemie cyberbezpieczeństwa.</p>
+      </div>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Dlaczego nie publikujemy wersji wtyczek</strong>
+        Podczas audytu zidentyfikowałem na serwerach Wektora B1 nieaktualne gałęzie PHP, otwarte końcówki REST API oraz konkretne wtyczki WordPressa. Publikacja numerów wersji i ścieżek URL obok nazwy czynnego szpitala byłaby gotową instrukcją dla kolejnych grup przestępczych — dlatego w publicznym pliku JSON i tabeli te pola zostały zredagowane i trafią wyłącznie w zgłoszeniu incydentu do CERT Polska.
+      </div>
+      <div class="lab-aside-note">
+        <strong>Pułapka dat w WordPressie</strong>
+        Na serwerach <code>przedszkole337[.]pl</code> i <code>klapciatek[.]pl</code> pole <code>date_gmt</code> wskazywało lata 2019 i 2023. Dopiero porównanie z polem <code>modified_gmt</code> potwierdziło, że włamywacze dopisali ukryte linki kasynowe do starych zakładek przedszkoli w <strong>październiku 2026 roku</strong>.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" id="fig-vectors" aria-labelledby="fig2-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Wykres 02 · Trójpoziomowa anatomia 291 nieblokowanych domen</span>
+        <h3 class="lab-fig-title" id="fig2-title">92,4% to przejęte po wygaśnięciu domeny na Cloudflare, ale 7,6% to żywe serwery szpitali, szkół i żłobków po włamaniu</h3>
+        <p class="lab-fig-sub">Porównanie udziału w próbie (N = 291), infrastruktury hostingowej, sposobu działania oraz właściwej ścieżki reakcji prawnej.</p>
+      </div>
+    </div>
+
+    <div class="vec-bar-wrap">
+      <div class="comp-sec-head">
+        <span class="comp-sec-title">Podział 291 nieblokowanych domen instytucji wg wektora technicznego</span>
+        <span class="comp-click-hint">Kliknij segment lub kartę, aby wyfiltrować rekordy w bazie ↓</span>
+      </div>
+      <div class="vec-stack-bar" role="img" aria-label="Podział 291 domen: Wektor A 83,2% (242), Wektor B2 9,3% (27), Wektor B1 7,6% (22)">
+        <button type="button" class="vec-seg is-a" style="width:83.16%" data-cas-preset="view=unblocked&amp;vec=VECTOR_A_FULL_CASINO_TAKEOVER" title="Wektor A: 242 domeny (83,2%)">Wektor A · 242 (83,2%)</button>
+        <button type="button" class="vec-seg is-b2" style="width:9.28%" data-cas-preset="view=unblocked&amp;vec=VECTOR_B2_DROPCAUGHT_SEO_FACADE" title="Wektor B2: 27 domen (9,3%)">B2 · 27</button>
+        <button type="button" class="vec-seg is-b1" style="width:7.56%" data-cas-preset="view=victims" title="Wektor B1: 22 serwery-ofiary (7,6%)">B1 · 22</button>
+      </div>
+
+      <div class="vec-cards">
+        <div class="vec-card">
+          <div>
+            <div class="vec-card-head">
+              <span class="vec-card-kicker">Wektor A · Pełne przejęcie</span>
+              <span class="vec-card-num">242<small>83,2%</small></span>
+            </div>
+            <h4>Bezpośrednie kasyno BLIK albo przekierowanie 301 do hubu</h4>
+            <p style="margin-top:8px">Wygasłe domeny szkół, przychodni i żłobków kupione na rynku wtórnym i skierowane wprost na formularze rejestracji kasyn offshore lub sieć 31 hubów afiliacyjnych.</p>
+          </div>
+          <div>
+            <div class="vec-meta-list">
+              <span>• Sieć DNS: <strong>97,9% Cloudflare</strong> (237 / 242)</span>
+              <span>• Otwarte od A do Z w PL: <strong>238 / 242</strong> (4 → hub w MF)</span>
+            </div>
+            <div class="vec-remedy" style="margin-top:8px">Reakcja: Blokada DNS MF (art. 15f ust. 4) + czyszczenie rejestrów</div>
+            <button type="button" class="vec-filter-btn" style="margin-top:8px" data-cas-preset="view=unblocked&amp;vec=VECTOR_A_FULL_CASINO_TAKEOVER">Pokaż 242 domeny Wektora A →</button>
+          </div>
+        </div>
+
+        <div class="vec-card">
+          <div>
+            <div class="vec-card-head">
+              <span class="vec-card-kicker">Wektor B2 · Atrapa SEO / PBN</span>
+              <span class="vec-card-num">27<small>9,3%</small></span>
+            </div>
+            <h4>15 klonów szkół z Wayback Machine + 12 blogów i gier crash</h4>
+            <p style="margin-top:8px">Przejęte domeny udające dawną placówkę (skopiowane z Internet Archive statuty i aktualności przeplecione linkami do slotów) lub poradniki gry „Aviator”.</p>
+          </div>
+          <div>
+            <div class="vec-meta-list">
+              <span>• Sieć DNS: <strong>100,0% Cloudflare</strong> (27 / 27)</span>
+              <span>• Podtypy: <strong>15 klonów PBN</strong> · <strong>12 atrap kasynowych</strong></span>
+            </div>
+            <div class="vec-remedy" style="margin-top:8px">Reakcja: Blokada DNS MF (art. 15f ust. 4) + odpięcie z BIP/RSPO</div>
+            <button type="button" class="vec-filter-btn" style="margin-top:8px" data-cas-preset="view=unblocked&amp;vec=VECTOR_B2_DROPCAUGHT_SEO_FACADE">Pokaż 27 atrap Wektora B2 →</button>
+          </div>
+        </div>
+
+        <div class="vec-card is-victim">
+          <div>
+            <div class="vec-card-head">
+              <span class="vec-card-kicker">Wektor B1 · Serwery-ofiary</span>
+              <span class="vec-card-num">22<small>7,6%</small></span>
+            </div>
+            <h4>Włamanie do działającego CMS szpitala, szkoły lub żłobka</h4>
+            <p style="margin-top:8px">Prawdziwe, czynne witryny instytucji (w tym 8 aktywnych jednostek publicznych: 2 szpitale/SPZOZ, 5 szkół/przedszkoli i żłobek gminny) z ukrytymi w CSS linkami spamowymi.</p>
+          </div>
+          <div>
+            <div class="vec-meta-list">
+              <span>• Hosting: <strong>95,5% PL / UE</strong> (21 / 22; 1 Cloudflare)</span>
+              <span>• Sektor: <strong>9 publicznych</strong> (8 aktywnych) + <strong>13 prywatnych</strong></span>
+            </div>
+            <div class="vec-remedy" style="margin-top:8px">Reakcja: CERT Polska + czyszczenie CMS (bez blokady całej domeny z art. 15f ust. 5)</div>
+            <button type="button" class="vec-filter-btn" style="margin-top:8px" data-cas-preset="view=victims">Pokaż 22 serwery-ofiary B1 →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="infrastruktura">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 03
+      <strong>Hurtownie domen</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Seryjne klastry na Cloudflare, czterej rejestratorzy przechwytywania i półroczna przewaga czasowa nad blokadą</h2>
+      <p class="has-dropcap">Na pierwszy rzut oka 269 przejętych domen oświatowych i medycznych oraz ponad pięćset zablokowanych wcześniej domen <code>.pl</code> wygląda jak rozproszona chmura niezależnych stron ukrytych za odwrotnym proxy Cloudflare. W całej zbadanej puli 859 domen syndykatowych (po odjęciu serwerów-ofiar B1) aż <strong>710 korzysta z sieci Cloudflare (82,7% całości, a wśród 738 aktywnie rozwiązujących się dziś domen — aż 96,2%)</strong>, co skutecznie zasłania adresy IP fizycznych serwerów docelowych.</p>
+      <p>Cloudflare zostawia jednak w publicznym systemie DNS subtelny odcisk organizacyjny: każdemu kontu (<em>workspace</em>) przypisuje stałą parę serwerów nazw spośród puli około tysiąca imion (w naszym zbiorze zaobserwowałem dokładnie <strong>574 różne hosty <code>*.ns.cloudflare.com</code></strong>, co oznacza pulę rzędu 250 tysięcy możliwych par). Gdyby każdą przejętą domenę rejestrował osobny afiliant na oddzielnym koncie, szansa, że trzydzieści cztery domeny wylosują identyczną parę imion, byłaby mniejsza niż 10<sup>−120</sup> (nawet przy skrajnie zachowawczym założeniu puli 2 500 par wynosi 7,5&nbsp;×&nbsp;10<sup>−55</sup>).</p>
+      <p>Tymczasem po pogrupowaniu rekordów DNS wyłaniają się wyraźne hurtowe gniazda operacyjne. Para <code>autumn.ns.cloudflare.com + wells.ns.cloudflare.com</code> obsługuje <strong>138 zablokowanych w Rejestrze MF polskich domen <code>.pl</code></strong>. Z kolei para <code>grant.ns.cloudflare.com + uma.ns.cloudflare.com</code> skupia <strong>34 domeny naraz</strong>: <strong>31 wciąż nieblokowanych domen polskich szkół, przedszkoli i przychodni</strong> z naszej głównej bazy, <strong>1 nieblokowany hub przekierowań</strong> (<code>puchalskidietetyk[.]pl</code>) oraz <strong>2 domeny już wpisane na czarną listę MF</strong> (<code>budowajablonki[.]pl</code> i <code>personelgroup[.]pl</code>) — a wszystkie aktywne witryny w tym klastrze serwują ten sam szablon <code>VOX Casino</code> (<a href="?view=unblocked&amp;q=grant.ns.cloudflare.com%20%2B%20uma.ns.cloudflare.com#explorer" data-cas-preset="view=unblocked&amp;q=grant.ns.cloudflare.com%20%2B%20uma.ns.cloudflare.com">zobacz 31 nieblokowanych domen z klastra grant+uma ↓</a>). Podobny most łączący zablokowane i nieblokowane domeny widać na parze <code>austin + sreeni</code> (3 nieblokowane szkoły obok 3 zablokowanych, w tym <code>spnasielsk[.]pl</code>). Łącznie zaledwie <strong>pięć par serwerów nazw Cloudflare skupia 233 z 710 domen (32,8%)</strong>. Uczciwość metodologiczna nakazuje dodać dwa zastrzeżenia: wspólna para NS dowodzi wspólnego konta technicznego w Cloudflare (jednego zespołu afiliacyjnego albo wyspecjalizowanej agencji PBN obsługującej kilku zleceniodawców), natomiast samo świadczenie usługi reverse-proxy przez dostawcę chmury korzysta z wyłączenia odpowiedzialności pośrednika w art. 4–8 unijnego Aktu o usługach cyfrowych (DSA) do czasu doręczenia formalnego nakazu lub powiadomienia w trybie art. 9 DSA.</p>
+      <p>Równie silna koncentracja występuje na etapie zakupu wygasającej domeny. Odpytałem protokół RDAP dla kolejnych domen z listy 291 aż do momentu włączenia limitu zapytań <code>HTTP 429</code> przez serwer NASK, uzyskując pełne dane dla <strong>105 domen</strong> (co stanowi <strong>95,2% spisu z natury aktywnej kohorty RSPO 2025/2026</strong> po odliczeniu domen <code>.eu</code> nieudostępniających publicznego RDAP). W tej próbie <strong>czterej rejestratorzy specjalizujący się w przechwytywaniu wygasających domen odpowiadają za 78,1% rejestracji (82 ze 105; po przeważeniu poststratyfikacyjnym IPW: 79,6%)</strong>: <code>Aftermarket.pl Limited</code> (Cypr — <strong>39,0%</strong> całej próby, a w samym Wektorze A domen <code>.pl</code> aż <strong>48,8%, czyli 39 z 80 domen</strong>), holenderski <code>Openprovider / Hosting Concepts B.V.</code> (<strong>20,0%</strong>), francuski <code>Netim</code> (<strong>11,4%</strong>) oraz amerykański <code>Dynadot</code> (<strong>7,6%</strong>). Nie oznacza to naruszenia prawa po stronie samych giełd domen: automaty drop-catchingowe licytują każdy zwalniany adres z wysokim wskaźnikiem linków przychodzących, a w polskim systemie NASK po 30-dniowym okresie wygasania domena publicznej szkoły podstawowej wraca do wolnej puli na identycznych zasadach jak domena zamkniętego sklepu internetowego.</p>
+      <p>Dlaczego ten model tak bardzo się opłaca finansowo, widać na krzywej czasu reakcji państwa. Dla <strong>19 domen instytucji publicznych</strong>, które zostały już wyłapane i wpisane do Rejestru MF, policzyłem dokładny odstęp między datą nowej rejestracji w RDAP a datą wpisu w pliku XML Ministerstwa Finansów: <strong>mediana wyniosła 131 dni</strong> (rozstęp ćwiartkowy: <code>83–155 dni</code>; najszybciej zablokowano <code>piw[.]olawa[.]pl</code> po 28 dniach, najdłużej czekały <code>sudlugie[.]pl</code> — 307 dni oraz <code>spnasielsk[.]pl</code> — 317 dni). Równocześnie wśród <strong>82 wciąż nieblokowanych domen Wektora A</strong> mediana dotychczasowego wieku od przejęcia wynosi już <strong>151 dni</strong> (148 dni dla ścisłych rejestratorów drop-catch z lat 2025–2026, <code>N = 77</code>; rekordzista <code>zlobekgizycko[.]pl</code> wisi bez blokady od 816 dni). Połączenie obu grup w estymatorze przeżycia <strong>Kaplana–Meiera (N = 101)</strong> pokazuje realną skalę luki czasowej: <strong>po 150 dniach od przejęcia poza Rejestrem MF pozostaje 83,0% domen publicznych, a po pełnych 365 dniach — nadal 63,0%</strong>.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Wszystkie 16 województw</strong>
+        Zjawisko nie omija żadnego regionu Polski: po uzupełnieniu brakującego województwa przy warszawskiej domenie <code>przedszkolewola[.]pl</code> wszystkie 291 nieblokowanych domen rozkłada się na pełne 16 województw — od mazowieckiego (59), wielkopolskiego (30), małopolskiego (26), podkarpackiego (24) i śląskiego (23) po opolskie i świętokrzyskie (po 4) oraz lubuskie (2).
+      </div>
+      <div class="lab-aside-note">
+        <strong>Dlaczego liczymy krzywą Kaplana–Meiera</strong>
+        Zwykła średnia liczona wyłącznie na 19 już zablokowanych domenach sztucznie zaniża czas życia kasyn, bo pomija 82 domeny, których urząd skarbowy jeszcze w ogóle nie wykrył (obserwacje prawostronnie ucięte). Estymator Kaplana–Meiera uwzględnia obie grupy jednocześnie.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" id="fig-infra" aria-labelledby="fig3-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Wykres 03 · Infrastruktura, czas przetrwania i geografia (moduł 3-widokowy)</span>
+        <h3 class="lab-fig-title" id="fig3-title">32,8% domen Cloudflare leży na pięciu kontach, 4 giełdy rejestrują 78,1% adresów, a 83,0% przejęć przetrwa 150 dni bez blokady</h3>
+        <p class="lab-fig-sub">Przełączaj między klastrami serwerów nazw i rejestratorami (01), krzywą przetrwania Kaplana–Meiera (02) oraz rozkładem w 16 województwach (03).</p>
+      </div>
+    </div>
+
+    <div id="fig-infra-interactive">
+      <noscript>
+        <p class="specimen-note">Widok interaktywny wymaga JavaScriptu. Kluczowe liczby: klaster <code>autumn+wells</code> = 138 domen MF; <code>grant+uma</code> = 34 domeny (32 nieblokowane + 2 w MF); Top-4 rejestratorów (Aftermarket.pl 39,0%, Openprovider 20,0%, Netim 11,4%, Dynadot 7,6%) = 78,1% (N=105); przetrwanie Kaplana–Meiera (N=101): 94,5% po 90 dniach, 83,0% po 150 dniach i 63,0% po 365 dniach.</p>
+      </noscript>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Źródło: rekordy DNS over HTTPS (908 domen), NASK/IANA RDAP (N=105 nieblokowanych + N=19 zablokowanych w MF), dane lokalizacyjne TERYT/RSPO/RPWDL (stan: 03–04.11.2026).</span>
+      <span>Kliknięcie klastra NS, rejestratora lub województwa automatycznie filtruje tabelę poniżej.</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="reforma">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 04
+      <strong>Higiena i naprawa</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Trzy pułapki w publicznych plikach, które wyłapał audyt kodu, i cztery proste zmiany domykające lukę systemową</h2>
+      <p class="has-dropcap">Podobnie jak w poprzednim raporcie o zamówieniach publicznych na AI, samo pobranie publicznych plików CSV i XML okazało się dopiero połową roboty. Zanim zamknąłem ostateczną tabelę 291 nieblokowanych i 68 zablokowanych domen, sprawdziłem krzyżowo własne skrypty oraz surowe pliki dokumentów źródłowych, co odsłoniło trzy pouczające pułapki w samych rejestrach państwowych.</p>
+      <p>Po pierwsze, oficjalny plik <code>mf_hazard.xml</code> Ministerstwa Finansów (59 376 pozycji) jest zapisany w odwrotnej kolejności chronologicznej — od najnowszych wpisów z listopada 2026 r. na początku pliku do pozycji nr 1 z kwietnia 2017 r. na samym dole. Zwykła pętla deduplikująca domeny główne z góry na dół bez uprzedniego posortowania po dacie <code>DataWpisu</code> przypisuje wieloletnie domeny kasynowe do <em>ostatniego</em> roku, w którym zablokowano ich kolejną subdomenę, a uproszczona lista sufiksów spłaszcza zagraniczne domeny chmurowe (<code>vercel.app</code>, <code>co.uk</code>, <code>eu.com</code>), zawyżając udział <code>.pl</code> w 2026 r. o 0,57 punktu procentowego (<code>22,08%</code> zamiast właściwych <code>21,51%</code>). Wszystkie liczby w tym raporcie pochodzą z poprawionego szeregu chronologicznego na pełnej liście ICANN/PSL.</p>
+      <p>Po drugie, nocny eksport <code>RPWDL2</code> udostępniany przez Centrum e-Zdrowia w paczce nazwanej <code>CSV_Rpm_aktywne</code> zawiera wewnątrz pliku <code>komorki.csv</code> nie tylko czynne oddziały szpitalne, ale również historyczne komórki organizacyjne z wypełnioną kolumną daty zakończenia działalności. To właśnie dlatego zablokowana w marcu 2026 r. domena <code>pzzoz[.]bedzin[.]pl</code> po wyczyszczeniu głównego rekordu szpitala nadal jest co noc rozsyłana do integratorów i wyszukiwarek medycznych w 70 wierszach zamkniętych komórek i zakładów pod aktywną księgą <code>000000014475</code>.</p>
+      <p>Po trzecie wreszcie, automatyczna reguła odcinająca domeny przypisane w pliku RSPO do więcej niż trzech jednostek (wprowadzona po to, by nie skanować miejskich portali oświatowych) wrzuciła warszawską domenę <code>zslie1[.]edu[.]pl</code> do kohorty archiwalnej z lat 2018–2023 — mimo że w rzeczywistości są to cztery szkoły publiczne jednego czynnego zespołu szkół przy ul. gen. Zajączka (976 uczniów). Dopiero krzyżowe sprawdzenie żywego API <code>rspo.gov.pl</code> przywróciło jej właściwą klasyfikację wśród ośmiu aktywnych publicznych placówek z Wektora B1.</p>
+      <h3>Cztery niskokosztowe zmiany techniczne zamiast ręcznego ścigania pojedynczych domen</h3>
+      <p>Sedno problemu leży w asymetrii kosztów: gmina lub grantobiorca oszczędza około 100 zł rocznie na nieprzedłużeniu starej domeny <code>.pl</code>, oddając sieciom afiliacyjnym wieloletni kapitał zaufania z <code>.gov.pl</code>, <code>BIP</code> i Wikipedii — a nakładana po 131 dniach krajowa blokada DNS i tak nie zatrzymuje zagranicznych robotów Googlebota indeksujących przejętą domenę z USA. Zamknięcie tej luki nie wymaga jednak pisania wielkich ustaw ani kosztownych przetargów IT. Wystarczą cztery proste bezpieczniki na styku istniejących instytucji:</p>
+      <p><strong>1. Automatyczna nocna walidacja krzyżowa <code>MF XML ↔ RSPO / RPWDL2 / Rejestr Żłobków / Wykaz MC</code>.</strong> Plik XML Rejestru Hazardowego MF jest publiczny i aktualizowany codziennie. Prosty skrypt walidacyjny po stronie Centrum Informatycznego Edukacji, Centrum e-Zdrowia i Ministerstwa Cyfryzacji może każdej nocy porównywać wszystkie pola <code>Strona WWW</code> (włącznie z tabelami podrzędnymi <code>zaklady.csv</code> i <code>komorki.csv</code> oraz archiwalnymi kartami zlikwidowanych szkół w RSPO, na których linki powinny mieć co najmniej <code>rel="nofollow"</code> albo postać nieklikalnego tekstu) z listą MF oraz listą ostrzeżeń CERT Polska.</p>
+      <p><strong>2. Kwarantanna wygasających domen podmiotów publicznych i weryfikacja abonentów strefy <code>.edu.pl</code> w NASK.</strong> Aż 66,9% przejętych domen z kohorty historycznej RSPO należało do nadal działających szkół, które przeniosły witrynę pod nowy adres i porzuciły starą domenę. Domeny wpisane do ustawowego Wykazu stron podmiotów publicznych MC (poz. 1875) powinny być w rejestrze NASK objęte statusem ochronnym (zamiast trafiać po 30 dniach na otwarte aukcje przechwytywania — zamrożona kwarantanna z powiadomieniem organu prowadzącego i CERT Polska), a rejestracja nazw w strefie funkcjonalnej <code>.edu.pl</code> powinna wymagać potwierdzenia statusu podmiotu oświatowego lub akademickiego, zamiast pozwalać zagranicznym automatom rejestrować dawne szkoły pod kasyna.</p>
+      <p><strong>3. Klastrowa detekcja przejęć po parach <code>NS</code> i szablonach w KAS — z bezwzględnym oddzieleniem serwerów-ofiar Wektora B1.</strong> Kiedy 2 domeny z pary serwerów nazw <code>grant + uma</code> trafiają do Rejestru MF za oferowanie kasyna VOX, automatyczne sprawdzenie pozostałych polskich domen oświatowych i medycznych na tej samej parze NS pozwala zidentyfikować 31 kolejnych przejęć w jedno popołudnie zamiast 151 dni — przy równoczesnym kierowaniu zainfekowanych serwerów żywych instytucji (Wektor B1) wyłącznie do CERT Polska, tak aby nie uruchamiać wobec szpitali i szkół blokady całej domeny z art. 15f ust. 5 u.g.h.</p>
+      <p><strong>4. Cotygodniowy skaner linków wychodzących w serwisach <code>.gov.pl</code> i <code>BIP</code>.</strong> Lekki crawler sprawdzający raz w tygodniu kody <code>HTTP 301</code>, zmiany daty rejestracji w RDAP oraz obecność domen docelowych w bazach MF i CERT Polska wyeliminowałby sytuacje, w których strona Ministerstwa Klimatu linkuje do zablokowanej domeny przez 657 dni, a starostwo powiatowe odsyła rodziców przez łańcuch przekierowań do kasyna na dawnej domenie programu UNICEF i MEiN.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Powtarzalność ustaleń</strong>
+        Każdy rekord w bazie poniżej ma jawny identyfikator instytucji (<code>RSPO</code>, <code>RPWDL</code>, <code>Wykaz MC</code>) oraz przycisk prowadzący do oficjalnej karty państwowego rejestru lub strony urzędowej, na której można w kilkanaście sekund potwierdzić obecność domeny.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig4-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Dowód z dokumentów źródłowych · Trzy reprezentatywne przypadki z audytu</span>
+        <h3 class="lab-fig-title" id="fig4-title">Jak ten sam problem wygląda w trzech różnych miejscach państwa: łańcuch 301, włamanie do przychodni i ślepy rejestr po blokadzie</h3>
+      </div>
+    </div>
+    <div class="specimen-grid">
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Przypadek A · Łańcuch 301 i dawny projekt UNICEF/MEiN</strong>
+          <span>Wektor A · Starostwo Powiatowe w Kłodzku</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Strona urzędowa:</span><strong>powiat.klodzko.pl (dofollow)</strong></div>
+          <div class="specimen-line"><span>Przejęta szkoła (301):</span><strong>sm2bystrzyca[.]pl</strong></div>
+          <div class="specimen-line is-error"><span>Cel przekierowania (527 dni):</span><b>learningpassport[.]pl (VOX)</b></div>
+        </div>
+        <p class="specimen-note">Wykaz szkół muzycznych starostwa prowadzi do wygasłej domeny szkoły w Bystrzycy Kłodzkiej, a ta przekierowuje na dawną polską domenę szkoleniową Biura UNICEF, MEN, IBE, Fundacji SOK i Microsoftu, przechwyconą 25.05.2025 r. przez Aftermarket.pl. Obie domeny pozostają poza Rejestrem MF. <a href="https://powiat.klodzko.pl/92/szkoly-muzyczne.html" target="_blank" rel="noopener noreferrer">Strona starostwa ↗</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Przypadek B · Żywa gminna przychodnia po włamaniu</strong>
+          <span>Wektor B1 · SPZOZ w Cegłowie (księga RPWDL + BIP)</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Aktywne komórki RPWDL:</span><strong>13 poradni (25 w księdze)</strong></div>
+          <div class="specimen-line"><span>Wpis przychodni (23.10.2026):</span><strong>Przetarg na ambulans A1</strong></div>
+          <div class="specimen-line is-error"><span>Wstrzyknięty spam (15.10.2026):</span><b>Podstrony bonusów kasynowych</b></div>
+        </div>
+        <p class="specimen-note">Czynny serwer publicznego ośrodka zdrowia podlinkowany z BIP gminy. Wpis do Rejestru MF uruchomiłby z mocy art. 15f ust. 5 u.g.h. blokadę całej domeny ośrodka w 48 h — właściwą reakcją jest oczyszczenie CMS przy wsparciu CERT Polska. <a href="https://bip.ceglow.pl/ceg/spzoz-w-ceglowie/informacje/18278,Informacje-ogolne.html" target="_blank" rel="noopener noreferrer">Karta BIP Cegłów ↗</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Przypadek C · Państwowe bazy po wpisie do Rejestru MF</strong>
+          <span>Silosy po blokadzie · gov.pl + rspo.gov.pl + RPWDL2</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>gov.pl/web/klimat (zakaz 01.2025):</span><strong>657 dni aktywnego linku</strong></div>
+          <div class="specimen-line"><span>rspo.gov.pl (zakaz 08.2026):</span><strong>zsrozanki[.]pl + spwolarasztowska[.]pl</strong></div>
+          <div class="specimen-line is-error"><span>RPWDL2 aktywne (zakaz 03.2026):</span><b>pzzoz[.]bedzin[.]pl (70 wierszy)</b></div>
+        </div>
+        <p class="specimen-note">Nawet gdy KAS/MF zablokuje domenę, informacja nie trafia do innych resortów: domeny wiszą na żywych kartach publicznych szkół podstawowych, w nocnym zrzucie CeZ i w 22 wierszach Wykazu MC. <a href="https://rspo.gov.pl/institutions/93026" target="_blank" rel="noopener noreferrer">Karta RSPO #93026 ↗</a></p>
+      </div>
+    </div>
+  </figure>
+</article>
+
+<section class="lab-tool-section" id="explorer">
+  <div class="frame">
+    <div class="lab-tool-head">
+      <div>
+        <span class="number">Pełna zneutralizowana baza danych · 291 nieblokowanych + 68 zablokowanych w MF + 9 stron .gov.pl/BIP</span>
+        <h2>Sprawdź każdy rekord w państwowym rejestrze</h2>
+      </div>
+      <p>Przełączaj między czterema soczewkami śledczymi, filtruj po województwie, rejestrze lub klastrze Cloudflare i przejdź jednym kliknięciem do oficjalnej karty na <code>rspo.gov.pl</code>, <code>dane.gov.pl</code> lub <code>BIP</code>.</p>
+    </div>
+    <div id="casino-explorer" data-src="/assets/lab/casino-state-2026.json">
+      <noscript>
+        <div class="lab-callout">
+          <span class="micro">Interaktywna wyszukiwarka wymaga włączonego JavaScriptu</span>
+          <p>Pełny, zneutralizowany zbiór wszystkich 291 nieblokowanych domen instytucji, 68 domen zablokowanych w Rejestrze MF nadal obecnych w publicznych bazach oraz 9 oficjalnych stron <code>.gov.pl</code> i <code>BIP</code> możesz pobrać bezpośrednio jako plik <a href="/assets/lab/casino-state-2026.json">casino-state-2026.json</a>.</p>
+        </div>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<section class="plain-contact">
+  <div class="frame about-strip">
+    <span class="number">05 / Kontakt, sprostowania i współpraca redakcyjna</span>
+    <h2>Reprezentujesz instytucję ze zbioru albo pracujesz nad podobnym tematem?</h2>
+    <div>
+      <p>Jeśli kierujesz szkołą, szpitalem lub urzędem widocznym w bazie i oczyściliście już serwer albo odpięliście wygasłą domenę z karty RSPO/RPWDL/BIP, napisz — po weryfikacji zaktualizuję status rekordu w pliku źródłowym. Redakcje mogą bezpłatnie osadzać zneutralizowaną wyszukiwarkę przez przycisk <code>iframe</code> nad tabelą (z podaniem źródła).</p>
+      <a class="quiet-link" href="mailto:stuczynski.g@gmail.com?subject=Raport%20NR%2002%20%E2%80%94%20Rejestry%20publiczne%20i%20domeny">stuczynski.g@gmail.com ↗</a>
+      <p class="contact-alt">Krótsze wątki i notatki publikuję na <a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X (@rpl_0x)</a> oraz <a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedInie</a>.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="footer"><div class="frame"><p>Grzegorz Stuczyński · RolePlayingTech © 2026</p><div class="sub-links"><a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/RolePlayingTech" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://roleplayinglife.substack.com/" target="_blank" rel="noopener noreferrer">Substack ↗</a><a href="mailto:stuczynski.g@gmail.com">Email ↗</a></div></div></footer>
+</body>
+</html>

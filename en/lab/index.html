@@ -24,6 +24,7 @@
 <script>document.documentElement.classList.add('js')</script>
 <link rel="stylesheet" href="/assets/minimal.css">
 <link rel="stylesheet" href="/assets/lab/bzp-explorer.css">
+<link rel="stylesheet" href="/assets/lab/casino-explorer.css">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="canonical" href="https://roleplayingtech.com/en/lab/">
 <link rel="alternate" hreflang="en" href="https://roleplayingtech.com/en/lab/">
@@ -41,8 +42,8 @@
   <h1>Data &amp; interactive essays</h1>
   <p class="intro-primary">Rather than standalone opinion columns, I prefer pairing longform reporting with an audited dataset and an interactive tool where readers can check every record back to its official source.</p>
   <div class="intro-actions">
-    <a class="jump" href="/en/lab/ai-tenders/">Read Issue 01 (Polish AI Tenders)<span>→</span></a>
-    <a class="quiet-link" href="#approach">How these pieces are built<span>↓</span></a>
+    <a class="jump" href="/en/lab/municipal-cybersecurity/">Search Issue 03 (All 2,809 Polish Local Govs)<span>→</span></a>
+    <a class="quiet-link" href="#publications">Browse all 4 investigations &amp; datasets<span>↓</span></a>
   </div>
 </section>
 
@@ -56,11 +57,101 @@
     <article class="lab-hub-feature reveal">
       <div>
         <div class="edu-meta">
+          <span class="index">ISSUE 04 · NOVEMBER 2026</span>
+          <span class="project-meta">ENERGY SYSTEMS · PSE GRID TELEMETRY (2024–2026)</span>
+        </div>
+        <h3><a href="/en/lab/polish-grid-curtailment/">Shutting Off Cheap Solar When Power Is Expensive: Inside 73,924 Polish Grid Intervals</a></h3>
+        <p>A continuous 15-minute telemetry audit across six PSE API streams (Sep 24, 2024 – Nov 2, 2026), unit-level generation for 106 dispatchable units across 37 power stations (<code>gen-jw</code>), and all 6 cross-border interconnectors. Shows that 66.57% of Poland's 2026 renewable curtailment (1,201.57 of 1,805.05 GWh) occurred at positive wholesale prices and 27.56% (497.42 GWh) at high prices <code>RCE ≥ 250 PLN/MWh</code> — driven by a ~7.98 GW midday coal and gas boiler floor held online to survive the +5.64 GW climb to 13.63 GW at 20:00, while 96.75% of large curtailment jumps (≥ 200 MW) strike rigidly at minute <code>:00</code> on the full clock hour.</p>
+        <p class="edu-topics">3 interactive modules (price regimes &amp; <code>:00</code> guillotine, 12:00→20:00 duck curve, loop flows &amp; HVDC cables) · 37 plants &amp; 140 days explorer · CSV/JSON · newsroom iframe</p>
+        <div class="edu-actions">
+          <a class="edu-cta" href="/en/lab/polish-grid-curtailment/">Read the analysis &amp; inspect plants <span>→</span></a>
+          <a class="edu-source" href="/en/lab/polish-grid-curtailment/#explorer">37 plants &amp; 140 curtailment days ↓</a>
+        </div>
+      </div>
+      <div class="lab-issue2-stats">
+        <div class="lab-issue2-stat">
+          <strong>497.42<small>GWh</small></strong>
+          <span>of clean output curtailed in 2026 YTD while wholesale power cost <code>RCE ≥ 250 PLN/MWh</code> (27.6% of 1,805.05 GWh)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>+5.64<small>GW</small></strong>
+          <span>evening pure-thermal climb from 7.98 GW at noon to 13.63 GW at 20:00 (+7.11 GW incl. pumped hydro)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>96.75<small>%</small></strong>
+          <span>of curtailment steps ≥ 200 MW hit at minute <code>:00</code> on the full hour (100% for steps ≥ 500 MW)</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="lab-hub-feature reveal">
+      <div>
+        <div class="edu-meta">
+          <span class="index">ISSUE 03 · NOVEMBER 2026</span>
+          <span class="project-meta">PUBLIC CYBERSECURITY · ALL 2,809 LOCAL GOVERNMENTS</span>
+        </div>
+        <h3><a href="/en/lab/municipal-cybersecurity/">PLN 1.48B for “Cybersecure Local Gov”, yet 1 in 4 municipal email domains remain spoofable</a></h3>
+        <p>A 100% national census of Poland's 2,809 municipalities, counties, and voivodeships conducted 34 days after the hard settlement deadline of the PLN 1,483.98M EU-funded grant program (2,511 awarded units). Documents 734 of 2,779 institutional domains (26.41%) failing to block forged emails (including 62 max-grant ~850k PLN municipalities lacking any DMARC record, plus 4 regional Marshal offices and Wrocław on passive <code>p=none</code>), a statistically null grant effect on missing DMARC (<code>p = 0.28</code>), 30 municipalities running consumer freemail/ISP boxes, and 336 of 346 Meta-footprint portals leaking visitor IPs and URLs at 0 seconds pre-consent (including 5 commercial Meta Pixels across grant winners).</p>
+        <p class="edu-topics">3 visual modules (grant tiers &amp; 1,124 <code>.gov.pl</code> benchmark, 16-region &amp; cloud sovereignty matrix, stealth Chromium Zero-Click funnel) · all 2,809 units searchable · CSV/JSON · iframe</p>
+        <div class="edu-actions">
+          <a class="edu-cta" href="/en/lab/municipal-cybersecurity/">Read the investigation &amp; check any town <span>→</span></a>
+          <a class="edu-source" href="/en/lab/municipal-cybersecurity/#explorer">Search all 2,809 local governments ↓</a>
+        </div>
+      </div>
+      <div class="lab-issue2-stats">
+        <div class="lab-issue2-stat">
+          <strong>26.41<small>%</small></strong>
+          <span>of official municipal mail domains remain spoofable (734 of 2,779; holding PLN 356.07M in grants)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>p = 0.28</strong>
+          <span>statistically null difference in missing DMARC between grant winners (12.8%) and non-recipients (15.2%)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>336 / 346</strong>
+          <span>of Meta-footprint municipal websites transmit visitor IP and page URLs pre-consent at 0 seconds</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="lab-hub-feature reveal">
+      <div>
+        <div class="edu-meta">
+          <span class="index">ISSUE 02 · NOVEMBER 2026</span>
+          <span class="project-meta">PUBLIC REGISTRIES · CYBERSECURITY</span>
+        </div>
+        <h3><a href="/en/lab/state-registries-casinos/">How Polish State Registries and .gov.pl Portals Funnel Traffic to Unlicensed Casinos</a></h3>
+        <p>A cross-registry audit of 35,583 unique school, hospital and nursery domains from RSPO, RPWDL2 and the National Nursery Register matched against 59,376 entries in the Ministry of Finance's illegal gambling blocklist. Documents 291 active, unblocked domains routing Polish visitors to unlicensed casinos (287 unblocked end-to-end), 158 still displayed on live official institution cards (plus 137 in the Ministry of Digital Affairs open dataset), 9 official <code>.gov.pl</code>, county and BIP pages carrying 10 live <code>dofollow</code> anchors, and a 26.2× surge in <code>.pl</code> root domains inside the MF blocklist (from 0.82% in 2023 to 21.51% in 2026). Separates three technical vectors — including 8 active public school and hospital servers with injected PHP spam where MF blacklisting would trigger mandatory 48h domain-wide ISP blocking under Art. 15f(5).</p>
+        <p class="edu-topics">3 visual modules (5-silo architecture, 3 technical vectors, Cloudflare/RDAP &amp; Kaplan–Meier curve) · 4-lens defanged <code>[.]</code> database · CSV/JSON · newsroom iframe</p>
+        <div class="edu-actions">
+          <a class="edu-cta" href="/en/lab/state-registries-casinos/">Read the investigation &amp; inspect records <span>→</span></a>
+          <a class="edu-source" href="/en/lab/state-registries-casinos/#explorer">Jump straight to database ↓</a>
+        </div>
+      </div>
+      <div class="lab-issue2-stats">
+        <div class="lab-issue2-stat">
+          <strong>291<small>domains</small></strong>
+          <span>active &amp; unblocked (out of 35,583 audited); 158 still listed in live RSPO, RPWDL2 &amp; Nursery cards</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>26.2<small>×</small></strong>
+          <span>surge in <code>.pl</code> root share inside the MF blocklist (0.82% in 2023 to 21.51% in 2026, PSL-deduplicated)</span>
+        </div>
+        <div class="lab-issue2-stat">
+          <strong>94.5<small>%</small></strong>
+          <span>of drop-caught domains evade DNS blocking for ≥ 90 days (Kaplan–Meier survival, <code>N = 101</code>)</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="lab-hub-feature reveal">
+      <div>
+        <div class="edu-meta">
           <span class="index">ISSUE 01 · NOVEMBER 2026</span>
           <span class="project-meta">PUBLIC PROCUREMENT · REPORT + EXPLORER</span>
         </div>
-        <h3><a href="/en/lab/ai-tenders/">What do Polish public institutions actually buy under the ‘AI’ label?</a></h3>
-        <p>An audit of 304 linked procurement notices and full HTML protocols reconstructed into 171 unique proceedings in Poland's Public Procurement Bulletin (2024–2026; 159 core proceedings, 110 signed contracts worth 32.20M PLN gross). Explains why workshops make up 22.6% of notices yet only 7.6% of signed value while 89.8% goes to hospital systems, imaging labs and GPU servers — why competition collapses above 170,000 PLN gross, leaving 56.0% of contracted money (and 60.7% — 19.54M PLN — after sole-source rules and 121 rejected bids, 26.3%) with zero surviving rivals — and why 72.2% of AI software tenders include zero substantive quality criteria while SMEs capture 93.8% of value and 31 tenders collapse.</p>
+        <h3><a href="/en/lab/ai-tenders/">60.7% of the money, zero surviving rivals: How Polish public institutions actually buy AI</a></h3>
+        <p>An investigation across 304 linked procurement notices and full HTML protocols reconstructed into 171 unique proceedings in Poland's Public Procurement Bulletin (2024–2026; 159 core proceedings, 110 signed contracts worth 32.20M PLN gross) cross-referenced with KRS corporate filings and CEIDG registrations. Shows why 60.7% of contracted money (19.54M PLN across 59 awards) and 17 of 17 contracts won by all six top pure-AI suppliers went to bidders facing zero surviving rivals — from a 100%-owned Asseco subsidiary declared as a “micro-enterprise” in BZP, to a 20-day-old sole trader winning a 285k PLN KPO hospital connector, a 306k PLN clinical AI tool hidden under CPV “Newspapers”, and 12 of 12 locked-in HIS/PACS hospital awards.</p>
         <p class="edu-topics">2 interactive figures (3-view competition &amp; failure explorer) · 171 searchable tenders · CSV/JSON export · newsroom iframe mode</p>
         <div class="edu-actions">
           <a class="edu-cta" href="/en/lab/ai-tenders/">Read the report &amp; explore data <span>→</span></a>

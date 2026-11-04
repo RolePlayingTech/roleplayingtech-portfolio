@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f7f6f2">
+<meta name="description" content="Nationwide audit of all 2,809 Polish municipalities, counties, and voivodeships 34 days after the PLN 1.48B 'Cybersecure Local Government' grant deadline: 26.4% of official email domains remain spoofable, the grant effect on missing DMARC is statistically null (p = 0.28), and 336 of 346 Meta-footprint websites leak visitor data at 0 seconds before consent.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PLN 1.48B for 'Cybersecure Local Gov', yet 1 in 4 municipal email domains remain spoofable">
+<meta property="og:description" content="Auditing 100% of Poland's 2,809 local governments 34 days after the PLN 1.48B EU-funded cybersecurity grant deadline: 734 official domains fail to block email spoofing (including 62 max-grant municipalities lacking DMARC), 30 offices run on commercial freemail, and 336 portals leak visitor data to Meta pre-consent.">
+<meta property="og:url" content="https://roleplayingtech.com/en/lab/municipal-cybersecurity/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:image" content="https://roleplayingtech.com/assets/lab/og-jst-cyber-2026-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="RolePlayingTech Issue 03: audit of all 2,809 Polish local governments after the PLN 1.48B Cybersecure Local Gov program (26.4% spoofable mail, p = 0.28 grant effect on missing DMARC, 336/346 sites leaking to Meta pre-consent)">
+<meta property="article:published_time" content="2026-11-04">
+<meta property="article:author" content="Grzegorz Stuczyński">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PLN 1.48B for 'Cybersecure Local Gov', yet 1 in 4 Polish municipal domains remain spoofable">
+<meta name="twitter:description" content="Full-population DNS & stealth Chromium audit of all 2,809 Polish municipalities, counties, and regions 34 days after grant settlement.">
+<meta name="twitter:image" content="https://roleplayingtech.com/assets/lab/og-jst-cyber-2026-en.png">
+<title>PLN 1.48B for 'Cybersecure Local Gov', yet 1 in 4 municipal domains remain spoofable — RolePlayingTech</title>
+<script>document.documentElement.classList.add('js');if(location.search.indexOf('embed=1')!==-1)document.documentElement.classList.add('is-embed');</script>
+<link rel="stylesheet" href="/assets/minimal.css">
+<link rel="stylesheet" href="/assets/lab/bzp-explorer.css">
+<link rel="stylesheet" href="/assets/lab/jst-explorer.css">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="canonical" href="https://roleplayingtech.com/en/lab/municipal-cybersecurity/">
+<link rel="alternate" hreflang="pl" href="https://roleplayingtech.com/pl/lab/cyberbezpieczny-samorzad/">
+<link rel="alternate" hreflang="en" href="https://roleplayingtech.com/en/lab/municipal-cybersecurity/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "headline": "PLN 1.48B for 'Cybersecure Local Gov', yet 1 in 4 municipal email domains remain spoofable",
+      "image": "https://roleplayingtech.com/assets/lab/og-jst-cyber-2026-en.png",
+      "datePublished": "2026-11-04",
+      "dateModified": "2026-11-04",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Grzegorz Stuczyński",
+        "url": "https://roleplayingtech.com/en/about/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "RolePlayingTech",
+        "url": "https://roleplayingtech.com/en/"
+      },
+      "mainEntityOfPage": "https://roleplayingtech.com/en/lab/municipal-cybersecurity/"
+    },
+    {
+      "@type": "Dataset",
+      "name": "Nationwide Mail Authentication (SPF/DMARC/DNSSEC), TLS & Zero-Click Tracker Audit of All 2,809 Polish Local Governments (November 2026)",
+      "description": "100% population census of Poland's 2,809 statutory local governments (2,479 municipalities, 314 counties, 16 voivodeships) joined to the penny with all 2,511 CPPC FERC.02.02 'Cyberbezpieczny Samorząd' grant applications (PLN 1,483,979,072.49), DoH DNS records, 1,124 active .gov.pl mail domains, and stealth Chromium pre-consent network captures.",
+      "url": "https://roleplayingtech.com/en/lab/municipal-cybersecurity/",
+      "temporalCoverage": "2026-11-03/2026-11-04",
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://roleplayingtech.com/assets/lab/jst-cyber-2026.json"
+      }
+    }
+  ]
+}
+</script>
+<script src="/assets/site.js" defer></script>
+<script src="/assets/lab/jst-explorer.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="frame"><a class="logo" href="/en/">roleplayingtech<i>.</i></a><nav class="head-nav" aria-label="Navigation"><a href="/en/#work">Work</a><a href="/en/education/">Education</a><a href="/en/lab/" aria-current="page">Analysis</a><a href="/en/about/">About</a><a href="/en/#help">Collaborate</a><a href="/en/#links">Elsewhere</a><a href="/en/#contact">Contact</a><div class="head-socials" aria-label="Social profiles"><a class="soc-link" href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer" aria-label="X (@rpl_0x)" title="X · @rpl_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="soc-accent" d="M12.9 2.5L9.1 6.9M6.9 9.1L3.1 13.5" fill="none" stroke="var(--rust)" stroke-width="1.45" stroke-linecap="round"/><path d="M2.6 2.5h2.7l8.1 11h-2.7Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="soc-accent" cx="4.2" cy="3.9" r="1.15" fill="var(--rust)"/><path d="M4.2 6.6v5.9M7.6 12.5V6.6m0 2.2c0-1.4 1.1-2.3 2.4-2.3 1.4 0 2.2.9 2.2 2.4v3.6" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (@roleplayinglife_0x)" title="Instagram · @roleplayinglife_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.2" y="2.2" width="11.6" height="11.6" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.7" fill="none" stroke="currentColor" stroke-width="1.4"/><circle class="soc-accent" cx="11.3" cy="4.7" r="1" fill="var(--rust)"/></svg></a></div><a class="switch" href="/pl/lab/cyberbezpieczny-samorzad/" hreflang="pl">PL</a></nav></div></header>
+
+<nav class="lab-subnav" aria-label="Report chapters">
+  <div class="frame lab-subnav-inner">
+    <div class="lab-subnav-links">
+      <a href="#poczta">01 · PLN 1.48B &amp; spoofable mail</a>
+      <a href="#architektura">02 · Freemails, clouds &amp; courts</a>
+      <a href="#sledzenie">03 · Zero-Click Meta tracking</a>
+      <a href="#rozliczenie">04 · NIK audit &amp; 3 fixes</a>
+    </div>
+    <a class="lab-subnav-cta" href="#explorer"><span class="cta-full">Search all 2,809 Polish units ↓</span><span class="cta-short">2,809 units ↓</span></a>
+  </div>
+</nav>
+
+<main id="main">
+
+<header class="lab-hero frame">
+  <div class="back"><a class="quiet-link" href="/en/lab/">← Analysis &amp; tools</a></div>
+  <div class="lab-issue-bar micro">
+    <span class="lab-tag">ISSUE 03 · PUBLIC CYBERSECURITY &amp; PRIVACY TELEMETRY</span>
+    <span>All 2,809 Polish municipalities, counties &amp; voivodeships</span>
+    <span>Audit window: Nov 3–4, 2026 (34 days post-deadline) · ~13 min read</span>
+  </div>
+  <h1>PLN 1.48B for “Cybersecure Local Gov”, yet 1 in 4 municipal email domains <i>remain spoofable</i></h1>
+
+  <div class="lab-lead-grid">
+    <div>
+      <p class="lab-lead">Thirty-four days after the hard completion and settlement deadline of Poland's largest-ever municipal cybersecurity program — <strong>“Cyberbezpieczny Samorząd” (PLN 1.48 billion in EU FERC grants awarded across 2,511 local governments, hard deadline September 30, 2026)</strong> — and nearly three years after statutory email authentication became mandatory for every Polish public authority (<strong>December 25, 2023</strong>), <strong>734 of 2,779 institutional municipal domains (26.41%)</strong> still fail to block forged emails sent in their name to citizens and accounting clerks. Exactly <strong>362 local governments (13.03%) lack any valid DMARC record</strong> — including <strong>62 municipalities awarded the maximum ~PLN 850k grant</strong> and major county-right cities <strong>Słupsk, Bytom, and Gorzów Wielkopolski</strong> — and the missing-DMARC rate among grant winners (<strong>12.77%</strong>) is statistically indistinguishable from non-recipients (<strong>15.20%, Yates χ² p = 0.28</strong>).</p>
+      <p class="lab-lead-sub">To test externally verifiable security and privacy hygiene across the entire country after grant settlement, I assembled a <strong>100% census of Poland's 2,809 statutory local governments</strong> (2,479 municipalities, 314 counties, and 16 voivodeships), reconciled it to the exact penny against CPPC's grant ranking list (<code>PLN 1,483,979,072.49</code>), queried DNS mail records alongside <strong>1,124 active <code>.gov.pl</code> mail domains</strong>, and ran clean stealth Chromium sessions across <strong>470 municipal portals</strong> to record network requests fired at 0 seconds before any cookie-banner interaction.</p>
+      <div class="lab-byline-bar">
+        <span>Research, code &amp; verification: <strong>Grzegorz Stuczyński</strong></span>
+        <span>Sources: <a href="https://www.gov.pl/web/cppc/cyberbezpieczny-samorzad" target="_blank" rel="noopener noreferrer">CPPC FERC.02.02</a> · <a href="https://www.nik.gov.pl/aktualnosci/cyberbezpieczny-samorzad.html" target="_blank" rel="noopener noreferrer">NIK P/25/003</a> · <a href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20230001703" target="_blank" rel="noopener noreferrer">Dz.U. 2023 item 1703</a> · <a href="https://dane.gov.pl" target="_blank" rel="noopener noreferrer">MSWiA / GUS TERYT</a></span>
+        <span>Data &amp; code: <a href="/assets/lab/jst-cyber-2026.json" download>JSON (772 KB)</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/jst-cyber-methodology.md" target="_blank" rel="noopener noreferrer">Methodology &amp; tests ↗</a></span>
+      </div>
+      <div class="jst-note-box" role="note">
+        <span class="micro">Scope &amp; fairness boundary · What external telemetry proves — and what it does not</span>
+        This study is a strictly passive, non-intrusive measurement of public internet surfaces (<code>MX/SPF/DMARC/DNSSEC</code> records per RFC 7489 &amp; 7208, TLS handshakes, and zero-click browser requests on public homepages). It <strong>does not evaluate internal grant-funded upgrades</strong> — such as LAN segmentation, firewalls, offline backups, EDR endpoints, or staff training — which genuinely improve ransomware resilience behind the perimeter. What it proves is that a PLN 1.48B grant architecture failed to verify free, five-minute DNS protections required by Polish statute since December 2023.
+      </div>
+      <div class="lab-jump-row">
+        <a class="jump" href="#explorer">Search any of Poland's 2,809 local governments<span>↓</span></a>
+        <a class="quiet-link" href="#poczta">Read the full investigation &amp; charts ↓</a>
+      </div>
+    </div>
+
+    <aside class="lab-meta-box" aria-label="Audit scope and statutory baseline">
+      <span class="micro">Before diving into the numbers · Three hard baselines</span>
+      <ul>
+        <li><strong>100% national census (2,809 of 2,809 units):</strong> after adding 2 statutory urban-rural municipalities omitted from MSWiA's contact spreadsheet (Włoszczowa and Baborów) and clearing 1 false county-level join, the dataset reconciles all <code>2,511</code> positive CPPC applications to the exact grosz (<code>PLN 1,483,979,072.49</code> ranked; <code>2,495</code> signed contracts totaling <code>PLN 1,474,312,573.61</code>).</li>
+        <li><strong>Mandatory by law since Dec 25, 2023:</strong> <code>Article 24(1)–(2)</code> of Poland's Electronic Communication Abuse Act of July 28, 2023 (<code>Dz.U. 2023 item 1703</code>) requires every public entity to use <code>SPF</code>, <code>DMARC</code>, and <code>DKIM</code> (3-month transition under <code>Art. 40(1)</code>; administrative fines by the UKE President under <code>Art. 27(7)</code>).</li>
+        <li><strong>Supreme Audit Office report P/25/003 (July 2026):</strong> NIK concluded that CPPC's grant KPIs measured purchase counts and training headcount rather than actual cybersecurity gains. Our DNS and browser census provides the nationwide empirical proof across all 2,809 units.</li>
+      </ul>
+      <details class="lab-meta-more">
+        <summary>How missing DMARC differs from p=none and enforcing policies</summary>
+        <ul>
+          <li><strong>Missing DMARC (or duplicate PermError):</strong> violates Article 24(2) outright — anyone on the internet can forge an email from <code>taxes@your-town.pl</code> without domain-level policy instructions to receiving mail servers.</li>
+          <li><strong>Monitoring-only <code>p=none</code>:</strong> the office published a DNS text record, but explicitly instructs Gmail, WP, and Outlook: <em>“even if authentication fails, deliver the forged message normally to the citizen's inbox.”</em></li>
+          <li><strong>Enforcing <code>p=quarantine</code> or <code>p=reject</code>:</strong> real anti-spoofing protection — unauthenticated messages impersonating the municipal domain are quarantined as spam or rejected at the gateway.</li>
+        </ul>
+      </details>
+    </aside>
+  </div>
+
+  <div class="lab-findings" aria-label="Key findings">
+    <div class="lab-finding">
+      <span class="micro">01 · Spoofable official email</span>
+      <strong>26.41<small>%</small></strong>
+      <p><strong>734 of 2,779</strong> institutional local-government domains fail to block forged emails (<code>362</code> lacking valid DMARC + <code>372</code> on <code>p=none</code>), including <code>632</code> grant winners holding <strong>PLN 356.07M</strong>.</p>
+    </div>
+    <div class="lab-finding">
+      <span class="micro">02 · Statistically null grant effect</span>
+      <strong>p = 0.28</strong>
+      <p>Missing DMARC stands at <strong>12.77%</strong> among grant winners versus <strong>15.20%</strong> among non-recipients — indistinguishable from noise, including <a href="#explorer" data-jst-preset="preset=max_nodmarc">62 max-grant (~850k PLN) communes</a>.</p>
+    </div>
+    <div class="lab-finding">
+      <span class="micro">03 · Commercial freemails &amp; US clouds</span>
+      <strong>30<small>communes</small></strong>
+      <p>Still serve citizens from commercial or shared ISP boxes (<code>@post.pl</code>, <code>@onet.pl</code>, <code>@wp.pl</code>, <code>@gmail.com</code>, shared <code>@home.pl</code>; <strong>PLN 12.61M</strong> in grants), while <code>92</code> units use US Big Tech cloud mail vs. <code>55</code> on state NASK/COI.</p>
+    </div>
+    <div class="lab-finding">
+      <span class="micro">04 · Zero-Click Meta surveillance</span>
+      <strong>336 / 346</strong>
+      <p><strong>97.11%</strong> of reachable Meta-footprint municipal sites transmit visitor IP and page URLs pre-consent (<code>331</code> SDK plugins + <a href="#explorer" data-jst-preset="preset=pixel_tr">5 commercial Meta Pixels /tr</a> across grant winners holding <strong>PLN 4.11M</strong>).</p>
+    </div>
+  </div>
+</header>
+
+<article class="lab-essay frame" id="poczta">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 01
+      <strong>Billions for gear, zero for DNS</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>34 days after settlement, 62 municipalities with maximum ~PLN 850k grants still lack a free DMARC record</h2>
+      <p class="has-dropcap">If a resident or local business in Bytom, Słupsk, or Gorzów Wielkopolski received an email this morning from <code>podatki@um.bytom.pl</code>, <code>wydzial@um.slupsk.pl</code>, or <code>sekretariat@um.gorzow.pl</code> announcing a new bank account for municipal tax or waste fees, none of those three city halls instructs receiving mail servers to block the forgery. All three county-right cities collected near-maximum or maximum grants under “Cyberbezpieczny Samorząd” — <strong>PLN 790,959</strong>, <strong>PLN 849,915</strong>, and <strong>PLN 850,000</strong> respectively — and in early November 2026 none of them publishes a <code>_dmarc</code> DNS record.</p>
+      <p>Across an even wider tier of major regional authorities, a DMARC record exists on paper but sits in passive <code>p=none</code> mode, letting spoofed emails land directly in citizens' inboxes. That includes <strong>four of Poland's sixteen regional Marshal offices</strong> — <strong>Dolnośląskie</strong> (<code>dolnyslask.pl</code>, PLN 850k grant), <strong>Lubelskie</strong> (<code>lubelskie.pl</code>, PLN 779,972), <strong>Podkarpackie</strong> (<code>podkarpackie.pl</code>, PLN 850k), and <strong>Wielkopolskie</strong> (<code>umww.pl</code>, PLN 849,717) — alongside <strong>five more cities with county rights</strong>: <strong>Wrocław</strong> (<code>um.wroc.pl</code>, PLN 845,750), <strong>Zielona Góra</strong> (<code>um.zielona-gora.pl</code>, PLN 790,500), <strong>Jelenia Góra</strong> (<code>jeleniagora.pl</code>, PLN 850k), <strong>Piotrków Trybunalski</strong> (<code>piotrkow.pl</code>, PLN 804,714), and <strong>Przemyśl</strong> (<code>um.przemysl.pl</code>, PLN 850k). <a href="#explorer" data-jst-preset="preset=big_spoof">Inspect all 12 vulnerable major cities &amp; regions in the explorer →</a></p>
+      <p>The sharpest test compares the <strong>2,483 grant-winning authorities running institutional mail domains</strong> against the natural control group of <strong>296 local governments that received no grant</strong>. Under <strong>Article 24(1)–(2) of the Electronic Communication Abuse Act of July 28, 2023 (Dz.U. 2023 item 1703)</strong>, every Polish public authority has been legally required to deploy SPF, DMARC, and DKIM since December 25, 2023. Yet complete absence of effective DMARC stands at <strong>12.77% among grant winners (317 of 2,483, holding PLN 171.85M in grants)</strong> versus <strong>15.20% among non-recipients (45 of 296)</strong>. That <code>2.44 percentage-point</code> gap is statistically indistinguishable from zero (<strong>Yates χ² p = 0.2777; Fisher's exact p = 0.2357</strong>) — a null result that holds across every denominator specification.</p>
+      <p>Only when passive <code>p=none</code> policies are combined with missing records do grant winners show a modest advantage (<strong>25.45% spoofable vs. 34.46%, p = 0.0011</strong>), largely reflecting baseline staffing differences between larger applicants and tiny non-applicant communes. Even so, leaving <strong>632 grant-winning offices (PLN 356.07M in public cybersecurity subsidies, including 150 max-grant units)</strong> open to trivial domain impersonation exposes a structural blind spot in invoice-driven grant compliance.</p>
+      <p>To make matters worse, three grant-winning municipalities (including <strong>Aleksandrów Kujawski</strong> — <code>aleksandrowkujawski.pl</code>, PLN 850k — and <strong>Sztum</strong> — <code>sztum.pl</code>, PLN 850k) publish SPF records exceeding RFC 7208's 10-lookup ceiling (<code>PermError</code>), while three institutional domains publish two conflicting <code>v=DMARC1</code> TXT records simultaneously, forcing compliant receivers under RFC 7489 Section 6.6.3 to disable DMARC evaluation altogether.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>The grant operator leaves 90% unquarantined</strong>
+        The Digital Poland Project Center (<code>cppc.gov.pl</code>), which administered and settled the PLN 1.48B municipal cybersecurity program, publishes <code>v=DMARC1; p=quarantine; sp=quarantine; pct=10</code> — leaving <strong>90% of forged emails impersonating @cppc.gov.pl</strong> exempt from quarantine.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig1-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Figure 01 · CPPC grant tiers, administrative levels &amp; benchmark against 1,124 active .gov.pl mail domains</span>
+        <h3 class="lab-fig-title" id="fig1-title">Missing DMARC does not scale with grant size — it scales with centralized vs. fragmented mail architecture</h3>
+      </div>
+    </div>
+    <div id="fig-jst-grants">
+      <noscript>
+        <p>Across 2,779 institutional municipal mail domains, 362 (13.03%) lack valid DMARC (12.77% with grant vs. 15.20% without, p = 0.28) and 372 (13.39%) use monitoring-only p=none (734 = 26.41% spoofable overall).</p>
+      </noscript>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="architektura">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 02
+      <strong>Freemails, clouds &amp; courts</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>30 town halls running official mail on @post.pl, @onet.pl, @gmail.com and shared @home.pl — and why Polish courts perform 10× better</h2>
+      <p class="has-dropcap">Rather than trusting the Interior Ministry's contact spreadsheet blindly, I crawled the live official websites and Public Information Bulletins (BIP) of every municipality listed with a consumer or ISP mailbox. Three communes listed by MSWiA with legacy <code>@wp.pl</code> or <code>@ns.onet.pl</code> addresses had already migrated to their own domains with active DMARC quarantine — so our dataset credits them as protected institutional domains.</p>
+      <p>Even after that live verification, <strong>exactly 30 Polish municipal offices</strong> still publish a consumer freemail or shared ISP mailbox on their live websites in November 2026 as their primary official contact — <strong>20 of them owning no institutional mail domain whatsoever</strong>, and <strong>28 of 30 having collected “Cybersecure Local Gov” grants totaling PLN 12.61M</strong>. Two received the maximum <strong>PLN 850,000</strong> grant: <strong>Ostrów Mazowiecka</strong> (<code>gminaostrowmaz@home.pl</code>) and <strong>Pisz</strong> (<code>pisz@home.pl</code>). The town of <strong>Kolno</strong> (<strong>PLN 814,377</strong> grant) lists <code>kolno@home.pl</code> on its homepage while leaving its secondary <code>mkolno.pl</code> domain without DMARC. Others operate on <strong>Gmail</strong> (<code>sekretariat.godkowo@gmail.com</code>, PLN 226.7k), <strong>WP</strong> (<code>ug.zawidz@wp.pl</code>, PLN 490.2k), <strong>Tlen</strong> (<code>ug.leoncin@tlen.pl</code>, PLN 457.6k), five on <code>@pro.onet.pl</code>, eleven on <code>@post.pl</code>, and three on <code>@data.pl</code>. On a consumer portal domain, a mayor has zero administrative control over DKIM keys, DMARC enforcement, or security audit logs. <a href="#explorer" data-jst-preset="preset=freemail">Inspect all 30 live freemail municipalities →</a></p>
+      <p>Mapping underlying <code>MX</code> mail hosts across all <strong>2,779 institutional domains</strong> reveals an equally telling sovereignty split. Only <strong>55 local governments (1.98%)</strong> route mail through Polish state or academic infrastructure (<strong>NASK / COI / PIONIER</strong>), whereas <strong>92 authorities (3.31%)</strong> rely directly on US Big Tech cloud suites — <strong>74 on Microsoft 365 / Azure</strong> (including Warsaw, Gdańsk, Katowice, Kielce, Gliwice, Toruń, Płock, and Koszalin) and <strong>18 on Google Workspace</strong> — while shared commercial web hosts carry the bulk of local administration: <strong>home.pl / IONOS (597 units)</strong>, <strong>nazwa.pl (297)</strong>, and <strong>OVHcloud (128)</strong>.</p>
+      <p>To check whether decentralized configuration failure is unique to municipalities, I ran the exact same DNS audit across all <strong>1,395 registered <code>.gov.pl</code> domains</strong>, isolating <strong>1,124 active mail-sending domains</strong> (switch to Tab 03 in Figure 01 above). The architectural lesson jumps off the chart: <strong>Courts and Prosecution offices (365 domains)</strong> achieve a <strong>2.47% spoofable rate (only 9 of 365; 2.19% missing DMARC)</strong> because virtually every court routes mail through centralized Justice Ministry gateways (<code>ms.gov.pl</code> and <code>prokuratura.gov.pl</code>) secured once by a specialist team. Wherever central government leaves DNS configuration to individual offices, the exact same vulnerability reappears: <strong>28.75% spoofable across ministries and central agencies (117 of 407)</strong>, <strong>36.76% across regional <code>.gov.pl</code> offices</strong>, and <strong>3 of 4 active Sanitary Inspection mail domains</strong>.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>DNSSEC &amp; RFC 9116 security.txt</strong>
+        Cryptographically validated DNSSEC (<code>AD=True</code>) protects just <strong>376 of 2,779 municipal domains (13.53%)</strong>, while a valid <code>/.well-known/security.txt</code> vulnerability disclosure file exists on <strong>exactly 1 of 2,809 local governments in Poland</strong> (Płock City Hall).
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig2-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Figure 02 · Regional breakdown across all 16 voivodeships &amp; mail hosting concentration</span>
+        <h3 class="lab-fig-title" id="fig2-title">From 19.2% spoofable mail in Mazovia to 33.0% in Greater Poland — plus 30.7% broken HTTPS handshakes</h3>
+      </div>
+    </div>
+    <div id="fig-jst-map">
+      <noscript>
+        <p>Among 2,362 reachable municipal websites, 726 (30.74%) fail strict HTTPS/TLS certificate verification on default load. Use the interactive view to filter any of Poland's 16 voivodeships.</p>
+      </noscript>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="sledzenie">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 03
+      <strong>Zero-Click citizen tracking</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>336 of 346 Meta-footprint municipal websites transmit citizen IPs and page URLs before any cookie-banner click</h2>
+      <p class="has-dropcap">Public digital safety has two sides: preventing criminals from impersonating town hall, and ensuring town hall does not leak citizens' reading habits (from disability benefits and housing aid to tax arrears) to commercial ad-tech brokers. Static HTML inspection across reachable municipal websites detected Meta code on <strong>350 portals</strong>. Static HTML alone, however, cannot prove a violation — a properly configured Consent Management Platform (CMP) might block those scripts until a visitor clicks “Accept.”</p>
+      <p>To test real runtime behavior, I launched clean headless Chromium sessions (with automation flags masked, fresh browser profiles, and <strong>zero clicks on any cookie banner</strong>) across all 350 Meta-footprint sites plus a 100-site control sample running Google Tag Manager without Meta code. Out of <strong>346 reachable Meta-footprint sites, 336 (97.11% — including 293 Cybersecure grant winners awarded PLN 176.43M)</strong> opened live network connections to <code>facebook.com</code> or <code>connect.facebook.net</code> at 0 seconds, transmitting the citizen's IP address, full page URL, and browser fingerprint without consent.</p>
+      <p>Methodological rigor requires separating two distinct technical mechanisms within those 336 sites:</p>
+      <p><strong>1. Unblocked Meta Social Plugins (331 local governments).</strong> Most offices (<code>331 of 336</code>) did not buy ad-retargeting campaigns; they embedded a live Facebook Page timeline widget (<code>sdk.js</code> / <code>page.php</code>) without consent gating. Legally, however, the Court of Justice of the European Union settled this exact architecture in its Grand Chamber judgment <strong>C-40/17 (<em>Fashion ID</em>, paras. 75–85 &amp; 102)</strong>: embedding a third-party social plugin that transmits visitor IP and browser strings on page load establishes joint controllership and requires prior legal basis before the script loads. For Polish public authorities, two rules close every loophole: <strong>Articles 399–400 of the Electronic Communications Law (Dz.U. 2024 item 1221)</strong> require prior opt-in consent for terminal storage/access, and <strong>GDPR Article 6(1) subparagraph 2</strong> bars public authorities from invoking “legitimate interests” in the performance of their tasks.</p>
+      <p><strong>2. Full commercial Meta Pixel ad-tracking (<code>fbevents.js</code> + <code>facebook.com/tr</code>) fired at 0 seconds (5 grant winners holding PLN 4.11M).</strong> Five local governments fire Meta's full commercial ad tracker and set <code>_fbp</code> identifiers pre-consent: <strong>Lubuskie Voivodeship</strong> (<code>lubuskie.pl</code>, <strong>PLN 850,000</strong> grant, which simultaneously fires unconsented <strong>Hotjar</strong> session recording <code>_hjSession</code>), <strong>Gdynia</strong> (<code>gdynia.pl</code>, <strong>PLN 849,960.40</strong>), <strong>Tarnów</strong> (<code>tarnow.pl</code>, <strong>PLN 848,240.03</strong>), <strong>Polkowice</strong> (<code>polkowice.eu</code>, <strong>PLN 833,452.10</strong>), and <strong>Świdnik County</strong> (<code>powiatswidnik.pl</code>, <strong>PLN 724,298.14</strong>). On <strong>Tarnów's</strong> city portal, network capture caught Meta's <strong>Automatic Advanced Matching module (<code>udwv[em]</code>)</strong> loaded pre-consent — configured to SHA-256 hash email addresses typed into municipal forms for cross-matching against Facebook profiles. Meanwhile, across our 99 reachable GTM-only control portals, <strong>54 (54.55%)</strong> fired <strong>Google Analytics 4 (<code>g/collect</code>)</strong> beacons at 0 seconds without consent.</p>
+      <p>Proof that lawful engineering is straightforward comes from <strong>9 municipalities in the exact same Meta cohort</strong> — including <strong>Pruszcz Gdański, Trzebownisko, Mrągowo, Kożuchów, Iłowa, Nowe Ostrowy, Rudnik nad Sanem, Stawiguda, and Ustronie Morskie</strong> — whose consent managers held Meta and Google network requests at <code>0</code> until explicit opt-in. Conversely, the <strong>86 municipalities hosted on the central state portal <code>samorzad.gov.pl</code></strong> exhibit <strong>0 Meta trackers and 100% HSTS</strong> on the web — yet <strong>26 of those same 86 communes (30.23%)</strong> still run spoofable email on legacy <code>.pl</code> domains, and <code>samorzad.gov.pl</code> itself omits the mandatory <code>mailto:</code> URI scheme in its DMARC reporting tags (<code>rua=dmarc@coi.gov.pl</code>), causing RFC-compliant mail servers to drop aggregate attack reports.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>30.7% broken HTTPS handshakes</strong>
+        Out of <strong>2,362 reachable municipal websites</strong>, <strong>726 (30.74%)</strong> fail strict TLS certificate validation on default HTTPS connection (expired certificates, hostname mismatches on shared hosting, or missing intermediate chains).
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig3-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Figure 03 · Stealth Chromium Zero-Click capture (0s, zero clicks) &amp; the samorzad.gov.pl delegated-security split</span>
+        <h3 class="lab-fig-title" id="fig3-title">331 unblocked social SDKs, 5 commercial Meta Pixels, and 9 compliant towns proving consent gating works</h3>
+      </div>
+    </div>
+    <div id="fig-jst-privacy">
+      <noscript>
+        <p>In clean Chromium sessions, 336 of 346 reachable Meta-footprint sites (97.11%) transmitted data to Meta pre-consent (331 via social SDKs, 5 via commercial Meta Pixel fbevents.js + /tr), while 9 municipalities properly blocked third-party scripts prior to consent.</p>
+      </noscript>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="rozliczenie">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 04
+      <strong>NIK diagnosis &amp; 3 fixes</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Why PLN 1.48B could be settled to the penny without deploying DMARC — and how to fix all three gaps in 30 days</h2>
+      <p class="has-dropcap">How can a municipality collect PLN 850,000 for cybersecurity, pass a closing Information Security Management System audit, settle its EU grant before September 30, 2026, and still lack a DMARC record or a valid TLS certificate? Page 8 of Poland's <strong>Supreme Audit Office report from July 2026 (<em>Implementation of the Cybersecure Local Government Project</em>, audit P/25/003, ref. 98/2025/P/25/003/KAP)</strong> states the structural reason verbatim:</p>
+      <blockquote>
+        <p>“The grant project output and outcome indicators defined by CPPC were not linked to an actual increase in the level of cybersecurity among grantees (local governments), but solely to the number of purchases made and persons trained.”</p>
+      </blockquote>
+      <p>While NIK audited a targeted sample of ministries, project agencies, and municipalities — uncovering delayed calls and questionable eligible expenses such as diesel backup generators funded out of cybersecurity budgets — our census of all 2,809 Polish local governments supplies the nationwide empirical proof: <strong>procurement-driven compliance checklists are completely blind to automated, externally verifiable security posture</strong>.</p>
+      <p>Unlike multi-million-zloty server replacements, all three perimeter failures documented here can be fixed within 30 days at near-zero budget cost:</p>
+      <p><strong>1. Automated DNS/TLS gating before final grant payout.</strong> Before disbursing final tranches of any public IT subsidy, an automated check should verify four non-negotiable baselines: valid <code>SPF</code> without <code>PermError</code>, enforcing <code>DMARC</code> (<code>p=quarantine</code> or <code>p=reject</code> at <code>pct=100</code> with valid <code>mailto:</code> URIs), valid HTTPS + <code>HSTS</code>, and zero consumer freemail addresses in official registries.</p>
+      <p><strong>2. Turnkey centralized mail relay modeled on Poland's Courts &amp; Prosecution gateway.</strong> Just as 365 judicial domains achieved <code>97.5%</code> anti-spoofing compliance via centralized Justice Ministry mail relays, COI/NASK should offer an opt-in turnkey mail gateway under <code>samorzad.gov.pl</code> (pre-configured with <code>DKIM</code>, <code>DNSSEC</code>, and <code>p=reject</code>) for the 30 freemail communes and hundreds of small rural offices lacking dedicated security engineers.</p>
+      <p><strong>3. Stripping commercial ad pixels and click-to-load gating social widgets.</strong> Removing <code>fbevents.js</code> from municipal portals and placing Facebook widgets behind a two-click placeholder (as 9 compliant Polish municipalities already do) takes fifteen minutes — immediately ending pre-consent tracking of citizens seeking public services.</p>
+
+      <div class="jst-disclosure-box" role="note">
+        <span class="micro">Editorial standard &amp; right of reply · Status as of November 4, 2026</span>
+        Every finding in this report derives from passive public DNS queries, open CPPC/MSWiA/GUS registries, and standard unauthenticated homepage visits without vulnerability scanning or intrusion testing. At the time of publication (<code>2026-11-04</code>), <strong>0 institutional responses had been received</strong>. Every local government and central institution named here (including CPPC, COI, NASK, UKE, and UODO) is invited to submit corrections or notify us of deployed DNS/CMP fixes at <a href="mailto:stuczynski.g@gmail.com">stuczynski.g@gmail.com</a> — verified fixes will be updated directly in the public dataset with a remediation timestamp.
+      </div>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Check any municipality in 10 seconds</strong>
+        Type any Polish town, commune, county, TERYT code, or domain below (diacritic-insensitive) or click one of the preset pills above the table. Filtered slices export straight to CSV.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig4-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Primary evidence · Three verified cohorts from the 2,809-unit census</span>
+        <h3 class="lab-fig-title" id="fig4-title">From max-grant cities without DMARC, to consumer mailboxes, to pre-consent Meta Pixels</h3>
+      </div>
+    </div>
+    <div class="specimen-grid">
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Card A · Max grants with missing DMARC</strong>
+          <span>62 ~850k PLN winners lacking _dmarc</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Gorzów Wlkp. / Słupsk / Bytom:</span><strong>791–850k PLN · no DMARC</strong></div>
+          <div class="specimen-line"><span>Włoszczowa (gmina-wloszczowa.pl):</span><strong>850,000 PLN · no DMARC</strong></div>
+          <div class="specimen-line is-error"><span>4 regional Marshal offices (W):</span><b>780–850k PLN · p=none</b></div>
+        </div>
+        <p class="specimen-note">All 62 max-grant municipalities without DMARC were cross-verified on live municipal websites/BIP and dual DoH resolvers (Google + Cloudflare). <a href="#explorer" data-jst-preset="preset=max_nodmarc">Show all 62 in explorer →</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Card B · Town halls on consumer freemail</strong>
+          <span>30 municipalities confirmed on live sites</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Ostrów Mazowiecka (GW) / Pisz:</span><strong>850,000 PLN each · @home.pl</strong></div>
+          <div class="specimen-line"><span>Kolno (+ mkolno.pl no DMARC):</span><strong>814,377 PLN · kolno@home.pl</strong></div>
+          <div class="specimen-line is-error"><span>Godkowo / Zawidz / 11 communes:</span><b>@gmail / @wp.pl / @post.pl</b></div>
+        </div>
+        <p class="specimen-note">28 of the 30 municipalities using external mailboxes won Cybersecure grants (PLN 12.61M total); 20 own no institutional mail domain at all. <a href="#explorer" data-jst-preset="preset=freemail">Show all 30 →</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Card C · Commercial Meta Pixel at 0s</strong>
+          <span>5 grant winners (PLN 4.11M) · pre-consent</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Lubuskie Region (lubuskie.pl):</span><strong>850,000 PLN · Pixel + Hotjar</strong></div>
+          <div class="specimen-line"><span>Gdynia / Polkowice / Świdnik:</span><strong>724–850k PLN · Pixel /tr</strong></div>
+          <div class="specimen-line is-error"><span>Tarnów (tarnow.pl · 848k PLN):</span><b>Pixel + Advanced Matching</b></div>
+        </div>
+        <p class="specimen-note">Tarnów's city portal loads Meta's udwv[em] email-hashing script pre-consent, while 9 peer towns prove strict CMP script blocking works cleanly. <a href="#explorer" data-jst-preset="preset=pixel_tr">Show in explorer →</a></p>
+      </div>
+    </div>
+  </figure>
+</article>
+
+<section class="lab-tool-section" id="explorer">
+  <div class="frame">
+    <div class="lab-tool-head">
+      <div>
+        <span class="number">Complete nationwide census · All 2,809 Polish municipalities, cities, counties &amp; voivodeships (100% GUS TERYT coverage)</span>
+        <h2>Check any Polish local government: CPPC grant, mail security &amp; website trackers</h2>
+      </div>
+      <p>Search by town, county, TERYT code, or email/website domain, or select one of the verified investigative cohorts above the table. Export any filtered view to CSV or embed the explorer in news coverage via <code>iframe</code>.</p>
+    </div>
+    <div id="jst-explorer" data-src="/assets/lab/jst-cyber-2026.json">
+      <noscript>
+        <div class="lab-callout">
+          <span class="micro">Interactive 2,809-unit explorer requires JavaScript</span>
+          <p>Download the complete verified dataset covering all 2,809 Polish local governments directly as <a href="/assets/lab/jst-cyber-2026.json">jst-cyber-2026.json</a>.</p>
+        </div>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<section class="plain-contact">
+  <div class="frame about-strip">
+    <span class="number">05 / Contact, DNS remediation updates &amp; newsroom embeds</span>
+    <h2>Manage municipal IT security or covering your local region in the press?</h2>
+    <div>
+      <p>If your office has deployed enforcing <code>DMARC</code> (<code>p=quarantine</code> or <code>p=reject</code>) or gated third-party scripts behind prior consent since our snapshot, send a note — I will re-verify DNS/Chromium live and update your entry. Newsrooms may freely embed the explorer via the <code>Embed (iframe)</code> button with attribution.</p>
+      <a class="quiet-link" href="mailto:stuczynski.g@gmail.com?subject=Issue%2003%20%E2%80%94%20Municipal%20Cybersecurity%20Audit%20(2809%20JST)">stuczynski.g@gmail.com ↗</a>
+      <p class="contact-alt">Shorter threads and charts appear on <a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X (@rpl_0x)</a> and <a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="footer"><div class="frame"><p>Grzegorz Stuczyński · RolePlayingTech © 2026</p><div class="sub-links"><a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/RolePlayingTech" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://roleplayinglife.substack.com/" target="_blank" rel="noopener noreferrer">Substack ↗</a><a href="mailto:stuczynski.g@gmail.com">Email ↗</a></div></div></footer>
+</body>
+</html>

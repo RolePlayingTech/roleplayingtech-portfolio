@@ -92,9 +92,57 @@
 <div class="offset">
 <article class="lab-home-card reveal">
 <div>
+<div class="edu-meta"><span class="index">RAPORT NR 04 · LISTOPAD 2026</span><span class="project-meta">ENERGETYKA · PSE API 15-MIN (2024–2026)</span></div>
+<h3><a href="/pl/lab/redysponowanie-oze-pse/">Wyłączamy tanie słońce, gdy prąd jest drogi. Co pokazały 73 924 kwadranse pracy sieci PSE</a></h3>
+<p>Przeliczyłem pełny szereg 73 924 kwadransów pracy sieci z API PSE S.A. (wrzesień 2024 – listopad 2026), telemetrię 106 bloków w 37 elektrowniach oraz przepływy na 6 granicach. W 2026 r. aż 66,57% nierynkowego wyłączania PV i wiatru (1 201,60 z 1 805,05 GWh) zaszło przy dodatnich cenach energii, w tym 497,42 GWh (27,56%) przy drogim prądzie RCE ≥ 250 zł/MWh — bo w południe w sieci musi pracować średnio 7,98 GW bloków węglowych i gazowych pod wieczorną rampę do 13,63 GW o 20:00, a 96,75% skoków redukcji ≥ 200 MW (i 100% skoków ≥ 500 MW) wybija sztywno w minucie <code>:00</code> pełnej godziny.</p>
+<p class="edu-topics">reżimy cenowe RCE i gilotyna :00 · krzywa kacza 106 bloków · 6 granic · wyszukiwarka 37 elektrowni i 140 dób · JSON / CSV · iframe</p>
+<div class="edu-actions">
+<a class="edu-cta" href="/pl/lab/redysponowanie-oze-pse/">Czytaj analizę i sprawdź 37 elektrowni <span>→</span></a>
+<a class="edu-source" href="/pl/lab/">Wszystkie analizy i warsztat →</a>
+</div>
+</div>
+<div class="lab-home-side">
+<div class="lab-home-stat"><strong>497,42<small>GWh</small></strong><span>czystej energii ściętej w 2026 r. przy drogim prądzie RCE ≥ 250 zł/MWh (łącznie 66,57% wyłączeń przy RCE &gt; 0 zł/MWh)</span></div>
+<div class="lab-home-stat"><strong>96,75<small>%</small></strong><span>skoków redukcji OZE ≥ 200 MW pada równo w minucie <code>:00</code> pełnej godziny (100% przy skokach ≥ 500 MW)</span></div>
+</div>
+</article>
+<article class="lab-home-card reveal">
+<div>
+<div class="edu-meta"><span class="index">RAPORT NR 03 · LISTOPAD 2026</span><span class="project-meta">CYBERBEZPIECZEŃSTWO · 2 809 SAMORZĄDÓW / CPPC</span></div>
+<h3><a href="/pl/lab/cyberbezpieczny-samorzad/">1,48 mld zł na „Cyberbezpieczny Samorząd”, a poczta co czwartego urzędu stoi otworem</a></h3>
+<p>34 dni po twardym terminie rozliczenia programu FERC 2.2 (30.09.2026) przeskanowałem wszystkie 2 809 polskich jednostek samorządu terytorialnego i połączyłem je co do grosza z listą 2 511 grantów CPPC (1 483 979 072,49 zł). Co czwarty urząd (734 z 2 779 domen, 26,41%) nie ma aktywnej blokady podszywania pod pocztę DMARC — różnica w całkowitym braku rekordu między beneficjentami a gminami bez grantu to szum statystyczny (12,77% vs 15,20%, p = 0,28), 30 urzędów używa skrzynek komercyjnych (<code>@wp.pl</code>, <code>@gmail.com</code>, <code>@home.pl</code>), a 336 z 346 stron z osadzeniami Mety wysyła dane obywateli przed kliknięciem zgody.</p>
+<p class="edu-topics">wyszukiwarka wszystkich 2 809 JST · mapa 16 województw · benchmark .gov.pl · lejek Zero-Click · otwarty JSON / CSV · iframe</p>
+<div class="edu-actions">
+<a class="edu-cta" href="/pl/lab/cyberbezpieczny-samorzad/">Sprawdź swój urząd w bazie 2 809 JST <span>→</span></a>
+<a class="edu-source" href="/pl/lab/">Wszystkie analizy i warsztat →</a>
+</div>
+</div>
+<div class="lab-home-side">
+<div class="lab-home-stat"><strong>26,41<small>%</small></strong><span>domen urzędowych bez aktywnej blokady spoofingu DMARC (734 z 2 779, w tym 62 gminy z maks. grantem ~850 tys. zł bez rekordu)</span></div>
+<div class="lab-home-stat"><strong>336<small>/346</small></strong><span>stron JST z integracjami Mety wysyła dane w 0 s przed zgodą RODO (w tym 5 aktywnych pikseli reklamowych Meta Pixel)</span></div>
+</div>
+</article>
+<article class="lab-home-card reveal">
+<div>
+<div class="edu-meta"><span class="index">RAPORT NR 02 · LISTOPAD 2026</span><span class="project-meta">REJESTRY PUBLICZNE · RSPO / RPWDL2 / MF</span></div>
+<h3><a href="/pl/lab/panstwo-linkuje-do-kasyna/">Jak państwowe rejestry i strony .gov.pl napędzają ruch nielegalnym kasynom</a></h3>
+<p>Przeskanowałem 35 583 unikalne domeny szkół, szpitali i żłobków z rejestrów MEN, MZ i MRPiPS oraz skrzyżowałem je z 59 376 wpisami rejestru hazardowego MF. Znalazłem 291 aktywnych, niezablokowanych domen kierujących do nielegalnych kasyn (158 wciąż widnieje w żywych kartach placówek), 9 stron <code>.gov.pl</code>, starostw i BIP z 10 linkami <code>dofollow</code> oraz 8 działających serwerów publicznych szkół i szpitali ze wstrzykniętym spamem PHP, których wpisanie na listę MF odcięłoby pacjentów od całej domeny w 48 h.</p>
+<p class="edu-topics">silosy państwowe i krzywa przeżycia Kaplana–Meiera · zanonimizowana baza <code>[.]</code> · otwarty JSON / CSV · osadzanie iframe</p>
+<div class="edu-actions">
+<a class="edu-cta" href="/pl/lab/panstwo-linkuje-do-kasyna/">Czytaj śledztwo i sprawdź bazę <span>→</span></a>
+<a class="edu-source" href="/pl/lab/">Wszystkie analizy i warsztat →</a>
+</div>
+</div>
+<div class="lab-home-side">
+<div class="lab-home-stat"><strong>291<small>domen</small></strong><span>aktywnych i niezablokowanych w Polsce (158 nadal w żywych kartach RSPO, RPWDL2 i Żłobków)</span></div>
+<div class="lab-home-stat"><strong>26,2<small>×</small></strong><span>skok udziału domen <code>.pl</code> w rejestrze hazardowym MF między 2023 a 2026 r. (z 0,82% do 21,51%)</span></div>
+</div>
+</article>
+<article class="lab-home-card reveal">
+<div>
 <div class="edu-meta"><span class="index">RAPORT NR 01 · LISTOPAD 2026</span><span class="project-meta">ZAMÓWIENIA PUBLICZNE · BZP 2024–2026</span></div>
-<h3><a href="/pl/lab/przetargi-ai/">Na co polskie instytucje naprawdę wydają pieniądze pod hasłem AI?</a></h3>
-<p>Przeanalizowałem 304 powiązane ogłoszenia i pełne protokoły HTML 171 postępowań z Biuletynu Zamówień Publicznych. Sprawdziłem, dlaczego szkolenia biorą tylko 7,6% kwoty umów przy 89,8% na systemy kliniczne, laboratoria i serwery GPU — oraz dlaczego powyżej 170 tys. zł konkurencja załamuje się tak gwałtownie, że 53,6% umów (60,7% kwoty — 19,54 mln zł) zakończyło się bez żadnego ważnego konkurenta, a 93,8% wartości trafia do MŚP.</p>
+<h3><a href="/pl/lab/przetargi-ai/">60,7% pieniędzy bez konkurenta. Jak polskie instytucje naprawdę kupują sztuczną inteligencję</a></h3>
+<p>Prześwietliłem 304 ogłoszenia i pełne protokoły HTML 171 postępowań z Biuletynu Zamówień Publicznych oraz odpisy KRS i CEIDG. Pokazuję, dlaczego aż 60,7% zakontraktowanych pieniędzy (19,54 z 32,20 mln zł) oraz 17 z 17 umów wszystkich sześciu liderów czystego AI trafiło do firm bez ocalałego rywala — od 100% spółki-córki Asseco wpisanej jako „mikroprzedsiębiorca”, przez 20-dniową JDG w szpitalnym KPO, po kliniczne AI kupione pod kodem „Gazety i czasopisma”.</p>
 <p class="edu-topics">3-widokowy wykres konkurencji i unieważnień · wyszukiwarka 171 przetargów · otwarty JSON / CSV · osadzanie iframe</p>
 <div class="edu-actions">
 <a class="edu-cta" href="/pl/lab/przetargi-ai/">Czytaj raport i sprawdź bazę <span>→</span></a>

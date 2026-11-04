@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f7f6f2">
+<meta name="description" content="Analysis of 73,924 continuous 15-minute intervals from Poland's TSO (PSE API v2, Sep 24, 2024 – Nov 2, 2026), 106 generating units and 6 borders: 66.6% of 2026 renewable curtailment occurred at positive prices and 27.6% (497.42 GWh) at RCE ≥ 250 PLN/MWh.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shutting off cheap solar while power is expensive: 73,924 fifteen-minute intervals of Poland's grid">
+<meta property="og:description" content="I analyzed 73,924 quarter-hours of PSE grid telemetry, 106 coal and gas units, and all 6 borders. Two-thirds of 2026 RES curtailment happened at positive prices, 497 GWh at RCE ≥ 250 PLN/MWh, and 96.8% of ≥200 MW cuts hit on the full clock hour (:00).">
+<meta property="og:url" content="https://roleplayingtech.com/en/lab/polish-grid-curtailment/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:image" content="https://roleplayingtech.com/assets/lab/og-pse-grid-2026-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="RolePlayingTech Issue 04: 1,805.05 GWh of curtailed renewables in 2026 YTD, 27.6% at RCE ≥ 250 PLN/MWh, 7.98 → 13.63 GW thermal ramp, and 96.8% of ≥200 MW cuts at minute :00">
+<meta property="article:published_time" content="2026-11-04">
+<meta property="article:author" content="Grzegorz Stuczyński">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shutting off cheap solar while power is expensive — 73,924 intervals of Poland's grid">
+<meta name="twitter:description" content="66.6% of Poland's 2026 renewable curtailment happens at positive wholesale prices and 497.42 GWh at ≥250 PLN/MWh while ~8 GW of coal and gas stay online to meet the 20:00 evening ramp.">
+<meta name="twitter:image" content="https://roleplayingtech.com/assets/lab/og-pse-grid-2026-en.png">
+<title>Shutting off cheap solar while power is expensive: 73,924 intervals of Poland's grid — RolePlayingTech</title>
+<script>document.documentElement.classList.add('js');if(location.search.indexOf('embed=1')!==-1)document.documentElement.classList.add('is-embed');</script>
+<link rel="stylesheet" href="/assets/minimal.css">
+<link rel="stylesheet" href="/assets/lab/bzp-explorer.css">
+<link rel="stylesheet" href="/assets/lab/pse-explorer.css">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="canonical" href="https://roleplayingtech.com/en/lab/polish-grid-curtailment/">
+<link rel="alternate" hreflang="en" href="https://roleplayingtech.com/en/lab/polish-grid-curtailment/">
+<link rel="alternate" hreflang="pl" href="https://roleplayingtech.com/pl/lab/redysponowanie-oze-pse/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "headline": "Shutting off cheap solar while power is expensive: 73,924 fifteen-minute intervals of Poland's grid",
+      "image": "https://roleplayingtech.com/assets/lab/og-pse-grid-2026-en.png",
+      "datePublished": "2026-11-04",
+      "dateModified": "2026-11-04",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Grzegorz Stuczyński",
+        "url": "https://roleplayingtech.com/en/about/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "RolePlayingTech",
+        "url": "https://roleplayingtech.com/en/"
+      },
+      "mainEntityOfPage": "https://roleplayingtech.com/en/lab/polish-grid-curtailment/"
+    },
+    {
+      "@type": "Dataset",
+      "name": "Non-Market Renewable Curtailment, Unit-Level Thermal Dispatch & Cross-Border Loop Flows in Poland (2024–2026)",
+      "description": "Aggregated dataset built from 73,924 continuous 15-minute intervals of PSE API v2 (Sep 24, 2024 – Nov 2, 2026): solar PV and wind curtailment by RCE/CSDAC/CEN price regime, zero-filled profiles of 37 power stations (106 generating units in gen-jw), physical vs commercial flows across 6 borders, and 140 largest curtailment days.",
+      "url": "https://roleplayingtech.com/en/lab/polish-grid-curtailment/",
+      "temporalCoverage": "2024-09-24/2026-11-02",
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://roleplayingtech.com/assets/lab/pse-grid-2026.json"
+      }
+    }
+  ]
+}
+</script>
+<script src="/assets/site.js" defer></script>
+<script src="/assets/lab/pse-explorer.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="frame"><a class="logo" href="/en/">roleplayingtech<i>.</i></a><nav class="head-nav" aria-label="Navigation"><a href="/en/#work">Projects</a><a href="/en/education/">Learning</a><a href="/en/lab/" aria-current="page">Essays</a><a href="/en/about/">About</a><a href="/en/#help">Work together</a><a href="/en/#links">Elsewhere</a><a href="/en/#contact">Contact</a><div class="head-socials" aria-label="Social profiles"><a class="soc-link" href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer" aria-label="X (@rpl_0x)" title="X · @rpl_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="soc-accent" d="M12.9 2.5L9.1 6.9M6.9 9.1L3.1 13.5" fill="none" stroke="var(--rust)" stroke-width="1.45" stroke-linecap="round"/><path d="M2.6 2.5h2.7l8.1 11h-2.7Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="soc-accent" cx="4.2" cy="3.9" r="1.15" fill="var(--rust)"/><path d="M4.2 6.6v5.9M7.6 12.5V6.6m0 2.2c0-1.4 1.1-2.3 2.4-2.3 1.4 0 2.2.9 2.2 2.4v3.6" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (@roleplayinglife_0x)" title="Instagram · @roleplayinglife_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.2" y="2.2" width="11.6" height="11.6" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.7" fill="none" stroke="currentColor" stroke-width="1.4"/><circle class="soc-accent" cx="11.3" cy="4.7" r="1" fill="var(--rust)"/></svg></a></div><a class="switch" href="/pl/lab/redysponowanie-oze-pse/" hreflang="pl">PL</a></nav></div></header>
+
+<nav class="lab-subnav" aria-label="Report chapters">
+  <div class="frame lab-subnav-inner">
+    <div class="lab-subnav-links">
+      <a href="#paradoks">01 · Expensive curtailment</a>
+      <a href="#podloga">02 · Coal floor &amp; 20:00 ramp</a>
+      <a href="#granice">03 · Loop flows &amp; HVDC links</a>
+      <a href="#rachunek">04 · Compensation, :00 &amp; prosumers</a>
+    </div>
+    <a class="lab-subnav-cta" href="#explorer"><span class="cta-full">Plants (37) &amp; days (140) ↓</span><span class="cta-short">Grid data ↓</span></a>
+  </div>
+</nav>
+
+<main id="main">
+
+<header class="lab-hero frame">
+  <div class="back"><a class="quiet-link" href="/en/lab/">← Data &amp; interactive essays</a></div>
+  <div class="lab-issue-bar micro">
+    <span class="lab-tag">ISSUE 04 · GRID TELEMETRY &amp; DATA INVESTIGATION</span>
+    <span>Polish Power System (PSE API v2 · 2024–2026)</span>
+    <span>Telemetry window: Sep 24, 2024 – Nov 2, 2026 · ~14 min read</span>
+  </div>
+  <h1>Shutting off cheap solar while power is expensive: what <i>73,924 quarter-hours</i> of Poland's grid reveal</h1>
+
+  <div class="lab-lead-grid">
+    <div>
+      <p class="lab-lead">In popular shorthand, forced renewable curtailment is a sunny Sunday-afternoon phenomenon: demand drops, solar floods the grid, wholesale electricity prices turn negative, and dispatchers trim surplus zero-cost energy. On <strong>Wednesday, June 24, 2026</strong> — an ordinary working weekday — Poland's transmission system operator curtailed <strong>19.20 GWh</strong> of solar PV (peaking at <code>3,543.1 MW</code> between 14:00 and 15:00, and still cutting <code>2,773.6 MW</code> between 15:00 and 16:00 while the market settlement price stood at <code>RCE = 312.1 PLN/MWh</code>). Five hours later, at 20:00, wholesale prices spiked to <strong>2,567.7 PLN/MWh</strong> (<code>CSDAC = 2,698.7</code>, <code>CEN = 2,947.6 PLN/MWh</code>), as the very coal and gas fleet that could not drop below <strong>8.82 GW</strong> at noon had to climb to <strong>17.30 GW</strong>.</p>
+      <p class="lab-lead-sub">To test how often Poland shuts down zero-marginal-cost renewables during expensive electricity hours — and what physically forces control rooms to do so — I joined <strong>73,924 continuous 15-minute intervals</strong> across six primary API feeds of Polish TSO <em>Polskie Sieci Elektroenergetyczne</em> (<code>2024-09-24</code> through <code>2026-11-02</code>, zero missing quarters) with unit-level telemetry from <strong>106 generating units across 37 power stations</strong> (<code>gen-jw</code>), physical and scheduled commercial flows across all six borders, and statutory compensation rules.</p>
+      <div class="lab-byline-bar">
+        <span>Analysis, code &amp; data verification: <strong>Grzegorz Stuczyński</strong></span>
+        <span>Sources: <a href="https://raporty.pse.pl/report/poze-redoze" target="_blank" rel="noopener noreferrer">PSE poze-redoze</a> · <a href="https://raporty.pse.pl/report/gen-jw" target="_blank" rel="noopener noreferrer">gen-jw</a> · <a href="https://raporty.pse.pl/report/rce-pln" target="_blank" rel="noopener noreferrer">rce-pln</a> · <a href="https://raporty.pse.pl/report/przeplywy-mocy" target="_blank" rel="noopener noreferrer">border flows</a> · <a href="https://www.ure.gov.pl" target="_blank" rel="noopener noreferrer">URE</a></span>
+        <span>Open data: <a href="/assets/lab/pse-grid-2026.json" download>JSON (124 KB)</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/pse-grid-methodology.md" target="_blank" rel="noopener noreferrer">Methodology &amp; formulas ↗</a></span>
+      </div>
+      <div class="pse-MethodNote" role="note">
+        <span class="micro">Methodological note · Strict separation of three dispatch series &amp; matched YTD windows</span>
+        All year-over-year changes compare identical calendar windows: <strong>Jan 1 – Nov 2, 2025 vs. Jan 1 – Nov 2, 2026</strong> (<code>29,376</code> quarter-hours each, accounting for CET/CEST transitions). Across unit-level analyses, three series are kept strictly separate and never mixed: (1) <strong>pure thermal <code>gen-jw</code> output</strong> (lignite + hard coal + gas CCGT + CHP, zero-filled across all <code>864</code> quarters of 9 representative expensive-curtailment weekdays: <code>7.98 → 13.63 GW</code>, ramp <strong>+5.64 GW</strong>), (2) <strong>total controllable thermal + pumped-storage (ESP) net swing</strong> (<code>-775.8 MW</code> pumping at 12:00 → <code>+693.7 MW</code> turbine output at 20:00, net swing <strong>+7.11 GW</strong>), and (3) <strong>system-level <code>JG</code> in <code>his-wlk-cal</code></strong> (<code>7.54 → 13.83 GW</code>, ramp <strong>+6.30 GW</strong>). Commercial vs. unscheduled loop flows cover strictly <code>2026 YTD</code> (<code>pwm-rdn-rdb</code> launched Jan 1, 2026).
+      </div>
+      <div class="lab-jump-row">
+        <a class="jump" href="#paradoks">Read the investigation<span>↓</span></a>
+        <a class="quiet-link" href="#explorer">Explore 37 power plants &amp; 140 curtailment days ↓</a>
+      </div>
+    </div>
+
+    <aside class="lab-meta-box" aria-label="Scope, telemetry continuity and physical context">
+      <span class="micro">Read first · Telemetry integrity &amp; grid physics</span>
+      <ul>
+        <li><strong>73,924 gap-free quarter-hours:</strong> continuous UTC series from <code>2024-09-23 22:15 UTC</code> to <code>2026-11-02 23:00 UTC</code> (765 normal 96-quarter days, 3 autumn 100-quarter DST days, and 2 spring 92-quarter DST days).</li>
+        <li><strong>Exact match with PSE press totals:</strong> integrating raw <code>poze-redoze</code> power (<code>MW × 0.25 h</code>) yields <code>1,377.46 GWh</code> for full-year 2025 and <code>1,424.20 GWh</code> of balance curtailment in Jan–Jul 2026 — matching PSE's official statements ("over 1.37 TWh" and "1.42 TWh") to the second decimal place.</li>
+        <li><strong>Physics, not operator whim:</strong> keeping ~8 GW of synchronous thermal units online at solar noon stems from boiler minimum-load limits, frequency inertia and short-circuit current requirements, and the absence of utility-scale batteries able to cover a 6 GW evening ramp.</li>
+      </ul>
+      <details class="lab-meta-more">
+        <summary>Glossary of PSE wholesale &amp; balancing price benchmarks</summary>
+        <ul>
+          <li><strong>RCE (Market Energy Price):</strong> Poland's 15-minute wholesale reference price (in 2026 identical across 100% of quarters to the Single Day-Ahead Coupling price <code>CSDAC</code>), used to credit dynamic net-billing solar prosumers.</li>
+          <li><strong>CEN (Imbalance Settlement Price):</strong> the 15-minute Balancing Market settlement price (<code>cen_cost</code> in PSE's API). Under PSE's <em>PV Financial Compensation Rules</em> (March 2026, p. 2), <code>CEN</code> sets the statutory energy compensation price <code>KC</code> whenever system imbalance is negative.</li>
+          <li><strong>Balance vs. network curtailment:</strong> balance redispatch reflects nationwide oversupply relative to export and pumping headroom; network redispatch reflects local line or transformer congestion.</li>
+        </ul>
+      </details>
+    </aside>
+  </div>
+
+  <div class="lab-findings" aria-label="Key findings">
+    <div class="lab-finding">
+      <span class="lab-finding-num">27.6<small>% expensive cuts</small></span>
+      <span class="lab-finding-label">of all renewable energy curtailed in 2026 YTD (<strong>497.42 of 1,805.05 GWh</strong>) was shut off while wholesale power traded at <strong>RCE ≥ 250 PLN/MWh</strong> — spanning <code>3,276</code> quarter-hours, <strong>2.41× more intervals</strong> than at zero or negative prices (<code>1,361</code> q).</span>
+      <span class="lab-finding-note">66.6% (1,201.60 GWh) curtailed at strictly positive RCE &gt; 0</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">+5.64<small>GW thermal ramp</small></span>
+      <span class="lab-finding-label">required between <strong>12:00 (7.98 GW)</strong> and <strong>20:00 (13.63 GW)</strong> from pure thermal <code>gen-jw</code> units alone on a representative weekday of expensive curtailment (<a href="?lens=plants&amp;preset=coal#explorer" data-pse-preset="lens=plants&amp;preset=coal">inspect all 37 plants ↓</a>).</span>
+      <span class="lab-finding-note">+7.11 GW net controllable swing including pumped storage (ESP)</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">96.8<small>% at minute :00</small></span>
+      <span class="lab-finding-label">of all renewable curtailment step-changes <strong>≥ 200 MW</strong> across 2025–2026 (<code>2,263 of 2,339</code>) — and <strong>100.0% of jumps ≥ 500 MW</strong> (<code>1,136 of 1,136</code>) — hit precisely on the full clock hour <code>:00</code>.</span>
+      <span class="lab-finding-note">despite 15-minute balancing market settlement since June 2024</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">+605<small>MW DE loop flow</small></span>
+      <span class="lab-finding-label">average <strong>unscheduled physical loop flow</strong> entering Poland from Germany during expensive RES cuts (<code>+607.3 MW</code> physical vs. <code>+2.1 MW</code> scheduled), while northern HVDC cables import commercial power from Lithuania and Sweden.</span>
+      <span class="lab-finding-note">Poland was an aggregate net importer in 862 curtailed quarters (140.68 GWh)</span>
+    </div>
+  </div>
+</header>
+
+<article class="lab-essay frame" id="paradoks">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 01
+      <strong>The price paradox</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Beyond the negative-price Sunday myth: 58.6% of curtailed energy falls on working weekdays, and two-thirds at positive prices</h2>
+      <p class="has-dropcap">Whenever forced solar and wind curtailment makes headlines in Central Europe, the standard explanation is reassuringly simple: on sunny spring Sundays, factory and office demand drops, rooftop and utility solar panels produce more electricity than the country needs, wholesale prices plunge below zero, and grid operators trim excess free energy. If that were the whole story, curtailment would be a benign weekend growing pain.</p>
+      <p>Joining PSE's 15-minute curtailment ledger (<code>poze-redoze</code>) interval by interval against wholesale settlement prices (<code>rce-pln</code> and <code>energy-prices</code>) tells a starkly different story. Across matched ten-month windows from <strong>January 1 through November 2</strong>, non-market renewable curtailment rose from <strong>1,326.29 GWh in 2025 YTD</strong> to <strong>1,805.05 GWh in 2026 YTD (+36.1% YoY)</strong> — comprising <strong>1,262.60 GWh of solar PV</strong> (<code>69.95%</code>, up <code>29.5%</code>) and <strong>542.45 GWh of onshore wind</strong> (<code>30.05%</code>, up <code>54.4%</code>). Remarkably, curtailment occurred across <strong>27.3% fewer quarter-hours</strong> than a year earlier (<code>6,993</code> active quarters vs. <code>9,623</code>), meaning average curtailment depth during active intervals surged by <strong>87.3% — from 551.3 MW to 1,032.5 MW</strong>.</p>
+      <p>The second surprise lies in PSE's own operational classification. Contrary to the widespread belief that renewables are throttled mainly because aging local distribution lines cannot carry rural solar output, <strong>98.84% of all curtailed volume in 2026 YTD (1,784.03 GWh) was system-wide balance curtailment</strong>, while local network congestion accounted for just <strong>1.16% (21.03 GWh</strong> — down from <code>2.24%</code> in 2025 YTD; in full-year 2024, according to the Energy Regulatory Office's October 2025 statutory report, autonomous DSO-level curtailment across all 188 distribution operators totaled just <code>26.92 GWh</code> alongside <code>722.34 GWh</code> ordered by the TSO). The binding constraint is nationwide system inflexibility, not just local transformers.</p>
+      <p>The sharpest anomaly emerges once every curtailed quarter-hour is matched with its simultaneous wholesale price. In 2026 YTD, <strong>58.56% of curtailed renewable electricity (1,056.97 GWh) was discarded Monday through Friday</strong>, while factories and offices were running (up <code>47.5%</code> in volume from <code>716.72 GWh</code> / <code>54.04%</code> in 2025 YTD). Zero or negative wholesale prices (<code>RCE ≤ 0 PLN/MWh</code>) accounted for only <strong>33.43% of curtailed volume (603.45 GWh across 1,361 quarters)</strong>. Fully <strong>66.57% — 1,201.60 GWh across 5,632 quarters — was shut off while wholesale electricity carried a positive market price</strong>.</p>
+      <p>Filtering strictly for expensive wholesale power — <strong><code>RCE ≥ 250 PLN/MWh</code></strong> (~58 EUR/MWh) — Polish grid operators curtailed <strong>497.42 GWh of solar and wind in 2026 YTD (27.56% of total curtailment)</strong> across <strong>3,276 quarter-hours (819 hours)</strong>, nearly doubling 2025 YTD's <code>261.93 GWh</code> (<code>+89.9%</code>). Above <strong><code>400 PLN/MWh</code></strong> (~93 EUR/MWh), curtailed volume jumped <strong>5.8-fold (+477.5%)</strong> from <code>31.76 GWh</code> to <strong>183.42 GWh</strong> (<a href="?lens=days&amp;preset=exp_wkd#explorer" data-pse-preset="lens=days&amp;preset=exp_wkd">inspect all expensive weekday episodes in the explorer ↓</a>). From June through October 2026, curtailment at <code>RCE ≥ 250 PLN/MWh</code> routinely represented <strong>35% to over 50% of monthly discarded clean energy</strong>.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Fewer hours, nearly twice the megawatt depth</strong>
+        With installed Polish solar PV surpassing 21 GW in 2026, dispatchers invoke curtailment in fewer intervals than in 2025, but slice 2.5–4.1 GW off the grid in a single command (peaking at <code>5,372.5 MW</code> on Easter Sunday, April 5, 2026, and <code>4,065.5 MW</code> on Wednesday, July 8, 2026).
+      </div>
+      <div class="lab-aside-note">
+        <strong>Why prices stay high while solar is cut</strong>
+        Day-ahead <code>CSDAC/RCE</code> clearing prices reflect the marginal bid of thermal coal and gas units required to clear the commercial schedule. When must-run thermal units set the marginal price, market prices remain elevated even as zero-cost renewables are curtailed non-marketly alongside them.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig1-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Figure 01 · Co-temporal price brackets, monthly wave &amp; the full-hour (:00) guillotine (3 interactive views)</span>
+        <h3 class="lab-fig-title" id="fig1-title">497.42 GWh curtailed at RCE ≥ 250 PLN/MWh, 355.09M PLN statutory KC valuation, and 96.75% of ≥200 MW steps at minute :00</h3>
+        <p class="lab-fig-sub">Switch between 2025 vs. 2026 price brackets &amp; valuations (01), the monthly stacked wave (02), and clock-minute dispatch step distributions (03).</p>
+      </div>
+    </div>
+
+    <div id="fig-pse-price">
+      <noscript>
+        <p class="specimen-note">Interactive tabs require JavaScript. Core 2026 YTD metrics (Jan 1 – Nov 2): 1,805.05 GWh curtailed (+36.1% YoY); 66.57% (1,201.60 GWh) at RCE &gt; 0; 27.56% (497.42 GWh, 3,276 q) at RCE ≥ 250 PLN/MWh; 10.16% (183.42 GWh) at RCE ≥ 400 PLN/MWh; gross market value max(0, RCE) = 251.46M PLN, statutory max(0, CEN) = 355.09M PLN vs. 105.5M PLN cumulative cash paid 2023 – Jul 2026; jumps ≥200 MW at :00 = 2,263 of 2,339 (96.75%).</p>
+      </noscript>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Source: own calculations across all 73,924 quarter-hours of PSE API v2 (<code>poze-redoze</code>, <code>rce-pln</code>, <code>energy-prices</code>) and official PSE/URE compensation disclosures.</span>
+      <span>In tab 03, toggle the step-change threshold across ≥100 MW, ≥200 MW, ≥300 MW, and ≥500 MW.</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="podloga">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 02
+      <strong>Thermal floor</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>The 20:00 trap: why Bełchatów, Opole and Kozienice cannot shut down at solar noon</h2>
+      <p class="has-dropcap">To understand why national grid dispatchers shut down three gigawatts of zero-marginal-cost solar power on a Tuesday or Wednesday afternoon while electricity costs 300 PLN/MWh, looking at noon is not enough. You have to look eight hours ahead — at <strong>20:00</strong>.</p>
+      <p>In an official technical briefing to renewable producers on <strong>May 23, 2025</strong> (slide 6), PSE spelled out the constraint explicitly: centrally dispatched thermal units (<code>JG / JWCD</code>) must maintain a minimum generation floor to satisfy <em>"network and power-plant constraints, balancing reserves (FCR, FRR), short-circuit power, inertia (lessons from Spain / Portugal) and capability to cover the 6 GW evening peak."</em> Invoking the Iberian blackout was grounded in synchronous grid physics: without rotating synchronous turbogenerators (or grid-forming inverters at scale), an AC grid loses rotational inertia and fault-clearing short-circuit current. Boiler thermodynamics is equally unforgiving: shutting down a pulverized-coal or lignite unit in the morning requires 8 to 16 hours to re-fire and synchronize — making it physically impossible to bring that capacity back for the evening peak after sunset.</p>
+      <p>Using PSE's unit-level <code>gen-jw</code> telemetry across <strong>106 generating units at 37 power stations</strong>, I measured that floor plant by plant across nine representative 2026 weekdays of expensive curtailment (<code>864</code> quarter-hours zero-filled across every station so offline plants never bias averages upward):</p>
+      <p>At <strong>12:00</strong> — right as solar PV averages <code>10.88 GW</code> and dispatchers curtail <code>1.61 GW</code> of renewables — <strong>pure thermal <code>gen-jw</code> output (lignite, hard coal, gas CCGT and CHP) bottoms out at 7,981.9 MW (7.98 GW)</strong>, averaging <strong>8,697.8 MW</strong> across midday <code>RCE ≥ 250 PLN/MWh</code> curtailment intervals (across all <code>3,276</code> expensive-curtailment quarters of 2026, system-wide <code>JG</code> averages <strong>8,402 MW</strong>). Simultaneously, Poland's six pumped-storage hydro stations (<code>Żarnowiec</code>, <code>Porąbka-Żar</code>, <code>Solina</code>, <code>Żydowo</code>, <code>Czorsztyn</code>, <code>Dychów</code>) are already absorbing <strong>-775.8 MW</strong> in pumping mode until their upper reservoirs fill up.</p>
+      <p>Between 16:00 and 20:00, as solar PV collapses from <code>10.88 GW</code> to <code>0.28 GW</code>, the thermal fleet executes a massive upward climb. By <strong>20:00</strong>, pure thermal <code>gen-jw</code> rises from <code>7,981.9 MW</code> to <strong>13,625.8 MW — a +5,643.9 MW (+5.64 GW) ramp</strong>: hard coal adds <code>+2,522.5 MW</code> (<code>4.31 → 6.83 GW</code>), lignite adds <code>+1,996.8 MW</code> (<code>2.38 → 4.38 GW</code>), gas CCGT adds <code>+993.5 MW</code> (<code>1.03 → 2.02 GW</code>), and CHP adds <code>+131.2 MW</code>. Adding the full net reversal of pumped-storage hydro — swinging from <code>-775.8 MW</code> midday pumping to <code>+693.7 MW</code> evening generation (<code>+1,469.6 MW</code>) — <strong>total controllable <code>gen-jw</code> net supply swings by +7,113.4 MW (+7.11 GW) in eight hours</strong> (on the system-wide <code>his-wlk-cal</code> <code>JG</code> series, which counts hydro generation but excludes pumping load, output rises from <code>7.54</code> to <code>13.83 GW</code>, or <strong>+6.30 GW</strong>).</p>
+      <p>Inspecting individual stations (<a href="?lens=plants#explorer" data-pse-preset="lens=plants">browse all 37 stations in the explorer below ↓</a>) shows how each fleet carries that obligation: at <strong>Bełchatów</strong> (PGE's lignite flagship), an average of <strong>8.8 of 12 units</strong> keep spinning through midday expensive cuts at throttled minimum load (<strong>1,812.9 MW at 12:00</strong>, <code>57.8%</code> of evening output) so they can deliver <strong>3,138.0 MW at 20:00 (+1,325.1 MW)</strong>. Hard-coal <strong>Opole</strong> keeps 3.4 of 6 units online at <strong>1,081.2 MW</strong> at noon to hit <strong>2,001.6 MW at 20:00 (+920.4 MW)</strong>; <strong>Kozienice 1 &amp; 2</strong> keep 5.5 of 11 units spinning (<code>1,295.2 → 1,860.4 MW</code>); <strong>Turów</strong> ramps <code>549.5 → 1,219.8 MW</code>; and PGE's new CCGT gas units at <strong>Gryfino</strong> throttle down to <code>237.3 MW</code> at noon (<code>28.0%</code> of evening load) before surging to <strong>847.9 MW at 20:00 (+610.6 MW)</strong>.</p>
+      <p>The tightest vise grip of the year occurred on <strong>Wednesday, June 24, 2026</strong> (select <code>Wed 2026-06-24</code> in Figure 02 below). Between 09:00 and 17:00, PSE curtailed <strong>19.20 GWh of solar PV</strong> (<code>7.99 GWh</code> at <code>RCE ≥ 250 PLN/MWh</code>) while pure thermal <code>gen-jw</code> held an <strong>8,822.1 MW</strong> floor at 12:00–13:00 (with <code>-768.8 MW</code> of ESP pumping). When the sun set into calm summer air (just <code>363 MW</code> of wind nationwide at 20:00), pure thermal <code>gen-jw</code> had to leap to <strong>17,295.4 MW in hour 20:00–21:00 (+8,473.3 MW hourly jump</strong>; or <strong>+9,360.0 MW</strong> from the 15-minute total <code>gen-jw</code> generation trough of <code>8,854.6 MW</code> at 12:45 to <code>18,214.6 MW</code> at 19:45). Even with virtually every available coal and gas boiler pushed near full output, scarcity drove 20:00–21:00 hourly prices to <strong>2,567.7 PLN/MWh (RCE)</strong>, <strong>2,698.7 PLN/MWh (CSDAC)</strong>, and <strong>2,947.6 PLN/MWh (CEN</strong>; peaking at <code>3,016.0 PLN/MWh</code> at 20:45–21:00).</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Why legacy pumped-storage hydro saturates by midday</strong>
+        Poland's six pumped-storage stations total ~1.8 GW of power and ~7–8 GWh of reservoir storage built decades ago for overnight coal baseload leveling. On a sunny 2026 day, a single morning of curtailed solar exceeds their entire upper-reservoir volume several times over.
+      </div>
+      <div class="lab-aside-note">
+        <strong>Control day comparison (Thu 2026-09-10)</strong>
+        Toggle to <code>Thu 2026-09-10</code> (0 GWh curtailed) on the chart below: with moderate solar (<code>8.0 GW</code>) and stronger wind (<code>5.3 GW</code>), noon thermal generation sat at <code>8.76 GW</code> while the evening ramp required 2.25 GW less thermal climb.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig2-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Figure 02 · 24-hour unit-level KSE dispatch profile (gen-jw + PV + ESP + curtailment)</span>
+        <h3 class="lab-fig-title" id="fig2-title">Anatomy of Poland's thermal duck curve: a 7.98 GW noon floor to survive a 13.63 GW evening peak</h3>
+        <p class="lab-fig-sub">Toggle across the 9-weekday benchmark, extreme Wednesday 2026-06-24 (2,568 PLN/MWh evening RCE), record Wednesday 2026-07-08 (33.28 GWh cut), and a zero-curtailment control day.</p>
+      </div>
+    </div>
+
+    <div id="fig-pse-duck">
+      <noscript>
+        <p class="specimen-note">Interactive chart requires JavaScript. 9-weekday benchmark (864 quarters): at 12:00 pure thermal gen-jw = 7.98 GW, PV = 10.88 GW, curtailed RES = 1.61 GW, ESP pumping = -776 MW; at 20:00 pure thermal = 13.63 GW (+5.64 GW thermal ramp), ESP = +694 MW (+7.11 GW total controllable swing), RCE = 1,316 PLN/MWh.</p>
+      </noscript>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Source: zero-filled unit-level PSE <code>gen-jw</code> telemetry (106 units across 37 stations) joined with <code>his-wlk-cal</code>, <code>poze-redoze</code>, and <code>rce-pln</code>.</span>
+      <span>Negative slate bars below 0 GW show midday water pumping by pumped-storage hydro plants (ESP).</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="granice">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 03
+      <strong>Six borders</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>What crosses Poland's borders during solar shutdowns: +605 MW of unscheduled German loop flows and commercial HVDC imports from the north</h2>
+      <p class="has-dropcap">Public debate around cross-border electricity trade during renewable shutdowns tends to polarize into two half-truths: critics claim Poland is shutting down domestic solar farms because it is "flooded by foreign imports," while defenders reply that Poland is actually a net exporter during curtailment hours. Comparing 15-minute physical meter readings (<code>przeplywy-mocy</code>) against commercial day-ahead and intraday schedules (<code>pwm-rdn-rdb</code>, published by PSE since January 1, 2026) proves that <strong>aggregate national net figures hide two opposing border mechanisms</strong>.</p>
+      <p>Summed across all six borders simultaneously, during 2026 YTD expensive curtailment (<code>RCE ≥ 250 PLN/MWh</code>, <code>3,276</code> quarters), Poland is indeed an <strong>aggregate net exporter averaging -1,001.3 MW physically</strong> (and <code>-1,094.2 MW</code> commercially). Yet alternating current in Continental Europe's synchronous grid follows Kirchhoff's laws of impedance rather than commercial contracts. Disaggregating the six borders reveals why local grid stress looks very different from the national sum:</p>
+      <p>First, on the <strong>western synchronous AC border with Germany (DE)</strong> during those 3,276 expensive-curtailment quarters, commercial trade schedules average virtually zero (<strong>+2.1 MW</strong>), yet physical power flowing from Germany into western Poland averages <strong>+607.3 MW</strong> (with physical inflow into Poland in <strong>71.4% of quarters</strong>, rising to <code>+718.1 MW</code> when <code>RCE ≥ 400 PLN/MWh</code>). That <strong>+605.2 MW gap</strong> is textbook <strong>unscheduled loop flow</strong>: wind and solar generation in northeastern Germany, constrained by internal German north–south bottlenecks, spills eastward through Polish 400/220 kV corridors and exits southward into <strong>Czechia (CZ: -1,183.8 MW physical vs. -445.4 MW commercial = -738.3 MW loop outflow)</strong> and <strong>Slovakia (SK: -502.8 MW physical)</strong>. Even though transit enters on the west and exits on the south, it consumes physical thermal headroom on western Polish transmission corridors right as domestic wind and solar farms in Pomerania, Lubuskie and Greater Poland need export capacity.</p>
+      <p>Second, the exact opposite mechanism plays out on Poland's <strong>northern DC links</strong> — the subsea <code>SwePol Link</code> HVDC cable to Sweden (SE) and the <code>LitPol Link</code> HVDC interconnector to Lithuania (LT). Direct-current links carry virtually zero unscheduled loop flow (physical vs. commercial deltas stay within <code>±4 MW</code>); every megawatt is dispatched by the European market-coupling algorithm flowing from lower-priced zones into higher-priced zones. Because Poland's must-run thermal floor keeps domestic clearing prices elevated above <code>250 PLN/MWh</code>, the coupling algorithm reads Poland as a high-price sink — and <strong>deliberately schedules commercial imports into Poland from Lithuania (+79.3 MW commercial / +83.5 MW physical across 70.9% of quarters) and Sweden (+66.1 MW commercial / +62.7 MW physical)</strong>, ramping even higher above <code>400 PLN/MWh</code> (<code>+107.6 MW</code> from LT and <code>+133.4 MW</code> from SE) at the exact moment Polish dispatchers curtail domestic renewables non-marketly.</p>
+      <p>Moreover, across <strong>862 curtailed quarter-hours in 2026 YTD (215.5 hours, 140.68 GWh of curtailed domestic RES, mean RCE = 441.9 PLN/MWh)</strong>, Poland was an <strong>aggregate net physical importer across all borders combined</strong> (averaging <code>+689.0 MW</code> total net import, driven by <code>+1,510.3 MW</code> from Germany = <code>+981.3 MW</code> commercial import plus <code>+529.0 MW</code> loop inflow — <a href="?lens=days&amp;preset=net_imp#explorer" data-pse-preset="lens=days&amp;preset=net_imp">filter net-import curtailment days below ↓</a>).</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Sign convention verified on KSE balance</strong>
+        Checked directly against PSE's national balance identity (median residual <code>0.00 MW</code>): positive values (<code>+</code>) always denote power flowing <strong>into Poland</strong>; negative values (<code>−</code>) denote power flowing <strong>out of Poland</strong>. Loop flow equals physical net flow minus scheduled commercial <code>RDN+RDB</code> exchange.
+      </div>
+      <div class="lab-aside-note">
+        <strong>Contrast with negative-price quarters</strong>
+        Click <code>Negative RCE &lt; 0</code> in Figure 03 below: when prices turn negative, Poland exports <code>-2,184.2 MW</code> commercially (including <code>-189.7 MW</code> to Sweden and <code>-118.5 MW</code> to Lithuania) — yet even then, <code>+345.4 MW</code> flows physically in from Germany despite a <code>-112.2 MW</code> Polish export schedule.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig3-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Figure 03 · Physical meter readings vs. commercial RDN+RDB schedules across all 6 Polish borders (2026 YTD)</span>
+        <h3 class="lab-fig-title" id="fig3-title">Schedules say "+2 MW", physics says "+607 MW": the DE → PL → CZ loop corridor and HVDC commercial imports</h3>
+        <p class="lab-fig-sub">Switch across five 2026 operating regimes to compare synchronous AC loop flows against controllable HVDC cables.</p>
+      </div>
+    </div>
+
+    <div id="fig-pse-borders">
+      <noscript>
+        <p class="specimen-note">Interactive view requires JavaScript. During 2026 RCE ≥ 250 PLN/MWh curtailment (3,276 quarters): Germany physical +607.3 MW vs. commercial +2.1 MW (+605.2 MW loop flow); Czechia physical -1,183.8 MW vs. commercial -445.4 MW (-738.3 MW loop flow); Lithuania HVDC +83.5 MW phys / +79.3 MW sched; Sweden HVDC +62.7 MW phys / +66.1 MW sched; Slovakia -502.8 MW phys; Ukraine -68.3 MW phys.</p>
+      </noscript>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Source: own calculations across 2026 YTD (<code>29,376</code> quarters with 100% joint coverage of <code>przeplywy-mocy</code> and <code>pwm-rdn-rdb</code>, Jan 1 – Nov 2, 2026).</span>
+      <span>Rust-bordered cards mark the synchronous AC loop corridor (DE → PL → CZ); slate-bordered cards mark controllable HVDC links (LT, SE).</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="rachunek">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 04
+      <strong>The bill &amp; fixes</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>355M PLN on formula paper vs. 105.5M PLN in cash transfers, the :00 clock-hour guillotine, and household solar price scissors</h2>
+      <p class="has-dropcap">Who pays for clean electricity ordered off the grid? Under Article 13(7) of EU Regulation 2019/943 and Article 9c(7a)–(7k) of Poland's Energy Law, eligible curtailed producers receive financial compensation from PSE, which recovers redispatch and balancing costs from every electricity consumer via the transmission <strong>quality fee (<em>stawka jakościowa</em>)</strong>. Effective February 1, 2026, Poland's Energy Regulatory Office approved a quality fee of <strong>33.16 PLN/MWh net</strong> (<code>33.06 PLN/MWh</code> in January 2026, up from <code>32.12 PLN/MWh</code> in 2025 and more than triple 2021's <code>10.18 PLN/MWh</code>).</p>
+      <p>Applying PSE's published <em>PV Financial Compensation Rules</em> (March 2026, p. 2) across the <strong>1,805.05 GWh</strong> curtailed in 2026 YTD uncovers a striking three-way divergence. Valued at wholesale spot prices <code>max(0, RCE)</code>, discarded 2026 YTD output is worth <strong>251.46M PLN</strong> (or <strong>254.27M PLN</strong> at <code>max(0, CSDAC)</code>). Under PSE's statutory formula for the market energy component <code>KC</code>, however, negative-imbalance intervals are priced at the Balancing Market settlement price <code>max(0, CEN)</code>. Because Poland's balancing market was system-short (<code>CEN ≥ 400 PLN/MWh</code>) during <code>3,305</code> curtailed quarters in 2026, gross formula valuation reaches <strong>355.09M PLN</strong> for ten months of 2026 alone (with just <code>29.52%</code> of curtailed volume generating <code>296.12M PLN</code> of that sum).</p>
+      <p>Compare that <strong>355.09M PLN</strong> single-year gross figure against actual cash paid out: from the start of 2023 through July 2026, PSE transferred a cumulative <strong>105.5M PLN</strong> to producers (<code>19.5M</code> in 2023, <code>2.7M</code> in 2024, <code>25.4M</code> in 2025, and <code>57.9M PLN</code> in Jan–Jul 2026 — which PSE spokesperson Maciej Wapiński confirmed in August 2026 still covered 2023–2025 curtailments, alongside ~<code>45M PLN</code> of approved claims awaiting transfer). Four statutory and administrative filters explain that 3.4× gap:</p>
+      <p>First, an expanding share of newer solar and wind connections carry non-firm delivery clauses ineligible for compensation under <strong>Article 9c(7g) of the Energy Law</strong> and <strong>Article 13(7) of Regulation 2019/943</strong> (as do exceedances on shared <em>cable pooling</em> connections under <strong>Article 7(9) PE</strong>). Second, under <strong>clause 2.1</strong> of PSE's March 2026 rules (p. 2), energy sold through the statutory <em>Obligated Seller</em> receives <code>KC = 0 PLN</code> (recovering only lost auction or certificate support <code>KAUK / KCERT</code> on p. 3 and CfD volume accounting under <strong>Article 93(18) of the RES Act</strong>). Third, in <code>2,260</code> quarters (<code>52.86%</code> of volume), <code>CEN ≤ 0</code> zeroes out <code>KC</code>. Fourth, multi-tier meter verification across 188 DSOs via PSE's <code>WoR</code> portal lags by many months: by summer 2026, Tauron had settled <code>36%</code> of its 2025 claim value and Enea had approved <code>68%</code> of 2025 applications.</p>
+      <p>A parallel gap between 15-minute market pricing and hourly physical dispatch shows up on the control-room clock. Poland adopted 15-minute balancing settlement on June 14, 2024. Yet inspecting all <strong>2,339 large curtailment step-changes (<code>|Δ| ≥ 200 MW</code> between consecutive quarters across 2025–2026)</strong> reveals that <strong>2,263 (96.75%) occurred precisely at minute <code>:00</code> on the full clock hour</strong>, leaving just <code>23</code> at <code>:15</code>, <code>31</code> at <code>:30</code>, and <code>22</code> at <code>:45</code> (<code>76</code> off-hour adjustments across nearly two years). For steps <strong><code>≥ 500 MW</code>, the ratio is 1,136 out of 1,136 — 100.00% on the full hour</strong>. PSE's May 23, 2025 presentation (slides 18–20) explains why: balancing dispatch ran in hourly blocks with ~30 minutes of TSO lead time plus up to 1 hour for DSO execution. When cloud cover shifts or industrial load rises at <code>:20</code>, gigawatts of clean capacity remain pinned down until the next full hour even as 15-minute imbalance prices shoot past 400 PLN/MWh.</p>
+      <p>At the household end sit Poland's <strong>1.61–1.65 million rooftop solar prosumers</strong>, where legal precision is essential: roughly one million pre-April 2022 households remain on 15-year volumetric <em>net-metering</em>, while April 2022 – June 2024 entrants stay on monthly average <code>RCEm</code> pricing unless they opt in under the November 27, 2024 RES Act amendment (<code>Dz.U. 2024 item 1847</code>). However, every new prosumer injecting power <strong>since July 1, 2024</strong> is billed mandatorily on dynamic 15-minute <code>RCE</code>. Across 2026 YTD, <strong>14.23% of all Polish PV output (3,101.05 of 21,791.31 GWh</strong>, peaking at <strong>33.3% in April 2026</strong>) coincided with <code>RCE ≤ 0 PLN/MWh</code>, earning <strong>0.00 PLN</strong> — because the statutory <code>1.23</code> deposit multiplier times zero is still zero. Across all 2026 YTD hours, PV-weighted <code>max(0, RCE)</code> averaged <strong>324.21 PLN/MWh</strong> (<strong>398.77 PLN/MWh</strong> after the <code>1.23</code> deposit multiplier) versus <strong>789.56 PLN/MWh</strong> wholesale <code>RCE</code> during the 18:00–22:00 evening peak (a <strong>2.44×</strong> raw spot ratio, or <strong>1.98×</strong> wholesale ratio after <code>1.23</code>, before retail G11/G12 tariffs and distribution charges).</p>
+      <h3>Three engineering levers that untie the 20:00 knot</h3>
+      <p>The constructive takeaway from 73,924 quarter-hours is that Poland does not suffer from an annual renewable surplus — it suffers from an eight-hour flexibility bottleneck between 12:00 and 20:00. Three measurable upgrades address the root cause:</p>
+      <p><strong>1. Completing 15-minute automated DSO dispatch (ending the <code>:00</code> guillotine).</strong> Delivering sub-hourly SCADA/CSIRE curtailment release across distribution operators (targeted by PSE for 2026–2027) lets control rooms release curtailed farms at <code>:15</code> or <code>:30</code> as soon as system balance tightens, cutting expensive high-<code>CEN</code> curtailment immediately.</p>
+      <p><strong>2. Utility-scale grid-forming batteries (BESS) replacing must-run thermal inertia.</strong> Every 1 GW of 4-hour grid-forming battery storage (providing synthetic inertia and fast FCR/aFRR reserves) works twice on the daily curve: absorbing <code>1 GW</code> at noon instead of curtailing solar, and discharging <code>1 GW</code> at 20:00 — trimming the required thermal ramp by <strong>2 GW at once</strong>.</p>
+      <p><strong>3. District-heating electrode boilers (<em>Power-to-Heat</em>) and western phase-shifting coordination.</strong> Absorbing midday surpluses into municipal thermal storage across Polish CHP networks while coordinating phase-shifting transformers and redispatch cost-sharing on the <code>+605 MW</code> German loop-flow corridor frees domestic grid capacity without hiking consumer transmission tariffs.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>System mechanics, not conspiracy</strong>
+        Telemetry shows rational actors responding to misaligned physical and market constraints: PSE holds thermal units online to safeguard inertia and the 20:00 peak, while European market coupling imports HVDC power from Lithuania and Sweden because those must-run thermal units keep Polish clearing prices above Nordic/Baltic levels.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig4-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Primary evidence · Three telemetry &amp; regulatory snapshots</span>
+        <h3 class="lab-fig-title" id="fig4-title">How boiler floors, hourly dispatch blocks and statutory formulas collide in practice</h3>
+      </div>
+    </div>
+    <div class="specimen-grid">
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Snapshot A · Wed 2026-06-24: midday PV cuts to 2,948 PLN/MWh</strong>
+          <span>gen-jw + poze-redoze + rce-pln telemetry</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>12:00–13:00 (3,013 MW PV cut):</span><strong>8,822 MW pure thermal</strong></div>
+          <div class="specimen-line"><span>15:00–16:00 (2,774 MW PV cut):</span><strong>RCE 312 / CEN 363 PLN</strong></div>
+          <div class="specimen-line is-error"><span>20:00–21:00 (17,295 MW thermal):</span><b>RCE 2,568 / CEN 2,948 PLN</b></div>
+        </div>
+        <p class="specimen-note">On a working Wednesday, 19.20 GWh of solar was curtailed (peaking at 3,543.1 MW at 14:00) while thermal units held an 8.82 GW midday floor to survive an +8.47 GW hourly climb by 20:00 (+9.36 GW 15-min trough-to-peak). <a href="https://raporty.pse.pl/report/poze-redoze?date=2026-06-24" target="_blank" rel="noopener noreferrer">PSE report 2026-06-24 ↗</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Snapshot B · The :00 guillotine &amp; PSE's May 23, 2025 briefing</strong>
+          <span>64,416 quarters (2025–2026) · Slides 6 &amp; 18–20</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Curtailment jumps ≥ 200 MW at :00:</span><strong>2,263 of 2,339 (96.75%)</strong></div>
+          <div class="specimen-line"><span>Off-hour :15 / :30 / :45 jumps:</span><strong>23 / 31 / 22 (3.25%)</strong></div>
+          <div class="specimen-line is-error"><span>Curtailment jumps ≥ 500 MW at :00:</span><b>1,136 of 1,136 (100.0%)</b></div>
+        </div>
+        <p class="specimen-note">Despite 15-minute settlement prices since June 2024, TSO → DSO dispatch cascades run in full-hour blocks (~30 min lead + up to 1 h DSO execution), locking curtailment across intra-hour price swings.</p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Snapshot C · 355M PLN formula vs. 105.5M PLN cash paid</strong>
+          <span>PV Compensation Rules (03/2026) + URE 2026 tariff</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>2026 YTD statutory max(0, CEN):</span><strong>355.09M PLN (KC)</strong></div>
+          <div class="specimen-line"><span>Cash paid 2023 – Jul 2026:</span><strong>105.5M PLN (+45M queued)</strong></div>
+          <div class="specimen-line is-error"><span>Quality fee from Feb 2026:</span><b>33.16 PLN/MWh (3.3× 2021)</b></div>
+        </div>
+        <p class="specimen-note">Statutory KC prices 29.5% of curtailed GWh at high CEN ≥ 400 PLN/MWh, yet non-firm connections (Art. 9c(7g) PE), Obligated Seller exclusions (clause 2.1, p. 2) and multi-month DSO queues cut and delay payouts.</p>
+      </div>
+    </div>
+  </figure>
+</article>
+
+<section class="lab-tool-section" id="explorer">
+  <div class="frame">
+    <div class="lab-tool-head">
+      <div>
+        <span class="number">Complete open dataset · 37 power stations (106 generating units) &amp; 140 largest curtailment days (2025–2026)</span>
+        <h2>Inspect every power plant and curtailment episode</h2>
+      </div>
+      <p>Switch between unit-level midday floors and evening ramps across 37 dispatchable power plants (Lens 01) and all 140 curtailment days ≥ 3 GWh in 2025–2026 (Lens 02). Every row links straight to PSE's official portal.</p>
+    </div>
+    <div id="pse-explorer" data-src="/assets/lab/pse-grid-2026.json">
+      <noscript>
+        <div class="lab-callout">
+          <span class="micro">Interactive explorer requires JavaScript</span>
+          <p>Download the complete verified dataset covering all 37 power plants, 140 curtailment episodes, and 73,924 aggregated quarter-hours directly as <a href="/assets/lab/pse-grid-2026.json">pse-grid-2026.json</a>.</p>
+        </div>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<section class="plain-contact">
+  <div class="frame about-strip">
+    <span class="number">05 / Contact, grid data &amp; newsroom embeds</span>
+    <h2>Work in power systems, energy policy or a newsroom and want to dig deeper?</h2>
+    <div>
+      <p>If you work in TSO/DSO operations, energy trading or storage and want to cross-reference specific nodes or periods, feel free to write. Newsrooms may freely embed the interactive plant and episode explorer via the <code>iframe</code> button above the table with source attribution.</p>
+      <a class="quiet-link" href="mailto:stuczynski.g@gmail.com?subject=Issue%2004%20%E2%80%94%20Polish%20grid%20curtailment%20telemetry">stuczynski.g@gmail.com ↗</a>
+      <p class="contact-alt">Shorter research threads and charts go out on <a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X (@rpl_0x)</a> and <a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="footer"><div class="frame"><p>Grzegorz Stuczyński · RolePlayingTech © 2026</p><div class="sub-links"><a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/RolePlayingTech" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://roleplayinglife.substack.com/" target="_blank" rel="noopener noreferrer">Substack ↗</a><a href="mailto:stuczynski.g@gmail.com">Email ↗</a></div></div></footer>
+</body>
+</html>

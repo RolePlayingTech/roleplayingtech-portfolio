@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f7f6f2">
+<meta name="description" content="Analiza 73 924 kwadransów pracy KSE z API PSE (24.09.2024–02.11.2026), 106 bloków wytwórczych i 6 granic: 66,6% przymusowych wyłączeń OZE w 2026 r. przypada przy cenach dodatnich, a 27,6% (497,42 GWh) przy drogim prądzie RCE ≥ 250 zł/MWh.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wyłączamy tanie słońce, gdy prąd jest drogi. Co pokazały 73 924 kwadranse pracy sieci PSE">
+<meta property="og:description" content="Przeliczyłem 73 924 kwadranse telemetrii PSE, 106 bloków węglowych i gazowych oraz 6 granic. W 2026 r. dwie trzecie ścięć OZE zaszło przy dodatnich cenach, 497 GWh przy RCE ≥ 250 zł/MWh, a 96,8% skoków ≥200 MW uderza równo o pełnej godzinie (:00).">
+<meta property="og:url" content="https://roleplayingtech.com/pl/lab/redysponowanie-oze-pse/">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://roleplayingtech.com/assets/lab/og-pse-grid-2026-pl.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Raport RolePlayingTech Nr 04: 1 805,05 GWh zredysponowanego OZE w 2026 r., 27,6% przy RCE ≥ 250 zł/MWh, rampa bloków cieplnych 7,98 → 13,63 GW i 96,8% skoków o pełnej godzinie :00">
+<meta property="article:published_time" content="2026-11-04">
+<meta property="article:author" content="Grzegorz Stuczyński">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wyłączamy tanie słońce, gdy prąd jest drogi — 73 924 kwadranse pracy sieci PSE">
+<meta name="twitter:description" content="66,6% przymusowych redukcji OZE w 2026 r. zachodzi przy cenach dodatnich, 497,42 GWh przy RCE ≥ 250 zł/MWh, a w tle kręci się średnio ~8 GW bloków cieplnych czekających na szczyt wieczorny.">
+<meta name="twitter:image" content="https://roleplayingtech.com/assets/lab/og-pse-grid-2026-pl.png">
+<title>Wyłączamy tanie słońce, gdy prąd jest drogi. Co pokazały 73 924 kwadranse pracy sieci PSE — RolePlayingTech</title>
+<script>document.documentElement.classList.add('js');if(location.search.indexOf('embed=1')!==-1)document.documentElement.classList.add('is-embed');</script>
+<link rel="stylesheet" href="/assets/minimal.css">
+<link rel="stylesheet" href="/assets/lab/bzp-explorer.css">
+<link rel="stylesheet" href="/assets/lab/pse-explorer.css">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="canonical" href="https://roleplayingtech.com/pl/lab/redysponowanie-oze-pse/">
+<link rel="alternate" hreflang="pl" href="https://roleplayingtech.com/pl/lab/redysponowanie-oze-pse/">
+<link rel="alternate" hreflang="en" href="https://roleplayingtech.com/en/lab/polish-grid-curtailment/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "headline": "Wyłączamy tanie słońce, gdy prąd jest drogi. Co pokazały 73 924 kwadranse pracy sieci PSE",
+      "image": "https://roleplayingtech.com/assets/lab/og-pse-grid-2026-pl.png",
+      "datePublished": "2026-11-04",
+      "dateModified": "2026-11-04",
+      "inLanguage": "pl-PL",
+      "author": {
+        "@type": "Person",
+        "name": "Grzegorz Stuczyński",
+        "url": "https://roleplayingtech.com/pl/about/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "RolePlayingTech",
+        "url": "https://roleplayingtech.com/pl/"
+      },
+      "mainEntityOfPage": "https://roleplayingtech.com/pl/lab/redysponowanie-oze-pse/"
+    },
+    {
+      "@type": "Dataset",
+      "name": "Nierynkowe redysponowanie OZE, praca bloków JWCD i przepływy transgraniczne w KSE (2024–2026)",
+      "description": "Zbiór zagregowany z 73 924 ciągłych 15-minutowych przedziałów API PSE v2 (24.09.2024–02.11.2026): wyłączenia PV i wiatru wg reżimu cenowego RCE/CSDAC/CEN, profile 37 elektrowni (106 bloków w gen-jw), przepływy fizyczne vs handlowe na 6 granicach oraz 140 największych dób redukcji.",
+      "url": "https://roleplayingtech.com/pl/lab/redysponowanie-oze-pse/",
+      "temporalCoverage": "2024-09-24/2026-11-02",
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://roleplayingtech.com/assets/lab/pse-grid-2026.json"
+      }
+    }
+  ]
+}
+</script>
+<script src="/assets/site.js" defer></script>
+<script src="/assets/lab/pse-explorer.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Przejdź do treści</a>
+<header class="site-head"><div class="frame"><a class="logo" href="/pl/">roleplayingtech<i>.</i></a><nav class="head-nav" aria-label="Nawigacja"><a href="/pl/#work">Projekty</a><a href="/pl/education/">Edukacja</a><a href="/pl/lab/" aria-current="page">Analizy</a><a href="/pl/about/">O mnie</a><a href="/pl/#help">Współpraca</a><a href="/pl/#links">W sieci</a><a href="/pl/#contact">Kontakt</a><div class="head-socials" aria-label="Profile społecznościowe"><a class="soc-link" href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer" aria-label="X (@rpl_0x)" title="X · @rpl_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="soc-accent" d="M12.9 2.5L9.1 6.9M6.9 9.1L3.1 13.5" fill="none" stroke="var(--rust)" stroke-width="1.45" stroke-linecap="round"/><path d="M2.6 2.5h2.7l8.1 11h-2.7Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="soc-accent" cx="4.2" cy="3.9" r="1.15" fill="var(--rust)"/><path d="M4.2 6.6v5.9M7.6 12.5V6.6m0 2.2c0-1.4 1.1-2.3 2.4-2.3 1.4 0 2.2.9 2.2 2.4v3.6" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (@roleplayinglife_0x)" title="Instagram · @roleplayinglife_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.2" y="2.2" width="11.6" height="11.6" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.7" fill="none" stroke="currentColor" stroke-width="1.4"/><circle class="soc-accent" cx="11.3" cy="4.7" r="1" fill="var(--rust)"/></svg></a></div><a class="switch" href="/en/lab/polish-grid-curtailment/" hreflang="en">EN</a></nav></div></header>
+
+<nav class="lab-subnav" aria-label="Spis rozdziałów raportu">
+  <div class="frame lab-subnav-inner">
+    <div class="lab-subnav-links">
+      <a href="#paradoks">01 · Paradoks drogich wyłączeń</a>
+      <a href="#podloga">02 · Podłoga węglowa i rampa 20:00</a>
+      <a href="#granice">03 · Przepływy kołowe i kable HVDC</a>
+      <a href="#rachunek">04 · Rachunek, gilotyna :00 i prosumenci</a>
+    </div>
+    <a class="lab-subnav-cta" href="#explorer"><span class="cta-full">Elektrownie (37) i doby (140) ↓</span><span class="cta-short">Baza KSE ↓</span></a>
+  </div>
+</nav>
+
+<main id="main">
+
+<header class="lab-hero frame">
+  <div class="back"><a class="quiet-link" href="/pl/lab/">← Analizy i narzędzia</a></div>
+  <div class="lab-issue-bar micro">
+    <span class="lab-tag">NR 04 · TELEMETRIA SIECI I ANALIZA DANYCH</span>
+    <span>Krajowy System Elektroenergetyczny (PSE API v2 · 2024–2026)</span>
+    <span>Zakres danych: 24.09.2024–02.11.2026 · lektura ok. 14 min</span>
+  </div>
+  <h1>Wyłączamy tanie słońce, gdy prąd jest drogi. Co pokazały <i>73 924 kwadranse</i> pracy sieci PSE</h1>
+
+  <div class="lab-lead-grid">
+    <div>
+      <p class="lab-lead">W powszechnej opowieści przymusowe wyłączanie farm słonecznych i wiatrowych zdarza się w słoneczne niedzielne południa, kiedy energii jest w bród, a ceny na giełdzie spadają poniżej zera. W środę <strong>24 czerwca 2026 roku</strong> — zwykły dzień roboczy — operator sieci ściął w Polsce <strong>19,20 GWh</strong> produkcji fotowoltaicznej (w szczycie <code>3 543,1 MW</code> między 14:00 a 15:00 i <code>2 773,6 MW</code> między 15:00 a 16:00 przy cenie rozliczeniowej <code>RCE = 312,1 zł/MWh</code>). Pięć godzin później, o 20:00, cena hurtowa wystrzeliła do <strong>2 567,7 zł/MWh</strong> (<code>CSDAC = 2 698,7 zł/MWh</code>, <code>CEN = 2 947,6 zł/MWh</code>), a te same bloki węglowe i gazowe, które w południe nie mogły zejść niżej niż <strong>8,82 GW</strong>, musiały wspiąć się na <strong>17,30 GW</strong>.</p>
+      <p class="lab-lead-sub">Żeby sprawdzić, jak często Polska gasi odnawialne źródła przy drogiej energii i co fizycznie wymusza tę decyzję w dyspozytorni, pobrałem i połączyłem <strong>73 924 ciągłe 15-minutowe przedziały</strong> z sześciu strumieni API Polskich Sieci Elektroenergetycznych (<code>24.09.2024–02.11.2026</code>, zero brakujących kwadransów), profile pracy <strong>106 bloków w 37 elektrowniach</strong> (<code>gen-jw</code>), przepływy fizyczne i handlowe na wszystkich sześciu granicach oraz reguły rozliczeń rekompensat PSE i URE.</p>
+      <div class="lab-byline-bar">
+        <span>Analiza, kod i weryfikacja danych: <strong>Grzegorz Stuczyński</strong></span>
+        <span>Źródła: <a href="https://raporty.pse.pl/report/poze-redoze" target="_blank" rel="noopener noreferrer">PSE poze-redoze</a> · <a href="https://raporty.pse.pl/report/gen-jw" target="_blank" rel="noopener noreferrer">gen-jw</a> · <a href="https://raporty.pse.pl/report/rce-pln" target="_blank" rel="noopener noreferrer">rce-pln</a> · <a href="https://raporty.pse.pl/report/przeplywy-mocy" target="_blank" rel="noopener noreferrer">przepływy mocy</a> · <a href="https://www.ure.gov.pl" target="_blank" rel="noopener noreferrer">URE</a></span>
+        <span>Dane i kod: <a href="/assets/lab/pse-grid-2026.json" download>JSON (124 KB)</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/pse-grid-methodology.md" target="_blank" rel="noopener noreferrer">Metodologia i wzory ↗</a></span>
+      </div>
+      <div class="pse-MethodNote" role="note">
+        <span class="micro">Nota metodologiczna · Jednoznaczne rozdzielenie trzech miar mocy i okien porównawczych</span>
+        Wszystkie dynamiki roczne liczę na identycznych oknach kalendarzowych <strong>1 stycznia – 2 listopada 2025 r. vs 1 stycznia – 2 listopada 2026 r.</strong> (po <code>29 376</code> kwadransów z uwzględnieniem zmiany czasu CET/CEST). W analizie bloków dyspozycyjnych rygorystycznie rozdzielam trzy serie, których nie wolno mieszać: (1) <strong>czystą generację cieplną <code>gen-jw</code></strong> (węgiel brunatny + kamienny + gaz CCGT + elektrociepłownie, uzupełnioną zerami na wszystkich <code>864</code> kwadransach 9 reprezentatywnych dni roboczych: <code>7,98 → 13,63 GW</code>, rampa <strong>+5,64 GW</strong>), (2) <strong>pełny wahacz sterowalny z elektrowniami szczytowo-pompowymi ESP</strong> (<code>-775,8 MW</code> pompowania o 12:00 → <code>+693,7 MW</code> generacji o 20:00, łączny skok netto <strong>+7,11 GW</strong>) oraz (3) <strong>systemowy agregat <code>JG</code> w <code>his-wlk-cal</code></strong> (<code>7,54 → 13,83 GW</code>, rampa <strong>+6,30 GW</strong>). Przepływy handlowe vs kołowe liczę wyłącznie dla <code>2026 YTD</code> (raport <code>pwm-rdn-rdb</code> ruszył 01.01.2026 r.).
+      </div>
+      <div class="lab-jump-row">
+        <a class="jump" href="#paradoks">Czytaj analizę z wykresami<span>↓</span></a>
+        <a class="quiet-link" href="#explorer">Sprawdź 37 elektrowni i 140 dób redukcji ↓</a>
+      </div>
+    </div>
+
+    <aside class="lab-meta-box" aria-label="Zakres danych i definicje">
+      <span class="micro">Zanim przejdziesz do liczb · Skąd pochodzą dane</span>
+      <ul>
+        <li><strong>73 924 kwadranse bez luk:</strong> ciągły szereg UTC od <code>2024-09-23 22:15 UTC</code> do <code>2026-11-02 23:00 UTC</code> (765 dób po 96 kwadransów, 3 jesienne doby zmiany czasu po 100 i 2 wiosenne po 92 kwadranse).</li>
+        <li><strong>Zgodność z komunikatami PSE:</strong> zsumowanie surowych mocy z <code>poze-redoze</code> (<code>MW × 0,25 h</code>) daje dokładnie <code>1 377,46 GWh</code> w całym 2025 r. oraz <code>1 424,20 GWh</code> redukcji bilansowych w I–VII 2026 r. — co co do części setnych pokrywa się z oficjalnymi komunikatami PSE („ponad 1,37 TWh” i „1,42 TWh”).</li>
+        <li><strong>Uczciwy obraz przyczyn fizycznych:</strong> utrzymywanie ok. 8 GW pracujących bloków cieplnych w słoneczne południe nie jest kaprysem dyspozytorów — wynika z sztywnych minimów technicznych kotłów, wymogów inercji i mocy zwarciowej oraz braku wielkoskalowych magazynów bateryjnych zdolnych przejąć wieczorną rampę 6 GW.</li>
+      </ul>
+      <details class="lab-meta-more">
+        <summary>Słownik czterech skrótów cenowych i bilansowych PSE</summary>
+        <ul>
+          <li><strong>RCE (Rynkowa Cena Energii):</strong> 15-minutowa cena giełdowa (w 2026 r. tożsama w 100% kwadransów z ceną jednolitego łączenia rynków dnia następnego <code>CSDAC</code>), stosowana m.in. w dynamicznym net-billingu prosumentów.</li>
+          <li><strong>CEN (Cena Energii Niezbilansowania):</strong> 15-minutowa cena rozliczeniowa na Rynku Bilansującym (<code>cen_cost</code> w API PSE). Zgodnie z opublikowanymi przez PSE <em>Zasadami wyliczania rekompensaty finansowej PV</em> (marzec 2026, s. 2), przy ujemnym niezbilansowaniu systemu stanowi ustawową bazę wyceny składnika energetycznego rekompensaty <code>KC</code>.</li>
+          <li><strong>Redukcja bilansowa vs sieciowa:</strong> bilansowa oznacza globalną nadpodaż mocy w całym systemie względem zdolności eksportu i pompowania; sieciowa oznacza lokalne przeciążenie linii lub stacji.</li>
+        </ul>
+      </details>
+    </aside>
+  </div>
+
+  <div class="lab-findings" aria-label="Najważniejsze ustalenia analizy">
+    <div class="lab-finding">
+      <span class="lab-finding-num">27,6<small>% drogich ścięć</small></span>
+      <span class="lab-finding-label">zredysponowanego w 2026 r. OZE (<strong>497,42 z 1 805,05 GWh</strong>) wyłączono w kwadransach, gdy hurtowa cena prądu wynosiła <strong>RCE ≥ 250 zł/MWh</strong> — w <code>3 276</code> kwadransach, czyli <strong>2,41× częściej</strong> niż przy cenach zerowych lub ujemnych (<code>1 361</code> kwadr.).</span>
+      <span class="lab-finding-note">łącznie 66,6% (1 201,60 GWh) ścięto przy RCE &gt; 0 zł/MWh</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">+5,64<small>GW rampy</small></span>
+      <span class="lab-finding-label">o tyle między <strong>12:00 (7,98 GW)</strong> a <strong>20:00 (13,63 GW)</strong> muszą urosnąć same bloki cieplne <code>gen-jw</code> w typowy roboczy dzień drogich wyłączeń (<a href="?lens=plants&amp;preset=coal#explorer" data-pse-preset="lens=plants&amp;preset=coal">zobacz 37 elektrowni ↓</a>).</span>
+      <span class="lab-finding-note">z pełnym wahaczem szczytowo-pompowym ESP: +7,11 GW netto</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">96,8<small>% o pełnej :00</small></span>
+      <span class="lab-finding-label">wszystkich skoków redukcji OZE o <strong>≥ 200 MW</strong> w latach 2025–2026 (<code>2 263 z 2 339</code>) oraz <strong>100,0% skoków ≥ 500 MW</strong> (<code>1 136 z 1 136</code>) następuje równo w minucie <code>:00</code> pełnej godziny zegarowej.</span>
+      <span class="lab-finding-note">mimo 15-minutowego Rynku Bilansującego od czerwca 2024 r.</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">+605<small>MW kołowo z DE</small></span>
+      <span class="lab-finding-label">średniego <strong>nieplanowanego przepływu kołowego</strong> wpływa fizycznie z Niemiec podczas drogich wyłączeń OZE (<code>+607,3 MW</code> fizycznie przy <code>+2,1 MW</code> handlowo), podczas gdy kable HVDC ze Szwecji i Litwy prowadzą w tych samych godzinach import handlowy.</span>
+      <span class="lab-finding-note">w 862 kwadransach (140,68 GWh) Polska była importerem netto</span>
+    </div>
+  </div>
+</header>
+
+<article class="lab-essay frame" id="paradoks">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 01
+      <strong>Paradoks cenowy</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Mit niedzielnego nadmiaru prądu za zero złotych: 58,6% redukcji przypada w dni robocze, a dwie trzecie przy cenach dodatnich</h2>
+      <p class="has-dropcap">Kiedy w debacie publicznej pojawia się temat przymusowego ograniczania generacji farm fotowoltaicznych i wiatrowych (nierynkowego redysponowania OZE), niemal zawsze towarzyszy mu intuicyjne wyjaśnienie: w bezwietrzny albo wietrzny słoneczny weekend Polacy zużywają mało prądu, panele produkują więcej niż potrzebuje kraj, ceny hurtowe spadają poniżej zera, więc operator wyłącza nadwyżkę darmowej energii. Gdyby tak wyglądała cała prawda, problem sprowadzałby się do kilku wiosennych niedziel.</p>
+      <p>Połączenie kwadrans po kwadransie rejestru redukcji <code>poze-redoze</code> z cenami rozliczeniowymi <code>rce-pln</code> i <code>energy-prices</code> pokazuje zupełnie inny obraz. W porównywalnym dziesięciomiesięcznym oknie <strong>od 1 stycznia do 2 listopada</strong> wolumen ściętej w Polsce czystej energii wzrósł z <strong>1 326,29 GWh w 2025 r.</strong> do <strong>1 805,05 GWh w 2026 r. (+36,1% r/r)</strong> — w tym <strong>1 262,60 GWh z fotowoltaiki</strong> (<code>69,95%</code>, wzrost o <code>29,5%</code>) oraz <strong>542,45 GWh z lądowych farm wiatrowych</strong> (<code>30,05%</code>, skok o <code>54,4%</code>). Co ciekawe, wyłączenia zaszły w <strong>mniejszej liczbie kwadransów niż rok wcześniej</strong> (<code>6 993</code> wobec <code>9 623</code> przedziałów, spadek czasu trwania o <code>27,3%</code>), ale przeciętne cięcie w aktywnym kwadransie wzrosło o <strong>87,3% — z 551,3 MW do 1 032,5 MW</strong>.</p>
+      <p>Druga niespodzianka kryje się w powodzie operacyjnym raportowanym przez same Polskie Sieci Elektroenergetyczne. Wbrew powszechnemu przekonaniu, że panele są odcinane głównie dlatego, iż stare linie średniego i wysokiego napięcia „nie mieszczą prądu w powiatach”, w 2026 roku <strong>aż 98,84% całego wolumenu (1 784,03 GWh) stanowiły redukcje bilansowe</strong>, a lokalne przeciążenia sieciowe odpowiadały za zaledwie <strong>1,16% (21,03 GWh</strong> — wobec <code>2,24%</code> w analogicznym okresie 2025 r.; w pełnym 2024 r. według sprawozdania Prezesa URE z października 2025 r. własne redysponowanie wszystkich 188 operatorów dystrybucyjnych OSD wyniosło łącznie <code>26,92 GWh</code> wobec <code>722,34 GWh</code> po stronie OSP). Oznacza to, że główną barierą nie jest dziś pojedynczy transformator w gminie, lecz ogólnokrajowa sztywność bilansu mocy.</p>
+      <p>Trzecia i najważniejsza anomalia pojawia się po nałożeniu na każdy z 6 993 kwadransów redukcji ceny hurtowej z dokładnie tych samych 15 minut. W 2026 r. <strong>58,56% całej zredysponowanej energii (1 056,97 GWh) przepadło od poniedziałku do piątku</strong>, w normalne dni pracy przemysłu i biur (rok wcześniej <code>54,04%</code>, czyli wzrost wolumenu w dni robocze o <code>47,5%</code>). Ceny zerowe lub ujemne (<code>RCE ≤ 0 zł/MWh</code>) towarzyszyły zaledwie <strong>33,43% ściętej energii (603,45 GWh w 1 361 kwadransach)</strong>. Pozostałe <strong>66,57% — dokładnie 1 201,60 GWh w 5 632 kwadransach — wyłączono wtedy, gdy prąd na rynku miał dodatnią wartość</strong>.</p>
+      <p>Nawet jeśli odfiltrujemy kwadranse taniej energii i zostawimy wyłącznie przedziały drogiego prądu hurtowego — <strong><code>RCE ≥ 250 zł/MWh</code></strong> (powyżej typowych kosztów zmiennych paliwa OZE i powyżej progu opłacalności magazynowania) — w pierwszych dziesięciu miesiącach 2026 roku PSE i operatorzy dystrybucyjni wyłączyli w takich warunkach <strong>497,42 GWh zielonej energii (27,56% całego wolumenu)</strong> przez <strong>3 276 kwadransów (819 godzin)</strong>. To niemal podwojenie względem analogicznego okresu 2025 roku (<code>261,93 GWh</code>, <code>+89,9%</code>). Jeszcze gwałtowniej urosła półka bardzo drogiego prądu (<strong><code>RCE ≥ 400 zł/MWh</code></strong>): z <code>31,76 GWh</code> w 2025 YTD do <strong>183,42 GWh w 2026 YTD — skok o 477,5% (5,8-krotny)</strong> (<a href="?lens=days&amp;preset=exp_wkd#explorer" data-pse-preset="lens=days&amp;preset=exp_wkd">przejrzyj w bazie wszystkie dni robocze z drogimi wyłączeniami ↓</a>). W miesiącach letnich i jesiennych (czerwiec, lipiec, wrzesień, październik 2026 r.) wyłączenia przy <code>RCE ≥ 250 zł/MWh</code> stanowiły już od <strong>35% do ponad 50% miesięcznych redukcji</strong>.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Mniej godzin, niemal dwa razy głębsze cięcia</strong>
+        Wiosną i latem 2026 r. przyrost mocy zainstalowanej PV (ponad 21 GW w KSE) sprawił, że dyspozytornia sięga po redukcje rzadziej niż w 2025 r., ale jednym poleceniem zdejmuje z systemu po 2,5–4,1 GW naraz (rekord: <code>5 372,5 MW</code> w niedzielę wielkanocną 5 kwietnia 2026 r. oraz <code>4 065,5 MW</code> w roboczą środę 8 lipca 2026 r.).
+      </div>
+      <div class="lab-aside-note">
+        <strong>Dlaczego cena potrafi być wysoka w chwili wyłączenia?</strong>
+        Cena dnia następnego <code>CSDAC/RCE</code> odzwierciedla krańcowy koszt najdroższego bloku węglowego lub gazowego potrzebnego do domknięcia grafiku handlowego w danej godzinie. Kiedy ten blok musi pracować z przyczyn systemowych, wyznacza wysoką cenę rynkową — mimo że obok wyłączane jest zeroemisyjne słońce.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig1-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Wykres 01 · Rozkład cenowy, fala miesięczna i gilotyna pełnej godziny (3 widoki interaktywne)</span>
+        <h3 class="lab-fig-title" id="fig1-title">497,42 GWh ścięte przy RCE ≥ 250 zł/MWh, 355,09 mln zł wyceny ustawowej KC i 96,75% dużych skoków równo w minucie :00</h3>
+        <p class="lab-fig-sub">Przełączaj między porównaniem przedziałów cenowych i wycen 2025 vs 2026 (01), falą miesięczną (02) oraz rozkładem minutowym poleceń redukcyjnych (03).</p>
+      </div>
+    </div>
+
+    <div id="fig-pse-price">
+      <noscript>
+        <p class="specimen-note">Wykres interaktywny wymaga JavaScriptu. Kluczowe liczby (2026 YTD, 01.01–02.11): 1 805,05 GWh zredysponowanego OZE (+36,1% r/r); 66,57% (1 201,60 GWh) przy RCE &gt; 0; 27,56% (497,42 GWh, 3 276 kwadr.) przy RCE ≥ 250 zł/MWh; 10,16% (183,42 GWh) przy RCE ≥ 400 zł/MWh; wycena rynkowa max(0, RCE) = 251,46 mln zł, ustawowa max(0, CEN) = 355,09 mln zł wobec 105,5 mln zł gotówki wypłaconej łącznie w latach 2023–VII 2026; skoki ≥200 MW w minucie :00 = 2 263 z 2 339 (96,75%).</p>
+      </noscript>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Źródło: obliczenia własne na pełnym szeregu 73 924 kwadransów PSE API v2 (<code>poze-redoze</code>, <code>rce-pln</code>, <code>energy-prices</code>) oraz danych PSE/URE o wypłatach rekompensat.</span>
+      <span>W zakładce 03 możesz przełączać próg skoku mocy między ≥100 MW, ≥200 MW, ≥300 MW i ≥500 MW.</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="podloga">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 02
+      <strong>Podłoga cieplna</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Pułapka godziny 20:00: dlaczego Bełchatów, Opole i Kozienice nie mogą zgasnąć w południe, choć słońce daje 12 GW</h2>
+      <p class="has-dropcap">Żeby zrozumieć, dlaczego dyspozytor w Konstancinie-Jeziornie wydaje w środku roboczego dnia polecenie wyłączenia trzech gigawatów darmowej energii słonecznej przy cenie hurtowej 300 zł/MWh, nie wystarczy patrzeć na południe. Trzeba spojrzeć o osiem godzin w przód — na godzinę <strong>20:00</strong>.</p>
+      <p>W oficjalnej prezentacji ze spotkania z wytwórcami OZE z <strong>23 maja 2025 roku</strong> (slajd 6) Polskie Sieci Elektroenergetyczne same wyłożyły ten mechanizm jednym zdaniem: minimalny poziom generacji jednostek wytwórczych centralnie dysponowanych (<code>JG / JWCD</code>) jest utrzymywany w celu <em>„spełnienia ograniczeń sieciowych, elektrownianych, zapewnienia mocy regulacyjnych (FCR, FRR), mocy zwarciowej, inercji (doświadczenia Hiszpanii / Portugalii) oraz zdolności dla pokrycia szczytu wieczornego 6 GW”</em>. Wspomnienie kwietniowego blackoutu na Półwyspie Iberyjskim nie jest tu figurą retoryczną: synchroniczny system elektroenergetyczny pozbawiony wirujących mas turbogeneratorów traci bezwładność częstotliwościową i prąd zwarciowy niezbędny do prawidłowego zadziałania zabezpieczeń sieciowych. Równie twarda jest termodynamika samych bloków węglowych z lat 70., 80. i nowych jednostek nadkrytycznych: odstawienie kotła pyłowego rano oznacza od 8 do kilkunastu godzin ponownego rozpalania i synchronizacji — taki blok po prostu nie zdąży wrócić do sieci na wieczór, gdy zajdzie słońce.</p>
+      <p>Dzięki raportowi jednostkowemu <code>gen-jw</code> mogłem zmierzyć tę podłogę blok po bloku na <strong>106 jednostkach wytwórczych w 37 polskich elektrowniach</strong>. Dla dziewięciu reprezentatywnych dni roboczych 2026 roku z wysokimi redukcjami przy drogim prądzie (<code>864</code> kwadranse uzupełnione zerami dla wszystkich 37 obiektów, tak aby chwilowy postój żadnej elektrowni nie zawyżał średniej) wyłania się precyzyjny anatomiczny profil polskiej „kaczej krzywej”:</p>
+      <p>O godzinie <strong>12:00</strong> — w samym środku słonecznego szczytu (średnio <code>10,88 GW</code> generacji PV i <code>1,61 GW</code> przymusowych ścięć OZE) — <strong>czysta generacja cieplna <code>gen-jw</code> (węgiel brunatny, kamienny, gaz CCGT i elektrociepłownie) nie schodzi niżej niż średnio 7 981,9 MW (7,98 GW)</strong>, a podczas samych kwadransów drogich wyłączeń przy <code>RCE ≥ 250 zł/MWh</code> utrzymuje się na poziomie <strong>8 697,8 MW</strong> (w całym 2026 r. w <code>3 276</code> kwadransach takich redukcji systemowy wskaźnik <code>JG</code> wynosi średnio <strong>8 402 MW</strong>). W tym samym południowym oknie wszystkie polskie elektrownie szczytowo-pompowe (<code>Żarnowiec</code>, <code>Porąbka-Żar</code>, <code>Solina</code>, <code>Żydowo</code>, <code>Czorsztyn</code>, <code>Dychów</code>) pracują już jako pompy na niemal pełnej dostępnej pojemności górnych zbiorników, pobierając z sieci średnio <strong>-775,8 MW</strong>.</p>
+      <p>Kiedy między 16:00 a 20:00 produkcja słoneczna spada z <code>10,88 GW</code> do <code>0,28 GW</code>, cały system musi wykonać gigantyczny skok. Do godziny <strong>20:00</strong> same bloki cieplne <code>gen-jw</code> wspinają się z <code>7 981,9 MW</code> na <strong>13 625,8 MW — czyli o +5 643,9 MW (+5,64 GW)</strong>: węgiel kamienny dokłada <code>+2 522,5 MW</code> (z <code>4,31</code> do <code>6,83 GW</code>), węgiel brunatny <code>+1 996,8 MW</code> (z <code>2,38</code> do <code>4,38 GW</code>), bloki gazowo-parowe CCGT <code>+993,5 MW</code> (z <code>1,03</code> do <code>2,02 GW</code>), a elektrociepłownie <code>+131,2 MW</code>. Jeżeli doliczymy pełny obrót elektrowni szczytowo-pompowych ESP — które z <code>-775,8 MW</code> pompowania w południe przechodzą na <code>+693,7 MW</code> generacji turbinowej wieczorem (dając <code>+1 469,6 MW</code> wahacza) — <strong>łączny skok sterowalnych jednostek <code>gen-jw</code> między 12:00 a 20:00 sięga dokładnie +7 113,4 MW (+7,11 GW</strong>; w ujęciu systemowego agregatu <code>JG</code> bez poboru pomp jest to skok z <code>7,54</code> do <code>13,83 GW</code>, czyli <strong>+6,30 GW</strong>).</p>
+      <p>W tabeli jednostkowej (<a href="?lens=plants#explorer" data-pse-preset="lens=plants">sprawdź każdą z 37 elektrowni w wyszukiwarce poniżej ↓</a>) widać ten mechanizm jak na dłoni: w <strong>Bełchatowie</strong> (PGE GiEK) podczas południowych redukcji OZE przy drogim prądzie w ruchu pozostaje średnio <strong>8,8 z 12 bloków</strong> pracujących na obniżonym obciążeniu <strong>1 812,9 MW o 12:00</strong> (<code>57,8%</code> wieczornej mocy), by o 20:00 oddać do sieci <strong>3 138,0 MW (+1 325,1 MW)</strong>. W <strong>Opolu</strong> 3,4 z 6 bloków trzyma w południe <strong>1 081,2 MW</strong>, aby wieczorem wzrosnąć do <strong>2 001,6 MW (+920,4 MW)</strong>; w obu częściach <strong>Kozienic</strong> (Enea) pracuje średnio 5,5 z 11 bloków (<code>1 295,2 → 1 860,4 MW</code>), w <strong>Turowie</strong> 4,8 z 7 bloków (<code>549,5 → 1 219,8 MW</code>), a nowe gazowe <strong>Gryfino / Dolna Odra CCGT</strong> zjeżdża w południe do <code>237,3 MW</code> (<code>28,0%</code> obciążenia wieczornego), by o 20:00 dać <strong>847,9 MW (+610,6 MW)</strong>.</p>
+      <p>Skrajny przypadek tego kleszcza rozegrał się we wspomnianą <strong>środę 24 czerwca 2026 roku</strong> (przełącz na zakładkę <code>Śr 24.06.2026</code> na wykresie poniżej). Między 09:00 a 17:00 zredysponowano <strong>19,20 GWh samej fotowoltaiki</strong> (w tym <code>7,99 GWh</code> przy <code>RCE ≥ 250 zł/MWh</code>), podczas gdy w godzinie 12:00–13:00 bloki cieplne <code>gen-jw</code> trzymały sztywną podłogę <strong>8 822,1 MW</strong> (a <code>ESP</code> pompowały <code>-768,8 MW</code>). Gdy słońce zaszło przy niemal bezwietrznej pogodzie nad Polską (zaledwie <code>363 MW</code> wiatru o 20:00!), generacja cieplna <code>gen-jw</code> musiała skoczyć do <strong>17 295,4 MW w godzinie 20:00–21:00 (+8 473,3 MW w ujęciu średnich godzinowych</strong>, a licząc od najniższego kwadransa <code>8 854,6 MW</code> o 12:45 do szczytu <code>18 214,6 MW</code> całkowitej generacji <code>gen-jw</code> o 19:45 — aż <strong>+9 360,0 MW w siedem godzin</strong>). Nawet ten zryw ledwo domknął zapotrzebowanie kraju, windowując średnią cenę w godzinie 20:00–21:00 do <strong>2 567,7 zł/MWh (RCE)</strong>, <strong>2 698,7 zł/MWh (CSDAC)</strong> i <strong>2 947,6 zł/MWh (CEN</strong>; w kwadransie 20:45–21:00 aż <code>3 016,0 zł/MWh</code>).</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Dlaczego stare ESP już nie wystarczają</strong>
+        Wszystkie polskie elektrownie szczytowo-pompowe mają łącznie niespełna 1,8 GW mocy i 7–8 GWh pojemności wodnej (zbudowanej w epoce bloków węglowych pod wyrównywanie nocy). W słoneczny dzień 2026 r. jedno przedpołudnie redukcji OZE przekracza ich pojemność kilkukrotnie — o 13:00 górne zbiorniki w Żarnowcu i Porąbce-Żar są już pełne.
+      </div>
+      <div class="lab-aside-note">
+        <strong>Kontrola na dniu bez wyłączeń (10.09.2026)</strong>
+        Na wykresie obok możesz przełączyć się również na czwartek <code>10.09.2026</code> (0 GWh redukcji): przy umiarkowanym słońcu (<code>8,0 GW</code>) i silniejszym wietrze (<code>5,3 GW</code>) podłoga cieplna o 12:00 wyniosła <code>8,76 GW</code>, a rampa wieczorna była o 2,25 GW łagodniejsza.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig2-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Wykres 02 · Dobowy profil KSE (24 godziny) na poziomie jednostek wytwórczych gen-jw</span>
+        <h3 class="lab-fig-title" id="fig2-title">Anatomia polskiej „kaczej krzywej”: 7,98 GW podłogi cieplnej w południe i skok na 13,63 GW o godzinie 20:00</h3>
+        <p class="lab-fig-sub">Przełączaj między 9-dniowym wzorcem dni roboczych, ekstremalną środą 24.06.2026 (2 568 zł/MWh wieczorem), rekordową środą 08.07.2026 (33,28 GWh ścięć) i dniem kontrolnym.</p>
+      </div>
+    </div>
+
+    <div id="fig-pse-duck">
+      <noscript>
+        <p class="specimen-note">Wykres interaktywny wymaga JavaScriptu. Średnia 9 dni roboczych (864 kwadranse): o 12:00 bloki cieplne gen-jw = 7,98 GW, PV = 10,88 GW, ścięte OZE = 1,61 GW, pompowanie ESP = -776 MW; o 20:00 bloki cieplne = 13,63 GW (+5,64 GW rampy cieplnej), ESP = +694 MW (+7,11 GW łącznie z ESP), RCE = 1 316 zł/MWh.</p>
+      </noscript>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Źródło: dane jednostkowe PSE <code>gen-jw</code> (106 bloków w 37 elektrowniach, uzupełnione zerami na pełnej siatce kwadransów) połączone z <code>his-wlk-cal</code>, <code>poze-redoze</code> i <code>rce-pln</code>.</span>
+      <span>Słupki pod osią 0 GW oznaczają pobór mocy przez pompy elektrowni szczytowo-pompowych (ESP) w południe.</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="granice">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 03
+      <strong>Sześć granic</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Co płynie przez granice, gdy gasimy polskie farmy: 605 MW nieplanowanych przepływów kołowych z Niemiec i handlowy import kablami z północy</h2>
+      <p class="has-dropcap">W dyskusjach w mediach społecznościowych często pada uproszczony zarzut: „PSE wyłącza polską fotowoltaikę, bo zalewamy się importowanym prądem z zagranicy”. Równie często pada równie uproszczona odpowiedź: „To nieprawda, w godzinach wyłączeń Polska jest eksporterem netto”. Zestawienie 15-minutowych przepływów fizycznych (<code>przeplywy-mocy</code>) z grafikami handlowymi dnia następnego i bieżącego (<code>pwm-rdn-rdb</code>, publikowanymi przez PSE od 1 stycznia 2026 r.) dowodzi, że <strong>obie strony tego sporu patrzą tylko na połowę równania</strong>.</p>
+      <p>W skali zagregowanej wszystkich sześciu granic razem wziętych podczas redukcji OZE przy drogim prądzie (<code>RCE ≥ 250 zł/MWh</code>, <code>3 276</code> kwadransów w 2026 r.) Polska faktycznie jest <strong>eksporterem netto o średnim saldzie fizycznym -1 001,3 MW</strong> (i saldzie handlowym <code>-1 094,2 MW</code>). Jednak prąd w sieci synchronicznej Europy Kontynentalnej nie płynie według faktur handlowych, tylko według praw Kirchhoffa — po ścieżkach najmniejszej impedancji. Kiedy rozbijemy to zagregowane saldo na sześć poszczególnych przekrojów granicznych, wyłaniają się dwa zupełnie odmienne zjawiska:</p>
+      <p>Po pierwsze, na <strong>granicy zachodniej z Niemcami (DE)</strong> podczas tych samych 3 276 kwadransów drogich wyłączeń polskich farm OZE grafik handlowy wynosi praktycznie zero (średnio <strong>+2,1 MW</strong>), ale fizycznie przez linie transgraniczne do zachodniej Polski wpływa średnio <strong>+607,3 MW</strong> (wpływ fizyczny do Polski występuje w <strong>71,4% tych kwadransów</strong>, a przy <code>RCE ≥ 400 zł/MWh</code> rośnie do <code>+718,1 MW</code>). Różnica — średnio <strong>+605,2 MW</strong> — to klasyczny <strong>nieplanowany przepływ kołowy (<em>loop flow</em>)</strong>: nadwyżka generacji z północno-wschodnich Niemiec, nie mieszcząc się we własnych niemieckich korytarzach północ–południe, wchodzi fizycznie do polskiej sieci 400/220 kV i wypływa południową granicą do <strong>Czech (CZ: fizycznie -1 183,8 MW przy grafiku handlowym -445,4 MW, czyli -738,3 MW tranzytu kołowego)</strong> oraz na <strong>Słowację (SK: fizycznie -502,8 MW)</strong>. Choć w saldzie całego kraju ten tranzyt wchodzi i wychodzi, po drodze zajmuje przepustowość zachodnich polskich linii przesyłowych i przesuwników fazowych dokładnie w godzinach, gdy własne farmy słoneczne i wiatrowe na zachodzie i północy kraju walczą o wyprowadzenie mocy.</p>
+      <p>Po drugie, zupełnie inaczej zachowują się <strong>niesynchroniczne połączenia stałopądowe HVDC na północy</strong> — podmorski kabel <code>SwePol Link</code> ze Szwecją (SE) oraz most <code>LitPol Link</code> z Litwą (LT). Przez łącze stałoprądowe nie płyną przypadkowe przepływy kołowe (różnica między fizyką a grafikiem nie przekracza <code>±4 MW</code>); każdy megawat wynika z algorytmu handlowego <em>market coupling</em>, w którym prąd płynie ze strefy tańszej do droższej. I właśnie dlatego, że polska podłoga cieplna utrzymuje wysoką cenę <code>RCE/CSDAC ≥ 250 zł/MWh</code>, europejski algorytm giełdowy widzi w Polsce „drogi rynek potrzebujący energii” — i <strong>automatycznie kieruje do Polski handlowy import z Litwy (+79,3 MW handlowo / +83,5 MW fizycznie w 70,9% kwadransów) oraz ze Szwecji (+66,1 MW handlowo / +62,7 MW fizycznie)</strong>, a powyżej <code>400 zł/MWh</code> jeszcze go zwiększa (<code>+107,6 MW</code> z LT i <code>+133,4 MW</code> z SE) — w tych samych minutach, w których polskie dyspozytornie zdalnie odcinają krajowe OZE.</p>
+      <p>Co więcej, w <strong>862 kwadransach 2026 roku (215,5 godziny, 140,68 GWh ściętego OZE, średnia cena RCE = 441,9 zł/MWh)</strong> Polska była podczas przymusowej redukcji własnych źródeł odnawialnych <strong>fizycznym importerem netto na sumie wszystkich granic jednocześnie</strong> (średnio <code>+689,0 MW</code> importu fizycznego ogółem, w tym <code>+1 510,3 MW</code> z Niemiec złożone z <code>+981,3 MW</code> zakupu handlowego i <code>+529,0 MW</code> przepływu kołowego — <a href="?lens=days&amp;preset=net_imp#explorer" data-pse-preset="lens=days&amp;preset=net_imp">zobacz w tabeli doby z importem netto ↓</a>).</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Konwencja znaków w API PSE</strong>
+        Zweryfikowałem znaki bezpośrednio na równaniu bilansu KSE (mediana odchylenia <code>0,00 MW</code>): wartość dodatnia (<code>+</code>) oznacza zawsze wpływ energii <strong>do Polski</strong>, a wartość ujemna (<code>−</code>) wypływ energii <strong>z Polski</strong>. Przepływ kołowy to różnica między przepływem fizycznym a grafikiem handlowym <code>RDN+RDB</code>.
+      </div>
+      <div class="lab-aside-note">
+        <strong>Kiedy Polska faktycznie maksymalizuje eksport?</strong>
+        Przełącz na wykresie poniżej zakładkę na <code>Ujemne ceny: RCE &lt; 0 zł</code>: przy ujemnych cenach KSE eksportuje handlowo aż <code>-2 184,2 MW</code> (w tym <code>-189,7 MW</code> kablem do Szwecji i <code>-118,5 MW</code> na Litwę), ale nawet wtedy z Niemiec wpychane jest fizycznie <code>+345,4 MW</code> przy grafiku handlowym <code>-112,2 MW</code>!
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig3-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Wykres 03 · Przepływy fizyczne vs grafiki handlowe (RDN+RDB) na 6 granicach Polski (2026 YTD)</span>
+        <h3 class="lab-fig-title" id="fig3-title">Faktury mówią „zero”, fizyka mówi „+607 MW”: tranzyt kołowy Niemcy → Polska → Czechy i paradoks kabli HVDC</h3>
+        <p class="lab-fig-sub">Przełączaj między pięcioma reżimami pracy systemu w 2026 r., aby porównać fizykę linii AC z handlowymi grafikami giełdowymi na każdej granicy.</p>
+      </div>
+    </div>
+
+    <div id="fig-pse-borders">
+      <noscript>
+        <p class="specimen-note">Widok interaktywny wymaga JavaScriptu. Przy redukcjach OZE z RCE ≥ 250 zł/MWh (3 276 kwadransów w 2026 r.): Niemcy fizycznie +607,3 MW vs handlowo +2,1 MW (przepływ kołowy +605,2 MW); Czechy fizycznie -1 183,8 MW vs handlowo -445,4 MW (-738,3 MW kołowo); Litwa HVDC +83,5 MW fiz. / +79,3 MW handl.; Szwecja HVDC +62,7 MW fiz. / +66,1 MW handl.; Słowacja -502,8 MW fiz.; Ukraina -68,3 MW fiz.</p>
+      </noscript>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Źródło: obliczenia własne na pełnym zbiorze 2026 YTD (<code>29 376</code> kwadransów z kompletnym pokryciem <code>przeplywy-mocy</code> i <code>pwm-rdn-rdb</code>, 01.01–02.11.2026).</span>
+      <span>Karty z rdzawym paskiem oznaczają synchroniczny korytarz kołowy AC (DE → PL → CZ); karty z niebieskim paskiem — sterowalne łącza stałoprądowe HVDC (LT, SE).</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="rachunek">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Rozdział 04
+      <strong>Rachunek i naprawa</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>355 mln zł na papierze wzoru, 105,5 mln zł w przelewach, gilotyna pełnej godziny i nożyce cenowe prosumentów</h2>
+      <p class="has-dropcap">Kto na końcu płaci za prąd, którego nie wyprodukowano? Zgodnie z art. 13 ust. 7 unijnego Rozporządzenia 2019/943 oraz art. 9c ust. 7a–7k Prawa energetycznego wytwórcy OZE z gwarancją dostarczania energii przysługuje od operatora rekompensata finansowa, a jej koszt PSE przenosi na wszystkich odbiorców w <strong>stawce jakościowej</strong> na rachunku za przesył. Od 1 lutego 2026 r. stawka ta wynosi <strong>33,16 zł/MWh netto</strong> (w styczniu <code>33,06 zł/MWh</code>, wobec <code>32,12 zł/MWh</code> w 2025 r. i zaledwie <code>10,18 zł/MWh</code> w 2021 r. — ponaddwukrotnie szybciej niż inflacja).</p>
+      <p>Kiedy jednak policzymy wartość <strong>1 805,05 GWh</strong> energii zredysponowanej tylko od stycznia do 2 listopada 2026 r. według oficjalnego wzoru opublikowanego przez PSE w <em>Zasadach wyliczania rekompensaty finansowej PV</em> (marzec 2026, s. 2), pojawia się uderzający rozjazd. Wartość rynkowa ściętego wolumenu liczona po cenach spotowych <code>max(0, RCE)</code> wynosi <strong>251,46 mln zł</strong> (po <code>max(0, CSDAC)</code>: <strong>254,27 mln zł</strong>). Tymczasem wzór ustawowy dla składnika energetycznego <code>KC</code> nakazuje w kwadransach ujemnego niezbilansowania systemu mnożyć niewyprodukowaną energię przez cenę niezbilansowania <code>max(0, CEN)</code>. Ponieważ w <code>3 305</code> kwadransach 2026 r. system był na Rynku Bilansującym deficytowy (<code>CEN ≥ 400 zł/MWh</code>) mimo trwającej redukcji OZE, sama teoretyczna wartość brutto składnika <code>KC</code> za dziesięć miesięcy 2026 r. sięga aż <strong>355,09 mln zł</strong> (z czego <code>296,12 mln zł</code> generuje zaledwie <code>29,52%</code> wolumenu ściętego przy <code>CEN ≥ 400 zł/MWh</code>!).</p>
+      <p>Zestawmy te <strong>355,09 mln zł</strong> z jednego niepełnego roku z gotówką, która faktycznie wyszła z PSE: od początku 2023 roku do końca lipca 2026 roku operator wypłacił wytwórcom łącznie <strong>105,5 mln zł</strong> (<code>19,5 mln zł</code> w 2023 r., <code>2,7 mln zł</code> w 2024 r., <code>25,4 mln zł</code> w 2025 r. oraz <code>57,9 mln zł</code> w I–VII 2026 r., które — jak potwierdził w sierpniu 2026 r. rzecznik PSE Maciej Wapiński — dotyczyły wciąż rozliczeń za lata 2023–2025, przy kolejnych ok. <code>45 mln zł</code> zaakceptowanych i czekających w kolejce). Skąd bierze się przeszło trzykrotna przepaść między rachunkiem ze wzoru a realnymi wypłatami? Tworzą ją cztery ustawowe i proceduralne filtry:</p>
+      <p>Po pierwsze, rosnąca grupa nowych farm słonecznych i wiatrowych otrzymywała w ostatnich latach tzw. elastyczne warunki przyłączenia bez gwarancji niezawodnych dostaw energii, którym z mocy <strong>art. 9c ust. 7g Prawa energetycznego</strong> i <strong>art. 13 ust. 7 rozporządzenia 2019/943</strong> należy się <strong>0 zł rekompensaty</strong> (podobnie jak przy przekroczeniu mocy przyłączeniowej we współdzieleniu przyłącza <em>cable pooling</em> z <strong>art. 7 ust. 9 PE</strong>). Po drugie, zgodnie z <strong>pkt 2.1</strong> dokumentu PSE (s. 2), dla części energii rozliczanej ze <em>Sprzedawcą Zobowiązanym</em> składnik rynkowy <code>KC</code> wynosi zero (wytwórca odzyskuje jedynie utracone wsparcie aukcyjne <code>KAUK</code> lub certyfikaty <code>KCERT</code> opisane na s. 3 oraz zaliczenie wolumenu do obowiązku aukcyjnego z <strong>art. 93 ust. 18 ustawy o OZE</strong>). Po trzecie, w <code>2 260</code> kwadransach (<code>52,86%</code> wolumenu) <code>CEN</code> spada poniżej zera, zerując składnik <code>KC</code>. Po czwarte wreszcie, obieg danych pomiarowych między 188 operatorami OSD a portalem <code>WoR</code> trwa miesiącami: do lata 2026 r. Tauron rozliczył <code>36%</code> kwoty roszczeń za 2025 r., a w sieci Enei zatwierdzono <code>68%</code> wniosków z 2025 r.</p>
+      <p>Podobny rozdźwięk między nowoczesnym rynkiem a analogowym wykonawstwem widać na zegarze dyspozytorskim. Od 14 czerwca 2024 r. polski Rynek Bilansujący rozlicza energię i ceny co 15 minut. Kiedy jednak zbadałem dokładną minutę zegarową wszystkich <strong>2 339 dużych skoków redukcji OZE (zmiana o co najmniej <code>±200 MW</code> między sąsiednimi kwadransami w latach 2025–2026)</strong>, okazało się, że aż <strong>2 263 z nich (96,75%) wydarzyło się równo w minucie <code>:00</code> pełnej godziny</strong>, podczas gdy na minuty <code>:15</code>, <code>:30</code> i <code>:45</code> przypadło odpowiednio zaledwie <code>23</code>, <code>31</code> i <code>22</code> korekty (łącznie <code>76</code> przez prawie dwa lata!). Dla skoków o <strong>co najmniej <code>500 MW</code> wynik wynosi dokładnie 1 136 na 1 136 — 100,00% na pełnej godzinie</strong>. Przyczynę zdradzają slajdy 18–20 majowej prezentacji PSE z 2025 r.: polecenia szły w cyklach godzinowych z 30-minutowym wyprzedzeniem i do 1 godziny czasu na ręczne lub półautomatyczne wykonanie po stronie OSD. Oznacza to, że gdy chmura lub wieczorny wzrost popytu zmienia sytuację w 20. minucie godziny, setki megawatów słońca potrafią pozostać zdławione przez kolejne 40 minut aż do wybicia pełnej godziny, choć na rynku bilansującym prąd zdążył już podrożeć powyżej 400 zł/MWh.</p>
+      <p>Na samym dole tego łańcucha stoją domowi prosumenci. Trzeba tu zachować precyzję prawną: spośród ok. <strong>1,61–1,65 mln prosumentów w Polsce</strong> około miliona starszych instalacji (sprzed kwietnia 2022 r.) rozlicza się nadal w 15-letnim systemie opustów (<em>net-metering</em>), a prosumenci przyłączeni między kwietniem 2022 a czerwcem 2024 r. na mocy nowelizacji z 27 listopada 2024 r. (<code>Dz.U. 2024 poz. 1847</code>) pozostali domyślnie na cenie miesięcznej <code>RCEm</code>, o ile sami nie przeszli na rozliczenie dynamiczne. Jednak dla wszystkich nowych prosumentów wprowadzających energię <strong>od 1 lipca 2024 r.</strong> obowiązkowy jest już 15-minutowy net-billing po cenie <code>RCE</code>. W tej rosnącej kohorcie w 2026 r. aż <strong>14,23% całej krajowej generacji PV (3 101,05 z 21 791,31 GWh</strong>, a w kwietniu 2026 r. rekordowe <strong>33,3%</strong>!) przypadło w kwadransach <code>RCE ≤ 0 zł/MWh</code>, przynosząc <strong>0,00 zł depozytu</strong> — bo ustawowy mnożnik korygujący <code>1,23</code> pomnożony przez zero nadal daje zero. W całym 2026 YTD średnia cena ważona produkcją słoneczną wyniosła <strong>324,21 zł/MWh</strong> (po mnożniku <code>1,23</code>: <strong>398,77 zł/MWh</strong> depozytu), podczas gdy w wieczornym oknie poboru 18:00–22:00 średnia hurtowa <code>RCE</code> wynosiła <strong>789,56 zł/MWh</strong> (surowe nożyce hurtowe <strong>2,44×</strong>, a po mnożniku <code>1,23</code> nadal <strong>1,98×</strong>, nie licząc stawek dystrybucyjnych w taryfach G11/G12).</p>
+      <h3>Trzy dźwignie inżynieryjne, które rozcinają węzeł godziny 20:00</h3>
+      <p>Dobra wiadomość płynąca z tych 73 924 kwadransów jest taka, że problem nie wynika z „nadmiaru OZE w skali roku”, lecz z ośmiogodzinnej luki elastyczności między 12:00 a 20:00. Rozwiązują ją trzy konkretne zmiany, które można mierzyć w tych samych publicznych tabelach PSE:</p>
+      <p><strong>1. Dokończenie 15-minutowej automatyzacji poleceń OSD (zejście z gilotyny <code>:00</code>).</strong> Pełne wdrożenie kwadransowego sterowania SCADA/CSIRE po stronie operatorów dystrybucyjnych (zapowiadane przez PSE na przełom 2026 i 2027 r.) pozwoli zdejmować blokady OZE w minucie <code>:15</code> lub <code>:30</code> natychmiast po wzroście popytu lub przejściu frontu chmur, zamiast trzymać odcięte gigawaty do pełnej godziny przy <code>CEN &gt; 400 zł/MWh</code>.</p>
+      <p><strong>2. Wielkoskalowe magazyny bateryjne BESS i inwertery <em>grid-forming</em> zamiast wirującej podłogi węglowej.</strong> Każdy 1 GW czterogodzinnych magazynów bateryjnych z falownikami tworzącymi sieć (<em>grid-forming</em>, dostarczającymi syntetyczną inercję i szybkie rezerwy FCR/aFRR) działa na wykresie dobowym podwójnie: w południe ładuje się mocą <code>1 GW</code> zamiast wyłączać słońce, a między 18:00 a 22:00 oddaje <code>1 GW</code> na szczyt wieczorny, zmniejszając wymaganą rampę bloków węglowych o <strong>2 GW naraz</strong>.</p>
+      <p><strong>3. Kotle elektrodowe (<em>Power-to-Heat</em>) w ciepłownictwie i przesuwniki fazowe na granicy zachodniej.</strong> Przekierowanie południowych nadwyżek z wyłączanych farm do miejskich akumulatorów ciepła oraz rozliczenie i dławienie nieplanowanych przepływów kołowych <code>+605 MW</code> na przekroju z Niemcami uwalnia krajową przestrzeń bilansową bez dopisywania kolejnych złotych do stawki jakościowej na rachunkach odbiorców.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Dlaczego nie ma tu zarzutu o manipulację</strong>
+        Analiza pokazuje strukturalny efekt reguł fizycznych i rynkowych: dyspozytorzy PSE utrzymują bloki cieplne ze względu na bezpieczeństwo częstotliwościowe i szczyt o 20:00, a algorytm HVDC importuje prąd z Litwy i Szwecji dlatego, że widzi wysoką cenę <code>CSDAC</code> wyznaczoną przez te same bloki.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig4-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Dowód z dokumentów i telemetrii · Trzy migawki mechanizmu systemowego</span>
+        <h3 class="lab-fig-title" id="fig4-title">Jak fizyka bloków, zegar pełnej godziny i wzór rekompensat spotykają się w jednej dobie pracy KSE</h3>
+      </div>
+    </div>
+    <div class="specimen-grid">
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Migawka A · Środa 24.06.2026: od ścięć PV do 2 948 zł/MWh</strong>
+          <span>Telemetria gen-jw + poze-redoze + rce-pln</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>12:00–13:00 (ścięte 3 013 MW PV):</span><strong>8 822 MW cieplnych</strong></div>
+          <div class="specimen-line"><span>15:00–16:00 (ścięte 2 774 MW PV):</span><strong>RCE 312 / CEN 363 zł</strong></div>
+          <div class="specimen-line is-error"><span>20:00–21:00 (17 295 MW cieplnych):</span><b>RCE 2 568 / CEN 2 948 zł</b></div>
+        </div>
+        <p class="specimen-note">W roboczy dzień ścięto 19,20 GWh fotowoltaiki (szczyt 3 543,1 MW o 14:00), bo bloki węglowe i gazowe musiały utrzymać w południe 8,82 GW, by wieczorem udźwignąć skok o +8,47 GW średniej mocy godzinowej (+9,36 GW między minimum a szczytem 15-min). <a href="https://raporty.pse.pl/report/poze-redoze?date=2026-06-24" target="_blank" rel="noopener noreferrer">Raport PSE 24.06 ↗</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Migawka B · Gilotyna :00 i prezentacja PSE z 23.05.2025</strong>
+          <span>64 416 kwadransów (2025–2026) · Slajdy 6 i 18–20</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Skoki redukcji ≥ 200 MW w :00:</span><strong>2 263 z 2 339 (96,75%)</strong></div>
+          <div class="specimen-line"><span>Skoki w :15 / :30 / :45 łącznie:</span><strong>23 / 31 / 22 (3,25%)</strong></div>
+          <div class="specimen-line is-error"><span>Skoki redukcji ≥ 500 MW w :00:</span><b>1 136 z 1 136 (100,0%)</b></div>
+        </div>
+        <p class="specimen-note">Mimo 15-minutowych cen od czerwca 2024 r. kaskada poleceń OSP → OSD działa w blokach godzinowych (ok. 30 min wyprzedzenia + do 1 h wdrożenia w OSD), utrzymując odcięcie OZE nawet po odwróceniu bilansu wewnątrz godziny.</p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Migawka C · Nożyce wyceny 355 mln vs 105,5 mln zł</strong>
+          <span>Zasady rekompensat PV (03.2026) + taryfa URE 2026</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Wycena ustawowa max(0, CEN) 2026:</span><strong>355,09 mln zł (KC)</strong></div>
+          <div class="specimen-line"><span>Gotówka wypłacona 2023 – VII 2026:</span><strong>105,5 mln zł (+45 mln)</strong></div>
+          <div class="specimen-line is-error"><span>Stawka jakościowa od II 2026:</span><b>33,16 zł/MWh (3,3× r. 2021)</b></div>
+        </div>
+        <p class="specimen-note">Wzór KC wycenia 29,5% ścięć po wysokim CEN ≥ 400 zł/MWh, lecz umowy bez gwarancji dostaw (art. 9c ust. 7g PE), wyłączenie Sprzedawcy Zobowiązanego (pkt 2.1, s. 2) i wielomiesięczna weryfikacja OSD tną i opóźniają wypłaty.</p>
+      </div>
+    </div>
+  </figure>
+</article>
+
+<section class="lab-tool-section" id="explorer">
+  <div class="frame">
+    <div class="lab-tool-head">
+      <div>
+        <span class="number">Pełna baza danych · 37 elektrowni (106 bloków JWCD) oraz 140 największych dób redukcji OZE (2025–2026)</span>
+        <h2>Sprawdź każdą elektrownię i każdy epizod w danych PSE</h2>
+      </div>
+      <p>Przełączaj między profilami pracy 37 elektrowni podczas południowych redukcji i wieczornego szczytu (Soczewka 01) a listą 140 dób z wyłączeniami ≥ 3 GWh (Soczewka 02). Każdy wiersz odsyła bezpośrednio do publicznego raportu na <code>raporty.pse.pl</code>.</p>
+    </div>
+    <div id="pse-explorer" data-src="/assets/lab/pse-grid-2026.json">
+      <noscript>
+        <div class="lab-callout">
+          <span class="micro">Interaktywna wyszukiwarka wymaga włączonego JavaScriptu</span>
+          <p>Pełny zbiór wszystkich 37 elektrowni, 140 dób redukcji oraz zagregowanych szeregów 73 924 kwadransów możesz pobrać bezpośrednio jako plik <a href="/assets/lab/pse-grid-2026.json">pse-grid-2026.json</a>.</p>
+        </div>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<section class="plain-contact">
+  <div class="frame about-strip">
+    <span class="number">05 / Kontakt, dane źródłowe i osadzanie w mediach</span>
+    <h2>Pracujesz w energetyce, regulacji albo redakcji i chcesz pogłębić te dane?</h2>
+    <div>
+      <p>Jeśli widzisz dodatkowy kontekst operacyjny z dyspozytorni OSD/OSP albo chcesz zestawić te szeregi z konkretnym węzłem sieciowym, napisz śmiało. Redakcje mogą bezpłatnie osadzić interaktywną tabelę elektrowni i epizodów przez przycisk <code>Osadź (iframe)</code> nad tabelą (z podaniem źródła).</p>
+      <a class="quiet-link" href="mailto:stuczynski.g@gmail.com?subject=Raport%20NR%2004%20%E2%80%94%20Redysponowanie%20OZE%20i%20sie%C4%87%20PSE">stuczynski.g@gmail.com ↗</a>
+      <p class="contact-alt">Krótsze wątki i wykresy publikuję na <a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X (@rpl_0x)</a> oraz <a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedInie</a>.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="footer"><div class="frame"><p>Grzegorz Stuczyński · RolePlayingTech © 2026</p><div class="sub-links"><a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/RolePlayingTech" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://roleplayinglife.substack.com/" target="_blank" rel="noopener noreferrer">Substack ↗</a><a href="mailto:stuczynski.g@gmail.com">Email ↗</a></div></div></footer>
+</body>
+</html>

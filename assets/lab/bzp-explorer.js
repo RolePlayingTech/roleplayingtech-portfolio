@@ -25,7 +25,7 @@
     pl: {
       loading: 'Wczytywanie zweryfikowanego zbioru ogłoszeń BZP (2024–2026)…',
       loadErr: 'Nie udało się wczytać pliku danych JSON.',
-      embedHeadTitle: 'Baza przetargów AI w Polsce (BZP 2024–2026)',
+      embedHeadTitle: '60,7% pieniędzy bez konkurenta · Przetargi AI w Polsce (BZP 2024–2026)',
       embedHeadMeta: 'Stan na 03.11.2026 · RolePlayingTech',
       embedShowCharts: 'Pokaż wykresy i filtry kategorii ▾',
       embedHideCharts: 'Ukryj wykresy ▴',
@@ -49,7 +49,7 @@
       switchProv: 'Województwa',
       otherProv: 'Inne',
       clickFilter: 'kliknij, aby filtrować',
-      searchPh: 'Szukaj: instytucja, miasto, przedmiot, wykonawca, VoiceBot, PACS, GPU, BZP…',
+      searchPh: 'Szukaj: instytucja, miasto, wykonawca, Asseco, KRS, CEIDG, PUI, VoiceBot, GPU, BZP…',
       sortAria: 'Sortowanie listy przetargów',
       sortDate: 'Sortuj: najnowsze ogłoszenia',
       sortAmountDesc: 'Sortuj: najwyższa kwota umowy',
@@ -140,7 +140,7 @@
       compTab1: 'Przekrój rynku i ściana 170 tys. zł',
       compTab2Tpl: 'Mapa wszystkich {n} umów (kropki)',
       compTab3: 'Koszt monopolu, blokada i 31 porażek',
-      compForensicNoteHtml: '<strong>Głębsza weryfikacja treści ogłoszeń (sekcje 3.1 i 6.1.6 BZP):</strong> 4 umowy z wpisaną „1” to w istocie wolna ręka z art. 305 Pzp (łącznie 10 umów na 3,46 mln zł), a w 8 przetargach wieloofertowych (1,50 mln zł) odrzucono wszystkich rywali — przy ocenie końcowej bez konkurenta zostało <strong>59 ze 110 umów (53,6%) na 19,54 mln zł (60,7% kwoty)</strong>.',
+      compForensicNoteHtml: '<strong>Głębsza weryfikacja protokołów BZP, KRS i CEIDG:</strong> 4 umowy z wpisaną „1” to w istocie wolna ręka z art. 305 Pzp (łącznie 10 umów na 3,46 mln zł), a w 8 przetargach wieloofertowych (1,50 mln zł) odrzucono wszystkich rywali — przy ocenie końcowej bez konkurenta zostało <strong>59 ze 110 umów (53,6%) na 19,54 mln zł (60,7% kwoty)</strong>, w tym <strong>17 z 17 kontraktów (100% · 6,29 mln zł)</strong> sześciu liderów czystego AI.',
       fPriceTitle: 'Cena wygranej wobec kosztorysu netto (n = 31)',
       fPriceSub: 'Jednorodne umowy IT i sprzętu z 23% VAT (sekcja 4.3 vs 8.2 BZP · 100% = wycena netto zamawiającego)',
       fPriceScale0: '0%',
@@ -158,7 +158,7 @@
       fPriceR3Foot: 'mediana 0,664× brutto/netto',
       fPriceR3Pill: '−46,0% rabatu netto!',
       fPricePill1Html: '<strong>72,2% wdrożeń IT bez kryteriów jakości</strong> (39 z 54 · w całej bazie 63,5% to 100% cena lub cena + formalna gwarancja/SLA)',
-      fPricePill2Html: '<strong>Rozstrzał ważnych ofert:</strong> med. 2,71× (maks. 13,25×) w oprogramowaniu AI vs 1,12× w sprzęcie GPU',
+      fPricePill2Html: '<strong>Ślepa plamka 6.2 = 6.4:</strong> 7 z 8 przetargów ukryło odrzucone tańsze oferty (w Katowicach odrzucenie tańszego AI do mammografii podniosło kontrakt o +185,6 tys. zł) · rozstrzał ważnych ofert IT: med. 2,71× (maks. 13,25×)',
       fLockTitle: 'Blokada systemów bazowych (HIS/PACS/PUI) i wiosenny klif KPO',
       fLockSub: 'Wdrożenia oprogramowania AI (n = 45 podpisanych umów) — wpływ wymogu integracji z zastanym systemem',
       fLockLegZero: 'Bez konkurenta',
@@ -171,7 +171,7 @@
       fLockR2Val: '53,6% bez rywala',
       fLockR2Foot: '15 z 28 umów IT bez konkurenta',
       fLockR2Pill: 'w szpitalach: 12 z 19 (63,2%)',
-      fLockPillHtml: '<strong>Czas na ofertę: mediana 9,0 dni</strong> (41,2% ≤ 8 dni) wobec 28,0 dni oceny — w szpitalach nawet 5× wydłużany termin (12→27 dni) kończył się 1 ofertą',
+      fLockPillHtml: '<strong>Top 6 czystego AI: 17 z 17 umów bez rywala (6,29 mln zł)</strong> · w sekcji 7.2 BZP 7 umów (2,45 mln zł) spółek-córek 100% Asseco Poland i Agfa HealthCare wpisano jako mikro/małe firmy · czas na ofertę: med. 9,0 dni',
       fKpoKicker: 'Szczyt i klif KPO D1.1.2 (2026)',
       fKpoBodyHtml: '<strong>Szczyt KPO D1.1.2 (I–VI 2026):</strong> 26 z 38 szpitalnych przetargów AI (<strong>84,2% umów bez rywala</strong> — 16 z 19, <strong>8,45 mln zł</strong>) → po zamknięciu okna w <strong>III kw. 2026:</strong> 1 przetarg szpitalny (0 z KPO) i <strong>0,0% (0 z 11)</strong> umów z 1 ofertą w całym kraju (wobec 64,7% w I kw. i 55,0% w II kw.).',
       fCancelTitle: 'Sekcja zwłok 31 unieważnionych przetargów (22,0% ze 141 zakończonych · sekcja 5.2 BZP)',
@@ -181,13 +181,13 @@
       fCancel1Desc: 'Oferty powyżej budżetu (art. 255 pkt 3 Pzp · szok cenowy do 3,2× budżetu w NAWA)',
       fCancel2Pct: '25,8%',
       fCancel2Cnt: '8 z 31 postępowań',
-      fCancel2Desc: 'Odrzucono 100% złożonych ofert (art. 255 pkt 2 Pzp · dyskwalifikacje formalne i podmiotowe)',
+      fCancel2Desc: 'Odrzucono 100% złożonych ofert (art. 255 pkt 2 Pzp · np. UMP Poznań: 15 dni później wolna ręka dla tej samej spółki za identyczne 528,9 tys. zł)',
       fCancel3Pct: '19,4%',
       fCancel3Cnt: '6 z 31 postępowań',
       fCancel3Desc: 'Zero złożonych ofert (art. 255 pkt 1 Pzp · cisza rynkowa tylko w 1 na 5 unieważnień)',
       fCancel4Pct: '9,7%',
       fCancel4Cnt: '3 z 31 postępowań',
-      fCancel4Desc: 'Wada procedury lub fiasko negocjacji z wolnej ręki (art. 255 pkt 6 i 8 Pzp)',
+      fCancel4Desc: 'Wada procedury lub fiasko wolnej ręki (art. 255 pkt 6 i 8 Pzp · np. WUP Łódź: konflikt interesów byłego wicedyrektora i +19,1% ceny w powtórce)',
       fCancelFootNote: 'Unieważniono 31 ze 159 postępowań podstawowych (19,5% bazy · 22,0% spośród 141 zakończonych).',
       fCancelBtn: 'Pokaż wszystkie 31 unieważnionych przetargów w bazie ↓',
       compSecATitleTpl: 'Podział całej kwoty {sum} wg konkurencji · n = {n} umów',
@@ -274,7 +274,7 @@
     en: {
       loading: 'Loading verified Polish public procurement dataset (BZP 2024–2026)…',
       loadErr: 'Could not load the JSON dataset.',
-      embedHeadTitle: 'Polish Public-Sector AI Tenders (BZP 2024–2026)',
+      embedHeadTitle: '60.7% of spend, zero rivals · Polish Public-Sector AI Tenders (BZP 2024–2026)',
       embedHeadMeta: 'Data through 03.11.2026 · RolePlayingTech',
       embedShowCharts: 'Show category & year charts ▾',
       embedHideCharts: 'Hide charts ▴',
@@ -298,7 +298,7 @@
       switchProv: 'Regions',
       otherProv: 'Other',
       clickFilter: 'click to filter',
-      searchPh: 'Search: institution, city, tender title, vendor, hospital, university, GPU, BZP…',
+      searchPh: 'Search: institution, city, vendor, Asseco, KRS, CEIDG, PUI, hospital, GPU, BZP…',
       sortAria: 'Sort tenders',
       sortDate: 'Sort: newest notices',
       sortAmountDesc: 'Sort: highest contract value',
@@ -389,7 +389,7 @@
       compTab1: 'Market split & 170k PLN cliff',
       compTab2Tpl: 'All {n} contracts map (dots)',
       compTab3: 'Pricing, lock-in & 31 failures',
-      compForensicNoteHtml: '<strong>Deeper HTML notice audit (BZP Sections 3.1 &amp; 6.1.6):</strong> 4 awards coded “1 bid” are statutory Art. 305 sole-source contracts (10 total, 3.46M PLN), and 8 multi-bid tenders (1.50M PLN) disqualified every rival — leaving <strong>59 of 110 awards (53.6%) worth 19.54M PLN (60.7% of spend)</strong> with zero surviving competitors.',
+      compForensicNoteHtml: '<strong>Deeper BZP, KRS &amp; CEIDG protocol audit:</strong> 4 awards coded “1 bid” are statutory Art. 305 sole-source contracts (10 total, 3.46M PLN), and 8 multi-bid tenders (1.50M PLN) disqualified every rival — leaving <strong>59 of 110 awards (53.6%) worth 19.54M PLN (60.7% of spend)</strong> with zero surviving competitors, including <strong>17 of 17 contracts (100% · 6.29M PLN)</strong> for the top 6 pure-AI vendors.',
       fPriceTitle: 'Winning price vs. buyer net estimate (n = 31)',
       fPriceSub: 'Homogeneous 23%-VAT AI software & hardware awards (BZP Sec. 4.3 vs. 8.2 · 100% = buyer net estimate)',
       fPriceScale0: '0%',
@@ -407,7 +407,7 @@
       fPriceR3Foot: 'median 0.664× gross/net',
       fPriceR3Pill: '−46.0% net discount!',
       fPricePill1Html: '<strong>72.2% of AI software lacks quality criteria</strong> (39 of 54 · 63.5% overall use 100% price or price + formal warranty/SLA)',
-      fPricePill2Html: '<strong>Valid bid spread:</strong> med. 2.71× (up to 13.25×) in AI software vs. 1.12× in GPU hardware',
+      fPricePill2Html: '<strong>Sec. 6.2 = 6.4 blind spot:</strong> 7 of 8 tenders erased rejected cheaper bids (in Katowice rejecting cheaper mammography AI added +185.6k PLN) · valid software bid spread: med. 2.71× (up to 13.25×)',
       fLockTitle: 'Incumbent system lock-in (HIS/PACS/PUI) & Spring 2026 KPO cliff',
       fLockSub: 'Signed AI software deployments (n = 45) — impact of naming proprietary host systems in the tender notice',
       fLockLegZero: 'No rival',
@@ -420,7 +420,7 @@
       fLockR2Val: '53.6% zero-rival',
       fLockR2Foot: '15 of 28 software awards had zero rivals',
       fLockR2Pill: 'hospitals: 12/19 (63.2%)',
-      fLockPillHtml: '<strong>Bid window: median 9.0 days</strong> (41.2% ≤ 8 days) vs. 28.0 days to evaluate — in hospitals even 5× deadline extensions (12→27d) drew 1 bid',
+      fLockPillHtml: '<strong>Top 6 pure-AI leaders: 17 of 17 zero-rival awards (6.29M PLN)</strong> · in BZP Sec. 7.2, 7 awards (2.45M PLN) to 100% Asseco Poland &amp; Agfa HealthCare subsidiaries were filed as micro/small firms · med. bid window: 9.0d',
       fKpoKicker: 'Spring 2026 KPO D1.1.2 Sprint & Cliff',
       fKpoBodyHtml: '<strong>KPO D1.1.2 peak (Jan–Jun 2026):</strong> 26 of 38 hospital AI tenders (<strong>84.2% zero-rival awards</strong> — 16 of 19, <strong>8.45M PLN</strong>) → after the grant window closed in <strong>Q3 2026:</strong> 1 hospital tender (0 KPO) and <strong>0.0% (0 of 11)</strong> single-bid awards economy-wide (down from 64.7% in Q1 and 55.0% in Q2).',
       fCancelTitle: 'Autopsy of all 31 cancelled core tenders (22.0% of 141 concluded · BZP Section 5.2)',
@@ -430,13 +430,13 @@
       fCancel1Desc: 'Bids exceeded buyer budget (Art. 255(3) PZP · price shock up to 3.2× budget at NAWA)',
       fCancel2Pct: '25.8%',
       fCancel2Cnt: '8 of 31 cancellations',
-      fCancel2Desc: '100% of submitted bids rejected (Art. 255(2) PZP · formal & qualification disqualifications)',
+      fCancel2Desc: '100% of submitted bids rejected (Art. 255(2) PZP · e.g. UMP Poznań: sole-source award 15 days later to the same firm for identical 528.9k PLN)',
       fCancel3Pct: '19.4%',
       fCancel3Cnt: '6 of 31 cancellations',
       fCancel3Desc: 'Zero bids submitted (Art. 255(1) PZP · market silence in only 1 of 5 cancellations)',
       fCancel4Pct: '9.7%',
       fCancel4Cnt: '3 of 31 cancellations',
-      fCancel4Desc: 'Procedural defect or failed sole-source negotiation (Art. 255(6) & (8) PZP)',
+      fCancel4Desc: 'Procedural defect or failed sole-source negotiation (Art. 255(6) & (8) PZP · e.g. WUP Łódź ex-deputy-director conflict → +19.1% re-tender price)',
       fCancelFootNote: '31 of 159 core proceedings were cancelled (19.5% of dataset · 22.0% of 141 concluded).',
       fCancelBtn: 'Inspect all 31 cancelled tenders in the database ↓',
       compSecATitleTpl: 'Breakdown of all {sum} by competition tier · n = {n} awards',
@@ -547,7 +547,10 @@
     { keys: ['krakow', 'cracow', 'malopolska'], stems: ['krakow', 'malopolskie'] },
     { keys: ['wroclaw'], stems: ['wroclaw', 'dolnoslaskie'] },
     { keys: ['poznan'], stems: ['poznan', 'wielkopolskie'] },
-    { keys: ['gdansk', 'gdynia', 'pomerania', 'pomeranian'], stems: ['gdansk', 'gdyni', 'pomorskie'] }
+    { keys: ['gdansk', 'gdynia', 'pomerania', 'pomeranian'], stems: ['gdansk', 'gdyni', 'pomorskie'] },
+    { keys: ['newspaper', 'newspapers', 'magazine', 'magazines', 'journal', 'journals'], stems: ['gazet', 'czasopism', 'dziennik', '22200000'] },
+    { keys: ['mammography', 'breast', 'oncology', 'cancer'], stems: ['mammograf', 'onkolog', 'piersi', 'nowotwor'] },
+    { keys: ['conflict', 'subsidiary', 'monopoly', 'rejected', 'disqualified'], stems: ['konflikt', 'wicedyrektor', 'asseco', 'odrzucon', 'wolna reka'] }
   ];
 
   var state = {
@@ -2242,7 +2245,7 @@
 
     document.getElementById('bzp-csv').addEventListener('click', function () {
       var filtered = sortRows(DATA.filter(function (r) { return matchesRow(r, null); }));
-      var headers = ['bzp', 'result_bzp', 'status', 'sub_status', 'publication_date', 'contract_or_deadline', 'year', 'organization', 'city', 'province', 'sector', 'category', 'ai_scope', 'amount_pln_gross', 'bids', 'eu_cofinanced', 'contractors', 'title', 'url'];
+      var headers = ['bzp', 'result_bzp', 'status', 'sub_status', 'publication_date', 'contract_or_deadline', 'year', 'organization', 'city', 'province', 'sector', 'category', 'ai_scope', 'amount_pln_gross', 'bids', 'eu_cofinanced', 'contractors', 'title', 'audit_or_scope_note', 'url'];
       var lines = [headers.join(',')];
       filtered.forEach(function (r) {
         var vals = [
@@ -2264,6 +2267,7 @@
           r.eu ? '1' : '0',
           (r.contractors || []).join(' | '),
           r.title,
+          getScopeNote(r),
           r.url
         ].map(function (v) {
           var s = String(v == null ? '' : v).replace(/"/g, '""');
@@ -2304,14 +2308,21 @@
     if (state.eu) parts.push('UE/KPO');
     if (state.pure) parts.push(lang === 'en' ? 'pure AI only' : 'tylko czyste AI');
 
+    var isDefaultPool = !parts.length && state.status === 'all' && !state.incidental;
     var url = buildShareUrl(false) + '#explorer';
     if (lang === 'en') {
+      if (isDefaultPool && signed.length === 110) {
+        return '60.7% of Polish public-sector AI contract money (19.54M of 32.18M PLN across 59 of 110 core awards, BZP 01.2024–11.2026) went to vendors facing zero surviving rivals at final evaluation. Full dataset & BZP/KRS filings: ' + url;
+      }
       var scopeEn = parts.length ? ' [' + parts.join(' · ') + ']' : ' [core dataset]';
       var bodyEn = signed.length > 0
         ? (fmtProceedingsCount(filtered.length) + ', incl. ' + fmtContractsCount(signed.length) + ' worth ' + fmtPlnCompact(sum) + ' gross' +
             (withBids.length >= 3 && !state.single ? ' (' + single.length + '/' + withBids.length + ' single-bid)' : ''))
         : fmtProceedingsCount(filtered.length);
       return 'Polish public-sector AI tenders (BZP 01.2024–11.2026)' + scopeEn + ': ' + bodyEn + '. Source & filings: ' + url;
+    }
+    if (isDefaultPool && signed.length === 110) {
+      return '60,7% pieniędzy w publicznych przetargach AI w Polsce (19,54 z 32,18 mln zł w 59 ze 110 umów, BZP 01.2024–11.2026) trafiło do wykonawców bez żadnego ocalałego konkurenta przy ocenie końcowej. Pełna baza i protokoły BZP/KRS: ' + url;
     }
     var scopePl = parts.length ? ' [' + parts.join(' · ') + ']' : ' [zbiór podstawowy]';
     var bodyPl = signed.length > 0

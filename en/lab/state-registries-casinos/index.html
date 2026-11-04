@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f7f6f2">
+<meta name="description" content="Data investigation across Poland's RSPO, RPWDL, Nursery Registry, Ministry of Digital Affairs list and MF Gambling Blocklist (Nov 3–4, 2026): 291 hijacked or compromised school, hospital and nursery domains missing from the state blocklist plus 68 blocked domains still live in public silos.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How Polish state registries and .gov.pl pages funnel traffic to illegal offshore casinos">
+<meta property="og:description" content="I audited 35,583 root domains across Poland's school, healthcare and nursery registries. 291 serve or promote illegal casinos outside the state blocklist (158 still live in official registries), while 68 already-banned domains remain live on rspo.gov.pl, RPWDL2, MC lists and gov.pl.">
+<meta property="og:url" content="https://roleplayingtech.com/en/lab/state-registries-casinos/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:image" content="https://roleplayingtech.com/assets/lab/og-casino-state-2026-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="RolePlayingTech Issue 02: 291 unblocked hijacked or compromised school, hospital and nursery domains, 158 still live in primary state registries, 26.2x surge in .pl share on MF blocklist">
+<meta property="article:published_time" content="2026-11-04">
+<meta property="article:author" content="Grzegorz Stuczyński">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How Polish state registries and .gov.pl pages funnel traffic to illegal offshore casinos">
+<meta name="twitter:description" content="291 Polish school, hospital and nursery domains promote illegal offshore casinos outside the Ministry of Finance blocklist, while 68 already-banned domains remain live across official state databases.">
+<meta name="twitter:image" content="https://roleplayingtech.com/assets/lab/og-casino-state-2026-en.png">
+<title>How Polish state registries and .gov.pl pages funnel traffic to illegal offshore casinos — RolePlayingTech</title>
+<script>document.documentElement.classList.add('js');if(location.search.indexOf('embed=1')!==-1)document.documentElement.classList.add('is-embed');</script>
+<link rel="stylesheet" href="/assets/minimal.css">
+<link rel="stylesheet" href="/assets/lab/bzp-explorer.css">
+<link rel="stylesheet" href="/assets/lab/casino-explorer.css">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="canonical" href="https://roleplayingtech.com/en/lab/state-registries-casinos/">
+<link rel="alternate" hreflang="en" href="https://roleplayingtech.com/en/lab/state-registries-casinos/">
+<link rel="alternate" hreflang="pl" href="https://roleplayingtech.com/pl/lab/panstwo-linkuje-do-kasyna/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "headline": "How Polish state registries and .gov.pl pages funnel traffic to illegal offshore casinos",
+      "image": "https://roleplayingtech.com/assets/lab/og-casino-state-2026-en.png",
+      "datePublished": "2026-11-04",
+      "dateModified": "2026-11-04",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Grzegorz Stuczyński",
+        "url": "https://roleplayingtech.com/en/about/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "RolePlayingTech",
+        "url": "https://roleplayingtech.com/en/"
+      },
+      "mainEntityOfPage": "https://roleplayingtech.com/en/lab/state-registries-casinos/"
+    },
+    {
+      "@type": "Dataset",
+      "name": "Polish Educational and Healthcare Institutional Domains Hijacked or Compromised by Illegal Offshore Casinos (2025–2026)",
+      "description": "Strictly defanged dataset of 291 unblocked institutional domains across RSPO, RPWDL and Poland's Nursery Registry, 68 MF-banned domains still retained in public databases, and 9 official .gov.pl / BIP pages carrying live dofollow links (snapshot: Nov 3–4, 2026).",
+      "url": "https://roleplayingtech.com/en/lab/state-registries-casinos/",
+      "temporalCoverage": "2017-04-26/2026-11-04",
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://roleplayingtech.com/assets/lab/casino-state-2026.json"
+      }
+    }
+  ]
+}
+</script>
+<script src="/assets/site.js" defer></script>
+<script src="/assets/lab/casino-explorer.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="frame"><a class="logo" href="/en/">roleplayingtech<i>.</i></a><nav class="head-nav" aria-label="Navigation"><a href="/en/#work">Projects</a><a href="/en/education/">Learning</a><a href="/en/lab/" aria-current="page">Essays</a><a href="/en/about/">About</a><a href="/en/#help">Work together</a><a href="/en/#links">Elsewhere</a><a href="/en/#contact">Contact</a><div class="head-socials" aria-label="Social profiles"><a class="soc-link" href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer" aria-label="X (@rpl_0x)" title="X · @rpl_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="soc-accent" d="M12.9 2.5L9.1 6.9M6.9 9.1L3.1 13.5" fill="none" stroke="var(--rust)" stroke-width="1.45" stroke-linecap="round"/><path d="M2.6 2.5h2.7l8.1 11h-2.7Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="soc-accent" cx="4.2" cy="3.9" r="1.15" fill="var(--rust)"/><path d="M4.2 6.6v5.9M7.6 12.5V6.6m0 2.2c0-1.4 1.1-2.3 2.4-2.3 1.4 0 2.2.9 2.2 2.4v3.6" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="soc-link" href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (@roleplayinglife_0x)" title="Instagram · @roleplayinglife_0x"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.2" y="2.2" width="11.6" height="11.6" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.7" fill="none" stroke="currentColor" stroke-width="1.4"/><circle class="soc-accent" cx="11.3" cy="4.7" r="1" fill="var(--rust)"/></svg></a></div><a class="switch" href="/pl/lab/panstwo-linkuje-do-kasyna/" hreflang="pl">PL</a></nav></div></header>
+
+<nav class="lab-subnav" aria-label="Report chapters">
+  <div class="frame lab-subnav-inner">
+    <div class="lab-subnav-links">
+      <a href="#silos">01 · Five blind registries</a>
+      <a href="#wektory">02 · Drop-catches vs victims</a>
+      <a href="#infrastruktura">03 · Domain clusters &amp; lag</a>
+      <a href="#reforma">04 · Data hygiene &amp; fixes</a>
+    </div>
+    <a class="lab-subnav-cta" href="#explorer"><span class="cta-full">Defanged database (359) ↓</span><span class="cta-short">Database (359) ↓</span></a>
+  </div>
+</nav>
+
+<main id="main">
+
+<header class="lab-hero frame">
+  <div class="back"><a class="quiet-link" href="/en/lab/">← Data &amp; interactive essays</a></div>
+  <div class="lab-issue-bar micro">
+    <span class="lab-tag">ISSUE 02 · INVESTIGATION &amp; DATASET</span>
+    <span>Public registries &amp; illegal gambling (RSPO · RPWDL · MC · MF)</span>
+    <span>Verified snapshot: Nov 3–4, 2026 · ~14 min read</span>
+  </div>
+  <h1>How Polish state registries and <i>.gov.pl</i> pages funnel traffic to illegal offshore casinos</h1>
+
+  <div class="lab-lead-grid">
+    <div>
+      <p class="lab-lead">On the official website of Kłodzko County Office, the music schools directory lists the Secondary Music School in Bystrzyca Kłodzka. Clicking that link triggers an <code>HTTP 301</code> redirect into <code>learningpassport[.]pl</code> — until spring 2025 the Polish teacher-training domain of an educational program run by UNICEF's Refugee Response Office in Poland, the Ministry of Education, the Educational Research Institute, the SOK Foundation and Microsoft, and for 527 days (as of November 3, 2026) an unblocked VOX Casino storefront accepting instant BLIK deposits.</p>
+      <p class="lab-lead-sub">To find out whether this was an isolated glitch or a structural pattern, I harvested and audited <strong>35,583 unique registrable root domains</strong> across four Polish educational and healthcare registries (RSPO, RPWDL, Ministry of Family Nursery Registry) and cross-checked them against the Ministry of Digital Affairs statutory public websites list, all 59,376 entries of the Ministry of Finance Gambling Blocklist XML (2017–2026), DNS/RDAP telemetry, and Polish Wikipedia citations.</p>
+      <div class="lab-byline-bar">
+        <span>Reporting, code &amp; forensic audit: <strong>Grzegorz Stuczyński</strong></span>
+        <span>Sources: <a href="https://rspo.gov.pl" target="_blank" rel="noopener noreferrer">rspo.gov.pl</a> · <a href="https://dane.gov.pl/pl/dataset/2138" target="_blank" rel="noopener noreferrer">RPWDL</a> · <a href="https://dane.gov.pl/pl/dataset/1875" target="_blank" rel="noopener noreferrer">MC #1875</a> · <a href="https://hazard.mf.gov.pl" target="_blank" rel="noopener noreferrer">MF XML</a> (Nov 3–4, 2026)</span>
+        <span>Open data: <a href="/assets/lab/casino-state-2026.json" download>JSON (572 KB, defanged)</a> · <a href="https://github.com/RolePlayingTech/roleplayingtech-portfolio/blob/main/docs/lab/casino-state-methodology.md" target="_blank" rel="noopener noreferrer">Methodology ↗</a></span>
+      </div>
+      <div class="cas-disclosure-box" role="note">
+        <span class="micro">Editorial &amp; security disclosure · Right of reply &amp; CERT Polska</span>
+        Technical audit snapshot across this report and dataset: <strong>November 3–4, 2026</strong>. In compliance with Article 29 of the Polish Gambling Act, every gambling-linked domain across the report and JSON dataset is neutralized using <code>[.]</code> bracket notation with zero clickable casino links, while injected paths and software versions on the 22 externally compromised live servers (Vector B1) are withheld from public files and compiled for incident submission to <strong>CERT Polska (CSIRT NASK)</strong>. At the time of publication, zero institutional responses have been received yet — verified registry or server remediations reported to <a href="mailto:stuczynski.g@gmail.com">stuczynski.g@gmail.com</a> will be logged in the dataset as <code>CLEANED_AFTER_NOTIFICATION</code>.
+      </div>
+      <div class="lab-jump-row">
+        <a class="jump" href="#silos">Read the investigation<span>↓</span></a>
+        <a class="quiet-link" href="#explorer">Jump straight to the 359-domain database ↓</a>
+      </div>
+    </div>
+
+    <aside class="lab-meta-box" aria-label="Scope, legal compliance and harm minimization">
+      <span class="micro">Read first · Scope &amp; harm minimization</span>
+      <ul>
+        <li><strong>Zero clickable gambling links (Art. 29 Gambling Act):</strong> every hijacked, affiliate, or compromised domain is rendered strictly in defanged bracket notation (<code>example[.]pl</code>). Clickable verification buttons link exclusively to official state registries (<code>rspo.gov.pl</code>, <code>dane.gov.pl</code>, <code>gov.pl</code>, <code>BIP</code>).</li>
+        <li><strong>Active vs. archival cohorts kept separate:</strong> active 2025/2026 schools (<code>0.73%</code> prevalence) are never pooled into one headline rate with retired 2018–2023 domains (<code>1.70%</code> due to natural domain expiration).</li>
+        <li><strong>Victim server protection (Vector B1):</strong> for the 22 live hospitals, clinics, schools and nurseries hit by external CMS compromises, per-host plugin/PHP versions and injected subpage paths are redacted.</li>
+      </ul>
+      <details class="lab-meta-more">
+        <summary>Deduplication, PSL normalization &amp; audit details</summary>
+        <ul>
+          <li><strong>35,583 unique root domains:</strong> from 35,730 cohort scans across four registries, 147 cross-registry overlaps between RPWDL and school registries were removed (0 hit overlaps), excluding shared SaaS subdomains (<code>edupage.org</code>, <code>szkolnastrona.pl</code>, <code>bip.net.pl</code>, <code>gov.pl</code>).</li>
+          <li><strong>Full PSL &amp; chronological MF XML sorting:</strong> the <code>.pl</code> surge on the Ministry of Finance blocklist was computed after sorting all 59,376 XML entries chronologically by <code>DataWpisu</code> and normalizing against the full NASK + ICANN/private Public Suffix List (incl. <code>edu.pl</code>, <code>waw.pl</code>, <code>vercel.app</code>, <code>co.uk</code>).</li>
+          <li><strong>287 of 291 unblocked end-to-end in Poland:</strong> 4 of the 291 unblocked institutional domains <code>301</code>-redirect to a hub domain already in MF's XML; all 291 remain missing from the MF register itself and pass SEO link equity to foreign search crawlers.</li>
+        </ul>
+      </details>
+    </aside>
+  </div>
+
+  <div class="lab-findings" aria-label="Key findings">
+    <div class="lab-finding">
+      <span class="lab-finding-num">291<small>domains</small></span>
+      <span class="lab-finding-label">hijacked or compromised Polish school, hospital, clinic and nursery domains operating <strong>outside the MF Gambling Blocklist</strong> (<code>0.82%</code> of 35,583 roots; incl. <strong>166 public-sector</strong> — <a href="?view=unblocked&amp;public=1#explorer" data-cas-preset="view=unblocked&amp;public=1">filter public sector ↓</a>).</span>
+      <span class="lab-finding-note">242 takeovers (A) · 27 SEO facades (B2) · 22 CMS hacks (B1)</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">158<small>still live</small></span>
+      <span class="lab-finding-label">unblocked casino domains <strong>currently listed in live primary state registries</strong> (<code>54.3%</code> — 113 on RSPO, 37 in RPWDL2, 8 in the Nursery Registry; <a href="?view=unblocked&amp;live=1#explorer" data-cas-preset="view=unblocked&amp;live=1">inspect live records ↓</a>).</span>
+      <span class="lab-finding-note">plus 137 unblocked domains in MC's statutory public list</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">68<small>post-ban</small></span>
+      <span class="lab-finding-label">domains <strong>already banned by the Ministry of Finance</strong> (31 public/registry institutions &amp; 37 Wikipedia-cited <code>.pl</code> domains) still live on <code>rspo.gov.pl</code> (9), RPWDL2 (1 / 70 rows), MC's list (22) and <code>gov.pl</code> (<a href="?view=banned#explorer" data-cas-preset="view=banned">view all 68 ↓</a>).</span>
+      <span class="lab-finding-note">longest live gov.pl dofollow link: 657 days post-ban</span>
+    </div>
+    <div class="lab-finding">
+      <span class="lab-finding-num">26.2<small>× .pl surge</small></span>
+      <span class="lab-finding-label">jump in Polish <code>.pl</code> share among newly banned root domains on the MF blocklist: from <strong>0.82%</strong> in 2023 to <strong>21.51%</strong> in 2026 (<strong>33.0×</strong> in raw XML entries: 0.70% to 23.11%).</span>
+      <span class="lab-finding-note">over 570 hijacked non-gambling .pl domains in 2025–2026</span>
+    </div>
+  </div>
+</header>
+
+<article class="lab-essay frame" id="silos">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 01
+      <strong>Blind silos</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Why offshore casinos abandoned disposable .xyz domains and started buying expired Polish schools, clinics and government campaigns</h2>
+      <p class="has-dropcap">The trajectory of <code>learningpassport[.]pl</code> captures an industry-wide tactical pivot in miniature. Between June 2023 and April 2025, that auxiliary Polish domain served teacher-training courses for <em>Learning Passport Polska</em> — an education initiative run jointly by UNICEF's Refugee Response Office in Poland, the Ministry of Education, the Educational Research Institute (IBE), the SOK Foundation and Microsoft (whose core international course platform continues operating separately at <a href="https://poland.learningpassport.org" target="_blank" rel="noopener noreferrer"><code>poland.learningpassport.org</code> ↗</a>). When the Polish training cycle wound down in spring 2025 and its local domain registration lapsed, nothing placed the address in quarantine. Forty-five days after its final Wayback Machine capture, on <strong>May 25, 2025</strong>, the domain was re-registered through drop-catch marketplace <code>Aftermarket.pl Limited</code>, placed behind Cloudflare nameservers (<code>dom + zainab</code>), and turned into a Polish-language VOX Casino landing page advertising a 10,000 PLN welcome bonus. Soon after, the expired domain of a public music school in Bystrzyca Kłodzka (<code>sm2bystrzyca[.]pl</code>) was acquired as well, channeling visitors and search-engine PageRank straight from Kłodzko County's official directory at <a href="https://powiat.klodzko.pl/92/szkoly-muzyczne.html" target="_blank" rel="noopener noreferrer"><code>powiat.klodzko.pl/92/szkoly-muzyczne.html</code> ↗</a>. As of November 3, 2026 — <strong>527 days later</strong> — neither domain appears on Poland's national gambling blocklist.</p>
+      <p>For the first seven years of Poland's gambling domain register (launched in April 2017), offshore operators played a disposable-mirror game: spinning up numbered domains under <code>.com</code>, <code>.xyz</code>, <code>.top</code> or <code>.bet</code> and incrementing the counter whenever customs officers blacklisted a subdomain. In 2023, across <strong>4,391 newly blacklisted unique root domains</strong> (chronologically sorted and normalized via the full Public Suffix List), country-code <code>.pl</code> domains accounted for just <strong>0.82% (36 roots)</strong> — or <strong>0.70% (76 of 10,932)</strong> of raw XML rows. For search engines, however, fresh numbered domains carry zero authority and struggle to rank for lucrative Polish casino queries.</p>
+      <p>Starting in 2025, affiliate networks inverted their playbook. The <code>.pl</code> share of newly banned root domains jumped to <strong>5.60% (124 of 2,216)</strong> in 2025 and reached <strong>21.51% (931 of 4,328 roots — a 26.2× increase over 2023)</strong> between January 1 and November 3, 2026; in raw XML entries including subdomains, <code>.pl</code> rose <strong>33.0× to 23.11% (1,731 of 7,491)</strong>. Inspecting the 2025–2026 entries reveals <strong>more than 570 blacklisted <code>.pl</code> domains whose names have nothing to do with gambling</strong>: former primary schools, municipal welfare centers, cultural houses, public swimming pools, veterinary inspectorates and hospitals. To a search crawler, each of those domains comes pre-loaded with years of institutional <code>dofollow</code> backlinks from <code>.gov.pl</code> ministries, municipal Public Information Bulletins (<code>BIP</code>), regional school boards and Wikipedia.</p>
+      <p>If over five hundred hijacked Polish domains had already landed on the Ministry of Finance blocklist, the obvious question was the inverse: <strong>how many school, hospital and nursery domains are actively serving or promoting illegal casinos right now without being blocked — while official state registries still point citizens to them?</strong> Pulling primary dumps from four state registries and filtering out shared SaaS platforms yielded <strong>35,583 unique registrable root domains</strong>:</p>
+      <p>Across <strong>active 2025/2026 RSPO schools and educational institutions</strong>, <strong>105 of 14,286 dedicated non-MF domains (0.73%</strong>; 95% CI: <code>0.61%–0.89%</code>; <code>0.76%</code> including 4 MF-banned domains) actively served or promoted unlicensed online casinos. Disaggregating by ownership refutes the assumption that only small private schools lose control of their domains: <strong>public institutions stood at 0.78% (64 of 8,210)</strong> versus <strong>0.67% among non-public ones (41 of 6,076</strong>; Fisher's exact <code>p = 0.49</code>). Across <strong>8,198 historical domains from 2018–2023 RSPO archives</strong>, unblocked casino prevalence was more than twice as high at <strong>1.70% (139 domains)</strong>. Cross-checking all 139 against live <code>rspo.gov.pl</code> records showed that only <strong>20.9% (29)</strong> belonged to liquidated schools; <strong>66.9% (93)</strong> are still-operating schools that switched their website to <code>edupage.org</code>, <code>szkolnastrona.pl</code> or a municipal portal (only 3 moved to <code>gov.pl</code>) and let their old <code>.pl</code> expire. In Poland's <strong>Healthcare Providers Registry (RPWDL)</strong>, <strong>41 of 11,860 medical domains (0.35%)</strong> served unblocked casino content, and in the <strong>Ministry of Family Nursery Registry</strong>, <strong>10 of 2,304 total dedicated nursery domains (0.43%</strong>: 6 of 1,386 non-RSPO roots plus 4 co-listed in RSPO).</p>
+      <p>Even more revealing is what happens across government databases <em>after</em> the Ministry of Finance officially bans a domain. Poland's blocklist operates as a one-way silo — no other state registry polls it (<a href="?view=banned#explorer" data-cas-preset="view=banned">inspect all 68 MF-banned domains retained in public sources ↓</a>):</p>
+      <p>First, on <a href="https://www.gov.pl/web/klimat/badz-odkrywca-parkow-narodowych" target="_blank" rel="noopener noreferrer"><code>gov.pl/web/klimat/badz-odkrywca-parkow-narodowych</code> ↗</a> and Biebrza National Park's <a href="https://bbpn.gov.pl/promocja-parkow-narodowych" target="_blank" rel="noopener noreferrer"><code>bbpn.gov.pl/promocja-parkow-narodowych</code> ↗</a>, official pages still carry live <code>dofollow</code> links to <code>odkrywcaparkownarodowych[.]pl</code> — <strong>657 days after the Ministry of Finance blacklisted it on January 16, 2025</strong>. Second, despite a 7-day statutory update duty under Art. 7(1)(10), Art. 7(2) and Art. 36(1)(1), (2)–(3) of the Educational Information System Act (<code>Dz.U. 2026 item 803</code>), the Ministry of Education's live <code>rspo.gov.pl</code> API still displays <strong>9 MF-banned domains across 16 public institution cards</strong> — including <strong>two active public primary schools</strong> (<a href="https://rspo.gov.pl/institutions/93026" target="_blank" rel="noopener noreferrer"><code>RSPO 93026</code> ↗</a> in Różanki, <code>zsrozanki[.]pl</code>, banned Aug 21, 2026; and <a href="https://rspo.gov.pl/institutions/48899" target="_blank" rel="noopener noreferrer"><code>RSPO 48899</code> ↗</a> in Wola Rasztowska, <code>spwolarasztowska[.]pl</code>, banned Aug 13, 2026), one active non-public adult education center (<code>dzierzno[.]pl</code>, <a href="https://rspo.gov.pl/institutions/48079" target="_blank" rel="noopener noreferrer"><code>RSPO 48079</code> ↗</a> — 390 days post-ban) and 13 liquidated school cards. Third, in the e-Health Center's nightly <code>RPWDL2</code> active-providers archive from November 3, 2026 (<code>CSV_Rpm_aktywne</code>), the MF-banned hospital domain <code>pzzoz[.]bedzin[.]pl</code> (banned March 4, 2026) was cleared from <code>podmioty.csv</code> yet continues shipping every night under active hospital book <code>000000014475</code> (<em>Zagłębiowski Clinical Hospital</em>) across <strong>70 child rows</strong>: 2 historical facility records in <code>zaklady.csv</code> and 68 closed clinical ward records in <code>komorki.csv</code> (including ophthalmology and cytostatics). Fourth, the Ministry of Digital Affairs' statutory <em>List of Public-Entity Websites</em> under Art. 14(4) of the Digital Accessibility Act (<a href="https://dane.gov.pl/pl/dataset/1875" target="_blank" rel="noopener noreferrer"><code>dane.gov.pl</code> #1875 ↗</a>, latest published resource <code>65294</code> from March 13, 2025, data state April 30, 2024, 98,048 rows) currently distributes <strong>159 verified casino domains: 22 already banned by MF</strong> and <strong>137 unblocked</strong>.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Why Polish ISP DNS blocking doesn't stop SEO</strong>
+        Polish telecoms redirect MF-banned domains to a Ministry warning screen for domestic users. Search crawlers (Googlebot, Bingbot), however, crawl from US and Irish IP ranges where Polish ISP sinkholing does not apply — so they index the full casino storefront powered by <code>dofollow</code> links from <code>.gov.pl</code>, <code>BIP</code> and Polish Wikipedia (39 MF-banned <code>.pl</code> domains across 72 articles).
+      </div>
+      <div class="lab-aside-note">
+        <strong>9 official pages with live HTML links</strong>
+        Beyond registry database fields, live HTML inspection confirmed <strong>10 active <code>dofollow</code> <code>&lt;a href&gt;</code> tags across 9 official government and municipal pages</strong> (<code>gov.pl/web/klimat</code>, <code>bbpn.gov.pl</code>, <code>powiat.klodzko.pl</code>, and 6 municipal <code>BIP</code> pages — <a href="?view=govlinks#explorer" data-cas-preset="view=govlinks">inspect all 9 pages ↓</a>).
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" id="fig-silos" aria-labelledby="fig1-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Figure 01 · Disconnected state silos &amp; the .pl pivot</span>
+        <h3 class="lab-fig-title" id="fig1-title">Five public registries never sync against the Ministry of Finance blocklist — as .pl share jumps 26.2×</h3>
+        <p class="lab-fig-sub">Left: zero automated cross-validation between MF's daily XML blocklist and Poland's education, healthcare, digital accessibility and <code>.gov.pl</code>/<code>BIP</code> silos (Nov 3–4, 2026). Right: <code>.pl</code> share among newly banned root domains (Full PSL, 2017–2026) and prevalence across the four scanned cohorts.</p>
+      </div>
+    </div>
+
+    <div class="silo-grid">
+      <div class="silo-panel">
+        <div class="silo-panel-head">
+          <h4>Zero cross-registry synchronization</h4>
+          <p>Adding a domain to the Ministry of Finance XML triggers zero automated alerts in RSPO, RPWDL2, MC's statutory website list or <code>gov.pl</code>/<code>BIP</code> portals.</p>
+        </div>
+        <div class="silo-arch" role="img" aria-label="Diagram showing lack of synchronization between the MF Gambling Blocklist and RSPO, RPWDL2, MC statutory list, and gov.pl/BIP pages">
+          <div class="silo-arch-top">
+            <span class="silo-arch-top-kicker">MF GAMBLING BLOCKLIST (hazard.mf.gov.pl · XML)</span>
+            <span class="silo-arch-top-sub">59,376 entries (2017–2026) · 931 new .pl root domains in 2026 · 0 webhooks to other ministries</span>
+          </div>
+          <div class="silo-arch-gap" aria-hidden="true">
+            <span class="silo-arch-badge">ZERO AUTOMATED CROSS-SYNC</span>
+          </div>
+          <div class="silo-arch-cards">
+            <div class="silo-arch-card">
+              <span class="silo-arch-kicker">01 · MEN / CIE — RSPO.GOV.PL</span>
+              <strong class="silo-arch-val">113 unblocked live</strong>
+              <span class="silo-arch-line">+ 9 MF-banned domains across 16 live cards</span>
+              <span class="silo-arch-sub">incl. 2 active public primary schools</span>
+            </div>
+            <div class="silo-arch-card">
+              <span class="silo-arch-kicker">02 · MZ / CEZ — RPWDL2 + NURSERIES</span>
+              <strong class="silo-arch-val">37 RPWDL2 + 8 nurseries</strong>
+              <span class="silo-arch-line">+ pzzoz[.]bedzin[.]pl (70 child rows post-ban)</span>
+              <span class="silo-arch-sub">county hospitals, municipal clinics &amp; nurseries</span>
+            </div>
+            <div class="silo-arch-card">
+              <span class="silo-arch-kicker">03 · MC — STATUTORY PUBLIC LIST (#1875)</span>
+              <strong class="silo-arch-val">159 casino domains</strong>
+              <span class="silo-arch-line">137 unblocked + 22 already banned by MF</span>
+              <span class="silo-arch-sub">Art. 14(4) Digital Accessibility Act (res. 65294)</span>
+            </div>
+            <div class="silo-arch-card">
+              <span class="silo-arch-kicker">04 · .GOV.PL, BIP &amp; WIKIPEDIA</span>
+              <strong class="silo-arch-val">9 official pages (10 hrefs)</strong>
+              <span class="silo-arch-line">gov.pl/web/klimat (657d post-ban) + 6 BIP</span>
+              <span class="silo-arch-sub">+ 39 MF-banned .pl domains in 72 Wiki articles</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="silo-panel">
+        <div>
+          <div class="silo-panel-head">
+            <h4>.pl share of newly blacklisted MF roots (2017–2026, Full PSL)</h4>
+            <p>Share of Polish <code>.pl</code> domains among first-seen blacklisted <code>eTLD+1</code> roots (sorted chronologically).</p>
+          </div>
+          <div class="silo-surge-bars" role="img" aria-label="Bar chart of .pl domain share on MF blocklist from 2017 to 2026: surging from 0.82% in 2023 to 21.51% in 2026">
+            <div class="silo-yr-col"><span class="silo-yr-pct">1.4%</span><div class="silo-yr-bar" style="height:7%"></div><span class="silo-yr-lbl">17</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">1.1%</span><div class="silo-yr-bar" style="height:5%"></div><span class="silo-yr-lbl">18</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">0.4%</span><div class="silo-yr-bar" style="height:3%"></div><span class="silo-yr-lbl">19</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">0.1%</span><div class="silo-yr-bar" style="height:2%"></div><span class="silo-yr-lbl">20</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">3.3%</span><div class="silo-yr-bar" style="height:15%"></div><span class="silo-yr-lbl">21</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">2.2%</span><div class="silo-yr-bar" style="height:10%"></div><span class="silo-yr-lbl">22</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">0.8%</span><div class="silo-yr-bar" style="height:4%"></div><span class="silo-yr-lbl">23</span></div>
+            <div class="silo-yr-col"><span class="silo-yr-pct">0.9%</span><div class="silo-yr-bar" style="height:4%"></div><span class="silo-yr-lbl">24</span></div>
+            <div class="silo-yr-col is-2025"><span class="silo-yr-pct">5.6%</span><div class="silo-yr-bar" style="height:26%"></div><span class="silo-yr-lbl">25</span></div>
+            <div class="silo-yr-col is-peak"><span class="silo-yr-pct">21.5%</span><div class="silo-yr-bar" style="height:100%"></div><span class="silo-yr-lbl">26</span></div>
+          </div>
+        </div>
+
+        <div class="silo-cohorts">
+          <button type="button" class="silo-cohort-btn" data-cas-preset="view=unblocked&amp;cohort=ACTIVE_RSPO_2025_2026">
+            <div class="silo-cohort-top"><strong>Active RSPO schools (2025/2026)</strong><span class="silo-cohort-rate">0.73% (105 / 14,286)</span></div>
+            <div class="silo-cohort-track"><div class="silo-cohort-fill" style="width:43.5%"></div></div>
+            <div class="silo-cohort-sub"><span>public 0.78% vs non-public 0.67% (p=0.49)</span><span>filter 105 →</span></div>
+          </button>
+          <button type="button" class="silo-cohort-btn" data-cas-preset="view=unblocked&amp;cohort=ABANDONED_RSPO_2018_2023">
+            <div class="silo-cohort-top"><strong>Historical RSPO domains (2018–2023)</strong><span class="silo-cohort-rate">1.70% (139 / 8,198)</span></div>
+            <div class="silo-cohort-track"><div class="silo-cohort-fill is-hist" style="width:100%"></div></div>
+            <div class="silo-cohort-sub"><span>66.9% are active schools that changed URLs</span><span>filter 139 →</span></div>
+          </button>
+          <button type="button" class="silo-cohort-btn" data-cas-preset="view=unblocked&amp;cohort=ACTIVE_REJESTR_ZLOBKOW_2026">
+            <div class="silo-cohort-top"><strong>Ministry Nursery Registry (all roots)</strong><span class="silo-cohort-rate">0.43% (10 / 2,304)</span></div>
+            <div class="silo-cohort-track"><div class="silo-cohort-fill" style="width:25.5%"></div></div>
+            <div class="silo-cohort-sub"><span>6 residual + 4 co-listed in RSPO</span><span>filter 10 →</span></div>
+          </button>
+          <button type="button" class="silo-cohort-btn" data-cas-preset="view=unblocked&amp;cohort=ACTIVE_RPWDL_PODMIOTY_LECZNICZE_2026">
+            <div class="silo-cohort-top"><strong>RPWDL Healthcare Providers</strong><span class="silo-cohort-rate">0.35% (41 / 11,860)</span></div>
+            <div class="silo-cohort-track"><div class="silo-cohort-fill" style="width:20.4%"></div></div>
+            <div class="silo-cohort-sub"><span>37 still live in nightly RPWDL2 (Nov 3)</span><span>filter 41 →</span></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Source: author's calculations across RSPO (2018–2026), RPWDL/RPWDL2, Nursery Registry, MC (#1875) and MF XML (Nov 3–4, 2026).</span>
+      <span>Click any cohort bar on the right to filter the database below.</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="wektory">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 02
+      <strong>Takeovers vs. victims</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Why adding all 291 domains to the blocklist would cut patients off from county hospitals within 48 hours</h2>
+      <p class="has-dropcap">Visit the website of the municipal health clinic in Cegłów east of Warsaw (<code>spzozceglow[.]pl</code>, linked directly from the town's official Public Information Bulletin at <a href="https://bip.ceglow.pl/ceg/spzoz-w-ceglowie/informacje/18278,Informacje-ogolne.html" target="_blank" rel="noopener noreferrer"><code>bip.ceglow.pl</code> ↗</a>) and you see an ordinary public health center: schedules for thirteen outpatient clinics, registration phone numbers, and an October 23, 2026 procurement notice for a Type A1 patient-transport ambulance. Only when you inspect the server's underlying subpages and HTML DOM do you find the parasite: eight days before the ambulance tender went up, an attacker exploited an unpatched CMS installation and injected a cluster of Polish-language doorway pages advertising no-deposit casino bonuses.</p>
+      <p>I found the exact same pattern on the live server of the <strong>County Hospital Complex in Żuromin</strong> (<code>szpital-zuromin[.]pl</code> — a public hospital listing <strong>61 active wards, specialist clinics and diagnostic labs</strong> across 67 total rows in RPWDL), the <strong>Municipal Nursery in Starzyno</strong> (<code>zlobekstarzyno[.]pl</code> — 38 toddler places, 33 enrolled in Gmina Puck), an active four-school public complex in Warsaw (<code>zslie1[.]edu[.]pl</code> — <strong>976 students</strong> and school announcements dated October 26, 2026), <strong>Public Preschool No. 337 in Warsaw</strong> (<code>przedszkole337[.]pl</code>, linked from <a href="https://przedszkole337.bip.warszawa.pl/" target="_blank" rel="noopener noreferrer"><code>przedszkole337.bip.warszawa.pl</code> ↗</a> — where 67 hidden affiliate links sit in the HTML beside an October 30 parent workshop notice), <strong>Public Preschool No. 2 in Kłodzko</strong> (<code>przedszkole2[.]klodzko[.]pl</code> — 191 children, hosting an injected page targeting addicted gamblers searching how to <em>cancel self-exclusion</em>), <strong>Public Preschool in Mochy</strong>, and <strong>Arkady Fiedler Primary School in Gułtowy</strong>.</p>
+      <p>Forensic inspection of all 291 unblocked domains shows they split into <strong>three distinct technical vectors</strong> requiring opposite legal remedies:</p>
+      <p><strong>Vector A (242 of 291 — 83.2%)</strong> consists of expired domains bought on the drop-catch market and repurposed into full offshore casino registration funnels with BLIK/crypto deposits or <code>HTTP 301</code> redirects into 31 affiliate hub domains (for instance, <a href="https://sp109.bip.warszawa.pl/-/kontakt" target="_blank" rel="noopener noreferrer"><code>sp109.bip.warszawa.pl/-/kontakt</code> ↗</a> still points to <code>sp109[.]waw[.]pl</code> 552 days after its takeover, while Primary School No. 109 now operates on <code>sp109warszawa.edupage.org</code>). Fully <strong>97.9% (237 of 242)</strong> sit behind Cloudflare.</p>
+      <p><strong>Vector B2 (27 of 291 — 9.3%)</strong> comprises drop-caught domains turned into deceptive SEO facades (<strong>100% on Cloudflare</strong>). Rather than showing a roulette wheel on load, operators reconstructed <strong>15 former school websites from Wayback Machine snapshots</strong> — preserving real principals' names, statutes and assembly photos while splicing casino links into AI-rewritten paragraphs (<code>spnoskow[.]pl</code>, <code>spniemica[.]edu[.]pl</code>, <code>zsradzymin[.]pl</code>, <code>sp10szczecin[.]pl</code>) — alongside <strong>12 slot-review and crash-game facades</strong> such as Warsaw's <code>przedszkole384[.]pl</code> ("Aviator"), still linked on two <a href="https://przedszkole384.bip.warszawa.pl/" target="_blank" rel="noopener noreferrer"><code>przedszkole384.bip.warszawa.pl</code> ↗</a> pages.</p>
+      <p><strong>Vector B1 (22 of 291 — 7.6%)</strong> represents genuine <strong>live institutional servers compromised by third-party attackers</strong> (<a href="?view=victims#explorer" data-cas-preset="view=victims">inspect all 22 Vector B1 victim servers ↓</a>). These domains never expired: <strong>95.5% (21 of 22)</strong> run on Polish or European shared hosting (<code>cyber_Folks</code>, <code>home.pl</code>, <code>LH.pl</code>, <code>Hekko</code>), where attackers hid gambling links via CSS (<code>display: none</code>, off-screen positioning, zero opacity) inside unpatched WordPress or Joomla sites. They include <strong>9 public-sector servers (8 active public institutions today plus 1 legacy liquidated school server <code>pspsycyna[.]pl</code>)</strong> and 13 private clinics, schools and nurseries.</p>
+
+      <div class="lab-callout">
+        <span class="micro">Crucial statutory boundary · Article 15f(4)–(5) &amp; Article 29(4) of Poland's Gambling Act</span>
+        <p>All <strong>269 drop-caught domains (Vector A + Vector B2) and their 31 redirect hubs</strong> exist solely to offer or advertise unlicensed gambling — making them textbook candidates for the Ministry of Finance DNS blocklist under Art. 15f(4)(1). Entering any domain into that register, however, triggers a <strong>mandatory 48-hour domain-wide ISP DNS block and tax-crime warning redirect under Article 15f(5)</strong> plus payment-provider cutoffs under Art. 15g(2), leaving an institution only a post-facto objection (<em>sprzeciw</em>) under Art. 15f(7) — while unwitting hack victims do not unlawfully promote gambling under Art. 29(4). Sinkholing <code>szpital-zuromin[.]pl</code> or <code>spzozceglow[.]pl</code> would sever patients from clinic schedules and tenders; those 22 servers belong in <strong>CERT Polska's (CSIRT NASK)</strong> incident-remediation queue.</p>
+      </div>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Why per-host plugin versions are redacted</strong>
+        During forensic probing of Vector B1 servers, I identified legacy PHP branches, exposed REST endpoints and vulnerable WordPress plugins. Publishing exact version numbers and injected URLs alongside named county hospitals would create a target blueprint — so per-host exploit details are stripped from the public JSON/CSV and reserved exclusively for CERT Polska.
+      </div>
+      <div class="lab-aside-note">
+        <strong>The WordPress modified_gmt trap</strong>
+        On <code>przedszkole337[.]pl</code> and <code>klapciatek[.]pl</code>, WordPress's <code>date_gmt</code> field showed 2019 and 2023 — the dates teachers originally created legitimate "About Us" and classroom pages. Comparing <code>modified_gmt</code> proved attackers injected the hidden casino links in <strong>October 2026</strong>.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" id="fig-vectors" aria-labelledby="fig2-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Figure 02 · Three-tier forensic anatomy of the 291 unblocked domains</span>
+        <h3 class="lab-fig-title" id="fig2-title">92.4% are drop-caught expired domains behind Cloudflare — while 7.6% are live compromised hospital, school and nursery servers</h3>
+        <p class="lab-fig-sub">Breakdown across the 291 unblocked domains by technical mechanism, DNS/hosting footprint, and statutory remediation path.</p>
+      </div>
+    </div>
+
+    <div class="vec-bar-wrap">
+      <div class="comp-sec-head">
+        <span class="comp-sec-title">Distribution of 291 unblocked institutional domains across technical vectors</span>
+        <span class="comp-click-hint">Click any segment or card to filter the explorer below ↓</span>
+      </div>
+      <div class="vec-stack-bar" role="img" aria-label="291 domains breakdown: Vector A 83.2% (242), Vector B2 9.3% (27), Vector B1 7.6% (22)">
+        <button type="button" class="vec-seg is-a" style="width:83.16%" data-cas-preset="view=unblocked&amp;vec=VECTOR_A_FULL_CASINO_TAKEOVER" title="Vector A: 242 domains (83.2%)">Vector A · 242 (83.2%)</button>
+        <button type="button" class="vec-seg is-b2" style="width:9.28%" data-cas-preset="view=unblocked&amp;vec=VECTOR_B2_DROPCAUGHT_SEO_FACADE" title="Vector B2: 27 domains (9.3%)">B2 · 27</button>
+        <button type="button" class="vec-seg is-b1" style="width:7.56%" data-cas-preset="view=victims" title="Vector B1: 22 victim servers (7.6%)">B1 · 22</button>
+      </div>
+
+      <div class="vec-cards">
+        <div class="vec-card">
+          <div>
+            <div class="vec-card-head">
+              <span class="vec-card-kicker">Vector A · Full takeover</span>
+              <span class="vec-card-num">242<small>83.2%</small></span>
+            </div>
+            <h4>Direct BLIK casino funnel or 301 redirect into hub</h4>
+            <p style="margin-top:8px">Expired school, clinic and nursery domains acquired via drop-catching to serve offshore casino registration funnels or 301-redirect into 31 affiliate hubs.</p>
+          </div>
+          <div>
+            <div class="vec-meta-list">
+              <span>• DNS proxy: <strong>97.9% Cloudflare</strong> (237 / 242)</span>
+              <span>• Unblocked end-to-end in PL: <strong>238 / 242</strong> (4 → MF hub)</span>
+            </div>
+            <div class="vec-remedy" style="margin-top:8px">Remedy: MF DNS Blocklist (Art. 15f(4)) + registry purge</div>
+            <button type="button" class="vec-filter-btn" style="margin-top:8px" data-cas-preset="view=unblocked&amp;vec=VECTOR_A_FULL_CASINO_TAKEOVER">Filter 242 Vector A domains →</button>
+          </div>
+        </div>
+
+        <div class="vec-card">
+          <div>
+            <div class="vec-card-head">
+              <span class="vec-card-kicker">Vector B2 · SEO facade / PBN</span>
+              <span class="vec-card-num">27<small>9.3%</small></span>
+            </div>
+            <h4>15 Wayback school clones + 12 crash-game &amp; slot blogs</h4>
+            <p style="margin-top:8px">Drop-caught domains impersonating the former school from Internet Archive HTML with spliced casino links, or disguised as "Aviator" crash-game portals.</p>
+          </div>
+          <div>
+            <div class="vec-meta-list">
+              <span>• DNS proxy: <strong>100.0% Cloudflare</strong> (27 / 27)</span>
+              <span>• Subtypes: <strong>15 Wayback PBNs</strong> · <strong>12 casino facades</strong></span>
+            </div>
+            <div class="vec-remedy" style="margin-top:8px">Remedy: MF DNS Blocklist (Art. 15f(4)) + BIP/RSPO unlink</div>
+            <button type="button" class="vec-filter-btn" style="margin-top:8px" data-cas-preset="view=unblocked&amp;vec=VECTOR_B2_DROPCAUGHT_SEO_FACADE">Filter 27 Vector B2 facades →</button>
+          </div>
+        </div>
+
+        <div class="vec-card is-victim">
+          <div>
+            <div class="vec-card-head">
+              <span class="vec-card-kicker">Vector B1 · Victim servers</span>
+              <span class="vec-card-num">22<small>7.6%</small></span>
+            </div>
+            <h4>Live compromised hospital, school &amp; nursery CMS</h4>
+            <p style="margin-top:8px">Genuine operating institutions (incl. 8 active public entities: 2 hospitals/SPZOZ, 5 schools/preschools &amp; 1 municipal nursery) carrying CSS-cloaked spam.</p>
+          </div>
+          <div>
+            <div class="vec-meta-list">
+              <span>• Hosting: <strong>95.5% PL / EU</strong> (21 / 22; 1 Cloudflare)</span>
+              <span>• Sector: <strong>9 public</strong> (8 active) + <strong>13 private</strong></span>
+            </div>
+            <div class="vec-remedy" style="margin-top:8px">Remedy: CERT Polska cleanup (no DNS ban — Art. 15f(5) blocks entire domain in 48h)</div>
+            <button type="button" class="vec-filter-btn" style="margin-top:8px" data-cas-preset="view=victims">Filter 22 Vector B1 victims →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="infrastruktura">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 03
+      <strong>Bulk clusters</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Cloudflare workspace fingerprints, four drop-catch registrars, and why 83% of hijacked domains survive past five months</h2>
+      <p class="has-dropcap">Viewed one URL at a time, 269 hijacked educational and medical domains plus over five hundred previously banned <code>.pl</code> domains look like an anonymous fog behind Cloudflare's reverse proxy. Across the combined pool of 859 non-victim syndicate domains, <strong>710 route through Cloudflare (82.7% overall, and 96.2% — 710 of 738 — among actively resolving domains)</strong>, masking origin server IP addresses.</p>
+      <p>Cloudflare, however, leaves an organizational fingerprint in authoritative DNS: each account workspace is assigned a deterministic pair of nameservers drawn from roughly a thousand names (my DNS cache alone observed <strong>574 distinct <code>*.ns.cloudflare.com</code> hostnames</strong>, implying a ~250,000-pair pool). Under independent account creation, the probability of thirty-four domains landing on the exact same nameserver pair by chance is below 10<sup>−120</sup> (and still 7.5&nbsp;×&nbsp;10<sup>−55</sup> even under an ultra-conservative 2,500-pair assumption).</p>
+      <p>Grouping DNS records exposes industrial-scale workspace clusters. The pair <code>autumn.ns.cloudflare.com + wells.ns.cloudflare.com</code> alone hosts <strong>138 MF-banned Polish <code>.pl</code> domains</strong>. Meanwhile, <code>grant.ns.cloudflare.com + uma.ns.cloudflare.com</code> concentrates <strong>34 domains on a single workspace</strong>: <strong>31 still-unblocked Polish school, preschool and clinic domains</strong> from this audit, <strong>1 unblocked redirect hub</strong> (<code>puchalskidietetyk[.]pl</code>), and <strong>2 domains already blacklisted by the Ministry of Finance</strong> (<code>budowajablonki[.]pl</code> and <code>personelgroup[.]pl</code>) — with every live page serving identical <code>VOX Casino</code> templates (<a href="?view=unblocked&amp;q=grant.ns.cloudflare.com%20%2B%20uma.ns.cloudflare.com#explorer" data-cas-preset="view=unblocked&amp;q=grant.ns.cloudflare.com%20%2B%20uma.ns.cloudflare.com">inspect all 31 unblocked grant+uma domains ↓</a>). A similar bridge spans <code>austin + sreeni</code> (3 unblocked schools alongside 3 MF-banned ones, including <code>spnasielsk[.]pl</code>). Altogether, <strong>just five Cloudflare workspace accounts control 233 of 710 domains (32.8%)</strong>. Two legal and methodological caveats apply: a shared NS pair proves a shared Cloudflare workspace (which may belong either to an in-house affiliate team or to a PBN agency provisioning domains for clients), and as a neutral network intermediary Cloudflare enjoys liability safe harbor under Articles 4–8 of the EU Digital Services Act (DSA) unless national authorities transmit formal action orders under Article 9 DSA.</p>
+      <p>A parallel bottleneck appears at domain acquisition. Querying NASK and IANA RDAP sequentially until NASK's <code>HTTP 429</code> rate limit halted requests resolved <strong>105 of the 291 unblocked domains</strong> (representing a <strong>95.2% census of active non-<code>.eu</code> RSPO domains</strong>). Within that sample, <strong>four drop-catch registrars account for 78.1% of registrations (82 of 105; 79.6% after inverse-probability post-stratification)</strong>: Cyprus-registered <code>Aftermarket.pl Limited</code> (<strong>39.0%</strong> overall, and <strong>48.8% — 39 of 80 — within <code>.pl</code> Vector A takeovers</strong>), Dutch registrar <code>Openprovider / Hosting Concepts B.V.</code> (<strong>20.0%</strong>), France's <code>Netim</code> (<strong>11.4%</strong>), and US-based <code>Dynadot</code> (<strong>7.6%</strong>), alongside 23 domains spread across 13 other registrars. Importantly, automated EPP drop-catching itself is lawful: registrars execute backorders on expiring domains with strong backlink profiles because Polish registry rules currently release an expired public primary school domain into the open market after 30 days on the exact same footing as a defunct online shop.</p>
+      <p>Why the economics work so well becomes clear when we measure enforcement latency. Across <strong>19 caught public-institution domains</strong> on the MF blocklist with RDAP registration timestamps, the <strong>median lag from drop-catch registration to MF ban was 131 days</strong> (IQR: <code>83–155 days</code>; ranging from 28 days on <code>piw[.]olawa[.]pl</code> to 307 days on <code>sudlugie[.]pl</code> and 317 days on <code>spnasielsk[.]pl</code>). Meanwhile, across the <strong>82 still-unblocked Vector A domains</strong> with RDAP dates, the median elapsed age is already <strong>151 days</strong> (148 days among strict 2025–2026 drop-catch registrars, <code>N = 77</code>; max 816 days on <code>zlobekgizycko[.]pl</code>). Combining caught events and right-censored survivors in a <strong>Kaplan–Meier survival curve (N = 101)</strong> reveals the true enforcement window: <strong>83.0% of hijacked public-institution domains remain unblocked at day 150, and 63.0% remain unblocked a full year (365 days) after takeover</strong>.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>All 16 Polish voivodeships</strong>
+        No region is spared: mapping Warsaw's <code>przedszkolewola[.]pl</code> to Mazowieckie places all 291 unblocked domains across all 16 provinces — led by Mazowieckie (59), Wielkopolskie (30), Małopolskie (26), Podkarpackie (24) and Śląskie (23), down to Opolskie and Świętokrzyskie (4 each) and Lubuskie (2).
+      </div>
+      <div class="lab-aside-note">
+        <strong>Why Kaplan–Meier matters here</strong>
+        Averaging lag solely across the 19 domains MF has already caught understates true casino survival because it ignores the 82 domains customs inspectors haven't caught yet (right-censored observations). Product-limit survival estimation incorporates both cohorts properly.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" id="fig-infra" aria-labelledby="fig3-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Figure 03 · Infrastructure concentration, survival &amp; geography (3-view explorer)</span>
+        <h3 class="lab-fig-title" id="fig3-title">Five Cloudflare workspaces hold 32.8% of domains, four registrars capture 78.1%, and 83.0% survive past 150 days</h3>
+        <p class="lab-fig-sub">Switch between Cloudflare NS clusters &amp; registrars (01), the Kaplan–Meier survival curve (02), and all 16 voivodeships (03).</p>
+      </div>
+    </div>
+
+    <div id="fig-infra-interactive">
+      <noscript>
+        <p class="specimen-note">Interactive tabs require JavaScript. Core metrics: <code>autumn+wells</code> = 138 MF-banned domains; <code>grant+uma</code> = 34 domains (32 unblocked + 2 MF-banned); Top-4 registrars (Aftermarket.pl 39.0%, Openprovider 20.0%, Netim 11.4%, Dynadot 7.6%) = 78.1% (N=105); Kaplan–Meier survival (N=101): 94.5% at 90d, 83.0% at 150d, and 63.0% at 365d.</p>
+      </noscript>
+    </div>
+
+    <div class="lab-fig-foot">
+      <span>Source: DNS-over-HTTPS telemetry (908 domains), NASK/IANA RDAP (N=105 unblocked + N=19 MF-banned), TERYT/RSPO/RPWDL geolocation (Nov 3–4, 2026).</span>
+      <span>Click any NS cluster, registrar or voivodeship bar to filter the database below.</span>
+    </div>
+  </figure>
+</article>
+
+<article class="lab-essay frame" id="reforma">
+  <div class="lab-essay-grid">
+    <div class="lab-essay-num number">
+      Chapter 04
+      <strong>Hygiene &amp; fixes</strong>
+    </div>
+    <div class="lab-prose">
+      <h2>Three traps caught during my internal code audit — and four low-cost architectural fixes that close the loophole</h2>
+      <p class="has-dropcap">Just as in Issue 01's procurement audit, downloading official XML and CSV dumps was only half the work. Before freezing the 291 unblocked and 68 post-ban records, I ran a four-part verification pass across my own scripts and primary filings, catching three subtle traps inside the state datasets themselves.</p>
+      <p>First, the Ministry of Finance's <code>mf_hazard.xml</code> feed (59,376 entries) is ordered newest-first — from November 2026 at the top down to entry #1 from April 2017 at the bottom. Deduplicating root domains top-to-bottom without sorting ascending by <code>DataWpisu</code> credits multi-year casino domains to the <em>last</em> year a subdomain was banned, while omitting foreign cloud suffixes (<code>vercel.app</code>, <code>co.uk</code>, <code>eu.com</code>) inflates 2026's <code>.pl</code> share by 0.57 percentage points (<code>22.08%</code> vs. true <code>21.51%</code>). Every time-series metric in this report uses the chronologically sorted Full PSL denominator.</p>
+      <p>Second, the e-Health Center's nightly <code>RPWDL2</code> archive labeled <code>CSV_Rpm_aktywne</code> bundles closed historical clinic wards (with populated end-date columns) inside <code>komorki.csv</code> under active hospital books. That explains why <code>pzzoz[.]bedzin[.]pl</code> — removed from the main hospital record after its March 2026 MF ban — still ships nightly in 70 child facility and closed-ward rows under active hospital book <code>000000014475</code>.</p>
+      <p>Third, filtering out domains shared by more than three RSPO units (designed to skip municipal school portals) initially pushed Warsaw's <code>zslie1[.]edu[.]pl</code> into the 2018–2023 historical bucket — even though those four units form one active public technical-school complex of 976 pupils. Live API verification restored it as the eighth active public institution in Vector B1.</p>
+      <h3>Four low-cost engineering fixes instead of whack-a-mole domain chasing</h3>
+      <p>Closing this structural gap does not require sweeping new legislation or expensive IT tenders — especially when keeping a legacy <code>.pl</code> domain parked on a <code>301</code> redirect costs ~100 PLN a year, whereas once drop-caught even a domestic DNS ban fails to stop US-based Googlebot from indexing its <code>.gov.pl</code> backlinks. Four lightweight safeguards across existing agencies would eliminate most of the attack surface:</p>
+      <p><strong>1. Automated nightly cross-sync between <code>MF XML</code>, <code>CERT Polska</code>, and <code>RSPO / RPWDL2 / Nursery Registry / MC #1875</code>.</strong> MF's blocklist XML is already public and updated daily. A simple nightly job at CIE, CeZ and the Ministry of Digital Affairs comparing every <code>Website</code> field (including child tables <code>zaklady.csv</code> and <code>komorki.csv</code>) against MF and CERT lists — alongside enforcing <code>rel="nofollow"</code> or unlinking liquidated units — would purge banned drop-catches overnight and alert administrators.</p>
+      <p><strong>2. NASK quarantine hold for expiring public-entity domains, <code>.edu.pl</code> eligibility checks, and clean decommissioning during <code>gov.pl</code> migrations.</strong> Fully 66.9% of hijacked historical RSPO domains belonged to still-active schools that moved to a new URL and let their old <code>.pl</code> lapse. Any domain listed in MC's statutory public-websites register (#1875) should carry a protective flag at NASK (with registrant eligibility verification for functional <code>.edu.pl</code> names): instead of dropping into public backorder auctions 30 days after an unpaid invoice, expired institutional domains should enter a non-registrable quarantine buffer with notice to the governing municipality and CERT Polska.</p>
+      <p><strong>3. Cluster-level NS &amp; template correlation at KAS — paired with strict Vector B1 victim routing to CERT Polska.</strong> When two VOX Casino domains on <code>grant + uma</code> hit the MF blocklist, automated NS-pair correlation (paired with formal Art. 9 DSA orders) can flag the remaining 31 hijacked school and clinic domains on that workspace in an afternoon rather than 151 days — while keeping live compromised institutional servers (Vector B1) off the MF register so Art. 15f(5)'s 48-hour DNS sinkhole never cuts off hospital patients, routing them instead to CERT Polska.</p>
+      <p><strong>4. Weekly outbound link &amp; RDAP-change scanner across <code>.gov.pl</code> and <code>BIP</code> portals.</strong> A lightweight crawler checking external links on ministry, national park, county and municipal BIP pages for <code>HTTP 301</code> redirects, recent RDAP re-registrations, or MF/CERT matches would prevent ministry pages from linking to banned casinos for 657 days.</p>
+    </div>
+
+    <aside class="lab-aside-col">
+      <div class="lab-aside-note">
+        <strong>Independent reproducibility</strong>
+        Every record in the explorer below carries an official registry ID (<code>RSPO</code>, <code>RPWDL</code>, <code>MC #1875</code>) and a one-click verification button opening the official state filing or government page.
+      </div>
+    </aside>
+  </div>
+
+  <figure class="lab-figure" aria-labelledby="fig4-title">
+    <div class="lab-fig-head">
+      <div>
+        <span class="lab-fig-kicker">Documentary proof · Three representative audit specimens</span>
+        <h3 class="lab-fig-title" id="fig4-title">How the same systemic blind spot manifests across three layers: a 301 chain, a hacked municipal clinic, and post-ban silos</h3>
+      </div>
+    </div>
+    <div class="specimen-grid">
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Specimen A · 301 chain into former UNICEF/MEiN training domain</strong>
+          <span>Vector A · Kłodzko County Office</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Official directory:</span><strong>powiat.klodzko.pl (dofollow)</strong></div>
+          <div class="specimen-line"><span>Hijacked music school (301):</span><strong>sm2bystrzyca[.]pl</strong></div>
+          <div class="specimen-line is-error"><span>Redirect target (527 days):</span><b>learningpassport[.]pl (VOX)</b></div>
+        </div>
+        <p class="specimen-note">The county's official music schools directory links to an expired school domain that 301-redirects into the former UNICEF Refugee Response Office + Ministry of Education + IBE + SOK Foundation + Microsoft training domain, drop-caught May 25, 2025 via Aftermarket.pl (527 days as of Nov 3, 2026). <a href="https://powiat.klodzko.pl/92/szkoly-muzyczne.html" target="_blank" rel="noopener noreferrer">County page ↗</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Specimen B · Compromised live municipal health clinic</strong>
+          <span>Vector B1 · SPZOZ Cegłów (RPWDL + BIP)</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>Active RPWDL units:</span><strong>13 clinics (25 total rows)</strong></div>
+          <div class="specimen-line"><span>Legitimate post (2026-10-23):</span><strong>Type A1 ambulance tender</strong></div>
+          <div class="specimen-line is-error"><span>Injected doorways (2026-10-15):</span><b>Casino bonus spam cluster</b></div>
+        </div>
+        <p class="specimen-note">Operating public health clinic linked from the municipal BIP. Listing it on MF's blocklist would trigger mandatory 48h domain-wide ISP blocking under Art. 15f(5) — requires CERT Polska CMS cleanup without disrupting patient access. <a href="https://bip.ceglow.pl/ceg/spzoz-w-ceglowie/informacje/18278,Informacje-ogolne.html" target="_blank" rel="noopener noreferrer">BIP Cegłów card ↗</a></p>
+      </div>
+
+      <div class="specimen-card">
+        <div class="specimen-head">
+          <strong>Specimen C · State databases retaining MF-banned domains</strong>
+          <span>Post-ban silos · gov.pl + rspo.gov.pl + RPWDL2</span>
+        </div>
+        <div class="specimen-lines">
+          <div class="specimen-line"><span>gov.pl/web/klimat (banned 01/25):</span><strong>657 days live dofollow</strong></div>
+          <div class="specimen-line"><span>rspo.gov.pl (banned 08/26):</span><strong>zsrozanki[.]pl + spwolarasztowska[.]pl</strong></div>
+          <div class="specimen-line is-error"><span>RPWDL2 active zip (banned 03/26):</span><b>pzzoz[.]bedzin[.]pl (70 rows)</b></div>
+        </div>
+        <p class="specimen-note">Even after MF blacklists a domain, zero automated sync reaches other ministries: banned domains persist on active public primary school cards, nightly health feeds, and 22 MC statutory rows. <a href="https://rspo.gov.pl/institutions/93026" target="_blank" rel="noopener noreferrer">RSPO card #93026 ↗</a></p>
+      </div>
+    </div>
+  </figure>
+</article>
+
+<section class="lab-tool-section" id="explorer">
+  <div class="frame">
+    <div class="lab-tool-head">
+      <div>
+        <span class="number">Full defanged database · 291 unblocked + 68 MF-banned + 9 official .gov.pl/BIP pages</span>
+        <h2>Verify every record back to its state filing</h2>
+      </div>
+      <p>Switch across the four investigative lenses, filter by voivodeship, registry cohort or Cloudflare cluster, and open official records on <code>rspo.gov.pl</code>, <code>dane.gov.pl</code> or <code>BIP</code> in one click.</p>
+    </div>
+    <div id="casino-explorer" data-src="/assets/lab/casino-state-2026.json">
+      <noscript>
+        <div class="lab-callout">
+          <span class="micro">Interactive explorer requires JavaScript</span>
+          <p>You can download the complete, strictly defanged dataset of all 291 unblocked institutional domains, 68 MF-banned domains retained in public silos, and 9 official <code>.gov.pl</code> / <code>BIP</code> pages directly as <a href="/assets/lab/casino-state-2026.json">casino-state-2026.json</a>.</p>
+        </div>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<section class="plain-contact">
+  <div class="frame about-strip">
+    <span class="number">05 / Contact, remediation updates &amp; newsroom embeds</span>
+    <h2>Represent an institution listed here or working on a related story?</h2>
+    <div>
+      <p>If you administer a school, hospital or municipal portal included in this audit and have cleaned your CMS or unlinked an expired domain from RSPO, RPWDL or BIP, send a quick note — once verified, I will update the record's remediation status in the dataset. Newsrooms may freely embed the defanged explorer via the <code>iframe</code> button above the table with source attribution.</p>
+      <a class="quiet-link" href="mailto:stuczynski.g@gmail.com?subject=Issue%2002%20%E2%80%94%20State%20registries%20audit">stuczynski.g@gmail.com ↗</a>
+      <p class="contact-alt">Shorter research notes go out on <a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X (@rpl_0x)</a> and <a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="footer"><div class="frame"><p>Grzegorz Stuczyński · RolePlayingTech © 2026</p><div class="sub-links"><a href="https://x.com/rpl_0x" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.instagram.com/roleplayinglife_0x/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.linkedin.com/in/grzegorz-stuczy%C5%84ski-764383131/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/RolePlayingTech" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://roleplayinglife.substack.com/" target="_blank" rel="noopener noreferrer">Substack ↗</a><a href="mailto:stuczynski.g@gmail.com">Email ↗</a></div></div></footer>
+</body>
+</html>

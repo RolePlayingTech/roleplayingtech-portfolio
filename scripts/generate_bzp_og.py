@@ -177,22 +177,23 @@ def render_card(stats: dict, lang: str, out_path: Path) -> None:
         if lang == "pl":
             h1_lines = [
                 [
-                    ("Na co polskie instytucje ", fonts["h1_reg"], INK),
-                    ("naprawdę", fonts["h1_ital"], RUST),
-                    (" wydają", fonts["h1_reg"], INK),
+                    ("60,7% pieniędzy ", fonts["h1_reg"], INK),
+                    ("bez konkurenta", fonts["h1_ital"], RUST),
+                    (".", fonts["h1_reg"], INK),
                 ],
                 [
-                    ("pieniądze pod hasłem AI?", fonts["h1_reg"], INK),
+                    ("Jak polskie instytucje kupują AI", fonts["h1_reg"], INK),
                 ],
             ]
         else:
             h1_lines = [
                 [
-                    ("What do Polish public institutions ", fonts["h1_reg"], INK),
-                    ("actually", fonts["h1_ital"], RUST),
+                    ("60.7% of the money, ", fonts["h1_reg"], INK),
+                    ("zero rivals", fonts["h1_ital"], RUST),
+                    (":", fonts["h1_reg"], INK),
                 ],
                 [
-                    ("buy under the ‘AI’ label?", fonts["h1_reg"], INK),
+                    ("How Polish institutions buy AI", fonts["h1_reg"], INK),
                 ],
             ]
         widest = max(
@@ -263,7 +264,7 @@ def render_card(stats: dict, lang: str, out_path: Path) -> None:
                 "accent": RUST,
                 "tag": "WDROŻENIA Z JEDNĄ OFERTĄ",
                 "l1": f"{stats['soft_single_num']} z {stats['soft_single_den']} umów na systemy AI bez wyboru",
-                "l2": "cenowego (mediana w IT: 1 oferta)",
+                "l2": "cenowego (60,7% całej kwoty bez rywala)",
             },
         ]
     else:
@@ -290,7 +291,7 @@ def render_card(stats: dict, lang: str, out_path: Path) -> None:
                 "accent": RUST,
                 "tag": "SINGLE-BID IT DEPLOYMENTS",
                 "l1": f"{stats['soft_single_num']} of {stats['soft_single_den']} AI software contracts",
-                "l2": "attracted zero competing bids",
+                "l2": "had 1 bid (60.7% zero-rival spend overall)",
             },
         ]
 
