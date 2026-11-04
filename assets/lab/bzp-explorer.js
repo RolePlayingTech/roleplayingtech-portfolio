@@ -16,7 +16,7 @@
   var CAT_COLORS = {
     software_deploy: '#98513c',
     hardware_lab: '#2d546b',
-    training: '#8c6d23',
+    training: '#7d601d',
     consulting: '#4a6b53',
     incidental: '#8d867c'
   };
@@ -122,17 +122,119 @@
       allShown: 'Wyświetlono wszystkie pasujące rekordy ({total}).',
       tagNoticeYear: 'Ogłoszenie: {y}',
       tagContractYear: 'Umowa: {y}',
+      tagBids23: '2–3 oferty',
+      tagBids4p: '4+ ofert',
+      tagStResolved: 'Rozstrzygnięte / umowa',
+      tagStOpen: 'Bez wyniku w BZP',
+      tagStCancel: 'Unieważnione',
       illProcBar: 'Udział w ogłoszeniach',
       illPlnBar: 'Udział w kwocie umów',
+      illScaleHint: 'skala 0–100% (linia 50%)',
+      illDeltaPosTpl: '+{d} pkt proc. w kwocie',
+      illDeltaNegTpl: '−{d} pkt proc. w kwocie',
       illMedian: 'mediana: {m}',
       illFilterBtn: 'Pokaż w bazie ↓',
       illYearBasis: 'wg roku ogłoszenia',
       illContractVal: 'wartość umów',
+      compTabAria: 'Widok wykresu konkurencji',
+      compTab1: 'Przekrój rynku i ściana 170 tys. zł',
+      compTab2Tpl: 'Mapa wszystkich {n} umów (kropki)',
+      compTab3: 'Koszt monopolu, blokada i 31 porażek',
+      compForensicNoteHtml: '<strong>Głębsza weryfikacja treści ogłoszeń (sekcje 3.1 i 6.1.6 BZP):</strong> 4 umowy z wpisaną „1” to w istocie wolna ręka z art. 305 Pzp (łącznie 10 umów na 3,46 mln zł), a w 8 przetargach wieloofertowych (1,50 mln zł) odrzucono wszystkich rywali — przy ocenie końcowej bez konkurenta zostało <strong>59 ze 110 umów (53,6%) na 19,54 mln zł (60,7% kwoty)</strong>.',
+      fPriceTitle: 'Cena wygranej wobec kosztorysu netto (n = 31)',
+      fPriceSub: 'Jednorodne umowy IT i sprzętu z 23% VAT (sekcja 4.3 vs 8.2 BZP · 100% = wycena netto zamawiającego)',
+      fPriceScale0: '0%',
+      fPriceScaleRef: '100% kosztorysu netto ▼',
+      fPriceR1Label: '1 ważna oferta (n = 18)',
+      fPriceR1Val: '100,0% kosztorysu netto',
+      fPriceR1Foot: 'mediana 1,230× brutto/netto',
+      fPriceR1Pill: '0% rabatu (+23% VAT)',
+      fPriceR2Label: '2–3 ważne oferty (n = 9)',
+      fPriceR2Val: '93,8% kosztorysu netto',
+      fPriceR2Foot: 'mediana 1,153× brutto/netto',
+      fPriceR2Pill: '−6,2% wobec kosztorysu',
+      fPriceR3Label: '4+ ważnych ofert (n = 4)',
+      fPriceR3Val: '54,0% kosztorysu netto',
+      fPriceR3Foot: 'mediana 0,664× brutto/netto',
+      fPriceR3Pill: '−46,0% rabatu netto!',
+      fPricePill1Html: '<strong>72,2% wdrożeń IT bez kryteriów jakości</strong> (39 z 54 · w całej bazie 63,5% to 100% cena lub cena + formalna gwarancja/SLA)',
+      fPricePill2Html: '<strong>Rozstrzał ważnych ofert:</strong> med. 2,71× (maks. 13,25×) w oprogramowaniu AI vs 1,12× w sprzęcie GPU',
+      fLockTitle: 'Blokada systemów bazowych (HIS/PACS/PUI) i wiosenny klif KPO',
+      fLockSub: 'Wdrożenia oprogramowania AI (n = 45 podpisanych umów) — wpływ wymogu integracji z zastanym systemem',
+      fLockLegZero: 'Bez konkurenta',
+      fLockLegMulti: '≥ 2 oferty',
+      fLockR1Label: 'Wskazany system (AMMS, CliniNET, AGFA, Pixel, PUI)',
+      fLockR1Val: '94,1% bez rywala',
+      fLockR1Foot: '16 z 17 umów IT bez konkurenta',
+      fLockR1Pill: 'w szpitalach: 12 z 12 (100%)',
+      fLockR2Label: 'Wdrożenie niezależne (bez lock-inu w ogłoszeniu)',
+      fLockR2Val: '53,6% bez rywala',
+      fLockR2Foot: '15 z 28 umów IT bez konkurenta',
+      fLockR2Pill: 'w szpitalach: 12 z 19 (63,2%)',
+      fLockPillHtml: '<strong>Czas na ofertę: mediana 9,0 dni</strong> (41,2% ≤ 8 dni) wobec 28,0 dni oceny — w szpitalach nawet 5× wydłużany termin (12→27 dni) kończył się 1 ofertą',
+      fKpoKicker: 'Szczyt i klif KPO D1.1.2 (2026)',
+      fKpoBodyHtml: '<strong>Szczyt KPO D1.1.2 (I–VI 2026):</strong> 26 z 38 szpitalnych przetargów AI (<strong>84,2% umów bez rywala</strong> — 16 z 19, <strong>8,45 mln zł</strong>) → po zamknięciu okna w <strong>III kw. 2026:</strong> 1 przetarg szpitalny (0 z KPO) i <strong>0,0% (0 z 11)</strong> umów z 1 ofertą w całym kraju (wobec 64,7% w I kw. i 55,0% w II kw.).',
+      fCancelTitle: 'Sekcja zwłok 31 unieważnionych przetargów (22,0% ze 141 zakończonych · sekcja 5.2 BZP)',
+      fCancelSub: 'Aż 24 z 31 unieważnień (77,4%) nastąpiło mimo złożenia przez wykonawców 53+ ofert · 10 z 26 nieudanych inicjatyw (38,5%) porzucono bez umowy',
+      fCancel1Pct: '45,2%',
+      fCancel1Cnt: '14 z 31 postępowań',
+      fCancel1Desc: 'Oferty powyżej budżetu (art. 255 pkt 3 Pzp · szok cenowy do 3,2× budżetu w NAWA)',
+      fCancel2Pct: '25,8%',
+      fCancel2Cnt: '8 z 31 postępowań',
+      fCancel2Desc: 'Odrzucono 100% złożonych ofert (art. 255 pkt 2 Pzp · dyskwalifikacje formalne i podmiotowe)',
+      fCancel3Pct: '19,4%',
+      fCancel3Cnt: '6 z 31 postępowań',
+      fCancel3Desc: 'Zero złożonych ofert (art. 255 pkt 1 Pzp · cisza rynkowa tylko w 1 na 5 unieważnień)',
+      fCancel4Pct: '9,7%',
+      fCancel4Cnt: '3 z 31 postępowań',
+      fCancel4Desc: 'Wada procedury lub fiasko negocjacji z wolnej ręki (art. 255 pkt 6 i 8 Pzp)',
+      fCancelFootNote: 'Unieważniono 31 ze 159 postępowań podstawowych (19,5% bazy · 22,0% spośród 141 zakończonych).',
+      fCancelBtn: 'Pokaż wszystkie 31 unieważnionych przetargów w bazie ↓',
+      compSecATitleTpl: 'Podział całej kwoty {sum} wg konkurencji · n = {n} umów',
+      compSecAHint: 'kliknij segment lub kafel, aby filtrować bazę ↓',
+      compZeroBadgeTpl: 'Bez konkurenta: {pct} kwoty',
+      compCalloutHtmlTpl: '<strong>{zrPct} wszystkich pieniędzy ({zrSum} w {zrCnt} {zrGen}) trafiło do wykonawców bez żadnego konkurenta</strong> — podczas gdy <strong>{crCnt} zatłoczonych przetargów (4–{maxBids} {maxBidsNoun}) dzieli raptem {crSum} ({crPct} kwoty)</strong>.',
+      compTier1Title: '1 oferta w przetargu',
+      compTier2Title: 'Z wolnej ręki (art. 305 Pzp)',
+      compTier3Title: '2–3 oferty',
+      compTier4TitleTpl: '4–{max} {noun}',
+      compTierSubTpl: '{cnt} ({cntPct})',
+      compOfSpendTpl: '{pct} kwoty',
+      compFilterCue: 'Filtruj ↓',
+      compCliffTitleTpl: 'Ściana 170 tys. zł · skok przy wyższych kwotach (n = {n})',
+      compCliffSub: 'Rozkład umów konkurencyjnych w 4 przedziałach wartości brutto',
+      compLeg1: '1 oferta',
+      compLegSole: 'wolna ręka',
+      compLeg23: '2–3 oferty',
+      compLeg4p: '4+ ofert',
+      compBr1: '< 50 tys. zł',
+      compBr2: '50–170 tys. zł',
+      compBr3: '170–500 tys. zł',
+      compBr4: '≥ 500 tys. zł',
+      compSingleShareTpl: '{pct} z 1 ofertą',
+      compMedPillTpl: 'mediana: {m}',
+      compCliffAboveTpl: '▲ < 170 tys. zł: {cnt} ({plnPct} kwoty) · med. {med} ({sPct} z 1 ofertą)',
+      compCliffBelowTpl: '▼ ≥ 170 tys. zł: {cnt} ({plnPct} kwoty) · med. {med} ({sPct} z 1 ofertą)',
+      compCatTitleTpl: 'Konkurencja w 4 kategoriach (n = {n} · kliknij, aby filtrować)',
+      compCatSub: 'Rozkład podpisanych umów (w tym z wolnej ręki) i odsetek kwoty bez konkurenta',
+      compCatZeroTpl: 'Bez konkurenta: {zr}/{tot} ({cntPct} umów · {plnPct} kwoty)',
+      compCatTrainTpl: 'Bez rywala: {cntPct} ({plnPct} kwoty) · 4+ ofert: {c4}/{tot} ({c4Pct})',
+      svgCatKickerTpl: 'KATEGORIE (n = {n}):',
+      svgCatSoft: 'Wdrożenia IT',
+      svgCatHard: 'Sprzęt i lab.',
+      svgCatTrain: 'Szkolenia',
+      svgCatCons: 'Badania',
+      svgZoneLeft1Tpl: 'PONIŻEJ 170 TYS. ZŁ ({cnt})',
+      svgZoneLeft2Tpl: 'mediana: {med} · tylko {pct} z 1 ofertą',
+      svgZoneRight1Tpl: 'OD 170 TYS. ZŁ WZWYŻ · {plnPct} KWOTY ({cnt})',
+      svgZoneRight2Tpl: 'mediana: {med} · aż {pct} z 1 ofertą',
+      svgZoneLeftMobTpl: '< 170 tys.: med. {medNum} ({pct} z 1 of.)',
+      svgZoneRightMobTpl: '≥ 170 tys.: {plnPct} kwoty · med. {medNum} ({pct})',
       compAll: 'Wszystkie umowy ({n})',
       compSoftTpl: 'Wdrożenia oprogramowania ({pct} z 1 ofertą)',
       compHealth: 'Szpitale i kliniki',
       compTrain: 'Szkolenia (tłok ofertowy)',
-      compZoneTpl: 'STREFA 1 OFERTY — {single} z {total} {contractsGen} ({pct}) bez realnej konkurencji cenowej',
+      compZoneTpl: 'STREFA 1 OFERTY — {single} z {total} {contractsGen} ({pct}) bez konkurencji cenowej',
       compZoneShortTpl: 'STREFA 1 OFERTY — {single}/{total} ({pct})',
       compAxisX: 'Wartość podpisanej umowy brutto (skala logarytmiczna)',
       compAxisY: 'Liczba ofert',
@@ -141,10 +243,11 @@
       compCardBids: 'Złożone oferty',
       compCardOpenBzp: 'Karta w BZP ↗',
       compCardInTable: 'Pokaż w tabeli ↓',
-      compPinsHeading: 'Wyróżnione punkty skrajne (kliknij, aby zbadać):',
-      compPin1Tpl: '{bids} o kurs za {amt}',
-      compPin2Tpl: '{bids} · {amt} (awatary AI w CZD)',
-      compPin3Tpl: '{bids} · {amt} (laboratorium UJD)',
+      compPinsHeading: 'Wyróżnione kontrakty (kliknij, aby zbadać):',
+      compPin1Tpl: '{bids} · kurs {amt}',
+      compPinAspTpl: '{bids} · chatbot ASP ({amt})',
+      compPin2Tpl: '{bids} · awatary CZD ({amt})',
+      compPin3Tpl: '{bids} · lab. UJD ({amt})',
       compPinGenericTpl: '{bids} · {amt} ({org})',
       cats: {
         software_deploy: 'Wdrożenia i systemy AI',
@@ -268,17 +371,119 @@
       allShown: 'All matching records shown ({total}).',
       tagNoticeYear: 'Notice: {y}',
       tagContractYear: 'Contract: {y}',
+      tagBids23: '2–3 bids',
+      tagBids4p: '4+ bids',
+      tagStResolved: 'Awarded / contract',
+      tagStOpen: 'No outcome in BZP',
+      tagStCancel: 'Cancelled',
       illProcBar: 'Share of notices',
       illPlnBar: 'Share of contract value',
+      illScaleHint: '0–100% scale (50% mark)',
+      illDeltaPosTpl: '+{d} pp in contract value',
+      illDeltaNegTpl: '−{d} pp in contract value',
       illMedian: 'median: {m}',
       illFilterBtn: 'Filter below ↓',
       illYearBasis: 'by notice year',
       illContractVal: 'contract value',
+      compTabAria: 'Competition chart view',
+      compTab1: 'Market split & 170k PLN cliff',
+      compTab2Tpl: 'All {n} contracts map (dots)',
+      compTab3: 'Pricing, lock-in & 31 failures',
+      compForensicNoteHtml: '<strong>Deeper HTML notice audit (BZP Sections 3.1 &amp; 6.1.6):</strong> 4 awards coded “1 bid” are statutory Art. 305 sole-source contracts (10 total, 3.46M PLN), and 8 multi-bid tenders (1.50M PLN) disqualified every rival — leaving <strong>59 of 110 awards (53.6%) worth 19.54M PLN (60.7% of spend)</strong> with zero surviving competitors.',
+      fPriceTitle: 'Winning price vs. buyer net estimate (n = 31)',
+      fPriceSub: 'Homogeneous 23%-VAT AI software & hardware awards (BZP Sec. 4.3 vs. 8.2 · 100% = buyer net estimate)',
+      fPriceScale0: '0%',
+      fPriceScaleRef: '100% buyer net estimate ▼',
+      fPriceR1Label: '1 surviving valid bid (n = 18)',
+      fPriceR1Val: '100.0% of net estimate',
+      fPriceR1Foot: 'median 1.230× gross/net',
+      fPriceR1Pill: '0% discount (+23% VAT)',
+      fPriceR2Label: '2–3 surviving valid bids (n = 9)',
+      fPriceR2Val: '93.8% of net estimate',
+      fPriceR2Foot: 'median 1.153× gross/net',
+      fPriceR2Pill: '−6.2% vs. estimate',
+      fPriceR3Label: '4+ surviving valid bids (n = 4)',
+      fPriceR3Val: '54.0% of net estimate',
+      fPriceR3Foot: 'median 0.664× gross/net',
+      fPriceR3Pill: '−46.0% net discount!',
+      fPricePill1Html: '<strong>72.2% of AI software lacks quality criteria</strong> (39 of 54 · 63.5% overall use 100% price or price + formal warranty/SLA)',
+      fPricePill2Html: '<strong>Valid bid spread:</strong> med. 2.71× (up to 13.25×) in AI software vs. 1.12× in GPU hardware',
+      fLockTitle: 'Incumbent system lock-in (HIS/PACS/PUI) & Spring 2026 KPO cliff',
+      fLockSub: 'Signed AI software deployments (n = 45) — impact of naming proprietary host systems in the tender notice',
+      fLockLegZero: 'No rival',
+      fLockLegMulti: '2+ bids',
+      fLockR1Label: 'Named host system (AMMS, CliniNET, AGFA, Pixel, PUI)',
+      fLockR1Val: '94.1% zero-rival',
+      fLockR1Foot: '16 of 17 software awards had zero rivals',
+      fLockR1Pill: 'hospitals: 12/12 (100%)',
+      fLockR2Label: 'Standalone deployment (no lock-in in notice)',
+      fLockR2Val: '53.6% zero-rival',
+      fLockR2Foot: '15 of 28 software awards had zero rivals',
+      fLockR2Pill: 'hospitals: 12/19 (63.2%)',
+      fLockPillHtml: '<strong>Bid window: median 9.0 days</strong> (41.2% ≤ 8 days) vs. 28.0 days to evaluate — in hospitals even 5× deadline extensions (12→27d) drew 1 bid',
+      fKpoKicker: 'Spring 2026 KPO D1.1.2 Sprint & Cliff',
+      fKpoBodyHtml: '<strong>KPO D1.1.2 peak (Jan–Jun 2026):</strong> 26 of 38 hospital AI tenders (<strong>84.2% zero-rival awards</strong> — 16 of 19, <strong>8.45M PLN</strong>) → after the grant window closed in <strong>Q3 2026:</strong> 1 hospital tender (0 KPO) and <strong>0.0% (0 of 11)</strong> single-bid awards economy-wide (down from 64.7% in Q1 and 55.0% in Q2).',
+      fCancelTitle: 'Autopsy of all 31 cancelled core tenders (22.0% of 141 concluded · BZP Section 5.2)',
+      fCancelSub: '24 of 31 cancellations (77.4%) failed despite vendors submitting 53+ bids · 10 of 26 failed initiatives (38.5%) were abandoned without a contract',
+      fCancel1Pct: '45.2%',
+      fCancel1Cnt: '14 of 31 cancellations',
+      fCancel1Desc: 'Bids exceeded buyer budget (Art. 255(3) PZP · price shock up to 3.2× budget at NAWA)',
+      fCancel2Pct: '25.8%',
+      fCancel2Cnt: '8 of 31 cancellations',
+      fCancel2Desc: '100% of submitted bids rejected (Art. 255(2) PZP · formal & qualification disqualifications)',
+      fCancel3Pct: '19.4%',
+      fCancel3Cnt: '6 of 31 cancellations',
+      fCancel3Desc: 'Zero bids submitted (Art. 255(1) PZP · market silence in only 1 of 5 cancellations)',
+      fCancel4Pct: '9.7%',
+      fCancel4Cnt: '3 of 31 cancellations',
+      fCancel4Desc: 'Procedural defect or failed sole-source negotiation (Art. 255(6) & (8) PZP)',
+      fCancelFootNote: '31 of 159 core proceedings were cancelled (19.5% of dataset · 22.0% of 141 concluded).',
+      fCancelBtn: 'Inspect all 31 cancelled tenders in the database ↓',
+      compSecATitleTpl: 'Breakdown of all {sum} by competition tier · n = {n} awards',
+      compSecAHint: 'click any segment or card to filter database ↓',
+      compZeroBadgeTpl: 'Zero rivals: {pct} of value',
+      compCalloutHtmlTpl: '<strong>{zrPct} of all contracted money ({zrSum} across {zrCnt} {zrGen}) went to vendors facing zero rival bids</strong> — while <strong>{crCnt} crowded tenders (4–{maxBids} {maxBidsNoun}) split just {crSum} ({crPct} of value)</strong>.',
+      compTier1Title: '1 bid in open tender',
+      compTier2Title: 'Sole-source (Art. 305 PZP)',
+      compTier3Title: '2–3 bids',
+      compTier4TitleTpl: '4–{max} {noun}',
+      compTierSubTpl: '{cnt} ({cntPct})',
+      compOfSpendTpl: '{pct} of value',
+      compFilterCue: 'Filter ↓',
+      compCliffTitleTpl: 'The 170k PLN cliff · competition drops as value rises (n = {n})',
+      compCliffSub: 'Share of competitive contracts across 4 gross value brackets',
+      compLeg1: '1 bid',
+      compLegSole: 'sole-source',
+      compLeg23: '2–3 bids',
+      compLeg4p: '4+ bids',
+      compBr1: '< 50k PLN',
+      compBr2: '50–170k PLN',
+      compBr3: '170–500k PLN',
+      compBr4: '≥ 500k PLN',
+      compSingleShareTpl: '{pct} single-bid',
+      compMedPillTpl: 'med: {m}',
+      compCliffAboveTpl: '▲ < 170k PLN: {cnt} ({plnPct} PLN) · med. {med} ({sPct} single-bid)',
+      compCliffBelowTpl: '▼ ≥ 170k PLN: {cnt} ({plnPct} PLN) · med. {med} ({sPct} single-bid)',
+      compCatTitleTpl: 'Competition by category (n = {n} · click to filter)',
+      compCatSub: 'Signed award breakdown (incl. sole-source) & zero-rival share of contract value',
+      compCatZeroTpl: 'Zero rivals: {zr}/{tot} ({cntPct} of awards · {plnPct} of PLN)',
+      compCatTrainTpl: 'Zero rivals: {cntPct} ({plnPct} PLN) · 4+ bids: {c4}/{tot} ({c4Pct})',
+      svgCatKickerTpl: 'CATEGORIES (n = {n}):',
+      svgCatSoft: 'AI software',
+      svgCatHard: 'Hardware & labs',
+      svgCatTrain: 'Trainings',
+      svgCatCons: 'Research',
+      svgZoneLeft1Tpl: 'BELOW 170K PLN ({cnt})',
+      svgZoneLeft2Tpl: 'median: {med} · only {pct} single-bid',
+      svgZoneRight1Tpl: '170K PLN & UP · {plnPct} OF VALUE ({cnt})',
+      svgZoneRight2Tpl: 'median: {med} · {pct} single-bid',
+      svgZoneLeftMobTpl: '< 170k: med {medNum} ({pct} 1-bid)',
+      svgZoneRightMobTpl: '≥ 170k: {plnPct} PLN · med {medNum} ({pct})',
       compAll: 'All contracts ({n})',
       compSoftTpl: 'AI software ({pct} single-bid)',
       compHealth: 'Hospitals & clinics',
       compTrain: 'Trainings (crowded bidding)',
-      compZoneTpl: 'SINGLE-BID ZONE — {single} of {total} {contractsGen} ({pct}) awarded with zero competing bids',
+      compZoneTpl: 'SINGLE-BID ZONE — {single} of {total} awards ({pct}) with zero rival bids',
       compZoneShortTpl: 'SINGLE-BID ZONE — {single}/{total} ({pct})',
       compAxisX: 'Signed gross contract value in PLN (logarithmic scale)',
       compAxisY: 'Bids submitted',
@@ -288,9 +493,10 @@
       compCardOpenBzp: 'Official BZP record ↗',
       compCardInTable: 'Show in database ↓',
       compPinsHeading: 'Highlighted landmark contracts (tap to inspect):',
-      compPin1Tpl: '{bids} for a {amt} workshop',
-      compPin2Tpl: '{bids} · {amt} (hospital AI avatars)',
-      compPin3Tpl: '{bids} · {amt} (imaging AI lab)',
+      compPin1Tpl: '{bids} · {amt} workshop',
+      compPinAspTpl: '{bids} · ASP chatbot ({amt})',
+      compPin2Tpl: '{bids} · CZD avatars ({amt})',
+      compPin3Tpl: '{bids} · UJD lab ({amt})',
       compPinGenericTpl: '{bids} · {amt} ({org})',
       cats: {
         software_deploy: 'AI software & deployments',
@@ -356,6 +562,7 @@
     cyear: params.get('cyear') || '',
     single: params.get('single') === '1',
     sole: params.get('sole') === '1',
+    btier: params.get('btier') || '',
     eu: params.get('eu') === '1',
     pure: params.get('pure') === '1',
     incidental: params.get('incidental') === '1' || params.get('cat') === 'incidental',
@@ -364,6 +571,10 @@
     embedChartsOpen: false,
     limit: 25
   };
+
+  var compView = 'split';
+  var compFilter = 'all';
+  var compSelectedBzp = '00137744';
 
   var DATA = [];
   var dataUrl = (mount && mount.getAttribute('data-src')) || '/assets/lab/bzp-ai-2024-2026.json';
@@ -498,6 +709,29 @@
     return b === 1 ? I18N.bidsOne : I18N.bidsMany.replace('{n}', b);
   }
 
+  function fmtMedianBidsNum(m) {
+    if (m == null) return '0';
+    var isInt = Math.abs(m - Math.round(m)) < 0.001;
+    var s = isInt ? String(Math.round(m)) : m.toFixed(1);
+    return lang === 'pl' ? s.replace('.', ',') : s;
+  }
+
+  function fmtMedianBids(m) {
+    if (m == null) return I18N.bidsUnknown;
+    var isInt = Math.abs(m - Math.round(m)) < 0.001;
+    if (isInt) return fmtBids(Math.round(m));
+    var numStr = fmtMedianBidsNum(m);
+    return lang === 'pl' ? (numStr + ' oferty') : (numStr + ' bids');
+  }
+
+  function sumAmounts(arr) {
+    var s = 0;
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].amountPln != null) s += arr[i].amountPln;
+    }
+    return s;
+  }
+
   function calcIncidentalSum() {
     var sum = 0;
     DATA.forEach(function (r) {
@@ -534,7 +768,7 @@
       I18N.sectors[r.sector] || '',
       getScopeNote(r),
       getLotsBidsNote(r),
-      isSoleSource(r) ? 'zamowienie z wolnej reki bez przetargu sole source single source art 214' : ''
+      isSoleSource(r) ? 'zamowienie z wolnej reki bez przetargu sole source single source art 305 art 214' : ''
     ].join(' ').toLowerCase();
     var folded = foldAscii(raw);
     return {
@@ -550,8 +784,7 @@
     var core = DATA.filter(function (r) { return r.category !== 'incidental'; });
     var signedAll = core.filter(function (r) { return r.status === 'resolved' && r.amountPln != null; });
     var totalProc = core.length || 1;
-    var totalPln = 0;
-    signedAll.forEach(function (r) { totalPln += r.amountPln; });
+    var totalPln = sumAmounts(signedAll);
 
     var cats = ['software_deploy', 'hardware_lab', 'training', 'consulting'];
     var rowsHtml = cats.map(function (ck) {
@@ -562,22 +795,28 @@
       cs.forEach(function (r) { sum += r.amountPln; vals.push(r.amountPln); });
       var procPct = (cp.length / totalProc) * 100;
       var plnPct = totalPln > 0 ? (sum / totalPln) * 100 : 0;
+      var delta = Number(plnPct.toFixed(1)) - Number(procPct.toFixed(1));
+      var deltaAbsStr = Math.abs(delta).toFixed(1);
+      if (lang === 'pl') deltaAbsStr = deltaAbsStr.replace('.', ',');
+      var deltaText = (delta >= 0 ? I18N.illDeltaPosTpl : I18N.illDeltaNegTpl).replace('{d}', deltaAbsStr);
+      var deltaCls = delta >= 0 ? 'is-pos' : 'is-neg';
       var med = calcMedian(vals);
       return (
         '<div class="ill-row">' +
           '<div class="ill-cat">' +
             '<strong>' + esc(I18N.cats[ck]) + '</strong>' +
             '<span>' + esc(fmtProceedingsCount(cp.length) + ' · ' + fmtContractsCount(cs.length)) + '</span>' +
+            '<span class="ill-delta ' + deltaCls + '">' + esc(deltaText) + '</span>' +
           '</div>' +
           '<div class="ill-bars">' +
             '<div class="ill-bar-line">' +
               '<span>' + esc(I18N.illProcBar) + '</span>' +
-              '<div class="ill-track"><div class="ill-fill-proc" style="width:' + Math.max(2, procPct * 1.8).toFixed(1) + '%"></div></div>' +
+              '<div class="ill-track"><div class="ill-fill-proc" style="width:' + Math.max(2, procPct).toFixed(1) + '%"></div></div>' +
               '<span class="ill-pct">' + esc(fmtPct(procPct)) + '</span>' +
             '</div>' +
             '<div class="ill-bar-line">' +
               '<span>' + esc(I18N.illPlnBar) + '</span>' +
-              '<div class="ill-track"><div class="ill-fill-pln" style="width:' + Math.max(2, plnPct * 1.8).toFixed(1) + '%"></div></div>' +
+              '<div class="ill-track"><div class="ill-fill-pln" style="width:' + Math.max(2, plnPct).toFixed(1) + '%"></div></div>' +
               '<span class="ill-pct" style="color:var(--rust)">' + esc(fmtPct(plnPct)) + '</span>' +
             '</div>' +
           '</div>' +
@@ -592,8 +831,7 @@
     var yearsHtml = ['2024', '2025', '2026'].map(function (y) {
       var yp = core.filter(function (r) { return String(r.year) === y; });
       var ys = signedAll.filter(function (r) { return String(r.year) === y; });
-      var sum = 0;
-      ys.forEach(function (r) { sum += r.amountPln; });
+      var sum = sumAmounts(ys);
       var yLabel = y === '2026' ? (lang === 'en' ? '2026 (to Nov 3)' : '2026 (do 3 XI)') : y;
       return (
         '<div class="ill-year-card">' +
@@ -610,66 +848,385 @@
       );
     }).join('');
 
+    var illFigParent = figIllusion.closest ? figIllusion.closest('.lab-figure') : null;
+    var illLeg = illFigParent ? illFigParent.querySelector('.lab-fig-legend') : null;
+    if (illLeg && !illLeg.querySelector('.ill-legend-scale')) {
+      var scaleSpan = document.createElement('span');
+      scaleSpan.className = 'ill-legend-scale';
+      scaleSpan.innerHTML = '<i class="ill-legend-mid" aria-hidden="true"></i> ' + esc(I18N.illScaleHint);
+      illLeg.appendChild(scaleSpan);
+    }
+
     figIllusion.innerHTML =
       '<div class="ill-rows">' + rowsHtml + '</div>' +
       '<div class="ill-years">' + yearsHtml + '</div>';
+    bindPresetLinks(figIllusion);
   }
 
-  /* ---------- Inline Editorial Figure 2: Competition Dot-Plot ---------- */
+  /* ---------- Inline Editorial Figure 2: Dual-View Competition Graphic ---------- */
   function renderCompetitionFigure() {
     if (!figComp || !DATA.length) return;
-    var pts = DATA.filter(function (r) {
-      return r.category !== 'incidental' && r.status === 'resolved' && r.amountPln != null && r.bids != null && r.bids >= 1;
-    }).slice();
-    if (!pts.length) return;
+    var core = DATA.filter(function (r) { return r.category !== 'incidental'; });
+    var signedCore = core.filter(function (r) { return r.status === 'resolved' && r.amountPln != null; });
+    var pts = signedCore.filter(function (r) { return r.bids != null && r.bids >= 1; }).slice();
+    if (!pts.length || !signedCore.length) return;
+
+    var figParent = figComp.closest ? figComp.closest('.lab-figure') : null;
+    if (figParent) figParent.classList.add('has-comp-mounted');
 
     pts.sort(function (a, b) { return a.amountPln - b.amountPln; });
 
+    /* --- 1. View 1 Metrics: All 110 Signed Core Contracts & 170k PLN Cliff --- */
+    var totalCorePln = sumAmounts(signedCore) || 1;
+    var tier1List = signedCore.filter(function (r) { return r.bids === 1; });
+    var tierSoleList = signedCore.filter(function (r) { return r.bids == null; });
+    var tier23List = signedCore.filter(function (r) { return r.bids != null && r.bids >= 2 && r.bids <= 3; });
+    var tier4pList = signedCore.filter(function (r) { return r.bids != null && r.bids >= 4; });
+
+    var maxBidsVal = 4;
+    pts.forEach(function (r) { if (r.bids > maxBidsVal) maxBidsVal = r.bids; });
+
+    var tier1Sum = sumAmounts(tier1List);
+    var tierSoleSum = sumAmounts(tierSoleList);
+    var tier23Sum = sumAmounts(tier23List);
+    var tier4pSum = sumAmounts(tier4pList);
+
+    var zrCount = tier1List.length + tierSoleList.length;
+    var zrSum = tier1Sum + tierSoleSum;
+    var zrPlnPct = (zrSum / totalCorePln) * 100;
+    var crPlnPct = (tier4pSum / totalCorePln) * 100;
+
+    var maxBidsNoun = lang === 'pl' ? fmtPlNoun(maxBidsVal, 'oferta', 'oferty', 'ofert') : 'bids';
+    var zrLocativeNoun = lang === 'pl' ? (zrCount === 1 ? 'umowie' : 'umowach') : (zrCount === 1 ? 'award' : 'awards');
+
+    var calloutHeadlineHtml = I18N.compCalloutHtmlTpl
+      .replace('{zrPct}', esc(fmtPct(zrPlnPct)))
+      .replace('{zrSum}', esc(fmtPlnCompact(zrSum)))
+      .replace('{zrCnt}', esc(zrCount))
+      .replace('{zrGen}', esc(zrLocativeNoun))
+      .replace('{crCnt}', esc(tier4pList.length))
+      .replace('{maxBids}', esc(maxBidsVal))
+      .replace('{maxBidsNoun}', esc(maxBidsNoun))
+      .replace('{crSum}', esc(fmtPlnCompact(tier4pSum)))
+      .replace('{crPct}', esc(fmtPct(crPlnPct)));
+
+    var tiers = [
+      {
+        key: 'b1',
+        color: '#98513c',
+        title: I18N.compTier1Title,
+        count: tier1List.length,
+        sum: tier1Sum,
+        plnPct: (tier1Sum / totalCorePln) * 100,
+        cntPct: (tier1List.length / signedCore.length) * 100,
+        preset: 'status=resolved&single=1'
+      },
+      {
+        key: 'sole',
+        color: '#7d601d',
+        title: I18N.compTier2Title,
+        count: tierSoleList.length,
+        sum: tierSoleSum,
+        plnPct: (tierSoleSum / totalCorePln) * 100,
+        cntPct: (tierSoleList.length / signedCore.length) * 100,
+        preset: 'status=resolved&sole=1'
+      },
+      {
+        key: 'b23',
+        color: '#2d546b',
+        title: I18N.compTier3Title,
+        count: tier23List.length,
+        sum: tier23Sum,
+        plnPct: (tier23Sum / totalCorePln) * 100,
+        cntPct: (tier23List.length / signedCore.length) * 100,
+        preset: 'status=resolved&btier=2-3'
+      },
+      {
+        key: 'b4p',
+        color: '#4a6b53',
+        title: I18N.compTier4TitleTpl.replace('{max}', maxBidsVal).replace('{noun}', maxBidsNoun),
+        count: tier4pList.length,
+        sum: tier4pSum,
+        plnPct: (tier4pSum / totalCorePln) * 100,
+        cntPct: (tier4pList.length / signedCore.length) * 100,
+        preset: 'status=resolved&btier=4p&sort=bids_desc'
+      }
+    ];
+
+    var moneyBarHtml = tiers.map(function (t) {
+      var wPct = Math.max(0.5, t.plnPct).toFixed(2);
+      var showInline = t.plnPct >= 10;
+      return (
+        '<button type="button" class="comp-money-seg" data-bzp-preset="' + esc(t.preset) + '" style="width:' + wPct + '%;background:' + t.color + '" title="' + esc(t.title + ': ' + fmtPlnCompact(t.sum) + ' (' + fmtPct(t.plnPct) + ') · ' + fmtContractsCount(t.count)) + '">' +
+          (showInline ? '<span>' + esc(fmtPct(t.plnPct)) + '</span>' : '') +
+        '</button>'
+      );
+    }).join('');
+
+    var tierCardsHtml = tiers.map(function (t) {
+      var cntLabel = I18N.compTierSubTpl
+        .replace('{cnt}', fmtContractsCount(t.count))
+        .replace('{cntPct}', fmtPct(t.cntPct));
+      return (
+        '<button type="button" class="comp-tier-card" data-bzp-preset="' + esc(t.preset) + '">' +
+          '<div class="comp-tier-head">' +
+            '<span class="comp-tier-swatch" style="background:' + t.color + '"></span>' +
+            '<span class="comp-tier-name">' + esc(t.title) + '</span>' +
+          '</div>' +
+          '<div class="comp-tier-main">' +
+            '<strong>' + esc(fmtPlnCompact(t.sum)) + '</strong>' +
+            '<span class="comp-tier-pct" style="color:' + t.color + '">' + esc(I18N.compOfSpendTpl.replace('{pct}', fmtPct(t.plnPct))) + '</span>' +
+          '</div>' +
+          '<div class="comp-tier-foot">' +
+            '<span>' + esc(cntLabel) + '</span>' +
+            '<span class="comp-click-hint">' + esc(I18N.compFilterCue) + '</span>' +
+          '</div>' +
+        '</button>'
+      );
+    }).join('');
+
+    /* Left Panel: 170k PLN Cliff across 4 brackets (n = 104 competitive) */
+    var compTotalPln = sumAmounts(pts) || 1;
+    var lt170 = pts.filter(function (r) { return r.amountPln < 170000; });
+    var ge170 = pts.filter(function (r) { return r.amountPln >= 170000; });
+    var lt170Single = lt170.filter(function (r) { return r.bids === 1; }).length;
+    var ge170Single = ge170.filter(function (r) { return r.bids === 1; }).length;
+    var lt170Med = calcMedian(lt170.map(function (r) { return r.bids; }));
+    var ge170Med = calcMedian(ge170.map(function (r) { return r.bids; }));
+    var lt170PlnPct = (sumAmounts(lt170) / compTotalPln) * 100;
+    var ge170PlnPct = (sumAmounts(ge170) / compTotalPln) * 100;
+    var lt170SinglePct = lt170.length ? (lt170Single / lt170.length) * 100 : 0;
+    var ge170SinglePct = ge170.length ? (ge170Single / ge170.length) * 100 : 0;
+
+    var cliffBannerHtml =
+      '<div class="comp-cliff-banner">' +
+        '<div class="comp-cliff-line is-above">' +
+          esc(I18N.compCliffAboveTpl
+            .replace('{cnt}', fmtContractsCount(lt170.length))
+            .replace('{plnPct}', fmtPct(lt170PlnPct))
+            .replace('{med}', fmtMedianBids(lt170Med))
+            .replace('{sPct}', fmtPct(lt170SinglePct))) +
+        '</div>' +
+        '<div class="comp-cliff-line is-below">' +
+          esc(I18N.compCliffBelowTpl
+            .replace('{cnt}', fmtContractsCount(ge170.length))
+            .replace('{plnPct}', fmtPct(ge170PlnPct))
+            .replace('{med}', fmtMedianBids(ge170Med))
+            .replace('{sPct}', fmtPct(ge170SinglePct))) +
+        '</div>' +
+      '</div>';
+
+    var bracketDefs = [
+      { label: I18N.compBr1, rows: pts.filter(function (r) { return r.amountPln < 50000; }) },
+      { label: I18N.compBr2, rows: pts.filter(function (r) { return r.amountPln >= 50000 && r.amountPln < 170000; }), afterHtml: cliffBannerHtml },
+      { label: I18N.compBr3, rows: pts.filter(function (r) { return r.amountPln >= 170000 && r.amountPln < 500000; }) },
+      { label: I18N.compBr4, rows: pts.filter(function (r) { return r.amountPln >= 500000; }) }
+    ];
+
+    var bracketsHtml = bracketDefs.map(function (br) {
+      var n = br.rows.length || 1;
+      var c1 = br.rows.filter(function (r) { return r.bids === 1; }).length;
+      var c23 = br.rows.filter(function (r) { return r.bids >= 2 && r.bids <= 3; }).length;
+      var c4 = br.rows.filter(function (r) { return r.bids >= 4; }).length;
+      var bSum = sumAmounts(br.rows);
+      var bMed = calcMedian(br.rows.map(function (r) { return r.bids; }));
+      var p1 = (c1 / n) * 100;
+      var p23 = (c23 / n) * 100;
+      var p4 = (c4 / n) * 100;
+      var isHighSingle = p1 >= 50;
+      return (
+        '<div class="comp-bracket-row">' +
+          '<div class="comp-row-top">' +
+            '<strong>' + esc(br.label) + '</strong>' +
+            '<span class="comp-row-sum">' + esc(fmtContractsCount(br.rows.length) + ' · ' + fmtPlnCompact(bSum)) + '</span>' +
+          '</div>' +
+          '<div class="comp-stack-track" title="' + esc('1: ' + c1 + ' · 2–3: ' + c23 + ' · 4+: ' + c4) + '">' +
+            (c1 > 0 ? '<i style="width:' + p1.toFixed(1) + '%;background:#98513c"></i>' : '') +
+            (c23 > 0 ? '<i style="width:' + p23.toFixed(1) + '%;background:#2d546b"></i>' : '') +
+            (c4 > 0 ? '<i style="width:' + p4.toFixed(1) + '%;background:#4a6b53"></i>' : '') +
+          '</div>' +
+          '<div class="comp-row-foot">' +
+            '<span class="comp-row-stat' + (isHighSingle ? ' is-rust' : '') + '">' + esc(I18N.compSingleShareTpl.replace('{pct}', fmtPct(p1)) + ' (' + c1 + '/' + br.rows.length + ')') + '</span>' +
+            '<span class="comp-med-pill' + (bMed <= 1 ? ' is-alert' : '') + '">' + esc(I18N.compMedPillTpl.replace('{m}', fmtMedianBidsNum(bMed))) + '</span>' +
+          '</div>' +
+        '</div>' +
+        (br.afterHtml || '')
+      );
+    }).join('');
+
+    /* Right Panel: Competition by Category across all 110 signed core contracts */
+    var catOrder = ['software_deploy', 'hardware_lab', 'consulting', 'training'];
+    var catRowsHtml = catOrder.map(function (ck) {
+      var cs = signedCore.filter(function (r) { return r.category === ck; });
+      var n = cs.length || 1;
+      var cSum = sumAmounts(cs) || 1;
+      var cSole = cs.filter(function (r) { return r.bids == null; });
+      var c1 = cs.filter(function (r) { return r.bids === 1; });
+      var c23 = cs.filter(function (r) { return r.bids != null && r.bids >= 2 && r.bids <= 3; });
+      var c4 = cs.filter(function (r) { return r.bids != null && r.bids >= 4; });
+      var cComp = cs.filter(function (r) { return r.bids != null && r.bids >= 1; });
+      var cMed = calcMedian(cComp.map(function (r) { return r.bids; }));
+      var zrCnt = cSole.length + c1.length;
+      var zrPln = sumAmounts(cSole) + sumAmounts(c1);
+      var zrCntPct = (zrCnt / n) * 100;
+      var zrValPct = (zrPln / cSum) * 100;
+
+      var footLeft = ck === 'training'
+        ? I18N.compCatTrainTpl
+            .replace('{cntPct}', fmtPct(zrCntPct))
+            .replace('{plnPct}', fmtPct(zrValPct))
+            .replace('{c4}', c4.length)
+            .replace('{tot}', cs.length)
+            .replace('{c4Pct}', fmtPct((c4.length / n) * 100))
+        : I18N.compCatZeroTpl
+            .replace('{zr}', zrCnt)
+            .replace('{tot}', cs.length)
+            .replace('{cntPct}', fmtPct(zrCntPct))
+            .replace('{plnPct}', fmtPct(zrValPct));
+
+      return (
+        '<button type="button" class="comp-cat-btn" data-bzp-preset="cat=' + esc(ck) + '">' +
+          '<div class="comp-row-top">' +
+            '<span class="comp-cat-label"><i style="background:' + (CAT_COLORS[ck] || '#68655f') + '"></i><strong>' + esc(I18N.cats[ck]) + '</strong></span>' +
+            '<span class="comp-row-sum">' + esc(fmtPlnCompact(cSum) + ' · ' + fmtContractsCount(cs.length)) + '</span>' +
+          '</div>' +
+          '<div class="comp-stack-track">' +
+            (c1.length > 0 ? '<i style="width:' + ((c1.length / n) * 100).toFixed(1) + '%;background:#98513c"></i>' : '') +
+            (cSole.length > 0 ? '<i style="width:' + ((cSole.length / n) * 100).toFixed(1) + '%;background:#7d601d"></i>' : '') +
+            (c23.length > 0 ? '<i style="width:' + ((c23.length / n) * 100).toFixed(1) + '%;background:#2d546b"></i>' : '') +
+            (c4.length > 0 ? '<i style="width:' + ((c4.length / n) * 100).toFixed(1) + '%;background:#4a6b53"></i>' : '') +
+          '</div>' +
+          '<div class="comp-row-foot">' +
+            '<span class="comp-row-stat' + (zrValPct >= 50 ? ' is-rust' : '') + '">' + esc(footLeft) + '</span>' +
+            '<span class="comp-med-pill' + (cMed <= 1 ? ' is-alert' : '') + '">' + esc(I18N.compMedPillTpl.replace('{m}', fmtMedianBids(cMed))) + '</span>' +
+          '</div>' +
+        '</button>'
+      );
+    }).join('');
+
+    var view1Html =
+      '<div class="comp-split-sec-a">' +
+        '<div class="comp-sec-head">' +
+          '<span class="comp-sec-title">' + esc(I18N.compSecATitleTpl.replace('{sum}', fmtPlnCompact(totalCorePln)).replace('{n}', signedCore.length)) + '</span>' +
+          '<span class="comp-click-hint">' + esc(I18N.compSecAHint) + '</span>' +
+        '</div>' +
+        '<div class="comp-split-callout">' +
+          '<span class="comp-zero-badge">' + esc(I18N.compZeroBadgeTpl.replace('{pct}', fmtPct(zrPlnPct))) + '</span>' +
+          '<p class="comp-callout-copy">' + calloutHeadlineHtml + '</p>' +
+        '</div>' +
+        '<div class="comp-money-bar" role="group" aria-label="' + esc(I18N.compSecATitleTpl.replace('{sum}', fmtPlnCompact(totalCorePln)).replace('{n}', signedCore.length)) + '">' +
+          moneyBarHtml +
+        '</div>' +
+        '<div class="comp-tier-grid">' + tierCardsHtml + '</div>' +
+        '<div class="comp-forensic-note">' + I18N.compForensicNoteHtml + '</div>' +
+      '</div>' +
+      '<div class="comp-diag-grid">' +
+        '<div class="comp-diag-panel">' +
+          '<div class="comp-diag-head">' +
+            '<h4>' + esc(I18N.compCliffTitleTpl.replace('{n}', pts.length)) + '</h4>' +
+            '<p>' + esc(I18N.compCliffSub) + '</p>' +
+            '<div class="comp-mini-legend">' +
+              '<span><i style="background:#98513c"></i>' + esc(I18N.compLeg1) + '</span>' +
+              '<span><i style="background:#2d546b"></i>' + esc(I18N.compLeg23) + '</span>' +
+              '<span><i style="background:#4a6b53"></i>' + esc(I18N.compLeg4p) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="comp-bracket-list">' + bracketsHtml + '</div>' +
+        '</div>' +
+        '<div class="comp-diag-panel">' +
+          '<div class="comp-diag-head">' +
+            '<h4>' + esc(I18N.compCatTitleTpl.replace('{n}', signedCore.length)) + '</h4>' +
+            '<p>' + esc(I18N.compCatSub) + '</p>' +
+            '<div class="comp-mini-legend">' +
+              '<span><i style="background:#98513c"></i>' + esc(I18N.compLeg1) + '</span>' +
+              '<span><i style="background:#7d601d"></i>' + esc(I18N.compLegSole) + '</span>' +
+              '<span><i style="background:#2d546b"></i>' + esc(I18N.compLeg23) + '</span>' +
+              '<span><i style="background:#4a6b53"></i>' + esc(I18N.compLeg4p) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="comp-cat-list">' + catRowsHtml + '</div>' +
+        '</div>' +
+      '</div>';
+
+    /* --- 2. View 2 Metrics & Self-Contained Crystal-Clear SVG Scatter --- */
     var isCompactSvg = window.innerWidth <= 639;
-    var W = isCompactSvg ? 500 : 680;
-    var H = isCompactSvg ? 344 : 386;
-    var padL = isCompactSvg ? 40 : 48;
-    var padR = isCompactSvg ? 20 : 20;
-    var padT = isCompactSvg ? 18 : 22;
+    var W = isCompactSvg ? 500 : 700;
+    var H = isCompactSvg ? 384 : 436;
+    var padL = isCompactSvg ? 40 : 46;
+    var padR = 16;
+    var padT = isCompactSvg ? 44 : 46;
     var padB = isCompactSvg ? 44 : 46;
     var plotW = W - padL - padR;
+    var plotBottom = H - padB + 6;
 
-    var minLog = Math.log10(1500);
+    var minLog = Math.log10(1400);
     var maxLog = Math.log10(6000000);
     function xOf(amt) {
-      var cl = Math.max(1500, Math.min(6000000, amt));
+      var cl = Math.max(1400, Math.min(6000000, amt));
       return padL + ((Math.log10(cl) - minLog) / (maxLog - minLog)) * plotW;
     }
 
-    // Dedicated single-bid band at bottom with clear header strip above jittered dots
-    var singleBandTop = isCompactSvg ? 255 : 293;
-    var ySingleCenter = isCompactSvg ? 286 : 326;
-    var yTwo = isCompactSvg ? 238 : 276;
-    var yTop = padT + 4;
+    var yTop = isCompactSvg ? 74 : 94;
+    var yTwo = isCompactSvg ? 248 : 302;
+    var singleBandTop = isCompactSvg ? 268 : 336;
+    var yOne = isCompactSvg ? 330 : 374;
+
     function yBase(bids) {
-      if (bids <= 1) return ySingleCenter;
+      if (bids <= 1) return yOne;
       var t = (Math.sqrt(Math.min(24, bids)) - Math.sqrt(2)) / (Math.sqrt(24) - Math.sqrt(2));
       return yTwo - t * (yTwo - yTop);
     }
 
-    var singleIdx = 0;
+    /* Deterministic upward-only stacking for bids === 1 in narrow log10 buckets (~0.085) */
+    var cliffLog = Math.log10(170000);
+    var b1Buckets = {};
+    pts.forEach(function (r, idx) {
+      if (r.bids === 1) {
+        var bk = Math.floor((Math.log10(Math.max(1400, r.amountPln)) - cliffLog) / 0.085);
+        if (!b1Buckets[bk]) b1Buckets[bk] = [];
+        b1Buckets[bk].push(idx);
+      }
+    });
+    Object.keys(b1Buckets).forEach(function (bk) {
+      b1Buckets[bk].sort(function (ia, ib) {
+        var aCzd = (pts[ia].bzp && pts[ia].bzp.indexOf('00137744') !== -1) ? 1 : 0;
+        var bCzd = (pts[ib].bzp && pts[ib].bzp.indexOf('00137744') !== -1) ? 1 : 0;
+        if (aCzd !== bCzd) return aCzd - bCzd;
+        return pts[ia].amountPln - pts[ib].amountPln;
+      });
+    });
+    var b1Offsets = {};
+    var rowStep = isCompactSvg ? 7.6 : 7.2;
+    Object.keys(b1Buckets).forEach(function (bk) {
+      var arr = b1Buckets[bk];
+      arr.forEach(function (ptIdx, k) {
+        var row = k % 3;
+        var subCol = Math.floor(k / 3);
+        var dy = -row * rowStep; // Strictly <= 0: never below yPos(1)!
+        var dx = arr.length > 3 ? (subCol === 0 ? -2.0 : 2.6) : 0;
+        b1Offsets[ptIdx] = { dx: dx, dy: dy };
+      });
+    });
+
+    var ge2Buckets = {};
     var plotted = pts.map(function (r, idx) {
       var cx = xOf(r.amountPln);
       var cy = yBase(r.bids);
       if (r.bids === 1) {
-        var offsetPattern = [-5, 0, 5, -2.5, 2.5];
-        var off = offsetPattern[singleIdx % offsetPattern.length];
-        if (r.bzp && r.bzp.indexOf('00137744') !== -1) off = -4.5;
-        else if (r.bzp && r.bzp.indexOf('00183188') !== -1) off = 5;
-        cy += off;
-        singleIdx += 1;
-      } else if (r.bids === 2) {
-        cy += (idx % 2 === 0 ? -2.2 : 2.2);
+        var off = b1Offsets[idx] || { dx: 0, dy: 0 };
+        cx += off.dx;
+        cy += off.dy;
+      } else {
+        var gk = r.bids + ':' + Math.floor((Math.log10(Math.max(1400, r.amountPln)) - minLog) / 0.06);
+        var seen = ge2Buckets[gk] || 0;
+        ge2Buckets[gk] = seen + 1;
+        if (seen > 0) {
+          cy += (seen % 2 === 1 ? -1.8 : 1.8);
+        }
       }
       return { r: r, cx: cx, cy: cy, idx: idx };
     });
 
-    // Dynamic statistics for Figure 02 toolbar & single-bid zone banner
     var softPts = plotted.filter(function (pt) { return pt.r.category === 'software_deploy'; });
     var softSingle = softPts.filter(function (pt) { return pt.r.bids === 1; });
     var softSinglePct = softPts.length ? fmtPct((softSingle.length / softPts.length) * 100) : '0%';
@@ -688,11 +1245,81 @@
       .replace('{total}', plotted.length)
       .replace('{pct}', singleSharePct);
 
+    /* Self-contained SVG Top Header & Category Legend Strip */
+    var svgLegendDefs = isCompactSvg
+      ? [
+          { x: 16, col: CAT_COLORS.software_deploy, lbl: I18N.svgCatSoft },
+          { x: 146, col: CAT_COLORS.hardware_lab, lbl: I18N.svgCatHard },
+          { x: 288, col: CAT_COLORS.training, lbl: I18N.svgCatTrain },
+          { x: 398, col: CAT_COLORS.consulting, lbl: I18N.svgCatCons }
+        ]
+      : [
+          { x: 158, col: CAT_COLORS.software_deploy, lbl: I18N.svgCatSoft },
+          { x: 286, col: CAT_COLORS.hardware_lab, lbl: I18N.svgCatHard },
+          { x: 422, col: CAT_COLORS.training, lbl: I18N.svgCatTrain },
+          { x: 530, col: CAT_COLORS.consulting, lbl: I18N.svgCatCons }
+        ];
+
+    var svgHeaderHtml =
+      '<rect x="0" y="0" width="' + W + '" height="34" fill="#f3f1ea"/>' +
+      '<line x1="0" y1="34" x2="' + W + '" y2="34" stroke="#dcd7cc"/>' +
+      (!isCompactSvg
+        ? '<text x="12" y="21" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="9.5" font-weight="700" letter-spacing="0.04em" fill="#68655f">' + esc(I18N.svgCatKickerTpl.replace('{n}', plotted.length)) + '</text>'
+        : '') +
+      svgLegendDefs.map(function (it) {
+        return (
+          '<circle cx="' + it.x + '" cy="17.5" r="' + (isCompactSvg ? '5.1' : '4.8') + '" fill="' + it.col + '" stroke="#fbfaf6" stroke-width="1"/>' +
+          '<text x="' + (it.x + 9) + '" y="21" font-family="-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif" font-size="' + (isCompactSvg ? '11.5' : '10.5') + '" font-weight="600" fill="#2b2926">' + esc(it.lbl) + '</text>'
+        );
+      }).join('');
+
+    /* 170k PLN Cliff Line & Two Named Background Zones */
+    var xCliff = xOf(170000);
+    var leftZoneW = Math.max(0, xCliff - padL);
+    var rightZoneW = Math.max(0, (W - padR) - xCliff);
+    var upperZoneH = singleBandTop - padT;
+    var singleZoneHeight = plotBottom - singleBandTop;
+
+    var ltSingleRound = Math.round(lt170SinglePct) + '%';
+    var geSingleRound = Math.round(ge170SinglePct) + '%';
+    var gePlnRound = Math.round(ge170PlnPct) + '%';
+
+    var zonesSvg =
+      '<rect x="' + padL + '" y="' + padT + '" width="' + leftZoneW.toFixed(1) + '" height="' + upperZoneH.toFixed(1) + '" fill="rgba(74,107,83,0.045)"/>' +
+      '<rect x="' + xCliff.toFixed(1) + '" y="' + padT + '" width="' + rightZoneW.toFixed(1) + '" height="' + upperZoneH.toFixed(1) + '" fill="rgba(152,81,60,0.055)"/>' +
+      '<rect x="' + padL + '" y="' + singleBandTop.toFixed(1) + '" width="' + leftZoneW.toFixed(1) + '" height="' + singleZoneHeight.toFixed(1) + '" fill="rgba(152,81,60,0.075)"/>' +
+      '<rect x="' + xCliff.toFixed(1) + '" y="' + singleBandTop.toFixed(1) + '" width="' + rightZoneW.toFixed(1) + '" height="' + singleZoneHeight.toFixed(1) + '" fill="rgba(152,81,60,0.125)"/>' +
+      '<line x1="' + padL + '" y1="' + singleBandTop.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + singleBandTop.toFixed(1) + '" stroke="#d4b5ab" stroke-dasharray="3,3"/>';
+
+    var zoneHeadersSvg = isCompactSvg
+      ? (
+          '<text x="' + (padL + 6) + '" y="' + (padT + 15) + '" font-family="-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif" font-size="10.9" font-weight="700" fill="#3b5943">' +
+            esc(I18N.svgZoneLeftMobTpl.replace('{medNum}', fmtMedianBidsNum(lt170Med)).replace('{pct}', ltSingleRound)) +
+          '</text>' +
+          '<text x="' + (xCliff + 5).toFixed(1) + '" y="' + (padT + 15) + '" font-family="-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif" font-size="10.9" font-weight="700" fill="#98513c">' +
+            esc(I18N.svgZoneRightMobTpl.replace('{plnPct}', gePlnRound).replace('{medNum}', fmtMedianBidsNum(ge170Med)).replace('{pct}', geSingleRound)) +
+          '</text>'
+        )
+      : (
+          '<text x="' + (padL + 8) + '" y="' + (padT + 14) + '" font-family="-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif" font-size="9.5" font-weight="700" letter-spacing="0.02em" fill="#3b5943">' +
+            esc(I18N.svgZoneLeft1Tpl.replace('{cnt}', fmtContractsCount(lt170.length))) +
+          '</text>' +
+          '<text x="' + (padL + 8) + '" y="' + (padT + 27) + '" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="8.9" fill="#514e49">' +
+            esc(I18N.svgZoneLeft2Tpl.replace('{med}', fmtMedianBids(lt170Med)).replace('{pct}', ltSingleRound)) +
+          '</text>' +
+          '<text x="' + (xCliff + 8).toFixed(1) + '" y="' + (padT + 14) + '" font-family="-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif" font-size="9.5" font-weight="700" letter-spacing="0.02em" fill="#98513c">' +
+            esc(I18N.svgZoneRight1Tpl.replace('{plnPct}', fmtPct(ge170PlnPct)).replace('{cnt}', fmtContractsCount(ge170.length))) +
+          '</text>' +
+          '<text x="' + (xCliff + 8).toFixed(1) + '" y="' + (padT + 27) + '" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="8.9" fill="#6e3a2a">' +
+            esc(I18N.svgZoneRight2Tpl.replace('{med}', fmtMedianBids(ge170Med)).replace('{pct}', geSingleRound)) +
+          '</text>'
+        );
+
     var xTicks = [
       { v: 2000, pl: '2 tys.', en: '2k' },
       { v: 10000, pl: '10 tys.', en: '10k' },
       { v: 50000, pl: '50 tys.', en: '50k' },
-      { v: 250000, pl: '250 tys.', en: '250k' },
+      { v: 170000, pl: '170 tys.', en: '170k', isCliff: true },
       { v: 1000000, pl: '1 mln', en: '1M' },
       { v: 5000000, pl: isCompactSvg ? '5 mln' : '5 mln zł', en: isCompactSvg ? '5M' : '5M PLN' }
     ];
@@ -701,16 +1328,29 @@
     var gridSvg = '';
     xTicks.forEach(function (tk) {
       var x = xOf(tk.v).toFixed(1);
-      gridSvg +=
-        '<line x1="' + x + '" y1="' + padT + '" x2="' + x + '" y2="' + (H - padB + 8) + '" stroke="#e3dfd6" stroke-dasharray="2,3"/>' +
-        '<text class="comp-tick" x="' + x + '" y="' + (H - padB + 22) + '" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="10" fill="#68655f">' + esc(tk[lang]) + '</text>';
+      if (tk.isCliff) {
+        gridSvg +=
+          '<line x1="' + x + '" y1="' + padT + '" x2="' + x + '" y2="' + plotBottom + '" stroke="#98513c" stroke-width="1.35" stroke-dasharray="4,3"/>' +
+          '<text class="comp-tick" x="' + x + '" y="' + (plotBottom + 15) + '" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="10" font-weight="700" fill="#98513c">' + esc(tk[lang]) + '</text>';
+      } else {
+        gridSvg +=
+          '<line x1="' + x + '" y1="' + (isCompactSvg ? padT + 22 : padT + 34) + '" x2="' + x + '" y2="' + plotBottom + '" stroke="#e3dfd6" stroke-dasharray="2,3"/>' +
+          '<text class="comp-tick" x="' + x + '" y="' + (plotBottom + 15) + '" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="10" fill="#68655f">' + esc(tk[lang]) + '</text>';
+      }
     });
     yTicks.forEach(function (yv) {
       var y = yBase(yv).toFixed(1);
       gridSvg +=
-        '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="' + (yv === 1 ? '#d4b5ab' : '#e6e2d9') + '"/>' +
-        '<text class="comp-tick" x="' + (padL - 9) + '" y="' + (Number(y) + 3.5) + '" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="10" font-weight="' + (yv === 1 ? '700' : '400') + '" fill="' + (yv === 1 ? '#98513c' : '#68655f') + '">' + yv + '</text>';
+        '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="' + (yv === 1 ? '#cfa89c' : '#e6e2d9') + '"/>' +
+        '<text class="comp-tick" x="' + (padL - 8) + '" y="' + (Number(y) + 3.5) + '" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="10" font-weight="' + (yv === 1 ? '700' : '400') + '" fill="' + (yv === 1 ? '#98513c' : '#68655f') + '">' + yv + '</text>';
     });
+    var bx = padL - 6;
+    var by = isCompactSvg ? 288 : 332;
+    gridSvg +=
+      '<g class="comp-axis-break" aria-hidden="true" stroke="#8a847a" stroke-width="1.25" stroke-linecap="round">' +
+        '<line x1="' + (bx - 3.5).toFixed(1) + '" y1="' + (by + 1.5).toFixed(1) + '" x2="' + (bx + 2.5).toFixed(1) + '" y2="' + (by - 4.5).toFixed(1) + '"/>' +
+        '<line x1="' + (bx - 3.5).toFixed(1) + '" y1="' + (by + 5.5).toFixed(1) + '" x2="' + (bx + 2.5).toFixed(1) + '" y2="' + (by - 0.5).toFixed(1) + '"/>' +
+      '</g>';
 
     function findPoint(bzpSub) {
       for (var i = 0; i < plotted.length; i++) {
@@ -719,34 +1359,43 @@
       return null;
     }
 
-    // Dynamic selection of 3 landmark contracts
-    var pTopBids = null;
-    plotted.forEach(function (pt) {
-      if (pt.r.category === 'training') {
-        if (!pTopBids || pt.r.bids > pTopBids.r.bids || (pt.r.bids === pTopBids.r.bids && pt.r.amountPln < pTopBids.r.amountPln)) {
-          pTopBids = pt;
-        }
-      }
-    });
+    /* Dynamic selection of 4 landmark contracts */
+    var pTopBids = findPoint('00465518');
     if (!pTopBids) {
       plotted.forEach(function (pt) {
-        if (!pTopBids || pt.r.bids > pTopBids.r.bids) pTopBids = pt;
+        if (pt.r.category === 'training') {
+          if (!pTopBids || pt.r.bids > pTopBids.r.bids || (pt.r.bids === pTopBids.r.bids && pt.r.amountPln < pTopBids.r.amountPln)) {
+            pTopBids = pt;
+          }
+        }
       });
     }
-
+    var pAsp = findPoint('00450838');
+    var pAspIsSpecific = Boolean(pAsp);
+    if (!pAsp) {
+      var softMulti = plotted.filter(function (pt) { return pt.r.category === 'software_deploy' && pt.r.bids >= 5; });
+      if (softMulti.length) {
+        softMulti.sort(function (a, b) { return b.r.bids - a.r.bids; });
+        pAsp = softMulti[0];
+      }
+    }
     var pCzd = findPoint('00137744');
     var pCzdIsSpecific = Boolean(pCzd);
     if (!pCzd) {
       var softSingleHealth = plotted.filter(function (pt) { return pt.r.category === 'software_deploy' && pt.r.bids === 1; });
       if (softSingleHealth.length) pCzd = softSingleHealth[softSingleHealth.length - 1];
     }
-
     var pUjd = findPoint('00163288');
     var pUjdIsSpecific = Boolean(pUjd);
     if (!pUjd) pUjd = plotted[plotted.length - 1];
 
     var pin1Label = pTopBids
-      ? I18N.compPin1Tpl.replace('{bids}', fmtBids(pTopBids.r.bids)).replace('{amt}', fmtPlnCompact(pTopBids.r.amountPln))
+      ? I18N.compPin1Tpl.replace('{bids}', fmtBids(pTopBids.r.bids)).replace('{amt}', fmtPlnMedian(pTopBids.r.amountPln))
+      : '';
+    var pinAspLabel = pAsp
+      ? (pAspIsSpecific ? I18N.compPinAspTpl : I18N.compPinGenericTpl.replace('{org}', pAsp.r.city || pAsp.r.org))
+          .replace('{bids}', fmtBids(pAsp.r.bids))
+          .replace('{amt}', fmtPlnCompact(pAsp.r.amountPln))
       : '';
     var pin2Label = pCzd
       ? (pCzdIsSpecific ? I18N.compPin2Tpl : I18N.compPinGenericTpl.replace('{org}', pCzd.r.city || pCzd.r.org))
@@ -761,48 +1410,72 @@
 
     var circlesSvg = plotted.map(function (pt, idx) {
       var col = CAT_COLORS[pt.r.category] || '#68655f';
-      return '<circle class="comp-dot" data-idx="' + idx + '" cx="' + pt.cx.toFixed(1) + '" cy="' + pt.cy.toFixed(1) + '" r="5.6" fill="' + col + '" fill-opacity="0.86" stroke="#fbfaf6" stroke-width="1.2"><title>' + esc(pt.r.org + ' — ' + fmtPlnExact(pt.r.amountPln) + ' (' + fmtBids(pt.r.bids) + ')') + '</title></circle>';
+      return '<circle class="comp-dot" data-idx="' + idx + '" cx="' + pt.cx.toFixed(1) + '" cy="' + pt.cy.toFixed(1) + '" r="5.3" fill="' + col + '" fill-opacity="0.88" stroke="#fbfaf6" stroke-width="1.15"><title>' + esc(pt.r.org + ' — ' + fmtPlnExact(pt.r.amountPln) + ' (' + fmtBids(pt.r.bids) + ')') + '</title></circle>';
     }).join('');
 
-    // Render callout annotations AFTER circles (top layer), placed in verified dot-free corridors with halo stroke
-    var haloAttr = 'paint-order="stroke" stroke="#fbfaf6" stroke-width="3.5" stroke-linejoin="round"';
+    /* Compact pill callout boxes (<rect rx="3">) placed close to dots (max 10–23px connector) */
+    function renderCalloutPill(pt, label, strokeCol, textCol, opts) {
+      if (!pt || !label) return '';
+      var pillH = 18;
+      var pillW = Math.round(label.length * 4.55 + 14);
+      var boxX = opts.alignRight ? (opts.maxX - pillW) : Math.round(pt.cx - pillW / 2);
+      if (opts.minX != null && boxX < opts.minX) boxX = opts.minX;
+      if (opts.maxX != null && boxX + pillW > opts.maxX) boxX = opts.maxX - pillW;
+      var boxY = opts.boxY;
+      var anchorX = Math.max(boxX + 8, Math.min(boxX + pillW - 8, pt.cx));
+      var lineY1 = boxY > pt.cy ? (pt.cy + 6) : (pt.cy - 6);
+      var lineY2 = boxY > pt.cy ? boxY : (boxY + pillH);
+      return (
+        '<g class="comp-ann" data-pin-idx="' + pt.idx + '">' +
+          '<circle cx="' + pt.cx.toFixed(1) + '" cy="' + pt.cy.toFixed(1) + '" r="7.4" fill="none" stroke="' + strokeCol + '" stroke-width="1.1" stroke-opacity="0.55"/>' +
+          '<line x1="' + pt.cx.toFixed(1) + '" y1="' + lineY1.toFixed(1) + '" x2="' + anchorX.toFixed(1) + '" y2="' + lineY2.toFixed(1) + '" stroke="' + strokeCol + '" stroke-width="1.2"/>' +
+          '<rect x="' + boxX.toFixed(1) + '" y="' + boxY.toFixed(1) + '" width="' + pillW + '" height="' + pillH + '" rx="3" fill="#fffdf8" fill-opacity="0.95" stroke="' + strokeCol + '" stroke-width="1"/>' +
+          '<text x="' + (boxX + pillW / 2).toFixed(1) + '" y="' + (boxY + 12.4).toFixed(1) + '" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif" font-size="9.5" font-weight="600" fill="' + textCol + '">' + esc(label) + '</text>' +
+        '</g>'
+      );
+    }
+
     var annSvg = '';
-    if (pTopBids) {
-      var p1TextX = Math.max(padL + 10, Math.min(285, pTopBids.cx - 84));
-      var p1TextY = 78;
-      annSvg +=
-        '<g class="comp-ann" data-pin-idx="' + pTopBids.idx + '" pointer-events="none">' +
-          '<line x1="' + pTopBids.cx.toFixed(1) + '" y1="' + (pTopBids.cy + 7).toFixed(1) + '" x2="' + pTopBids.cx.toFixed(1) + '" y2="' + (p1TextY - 11).toFixed(1) + '" stroke="#8c6d23" stroke-width="1.15"/>' +
-          '<text class="comp-ann-text" x="' + p1TextX.toFixed(1) + '" y="' + p1TextY + '" text-anchor="start" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="9.8" font-weight="600" fill="#5e4915" ' + haloAttr + '>' + esc(pin1Label) + '</text>' +
-        '</g>';
-    }
-    if (pUjd && pUjd !== pTopBids) {
-      var p3TextX = W - padR - 4;
-      var p3TextY = 144;
-      var p3LineEndX = Math.max(padL + 40, Math.min(W - padR - 10, pUjd.cx - 5));
-      annSvg +=
-        '<g class="comp-ann" data-pin-idx="' + pUjd.idx + '" pointer-events="none">' +
-          '<line x1="' + pUjd.cx.toFixed(1) + '" y1="' + (pUjd.cy - 7).toFixed(1) + '" x2="' + p3LineEndX.toFixed(1) + '" y2="' + (p3TextY + 5) + '" stroke="#2d546b" stroke-width="1.15"/>' +
-          '<text class="comp-ann-text" x="' + p3TextX.toFixed(1) + '" y="' + p3TextY + '" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="9.8" font-weight="600" fill="#2d546b" ' + haloAttr + '>' + esc(pin3Label) + '</text>' +
-        '</g>';
-    }
-    if (pCzd && pCzd !== pUjd && pCzd !== pTopBids) {
-      var p2TextX = Math.min(W - padR - 18, pCzd.cx + 115);
-      var p2TextY = 178;
-      annSvg +=
-        '<g class="comp-ann" data-pin-idx="' + pCzd.idx + '" pointer-events="none">' +
-          '<line x1="' + pCzd.cx.toFixed(1) + '" y1="' + (pCzd.cy - 7).toFixed(1) + '" x2="' + (pCzd.cx + 2).toFixed(1) + '" y2="' + (p2TextY + 5) + '" stroke="#98513c" stroke-width="1.15"/>' +
-          '<text class="comp-ann-text" x="' + p2TextX.toFixed(1) + '" y="' + p2TextY + '" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="9.8" font-weight="600" fill="#98513c" ' + haloAttr + '>' + esc(pin2Label) + '</text>' +
-        '</g>';
+    if (!isCompactSvg) {
+      if (pTopBids) {
+        annSvg += renderCalloutPill(pTopBids, pin1Label, '#7d601d', '#5e4915', {
+          boxY: Math.round(pTopBids.cy + 15),
+          minX: padL + 8,
+          maxX: Math.round(xCliff - 8)
+        });
+      }
+      if (pAsp && pAsp !== pTopBids) {
+        annSvg += renderCalloutPill(pAsp, pinAspLabel, '#98513c', '#7a3b29', {
+          boxY: Math.round(pAsp.cy + 15),
+          minX: 238,
+          maxX: Math.round(xCliff - 5)
+        });
+      }
+      if (pCzd && pCzd !== pTopBids && pCzd !== pAsp) {
+        annSvg += renderCalloutPill(pCzd, pin2Label, '#98513c', '#7a3b29', {
+          boxY: singleBandTop - 19,
+          minX: Math.round(xCliff + 10),
+          maxX: W - padR - 6
+        });
+      }
+      if (pUjd && pUjd !== pCzd && pUjd !== pTopBids && pUjd !== pAsp) {
+        annSvg += renderCalloutPill(pUjd, pin3Label, '#2d546b', '#224255', {
+          boxY: Math.round(pUjd.cy - 36),
+          minX: 528,
+          maxX: W - 6,
+          alignRight: true
+        });
+      }
     }
 
     var mobilePins = [];
-    if (pTopBids) mobilePins.push({ idx: pTopBids.idx, label: pin1Label, color: CAT_COLORS[pTopBids.r.category] || '#8c6d23' });
-    if (pCzd && pCzd !== pTopBids) mobilePins.push({ idx: pCzd.idx, label: pin2Label, color: CAT_COLORS[pCzd.r.category] || '#98513c' });
-    if (pUjd && pUjd !== pCzd && pUjd !== pTopBids) mobilePins.push({ idx: pUjd.idx, label: pin3Label, color: CAT_COLORS[pUjd.r.category] || '#2d546b' });
+    if (pTopBids) mobilePins.push({ idx: pTopBids.idx, label: pin1Label, color: CAT_COLORS[pTopBids.r.category] || '#7d601d' });
+    if (pAsp && pAsp !== pTopBids) mobilePins.push({ idx: pAsp.idx, label: pinAspLabel, color: CAT_COLORS[pAsp.r.category] || '#98513c' });
+    if (pCzd && pCzd !== pTopBids && pCzd !== pAsp) mobilePins.push({ idx: pCzd.idx, label: pin2Label, color: CAT_COLORS[pCzd.r.category] || '#98513c' });
+    if (pUjd && pUjd !== pCzd && pUjd !== pTopBids && pUjd !== pAsp) mobilePins.push({ idx: pUjd.idx, label: pin3Label, color: CAT_COLORS[pUjd.r.category] || '#2d546b' });
 
     var mobilePinsHtml = mobilePins.length
-      ? '<div class="comp-pins-mobile">' +
+      ? '<div class="comp-pins-mobile comp-mobile-pins">' +
           '<span class="comp-pins-title">' + esc(I18N.compPinsHeading) + '</span>' +
           mobilePins.map(function (mp) {
             return '<button type="button" class="comp-pin-btn" data-pin-select="' + mp.idx + '"><i style="background:' + mp.color + '"></i><span>' + esc(mp.label) + '</span></button>';
@@ -810,25 +1483,25 @@
         '</div>'
       : '';
 
-    var singleZoneHeight = (H - padB + 8) - singleBandTop;
-    var plotMidY = ((padT + (H - padB + 8)) / 2).toFixed(1);
+    var plotMidY = ((padT + plotBottom) / 2).toFixed(1);
 
-    figComp.innerHTML =
+    var view2Html =
       '<div class="comp-toolbar">' +
-        '<button type="button" class="bzp-pill is-active" data-cfilter="all">' + esc(I18N.compAll.replace('{n}', plotted.length)) + '</button>' +
-        '<button type="button" class="bzp-pill" data-cfilter="software">' + esc(compSoftLabel) + '</button>' +
-        '<button type="button" class="bzp-pill" data-cfilter="health">' + esc(I18N.compHealth) + '</button>' +
-        '<button type="button" class="bzp-pill" data-cfilter="training">' + esc(I18N.compTrain) + '</button>' +
+        '<button type="button" class="bzp-pill' + (compFilter === 'all' ? ' is-active' : '') + '" data-cfilter="all">' + esc(I18N.compAll.replace('{n}', plotted.length)) + '</button>' +
+        '<button type="button" class="bzp-pill' + (compFilter === 'software' ? ' is-active' : '') + '" data-cfilter="software">' + esc(compSoftLabel) + '</button>' +
+        '<button type="button" class="bzp-pill' + (compFilter === 'health' ? ' is-active' : '') + '" data-cfilter="health">' + esc(I18N.compHealth) + '</button>' +
+        '<button type="button" class="bzp-pill' + (compFilter === 'training' ? ' is-active' : '') + '" data-cfilter="training">' + esc(I18N.compTrain) + '</button>' +
       '</div>' +
       '<div class="comp-layout">' +
         '<div class="comp-stage-col">' +
           '<div class="comp-stage">' +
             '<svg class="comp-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(I18N.compAxisX) + '">' +
-              '<rect x="' + padL + '" y="' + singleBandTop.toFixed(1) + '" width="' + plotW + '" height="' + singleZoneHeight.toFixed(1) + '" fill="rgba(152,81,60,0.08)"/>' +
-              '<line x1="' + padL + '" y1="' + singleBandTop.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + singleBandTop.toFixed(1) + '" stroke="#d9bfb6" stroke-dasharray="3,3"/>' +
-              '<text class="comp-zone-label comp-zone-full" x="' + (padL + 8) + '" y="' + (singleBandTop + 13).toFixed(1) + '" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="9.3" font-weight="700" fill="#98513c">' + esc(compZoneFull) + '</text>' +
-              '<text class="comp-zone-label comp-zone-short" x="' + (padL + 8) + '" y="' + (singleBandTop + 14).toFixed(1) + '" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="12" font-weight="700" fill="#98513c">' + esc(compZoneShort) + '</text>' +
+              svgHeaderHtml +
+              zonesSvg +
               gridSvg +
+              zoneHeadersSvg +
+              '<text class="comp-zone-label comp-zone-full" x="' + (padL + 8) + '" y="' + (singleBandTop + 12.5).toFixed(1) + '" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="9.1" font-weight="700" fill="#98513c" paint-order="stroke" stroke="#f7f2ee" stroke-width="2.5">' + esc(compZoneFull) + '</text>' +
+              '<text class="comp-zone-label comp-zone-short" x="' + (padL + 6) + '" y="' + (singleBandTop + 14).toFixed(1) + '" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="11.5" font-weight="700" fill="#98513c">' + esc(compZoneShort) + '</text>' +
               circlesSvg +
               annSvg +
               '<text class="comp-axis-lbl" x="' + (padL + plotW / 2).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="10" fill="#514e49">' + esc(I18N.compAxisX) + '</text>' +
@@ -840,6 +1513,248 @@
         '<div class="comp-card" id="comp-inspector"></div>' +
       '</div>';
 
+    /* --- 3. View 3: Primary-Source HTML Forensics (Pricing, Lock-In & 31 Failures) --- */
+    var refLinePct = ((100 / 112) * 100).toFixed(2);
+    var refRightPct = (100 - (100 / 112) * 100).toFixed(2);
+    var priceRows = [
+      {
+        label: I18N.fPriceR1Label,
+        val: I18N.fPriceR1Val,
+        valCls: 'is-rust',
+        pctWidth: ((100 / 112) * 100).toFixed(2),
+        saveLeft: null,
+        saveWidth: null,
+        color: '#98513c',
+        foot: I18N.fPriceR1Foot,
+        pill: I18N.fPriceR1Pill,
+        pillCls: 'is-alert'
+      },
+      {
+        label: I18N.fPriceR2Label,
+        val: I18N.fPriceR2Val,
+        valCls: '',
+        pctWidth: ((93.8 / 112) * 100).toFixed(2),
+        saveLeft: ((93.8 / 112) * 100).toFixed(2),
+        saveWidth: (((100 - 93.8) / 112) * 100).toFixed(2),
+        color: '#2d546b',
+        foot: I18N.fPriceR2Foot,
+        pill: I18N.fPriceR2Pill,
+        pillCls: ''
+      },
+      {
+        label: I18N.fPriceR3Label,
+        val: I18N.fPriceR3Val,
+        valCls: 'is-sage',
+        pctWidth: ((54.0 / 112) * 100).toFixed(2),
+        saveLeft: ((54.0 / 112) * 100).toFixed(2),
+        saveWidth: (((100 - 54.0) / 112) * 100).toFixed(2),
+        color: '#4a6b53',
+        foot: I18N.fPriceR3Foot,
+        pill: I18N.fPriceR3Pill,
+        pillCls: 'is-good'
+      }
+    ];
+
+    var priceRowsHtml = priceRows.map(function (pr) {
+      return (
+        '<div class="comp-bracket-row comp-fprice-row">' +
+          '<div class="comp-row-top">' +
+            '<strong>' + esc(pr.label) + '</strong>' +
+            '<span class="comp-row-sum ' + pr.valCls + '">' + esc(pr.val) + '</span>' +
+          '</div>' +
+          '<div class="comp-price-track">' +
+            '<i class="comp-price-fill" style="width:' + pr.pctWidth + '%;background:' + pr.color + '"></i>' +
+            (pr.saveWidth ? '<i class="comp-price-save" style="left:' + pr.saveLeft + '%;width:' + pr.saveWidth + '%"></i>' : '') +
+            '<span class="comp-ref-line" style="left:' + refLinePct + '%"></span>' +
+          '</div>' +
+          '<div class="comp-row-foot">' +
+            '<span class="comp-row-stat">' + esc(pr.foot) + '</span>' +
+            '<span class="comp-med-pill' + (pr.pillCls ? ' ' + pr.pillCls : '') + '">' + esc(pr.pill) + '</span>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    var cancelTiers = [
+      { w: '45.16', pct: I18N.fCancel1Pct, cnt: I18N.fCancel1Cnt, desc: I18N.fCancel1Desc, color: '#98513c', narrow: false },
+      { w: '25.81', pct: I18N.fCancel2Pct, cnt: I18N.fCancel2Cnt, desc: I18N.fCancel2Desc, color: '#7d601d', narrow: false },
+      { w: '19.35', pct: I18N.fCancel3Pct, cnt: I18N.fCancel3Cnt, desc: I18N.fCancel3Desc, color: '#2d546b', narrow: false },
+      { w: '9.68', pct: I18N.fCancel4Pct, cnt: I18N.fCancel4Cnt, desc: I18N.fCancel4Desc, color: '#6e685f', narrow: true }
+    ];
+
+    var view3Html =
+      '<div class="comp-diag-grid comp-forensics-top">' +
+        '<div class="comp-diag-panel">' +
+          '<div>' +
+            '<div class="comp-diag-head">' +
+              '<h4>' + esc(I18N.fPriceTitle) + '</h4>' +
+              '<p>' + esc(I18N.fPriceSub) + '</p>' +
+            '</div>' +
+            '<div class="comp-price-scale">' +
+              '<span class="comp-price-s0">' + esc(I18N.fPriceScale0) + '</span>' +
+              '<span class="comp-price-sref" style="right:' + refRightPct + '%">' + esc(I18N.fPriceScaleRef) + '</span>' +
+            '</div>' +
+            '<div class="comp-bracket-list">' + priceRowsHtml + '</div>' +
+          '</div>' +
+          '<div class="comp-forensic-pills">' +
+            '<div class="comp-forensic-pill">' + I18N.fPricePill1Html + '</div>' +
+            '<div class="comp-forensic-pill">' + I18N.fPricePill2Html + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="comp-diag-panel">' +
+          '<div>' +
+            '<div class="comp-diag-head">' +
+              '<h4>' + esc(I18N.fLockTitle) + '</h4>' +
+              '<p>' + esc(I18N.fLockSub) + '</p>' +
+              '<div class="comp-mini-legend">' +
+                '<span><i style="background:#98513c"></i>' + esc(I18N.fLockLegZero) + '</span>' +
+                '<span><i style="background:#c9c3b8"></i>' + esc(I18N.fLockLegMulti) + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="comp-bracket-list">' +
+              '<div class="comp-bracket-row">' +
+                '<div class="comp-row-top">' +
+                  '<strong>' + esc(I18N.fLockR1Label) + '</strong>' +
+                  '<span class="comp-row-sum is-rust">' + esc(I18N.fLockR1Val) + '</span>' +
+                '</div>' +
+                '<div class="comp-stack-track">' +
+                  '<i style="width:94.1%;background:#98513c"></i>' +
+                  '<i style="width:5.9%;background:#c9c3b8"></i>' +
+                '</div>' +
+                '<div class="comp-row-foot">' +
+                  '<span class="comp-row-stat is-rust">' + esc(I18N.fLockR1Foot) + '</span>' +
+                  '<span class="comp-med-pill is-alert">' + esc(I18N.fLockR1Pill) + '</span>' +
+                '</div>' +
+              '</div>' +
+              '<div class="comp-bracket-row">' +
+                '<div class="comp-row-top">' +
+                  '<strong>' + esc(I18N.fLockR2Label) + '</strong>' +
+                  '<span class="comp-row-sum">' + esc(I18N.fLockR2Val) + '</span>' +
+                '</div>' +
+                '<div class="comp-stack-track">' +
+                  '<i style="width:53.6%;background:#98513c"></i>' +
+                  '<i style="width:46.4%;background:#c9c3b8"></i>' +
+                '</div>' +
+                '<div class="comp-row-foot">' +
+                  '<span class="comp-row-stat">' + esc(I18N.fLockR2Foot) + '</span>' +
+                  '<span class="comp-med-pill">' + esc(I18N.fLockR2Pill) + '</span>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="comp-forensic-pills">' +
+            '<div class="comp-forensic-pill">' + I18N.fLockPillHtml + '</div>' +
+            '<div class="comp-kpo-box">' +
+              '<span class="comp-kpo-kicker">' + esc(I18N.fKpoKicker) + '</span>' +
+              '<p class="comp-kpo-copy">' + I18N.fKpoBodyHtml + '</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="comp-autopsy-panel">' +
+        '<div class="comp-diag-head">' +
+          '<h4>' + esc(I18N.fCancelTitle) + '</h4>' +
+          '<p>' + esc(I18N.fCancelSub) + '</p>' +
+        '</div>' +
+        '<div class="comp-autopsy-bar" role="img" aria-label="' + esc(I18N.fCancelTitle) + '">' +
+          cancelTiers.map(function (ct) {
+            return (
+              '<div class="comp-autopsy-seg' + (ct.narrow ? ' is-narrow-seg' : '') + '" style="width:' + ct.w + '%;background:' + ct.color + '" title="' + esc(ct.pct + ' · ' + ct.cnt + ' — ' + ct.desc) + '">' +
+                '<span>' + esc(ct.pct) + '</span>' +
+              '</div>'
+            );
+          }).join('') +
+        '</div>' +
+        '<div class="comp-autopsy-grid">' +
+          cancelTiers.map(function (ct) {
+            return (
+              '<div class="comp-autopsy-item">' +
+                '<div class="comp-autopsy-item-head">' +
+                  '<span class="comp-tier-swatch" style="background:' + ct.color + '"></span>' +
+                  '<strong style="color:' + (ct.color === '#98513c' ? 'var(--rust)' : 'var(--ink)') + '">' + esc(ct.pct) + '</strong>' +
+                  '<span class="comp-autopsy-cnt">' + esc('(' + ct.cnt + ')') + '</span>' +
+                '</div>' +
+                '<p class="comp-autopsy-desc">' + esc(ct.desc) + '</p>' +
+              '</div>'
+            );
+          }).join('') +
+        '</div>' +
+        '<div class="comp-autopsy-foot">' +
+          '<span class="comp-autopsy-note">' + esc(I18N.fCancelFootNote) + '</span>' +
+          '<button type="button" class="comp-cancelled-btn" data-bzp-preset="status=cancelled">' + esc(I18N.fCancelBtn) + '</button>' +
+        '</div>' +
+      '</div>';
+
+    figComp.innerHTML =
+      '<div class="comp-view-bar" role="tablist" aria-label="' + esc(I18N.compTabAria) + '">' +
+        '<button type="button" role="tab" id="comp-tab-split" aria-controls="comp-panel-split" aria-selected="' + (compView === 'split' ? 'true' : 'false') + '" tabindex="' + (compView === 'split' ? '0' : '-1') + '" class="comp-view-tab' + (compView === 'split' ? ' is-active' : '') + '" data-comp-view="split">' +
+          '<span class="comp-view-idx">01</span>' +
+          '<span>' + esc(I18N.compTab1) + '</span>' +
+        '</button>' +
+        '<button type="button" role="tab" id="comp-tab-map" aria-controls="comp-panel-map" aria-selected="' + (compView === 'map' ? 'true' : 'false') + '" tabindex="' + (compView === 'map' ? '0' : '-1') + '" class="comp-view-tab' + (compView === 'map' ? ' is-active' : '') + '" data-comp-view="map">' +
+          '<span class="comp-view-idx">02</span>' +
+          '<span>' + esc(I18N.compTab2Tpl.replace('{n}', plotted.length)) + '</span>' +
+        '</button>' +
+        '<button type="button" role="tab" id="comp-tab-forensics" aria-controls="comp-panel-forensics" aria-selected="' + (compView === 'forensics' ? 'true' : 'false') + '" tabindex="' + (compView === 'forensics' ? '0' : '-1') + '" class="comp-view-tab' + (compView === 'forensics' ? ' is-active' : '') + '" data-comp-view="forensics">' +
+          '<span class="comp-view-idx">03</span>' +
+          '<span>' + esc(I18N.compTab3) + '</span>' +
+        '</button>' +
+      '</div>' +
+      '<div id="comp-panel-split" role="tabpanel" aria-labelledby="comp-tab-split" class="comp-panel comp-panel-split' + (compView === 'split' ? ' is-active' : '') + '">' +
+        view1Html +
+      '</div>' +
+      '<div id="comp-panel-map" role="tabpanel" aria-labelledby="comp-tab-map" class="comp-panel comp-panel-map' + (compView === 'map' ? ' is-active' : '') + '">' +
+        view2Html +
+      '</div>' +
+      '<div id="comp-panel-forensics" role="tabpanel" aria-labelledby="comp-tab-forensics" class="comp-panel comp-panel-forensics' + (compView === 'forensics' ? ' is-active' : '') + '">' +
+        view3Html +
+      '</div>';
+
+    bindPresetLinks(figComp);
+
+    var viewTabs = figComp.querySelectorAll('[data-comp-view]');
+    var splitPanel = document.getElementById('comp-panel-split');
+    var mapPanel = document.getElementById('comp-panel-map');
+    var forensicsPanel = document.getElementById('comp-panel-forensics');
+    var viewOrder = ['split', 'map', 'forensics'];
+
+    function setCompView(nextView, focusTab) {
+      compView = viewOrder.indexOf(nextView) !== -1 ? nextView : 'split';
+      Array.prototype.forEach.call(viewTabs, function (tb) {
+        var act = tb.getAttribute('data-comp-view') === compView;
+        tb.classList.toggle('is-active', act);
+        tb.setAttribute('aria-selected', act ? 'true' : 'false');
+        tb.setAttribute('tabindex', act ? '0' : '-1');
+        if (act && focusTab) tb.focus();
+      });
+      if (splitPanel) splitPanel.classList.toggle('is-active', compView === 'split');
+      if (mapPanel) mapPanel.classList.toggle('is-active', compView === 'map');
+      if (forensicsPanel) forensicsPanel.classList.toggle('is-active', compView === 'forensics');
+    }
+
+    Array.prototype.forEach.call(viewTabs, function (tb) {
+      tb.addEventListener('click', function () {
+        setCompView(tb.getAttribute('data-comp-view'), false);
+      });
+      tb.addEventListener('keydown', function (e) {
+        var curIdx = viewOrder.indexOf(compView);
+        if (curIdx === -1) curIdx = 0;
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          setCompView(viewOrder[(curIdx + 1) % viewOrder.length], true);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          setCompView(viewOrder[(curIdx + viewOrder.length - 1) % viewOrder.length], true);
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          setCompView(viewOrder[0], true);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          setCompView(viewOrder[viewOrder.length - 1], true);
+        }
+      });
+    });
+
     var dots = figComp.querySelectorAll('.comp-dot');
     var anns = figComp.querySelectorAll('.comp-ann');
     var pinBtns = figComp.querySelectorAll('[data-pin-select]');
@@ -847,10 +1762,14 @@
 
     function showCard(idx) {
       var item = plotted[idx];
-      if (!item) return;
+      if (!item || !inspector) return;
       var r = item.r;
+      if (r.bzp) compSelectedBzp = r.bzp;
       Array.prototype.forEach.call(dots, function (d) {
         d.classList.toggle('is-selected', Number(d.getAttribute('data-idx')) === idx);
+      });
+      Array.prototype.forEach.call(anns, function (a) {
+        a.classList.toggle('is-selected', Number(a.getAttribute('data-pin-idx')) === idx);
       });
       Array.prototype.forEach.call(pinBtns, function (pb) {
         pb.classList.toggle('is-active', Number(pb.getAttribute('data-pin-select')) === idx);
@@ -896,6 +1815,12 @@
       dot.addEventListener('click', function () { showCard(i); });
     });
 
+    Array.prototype.forEach.call(anns, function (ann) {
+      var i = Number(ann.getAttribute('data-pin-idx'));
+      ann.addEventListener('mouseenter', function () { showCard(i); });
+      ann.addEventListener('click', function () { showCard(i); });
+    });
+
     Array.prototype.forEach.call(pinBtns, function (btn) {
       var i = Number(btn.getAttribute('data-pin-select'));
       btn.addEventListener('click', function () {
@@ -903,8 +1828,39 @@
       });
     });
 
-    var defaultIdx = pCzd ? pCzd.idx : (plotted.length - 1);
+    function applyCompFilter(mode, autoSelect) {
+      compFilter = mode || 'all';
+      var firstMatch = -1;
+      function matchesMode(r) {
+        if (compFilter === 'software') return r.category === 'software_deploy';
+        if (compFilter === 'health') return r.sector === 'Ochrona zdrowia';
+        if (compFilter === 'training') return r.category === 'training';
+        return true;
+      }
+      Array.prototype.forEach.call(dots, function (dot) {
+        var idx = Number(dot.getAttribute('data-idx'));
+        var ok = matchesMode(plotted[idx].r);
+        dot.classList.toggle('is-dim', !ok);
+        if (ok && firstMatch === -1) firstMatch = idx;
+      });
+      Array.prototype.forEach.call(anns, function (ann) {
+        var idx = Number(ann.getAttribute('data-pin-idx'));
+        var ok = plotted[idx] ? matchesMode(plotted[idx].r) : true;
+        ann.classList.toggle('is-dim', !ok);
+      });
+      if (autoSelect) {
+        if (compFilter === 'training' && pTopBids) {
+          showCard(pTopBids.idx);
+        } else if (firstMatch !== -1 && compFilter !== 'all') {
+          showCard(firstMatch);
+        }
+      }
+    }
+
+    var restoredPt = compSelectedBzp ? findPoint(compSelectedBzp) : null;
+    var defaultIdx = restoredPt ? restoredPt.idx : (pCzd ? pCzd.idx : (plotted.length - 1));
     showCard(defaultIdx);
+    if (compFilter !== 'all') applyCompFilter(compFilter, false);
 
     Array.prototype.forEach.call(figComp.querySelectorAll('[data-cfilter]'), function (btn) {
       btn.addEventListener('click', function () {
@@ -912,29 +1868,7 @@
         Array.prototype.forEach.call(figComp.querySelectorAll('[data-cfilter]'), function (b) {
           b.classList.toggle('is-active', b === btn);
         });
-        var firstMatch = -1;
-        function matchesMode(r) {
-          if (mode === 'software') return r.category === 'software_deploy';
-          if (mode === 'health') return r.sector === 'Ochrona zdrowia';
-          if (mode === 'training') return r.category === 'training';
-          return true;
-        }
-        Array.prototype.forEach.call(dots, function (dot) {
-          var idx = Number(dot.getAttribute('data-idx'));
-          var ok = matchesMode(plotted[idx].r);
-          dot.classList.toggle('is-dim', !ok);
-          if (ok && firstMatch === -1) firstMatch = idx;
-        });
-        Array.prototype.forEach.call(anns, function (ann) {
-          var idx = Number(ann.getAttribute('data-pin-idx'));
-          var ok = plotted[idx] ? matchesMode(plotted[idx].r) : true;
-          ann.classList.toggle('is-dim', !ok);
-        });
-        if (mode === 'training' && pTopBids) {
-          showCard(pTopBids.idx);
-        } else if (firstMatch !== -1 && mode !== 'all') {
-          showCard(firstMatch);
-        }
+        applyCompFilter(mode, true);
       });
     });
   }
@@ -954,6 +1888,7 @@
     if (state.cyear) p.set('cyear', state.cyear);
     if (state.single) p.set('single', '1');
     if (state.sole) p.set('sole', '1');
+    if (state.btier) p.set('btier', state.btier);
     if (state.eu) p.set('eu', '1');
     if (state.pure) p.set('pure', '1');
     if (state.incidental && state.cat !== 'incidental') p.set('incidental', '1');
@@ -1016,6 +1951,8 @@
     if (ignoreKey !== 'cyear' && state.cyear && getContractYear(r) !== String(state.cyear)) return false;
     if (state.single && r.bids !== 1) return false;
     if (state.sole && !isSoleSource(r)) return false;
+    if (state.btier === '2-3' && !(r.bids != null && r.bids >= 2 && r.bids <= 3)) return false;
+    if (state.btier === '4p' && !(r.bids != null && r.bids >= 4)) return false;
     if (state.eu && !r.eu) return false;
     if (state.q) {
       var hayObj = r._searchHay || (r._searchHay = buildSearchHay(r));
@@ -1199,6 +2136,7 @@
       state.cyear = '';
       state.single = false;
       state.sole = false;
+      state.btier = '';
       state.eu = false;
       state.pure = false;
       state.incidental = false;
@@ -1215,7 +2153,10 @@
 
     document.getElementById('bzp-chk-single').addEventListener('change', function (e) {
       state.single = e.target.checked;
-      if (state.single) state.sole = false;
+      if (state.single) {
+        state.sole = false;
+        state.btier = '';
+      }
       state.limit = 25;
       render();
     });
@@ -1357,6 +2298,8 @@
     if (state.cyear) parts.push((lang === 'en' ? 'signed ' : 'umowa ') + state.cyear);
     if (state.single) parts.push(I18N.chkSingle.toLowerCase());
     if (state.sole) parts.push(I18N.tagSole.toLowerCase());
+    if (state.btier === '2-3') parts.push(I18N.tagBids23.toLowerCase());
+    if (state.btier === '4p') parts.push(I18N.tagBids4p.toLowerCase());
     if (state.sub === 'open_for_bids') parts.push(I18N.tagOpenNow.toLowerCase());
     if (state.eu) parts.push('UE/KPO');
     if (state.pure) parts.push(lang === 'en' ? 'pure AI only' : 'tylko czyste AI');
@@ -1396,7 +2339,7 @@
         badge: String(core.length),
         isActive: function () {
           return !state.q && state.status === 'all' && !state.sub && !state.cat && !state.sector && !state.prov &&
-            !state.year && !state.cyear && !state.single && !state.sole && !state.eu && !state.pure && !state.incidental;
+            !state.year && !state.cyear && !state.single && !state.sole && !state.btier && !state.eu && !state.pure && !state.incidental;
         }
       },
       {
@@ -1429,14 +2372,14 @@
         qs: 'status=resolved&pure=1',
         label: I18N.lensPure,
         badge: String(pureSigned),
-        isActive: function () { return state.pure && state.status === 'resolved' && !state.cat && !state.sector && !state.single; }
+        isActive: function () { return state.pure && state.status === 'resolved' && !state.cat && !state.sector && !state.single && !state.btier; }
       },
       {
         id: 'train',
         qs: 'status=resolved&cat=training&sort=bids_desc',
         label: I18N.lensTrainCrowd,
         badge: String(trainSigned),
-        isActive: function () { return state.cat === 'training' && state.sort === 'bids_desc' && !state.single; }
+        isActive: function () { return state.cat === 'training' && state.sort === 'bids_desc' && !state.single && !state.btier; }
       },
       {
         id: 'open_now',
@@ -1686,6 +2629,18 @@
       '<iframe src="' + buildShareUrl(true) + '" width="100%" height="820" style="border:1px solid #dbd7cd;background:#f7f6f2" loading="lazy" title="' + I18N.embedIframeTitle + '"></iframe>';
 
     var tags = [];
+    if (state.status !== 'all') {
+      var stTagLbl = state.status === 'resolved'
+        ? I18N.tagStResolved
+        : (state.status === 'open_or_pending' ? I18N.tagStOpen : I18N.tagStCancel);
+      tags.push({
+        label: stTagLbl + ' ×',
+        clear: function () {
+          state.status = 'all';
+          state.sub = '';
+        }
+      });
+    }
     if (state.year) tags.push({ label: I18N.tagNoticeYear.replace('{y}', state.year) + ' ×', clear: function () { state.year = ''; } });
     if (state.cyear) tags.push({ label: I18N.tagContractYear.replace('{y}', state.cyear === '2023' ? '2023 (XII)' : state.cyear) + ' ×', clear: function () { state.cyear = ''; } });
     if (state.sub) tags.push({ label: (state.sub === 'open_for_bids' ? I18N.tagOpenNow : I18N.tagPending) + ' ×', clear: function () { state.sub = ''; } });
@@ -1694,6 +2649,8 @@
     if (state.prov) tags.push({ label: state.prov + ' ×', clear: function () { state.prov = ''; } });
     if (state.single) tags.push({ label: I18N.chkSingle + ' ×', clear: function () { state.single = false; document.getElementById('bzp-chk-single').checked = false; } });
     if (state.sole) tags.push({ label: I18N.tagSole + ' ×', clear: function () { state.sole = false; } });
+    if (state.btier === '2-3') tags.push({ label: I18N.tagBids23 + ' ×', clear: function () { state.btier = ''; } });
+    if (state.btier === '4p') tags.push({ label: I18N.tagBids4p + ' ×', clear: function () { state.btier = ''; } });
     if (state.eu) tags.push({ label: I18N.chkEu + ' ×', clear: function () { state.eu = false; document.getElementById('bzp-chk-eu').checked = false; } });
     if (state.pure) tags.push({ label: I18N.chkPure + ' ×', clear: function () { state.pure = false; document.getElementById('bzp-chk-pure').checked = false; } });
 
@@ -1835,6 +2792,7 @@
     state.cyear = p.get('cyear') || '';
     state.single = p.get('single') === '1';
     state.sole = p.get('sole') === '1';
+    state.btier = (state.single || state.sole) ? '' : (p.get('btier') || '');
     state.eu = p.get('eu') === '1';
     state.pure = p.get('pure') === '1';
     state.incidental = p.get('incidental') === '1' || state.cat === 'incidental';

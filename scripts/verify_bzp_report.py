@@ -29,6 +29,78 @@ import urllib.parse
 SNAPSHOT_DATE = "2026-11-03"
 SITE_ORIGIN = "https://roleplayingtech.com/"
 BZP_URL_PREFIX = "https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/"
+BZP_NOTICE_URL_RE = re.compile(
+    r"^https://ezamowienia\.gov\.pl/mo-client-board/bzp/notice-details/id/"
+    r"(08d[0-9a-f]{5}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+)
+BZP_NOTICE_URL_SCAN_RE = re.compile(
+    r"https://ezamowienia\.gov\.pl/mo-client-board/bzp/notice-details/id/([0-9a-f-]{36})",
+    re.I,
+)
+ALLOWED_EZAMOWIENIA_NON_NOTICE_URLS = {
+    "https://ezamowienia.gov.pl",
+    "https://ezamowienia.gov.pl/",
+    "https://ezamowienia.gov.pl/mo-board/api/v1/notice",
+}
+COMPETITION_CLIFF_PLN = Decimal("170000")
+
+# Companion / excluded BZP notice UUIDs verified directly against local BZP API caches
+# (ContractNotice / AgreementIntentionNotice / NoticeUpdateNotice siblings of core records,
+# plus excluded boundary notices explicitly cited in methodology/prose):
+VERIFIED_COMPANION_NOTICE_UUIDS: dict[str, str] = {
+    "08dceeeb-13ff-f117-1a9f-3e0001b7af0e": "2024/BZP 00552151 (AgreementIntentionNotice, CREWŁ w Zgierzu — companion to 2024/BZP 00620147)",
+    "08de7ddb-2c8d-db43-056e-e50001ac545f": "2026/BZP 00146056 (ContractNotice, USK w Opolu — companion to 2026/BZP 00201117)",
+    "08de8364-d2b0-eb0b-056e-e5000104db65": "2026/BZP 00157076 (NoticeUpdateNotice, USK w Opolu — companion to 2026/BZP 00201117)",
+    "08dde563-ea1c-ca51-e769-360001c7d9f1": "2025/BZP 00394250 (ContractNotice, WSS w Legnicy — companion to 2025/BZP 00478008)",
+    "08de7528-7de7-3c05-056e-e50001abeac7": "2026/BZP 00130128 (ContractNotice, Narodowy Instytut Kardiologii — companion to 2026/BZP 00213382)",
+    "08de46c4-5d8c-5aad-d6d3-f500016282ce": "2025/BZP 00622781 (ContractNotice, UM w Poznaniu — companion to 2026/BZP 00146627)",
+    "08de1c60-b4cb-2009-6f2a-fc000173d783": "2025/BZP 00517087 (TenderResultNotice, UOKiK — excluded threshold boundary notice)",
+    "08dd0a25-4a46-c8c7-985c-bb0001350a3c": "2024/BZP 00608321 (TenderResultNotice, Politechnika Warszawska — excluded multi-lot notice cited in methodology)",
+    "08dd0a26-fc8f-14fb-985c-bb0001350a9b": "2024/BZP 00608403 (TenderResultNotice, Politechnika Warszawska — excluded multi-lot notice cited in methodology)",
+    "08dd7c00-0ee1-f000-eaaa-350001a35a15": "2025/BZP 00191385 (TenderResultNotice, WUP w Szczecinie — excluded boundary notice cited in methodology)",
+    "08dd9e82-f084-d984-eaaa-350001a4db0d": "2025/BZP 00253400 (TenderResultNotice, Zespół Szkół nr 18 — excluded boundary notice cited in methodology)",
+    "08dd9f4c-34bd-8c7d-eaaa-350001a4e7d8": "2025/BZP 00255537 (TenderResultNotice, Politechnika Warszawska — excluded boundary notice cited in methodology)",
+    "08dda366-3947-85cb-eaaa-350001a51782": "2025/BZP 00263281 (TenderResultNotice, ZOZ w Sochaczewie — excluded boundary notice cited in methodology)",
+    "08dda4b8-7f87-676b-e710-760001de8883": "2025/BZP 00263829 (TenderResultNotice, UKW w Bydgoszczy — excluded boundary notice cited in methodology)",
+    "08de154c-b18b-8e69-6f2a-fc0001f5cf0a": "2025/BZP 00497656 (TenderResultNotice, MSW w Siedlcach — retry/companion notice cited in methodology)",
+    "08dea513-744a-baf1-5fad-9500011a21a1": "2026/BZP 00219608 (TenderResultNotice, Kociewskie Centrum Zdrowia — retry/companion notice cited in methodology)",
+    "08deb19c-5e21-ee2d-5fad-9500011feb52": "2026/BZP 00243856 (TenderResultNotice, WUP we Wrocławiu — retry/companion notice cited in methodology)",
+    "08deb707-8c33-e1be-5fad-9500012b9ff1": "2026/BZP 00254063 (TenderResultNotice, Kociewskie Centrum Zdrowia — retry/companion notice cited in methodology)",
+    "08debd45-8128-d4f9-5fad-9500015c51b6": "2026/BZP 00267052 (TenderResultNotice, Szpital Miejski w Gliwicach — retry/companion notice cited in methodology)",
+    "08dec07f-348e-b2c2-5fad-9500015c71a7": "2026/BZP 00271902 (TenderResultNotice, Szpital Specjalistyczny im. L. Rydygiera w Krakowie — companion notice)",
+    "08decb83-1f9e-bca5-5fad-9500015f51db": "2026/BZP 00291854 (TenderResultNotice, WUP w Kielcach — excluded boundary notice cited in methodology)",
+    "08ded376-5681-c34c-92be-eb0001c25126": "2026/BZP 00310877 (TenderResultNotice, Uniwersytet Jagielloński — companion notice cited in methodology)",
+}
+
+# Forensic benchmarks deterministically extracted from the 159-notice BZP HTML protocol audit
+# (protocol sections beyond top-level summary JSON fields: Section 4 estimates, Section 5 criteria,
+# Section 6 rejected bids, Section 7 SME status, statutory sole-source & Art. 255 cancellation grounds):
+FORENSIC_HTML_BENCHMARKS: dict[str, Any] = {
+    # 1. Effective zero-surviving-rival competition after bid rejections + expanded statutory sole-source:
+    "effective_zero_rival_contracts": 59,           # out of 110 signed core contracts (53.6%)
+    "effective_zero_rival_sum_mln": Decimal("19.54"),
+    "effective_zero_rival_spend_pct": Decimal("60.7"),
+    "bid_rejection_rate_pct": Decimal("26.3"),
+    "statutory_sole_source_contracts": 10,
+    "statutory_sole_source_sum_mln": Decimal("3.46"),
+    # 2. Evaluation criteria with zero substantive quality weight:
+    "zero_quality_criteria_software_pct": Decimal("72.2"),
+    "zero_quality_criteria_overall_pct": Decimal("63.5"),
+    # 3. Median award price vs contracting authority's net/budget estimate:
+    "price_vs_estimate_crowded_pct": Decimal("54.0"),   # equivalent to a 46.0% / 46% discount
+    "price_discount_crowded_pct": Decimal("46.0"),
+    "price_vs_estimate_zero_rival_pct": Decimal("100.0"),
+    # 4. Cancelled core proceedings statutory breakdown (14 of 31 = 45.2% budget shock;
+    #    52 explicit bids across 23 notices + >=1 bid in 24th notice 2026/BZP 00226264 = 53+ bids):
+    "cancelled_budget_shock_count": 14,
+    "cancelled_budget_shock_pct": Decimal("45.2"),
+    "cancelled_with_bids_count": 24,
+    "cancelled_min_bids": 53,
+    "cancelled_stale_bids": 61,
+    # 5. SME (MŚP) contractor share across signed core contracts:
+    "sme_spend_pct": Decimal("93.8"),
+    "sme_contracts_pct": Decimal("95.5"),
+}
 
 REQUIRED_KEYS = (
     "id",
@@ -61,6 +133,7 @@ ALLOWED_PRESET_PARAMS = {
     "ymode",
     "single",
     "sole",
+    "btier",
     "eu",
     "incidental",
     "pure",
@@ -69,6 +142,7 @@ ALLOWED_PRESET_PARAMS = {
 ALLOWED_PRESET_STATUSES = {"all", "resolved", "open_or_pending", "cancelled"}
 ALLOWED_PRESET_SORTS = {"amount_desc", "amount_asc", "date_desc", "bids_desc", "bids_asc"}
 ALLOWED_PRESET_YMODES = {"notice", "contract"}
+ALLOWED_PRESET_BTIERS = {"", "2-3", "4p"}
 
 CAT_LABELS_PL = {
     "software_deploy": "Wdrożenia i systemy AI",
@@ -92,6 +166,12 @@ HTML_FILES = (
     "en/lab/index.html",
     "pl/index.html",
     "en/index.html",
+)
+
+MD_REPORT_FILES = (
+    "docs/lab/bzp-methodology.md",
+    "docs/lab/bzp-single-bid-investigation.md",
+    "docs/lab/bzp-press-kit.md",
 )
 
 VOID_HTML_TAGS = {
@@ -267,6 +347,59 @@ class VendorKpi:
     single_bid_count: int
 
 
+@dataclass
+class CompetitionTierKpi:
+    key: str
+    signed_count: int
+    signed_pct_core: Decimal
+    signed_pct_comp: Decimal
+    sum_pln: Decimal
+    spend_pct_core: Decimal
+    spend_pct_comp: Decimal
+
+
+@dataclass
+class CompetitionSliceKpi:
+    key: str
+    with_bids_count: int
+    count_pct_comp: Decimal
+    sum_pln: Decimal
+    spend_pct_comp: Decimal
+    spend_pct_core: Decimal
+    single_bid_count: int
+    single_bid_pct: Decimal
+    median_bids: Decimal
+    median_pln: Decimal
+
+
+@dataclass
+class CancellationGroupKpi:
+    key: str
+    total_count: int
+    resolved_count: int
+    open_or_pending_count: int
+    cancelled_count: int
+    concluded_count: int
+    cancelled_pct_concluded: Decimal
+    cancelled_pct_all: Decimal
+
+
+@dataclass
+class QuarterKpi:
+    quarter_key: str
+    start_date: str
+    end_date: str
+    proc_count: int
+    hc_proc_count: int
+    signed_count: int
+    sum_pln: Decimal
+    with_bids_count: int
+    single_bid_count: int
+    single_bid_pct: Decimal
+    zero_rival_count: int
+    zero_rival_pct: Decimal
+
+
 def is_valid_iso_date(val: Any) -> bool:
     if not isinstance(val, str) or not ISO_DATE_RE.match(val):
         return False
@@ -416,14 +549,194 @@ def compute_kpis(records: list[dict[str, Any]]) -> dict[str, Any]:
         if isinstance(r.get("bids"), int) and not isinstance(r.get("bids"), bool)
     ]
     core_single_bids = [r for r in core_with_bids if r["bids"] == 1]
+    core_sole_source = [r for r in core_signed if r.get("bids") is None]
+    core_zero_rival = [r for r in core_signed if r.get("bids") == 1 or r.get("bids") is None]
+    core_bids_2_3 = [r for r in core_with_bids if 2 <= r["bids"] <= 3]
+    core_bids_4_plus = [r for r in core_with_bids if r["bids"] >= 4]
     core_missing_bids = len(core_signed) - len(core_with_bids)
     core_single_bid_pct = pct_dec(len(core_single_bids), len(core_with_bids))
     core_median_bids = calc_median_dec([to_dec(r["bids"]) for r in core_with_bids])
+    competitive_sum = sum((to_dec(r["amountPln"]) for r in core_with_bids), Decimal("0"))
     top_bids_records = sorted(
         core_with_bids,
         key=lambda r: (r["bids"], to_dec(r["amountPln"])),
         reverse=True,
     )
+
+    def make_comp_tier(
+        tkey: str,
+        pool: list[dict[str, Any]],
+        in_competitive: bool,
+    ) -> CompetitionTierKpi:
+        tsum = sum((to_dec(r["amountPln"]) for r in pool), Decimal("0"))
+        return CompetitionTierKpi(
+            key=tkey,
+            signed_count=len(pool),
+            signed_pct_core=pct_dec(len(pool), len(core_signed)),
+            signed_pct_comp=pct_dec(len(pool), len(core_with_bids)) if in_competitive else Decimal("0"),
+            sum_pln=tsum,
+            spend_pct_core=pct_dec(tsum, core_sum),
+            spend_pct_comp=pct_dec(tsum, competitive_sum) if in_competitive else Decimal("0"),
+        )
+
+    comp_tiers: dict[str, CompetitionTierKpi] = {
+        "single_bid": make_comp_tier("single_bid", core_single_bids, True),
+        "sole_source": make_comp_tier("sole_source", core_sole_source, False),
+        "zero_rival": make_comp_tier("zero_rival", core_zero_rival, False),
+        "bids_2_3": make_comp_tier("bids_2_3", core_bids_2_3, True),
+        "bids_4_plus": make_comp_tier("bids_4_plus", core_bids_4_plus, True),
+    }
+
+    # Software deployments zero-rival breakdown (single-bid + sole-source)
+    sw_signed_pool = [r for r in core_signed if r.get("category") == "software_deploy"]
+    sw_sum = categories["software_deploy"].sum_pln
+    sw_single_pool = [r for r in sw_signed_pool if r.get("bids") == 1]
+    sw_sole_pool = [r for r in sw_signed_pool if r.get("bids") is None]
+    sw_zero_rival_pool = [r for r in sw_signed_pool if r.get("bids") == 1 or r.get("bids") is None]
+    sw_single_sum = sum((to_dec(r["amountPln"]) for r in sw_single_pool), Decimal("0"))
+    sw_sole_sum = sum((to_dec(r["amountPln"]) for r in sw_sole_pool), Decimal("0"))
+    sw_zero_rival_sum = sum((to_dec(r["amountPln"]) for r in sw_zero_rival_pool), Decimal("0"))
+    sw_zero_rival = {
+        "signed_count": len(sw_signed_pool),
+        "sum_pln": sw_sum,
+        "single_bid_count": len(sw_single_pool),
+        "single_bid_sum_pln": sw_single_sum,
+        "single_bid_spend_pct": pct_dec(sw_single_sum, sw_sum),
+        "sole_source_count": len(sw_sole_pool),
+        "sole_source_sum_pln": sw_sole_sum,
+        "sole_source_spend_pct": pct_dec(sw_sole_sum, sw_sum),
+        "zero_rival_count": len(sw_zero_rival_pool),
+        "zero_rival_count_pct": pct_dec(len(sw_zero_rival_pool), len(sw_signed_pool)),
+        "zero_rival_sum_pln": sw_zero_rival_sum,
+        "zero_rival_spend_pct": pct_dec(sw_zero_rival_sum, sw_sum),
+    }
+
+    def make_comp_slice(skey: str, pool: list[dict[str, Any]]) -> CompetitionSliceKpi:
+        ssum = sum((to_dec(r["amountPln"]) for r in pool), Decimal("0"))
+        ssb = [r for r in pool if r["bids"] == 1]
+        return CompetitionSliceKpi(
+            key=skey,
+            with_bids_count=len(pool),
+            count_pct_comp=pct_dec(len(pool), len(core_with_bids)),
+            sum_pln=ssum,
+            spend_pct_comp=pct_dec(ssum, competitive_sum),
+            spend_pct_core=pct_dec(ssum, core_sum),
+            single_bid_count=len(ssb),
+            single_bid_pct=pct_dec(len(ssb), len(pool)),
+            median_bids=calc_median_dec([to_dec(r["bids"]) for r in pool]),
+            median_pln=calc_median_dec([to_dec(r["amountPln"]) for r in pool]),
+        )
+
+    cliff_170k: dict[str, CompetitionSliceKpi] = {
+        "below_170k": make_comp_slice(
+            "below_170k",
+            [r for r in core_with_bids if to_dec(r["amountPln"]) < COMPETITION_CLIFF_PLN],
+        ),
+        "at_or_above_170k": make_comp_slice(
+            "at_or_above_170k",
+            [r for r in core_with_bids if to_dec(r["amountPln"]) >= COMPETITION_CLIFF_PLN],
+        ),
+    }
+
+    eu_competition: dict[str, CompetitionSliceKpi] = {
+        "eu": make_comp_slice("eu", [r for r in core_with_bids if r.get("eu") is True]),
+        "non_eu": make_comp_slice("non_eu", [r for r in core_with_bids if r.get("eu") is not True]),
+    }
+
+    # Concluded vs overall cancellation rates (all, core, and per core sector)
+    def make_cancellation_kpi(ckey: str, pool: list[dict[str, Any]]) -> CancellationGroupKpi:
+        res_c = sum(1 for r in pool if r.get("status") == "resolved")
+        open_c = sum(1 for r in pool if r.get("status") == "open_or_pending")
+        canc_c = sum(1 for r in pool if r.get("status") == "cancelled")
+        concl_c = res_c + canc_c
+        return CancellationGroupKpi(
+            key=ckey,
+            total_count=len(pool),
+            resolved_count=res_c,
+            open_or_pending_count=open_c,
+            cancelled_count=canc_c,
+            concluded_count=concl_c,
+            cancelled_pct_concluded=pct_dec(canc_c, concl_c),
+            cancelled_pct_all=pct_dec(canc_c, len(pool)),
+        )
+
+    canc_all = make_cancellation_kpi("all", records)
+    canc_core = make_cancellation_kpi("core", core)
+    canc_by_sector_keys = sorted({str(r.get("sector") or "") for r in core if r.get("sector")})
+    canc_by_sector: dict[str, CancellationGroupKpi] = {
+        sk: make_cancellation_kpi(sk, [r for r in core if r.get("sector") == sk])
+        for sk in canc_by_sector_keys
+    }
+    canc_sectors_sorted = sorted(
+        canc_by_sector.values(),
+        key=lambda c: (c.cancelled_pct_concluded, c.cancelled_count),
+        reverse=True,
+    )
+
+    # 2026 quarterly dynamics & Spring 2026 KPO healthcare surge (H1 2026)
+    quarter_defs = (
+        ("2026-Q1", "2026-01-01", "2026-03-31"),
+        ("2026-Q2", "2026-04-01", "2026-06-30"),
+        ("2026-Q3", "2026-07-01", "2026-09-30"),
+        ("2026-Q4", "2026-10-01", "2026-12-31"),
+    )
+    quarters_2026: dict[str, QuarterKpi] = {}
+    for qkey, d_start, d_end in quarter_defs:
+        qp = [r for r in core if isinstance(r.get("date"), str) and d_start <= r["date"] <= d_end]
+        qhc = [r for r in qp if r.get("sector") == "Ochrona zdrowia"]
+        qs = [r for r in qp if is_signed(r)]
+        qsum = sum((to_dec(r["amountPln"]) for r in qs), Decimal("0"))
+        qwb = [
+            r
+            for r in qs
+            if isinstance(r.get("bids"), int) and not isinstance(r.get("bids"), bool)
+        ]
+        qsb = [r for r in qwb if r["bids"] == 1]
+        qzr = [r for r in qs if r.get("bids") == 1 or r.get("bids") is None]
+        quarters_2026[qkey] = QuarterKpi(
+            quarter_key=qkey,
+            start_date=d_start,
+            end_date=d_end,
+            proc_count=len(qp),
+            hc_proc_count=len(qhc),
+            signed_count=len(qs),
+            sum_pln=qsum,
+            with_bids_count=len(qwb),
+            single_bid_count=len(qsb),
+            single_bid_pct=pct_dec(len(qsb), len(qwb)),
+            zero_rival_count=len(qzr),
+            zero_rival_pct=pct_dec(len(qzr), len(qs)),
+        )
+
+    hc_core_all = [r for r in core if r.get("sector") == "Ochrona zdrowia"]
+    hc_signed_all = [r for r in hc_core_all if is_signed(r)]
+    hc_sum_all = sum((to_dec(r["amountPln"]) for r in hc_signed_all), Decimal("0"))
+
+    hc_h1_proc = [
+        r
+        for r in hc_core_all
+        if isinstance(r.get("date"), str) and "2026-01-01" <= r["date"] <= "2026-06-30"
+    ]
+    hc_h1_signed = [r for r in hc_h1_proc if is_signed(r)]
+    hc_h1_sum = sum((to_dec(r["amountPln"]) for r in hc_h1_signed), Decimal("0"))
+    hc_h1_zr = [r for r in hc_h1_signed if r.get("bids") == 1 or r.get("bids") is None]
+    hc_h1_zr_sum = sum((to_dec(r["amountPln"]) for r in hc_h1_zr), Decimal("0"))
+
+    hc_2026_h1 = {
+        "hc_total_proc_count": len(hc_core_all),
+        "hc_total_signed_count": len(hc_signed_all),
+        "hc_total_sum_pln": hc_sum_all,
+        "h1_proc_count": len(hc_h1_proc),
+        "h1_proc_pct_of_hc": pct_dec(len(hc_h1_proc), len(hc_core_all)),
+        "h1_signed_count": len(hc_h1_signed),
+        "h1_signed_pct_of_hc": pct_dec(len(hc_h1_signed), len(hc_signed_all)),
+        "h1_sum_pln": hc_h1_sum,
+        "h1_spend_pct_of_hc": pct_dec(hc_h1_sum, hc_sum_all),
+        "h1_zero_rival_count": len(hc_h1_zr),
+        "h1_zero_rival_pct": pct_dec(len(hc_h1_zr), len(hc_h1_signed)),
+        "h1_zero_rival_sum_pln": hc_h1_zr_sum,
+        "h1_zero_rival_spend_pct": pct_dec(hc_h1_zr_sum, hc_h1_sum),
+    }
 
     # EU co-financing among core signed contracts
     eu_signed = [r for r in core_signed if r.get("eu") is True]
@@ -549,16 +862,49 @@ def compute_kpis(records: list[dict[str, Any]]) -> dict[str, Any]:
             "signed_count": len(core_signed),
             "with_bids_count": len(core_with_bids),
             "missing_bids_count": core_missing_bids,
+            "competitive_sum_pln": competitive_sum,
+            "competitive_spend_pct": pct_dec(competitive_sum, core_sum),
             "single_bid_count": len(core_single_bids),
             "single_bid_pct": core_single_bid_pct,
+            "single_bid_sum_pln": comp_tiers["single_bid"].sum_pln,
+            "single_bid_spend_pct_core": comp_tiers["single_bid"].spend_pct_core,
+            "single_bid_spend_pct_comp": comp_tiers["single_bid"].spend_pct_comp,
+            "sole_source_count": comp_tiers["sole_source"].signed_count,
+            "sole_source_sum_pln": comp_tiers["sole_source"].sum_pln,
+            "sole_source_spend_pct_core": comp_tiers["sole_source"].spend_pct_core,
+            "zero_rival_count": comp_tiers["zero_rival"].signed_count,
+            "zero_rival_count_pct_core": comp_tiers["zero_rival"].signed_pct_core,
+            "zero_rival_sum_pln": comp_tiers["zero_rival"].sum_pln,
+            "zero_rival_spend_pct": comp_tiers["zero_rival"].spend_pct_core,
+            "bids_2_3_count": comp_tiers["bids_2_3"].signed_count,
+            "bids_2_3_sum_pln": comp_tiers["bids_2_3"].sum_pln,
+            "bids_2_3_spend_pct_core": comp_tiers["bids_2_3"].spend_pct_core,
+            "bids_4_plus_count": comp_tiers["bids_4_plus"].signed_count,
+            "bids_4_plus_count_pct_core": comp_tiers["bids_4_plus"].signed_pct_core,
+            "bids_4_plus_sum_pln": comp_tiers["bids_4_plus"].sum_pln,
+            "bids_4_plus_spend_pct_core": comp_tiers["bids_4_plus"].spend_pct_core,
             "median_bids": core_median_bids,
             "top_bids_records": top_bids_records,
+            "tiers": comp_tiers,
+            "software_zero_rival": sw_zero_rival,
+            "cliff_170k": cliff_170k,
+            "eu_vs_non_eu": eu_competition,
         },
         "eu": {
             "signed_count": len(eu_signed),
             "signed_pct": eu_signed_pct,
             "sum_pln": eu_sum,
             "spend_pct": eu_spend_pct,
+        },
+        "cancellations": {
+            "all": canc_all,
+            "core": canc_core,
+            "by_sector": canc_by_sector,
+            "sectors_sorted": canc_sectors_sorted,
+        },
+        "temporal": {
+            "quarters_2026": quarters_2026,
+            "hc_2026_h1": hc_2026_h1,
         },
         "sectors": sectors,
         "sectors_by_key": sectors_by_key,
@@ -721,17 +1067,110 @@ def print_kpis(kpis: dict[str, Any]) -> None:
     )
 
     # 5. Competition overall in core
-    print("\n5. KONKURENCJA OGÓŁEM W CORE")
+    print("\n5. KONKURENCJA OGÓŁEM W CORE (ROZKŁAD KWOTOWY, PRÓG 170 TYS. ZŁ, UE vs POZA UE)")
     print(sub_hr)
     comp = kpis["competition"]
+    tiers: dict[str, CompetitionTierKpi] = comp["tiers"]
+    sw_zr = comp["software_zero_rival"]
+    cliff: dict[str, CompetitionSliceKpi] = comp["cliff_170k"]
+    eu_comp: dict[str, CompetitionSliceKpi] = comp["eu_vs_non_eu"]
+
     print(
         f"  Umowy z jawną l. ofert (`bids`): {comp['with_bids_count']} z {comp['signed_count']} "
-        f"(brak `bids`: {comp['missing_bids_count']})\n"
+        f"(brak `bids` / z wolnej ręki: {comp['missing_bids_count']})\n"
+        f"  Kwota umów konkurencyjnych:      {fmt_exact_pln(comp['competitive_sum_pln'], 'pl')}  "
+        f"(PL: {fmt_mln(comp['competitive_sum_pln'], 'pl')}, {fmt_num(comp['competitive_spend_pct'], 1, 'pl')}% core | "
+        f"EN: {fmt_mln(comp['competitive_sum_pln'], 'en')}, {fmt_num(comp['competitive_spend_pct'], 1, 'en')}% core)\n"
         f"  Umowy z 1 ofertą (`bids == 1`):  {comp['single_bid_count']} z {comp['with_bids_count']}  "
         f"(PL: {fmt_num(comp['single_bid_pct'], 1, 'pl')}% | EN: {fmt_num(comp['single_bid_pct'], 1, 'en')}%)\n"
         f"  Mediana liczby ofert w core:     {comp['median_bids']}"
     )
-    print("  Rekordy o najwyższej liczbie ofert (top 6 w core):")
+
+    print(
+        f"\n  a) Koszyki kwotowe konkurencji we wszystkich podpisanych umowach core "
+        f"[n={comp['signed_count']}, {fmt_exact_pln(kpis['core_sum_pln'], 'pl')}]:"
+    )
+    sb_t = tiers["single_bid"]
+    ss_t = tiers["sole_source"]
+    zr_t = tiers["zero_rival"]
+    b23_t = tiers["bids_2_3"]
+    b4p_t = tiers["bids_4_plus"]
+    print(
+        f"    single_bid (`bids == 1`):              {sb_t.signed_count:>2d} umów "
+        f"(PL: {fmt_num(sb_t.signed_pct_core, 1, 'pl')}% ze {comp['signed_count']}, "
+        f"{fmt_num(sb_t.signed_pct_comp, 1, 'pl')}% ze {comp['with_bids_count']}) | "
+        f"{fmt_exact_pln(sb_t.sum_pln, 'pl'):>16s} | "
+        f"PL: {fmt_mln(sb_t.sum_pln, 'pl')} ({fmt_num(sb_t.spend_pct_core, 1, 'pl')}% core, "
+        f"{fmt_num(sb_t.spend_pct_comp, 1, 'pl')}% konkur.) | "
+        f"EN: {fmt_mln(sb_t.sum_pln, 'en')} ({fmt_num(sb_t.spend_pct_core, 1, 'en')}% core, "
+        f"{fmt_num(sb_t.spend_pct_comp, 1, 'en')}% comp.)\n"
+        f"    sole_source (`bids is None`):          {ss_t.signed_count:>2d} umów "
+        f"(PL: {fmt_num(ss_t.signed_pct_core, 1, 'pl')}% ze {comp['signed_count']}) | "
+        f"{fmt_exact_pln(ss_t.sum_pln, 'pl'):>16s} | "
+        f"PL: {fmt_mln(ss_t.sum_pln, 'pl')} ({fmt_num(ss_t.spend_pct_core, 1, 'pl')}% core) | "
+        f"EN: {fmt_mln(ss_t.sum_pln, 'en')} ({fmt_num(ss_t.spend_pct_core, 1, 'en')}% core)\n"
+        f"    zero_rival (`bids == 1 or None`):      {zr_t.signed_count:>2d} umów "
+        f"(PL: {fmt_num(zr_t.signed_pct_core, 1, 'pl')}% | EN: {fmt_num(zr_t.signed_pct_core, 1, 'en')}%) | "
+        f"{fmt_exact_pln(zr_t.sum_pln, 'pl'):>16s} | "
+        f"PL: {fmt_mln(zr_t.sum_pln, 'pl')} ({fmt_num(zr_t.spend_pct_core, 1, 'pl')}% core) | "
+        f"EN: {fmt_mln(zr_t.sum_pln, 'en')} ({fmt_num(zr_t.spend_pct_core, 1, 'en')}% core)\n"
+        f"    bids_2_3 (`2 <= bids <= 3`):           {b23_t.signed_count:>2d} umów "
+        f"(PL: {fmt_num(b23_t.signed_pct_core, 1, 'pl')}% | EN: {fmt_num(b23_t.signed_pct_core, 1, 'en')}%) | "
+        f"{fmt_exact_pln(b23_t.sum_pln, 'pl'):>16s} | "
+        f"PL: {fmt_mln(b23_t.sum_pln, 'pl')} ({fmt_num(b23_t.spend_pct_core, 1, 'pl')}% core) | "
+        f"EN: {fmt_mln(b23_t.sum_pln, 'en')} ({fmt_num(b23_t.spend_pct_core, 1, 'en')}% core)\n"
+        f"    bids_4_plus (`bids >= 4`):             {b4p_t.signed_count:>2d} umów "
+        f"(PL: {fmt_num(b4p_t.signed_pct_core, 1, 'pl')}% | EN: {fmt_num(b4p_t.signed_pct_core, 1, 'en')}%) | "
+        f"{fmt_exact_pln(b4p_t.sum_pln, 'pl'):>16s} | "
+        f"PL: {fmt_mln(b4p_t.sum_pln, 'pl')} ({fmt_num(b4p_t.spend_pct_core, 1, 'pl')}% core) | "
+        f"EN: {fmt_mln(b4p_t.sum_pln, 'en')} ({fmt_num(b4p_t.spend_pct_core, 1, 'en')}% core)\n"
+        f"    -> W `software_deploy` [n={sw_zr['signed_count']}, {fmt_exact_pln(sw_zr['sum_pln'], 'pl')}]: "
+        f"zero_rival = {sw_zr['zero_rival_count']}/{sw_zr['signed_count']} "
+        f"(PL: {fmt_num(sw_zr['zero_rival_count_pct'], 1, 'pl')}% | "
+        f"EN: {fmt_num(sw_zr['zero_rival_count_pct'], 1, 'en')}%; "
+        f"1 oferta={sw_zr['single_bid_count']} + wolna ręka={sw_zr['sole_source_count']}) | "
+        f"{fmt_exact_pln(sw_zr['zero_rival_sum_pln'], 'pl')} "
+        f"(PL: {fmt_mln(sw_zr['zero_rival_sum_pln'], 'pl')}, {fmt_num(sw_zr['zero_rival_spend_pct'], 1, 'pl')}% software | "
+        f"EN: {fmt_mln(sw_zr['zero_rival_sum_pln'], 'en')}, {fmt_num(sw_zr['zero_rival_spend_pct'], 1, 'en')}% software)"
+    )
+
+    print(
+        f"\n  b) Klif konkurencji 170 000 zł wśród konkurencyjnych umów core [n={comp['with_bids_count']}]:"
+    )
+    for cl_key, cl_label in (
+        ("below_170k", "below_170k (`amountPln < 170 000 zł`)"),
+        ("at_or_above_170k", "at_or_above_170k (`amountPln >= 170 000 zł`)"),
+    ):
+        cs = cliff[cl_key]
+        med_pl = str(int(cs.median_bids)) if cs.median_bids == int(cs.median_bids) else fmt_num(cs.median_bids, 1, "pl")
+        med_en = str(int(cs.median_bids)) if cs.median_bids == int(cs.median_bids) else fmt_num(cs.median_bids, 1, "en")
+        print(
+            f"    {cl_label:<44s} | {cs.with_bids_count:>2d}/{comp['with_bids_count']} "
+            f"(PL: {fmt_num(cs.count_pct_comp, 1, 'pl')}% | EN: {fmt_num(cs.count_pct_comp, 1, 'en')}%) | "
+            f"{fmt_exact_pln(cs.sum_pln, 'pl'):>16s} "
+            f"(PL: {fmt_mln(cs.sum_pln, 'pl')}, {fmt_num(cs.spend_pct_comp, 1, 'pl')}% konkur. | "
+            f"EN: {fmt_mln(cs.sum_pln, 'en')}, {fmt_num(cs.spend_pct_comp, 1, 'en')}% comp.) | "
+            f"mediana bids PL: {med_pl} / EN: {med_en} (1,0: {fmt_num(cs.median_bids, 1, 'pl')}/{fmt_num(cs.median_bids, 1, 'en')}) | "
+            f"1 oferta: {cs.single_bid_count}/{cs.with_bids_count} "
+            f"(PL: {fmt_num(cs.single_bid_pct, 1, 'pl')}% | EN: {fmt_num(cs.single_bid_pct, 1, 'en')}%)"
+        )
+
+    print(
+        f"\n  c) Odsetek 1 oferty wg współfinansowania UE wśród konkurencyjnych umów core [n={comp['with_bids_count']}]:"
+    )
+    for ek, elabel in (
+        ("eu", "UE (`eu == True`)"),
+        ("non_eu", "Poza UE (`eu != True`)"),
+    ):
+        es = eu_comp[ek]
+        print(
+            f"    {elabel:<26s} | 1 oferta: {es.single_bid_count:>2d}/{es.with_bids_count:<2d} "
+            f"(PL: {fmt_num(es.single_bid_pct, 1, 'pl')}% | EN: {fmt_num(es.single_bid_pct, 1, 'en')}%) | "
+            f"mediana bids: {es.median_bids} | suma: {fmt_exact_pln(es.sum_pln, 'pl')} "
+            f"(PL: {fmt_mln(es.sum_pln, 'pl')} | EN: {fmt_mln(es.sum_pln, 'en')})"
+        )
+
+    print("\n  d) Rekordy o najwyższej liczbie ofert (top 6 w core):")
     for rec in comp["top_bids_records"][:6]:
         amt_d = to_dec(rec["amountPln"])
         print(
@@ -739,8 +1178,68 @@ def print_kpis(kpis: dict[str, Any]) -> None:
             f"{fmt_exact_pln(amt_d, 'pl'):>14s} | {rec['category']:<15s} | {rec['org']}"
         )
 
-    # 6. EU co-financing
-    print("\n6. WSPÓŁFINANSOWANIE UE / KPO / FERS (`eu == True` WŚRÓD UMÓW CORE)")
+    # 6. Quarterly dynamics, H1 2026 healthcare surge & cancellations
+    print("\n6. DYNAMIKA KWARTALNA, FALA SZPITALNA H1 2026 I UNIEWAŻNIENIA")
+    print(sub_hr)
+    canc = kpis["cancellations"]
+    c_core: CancellationGroupKpi = canc["core"]
+    c_all: CancellationGroupKpi = canc["all"]
+    print(
+        f"  a) Wskaźniki unieważnień (wobec zakończonych `resolved + cancelled` oraz wobec wszystkich):\n"
+        f"    CORE: {c_core.cancelled_count} / {c_core.concluded_count} zakończonych "
+        f"(PL: {fmt_num(c_core.cancelled_pct_concluded, 1, 'pl')}% | "
+        f"EN: {fmt_num(c_core.cancelled_pct_concluded, 1, 'en')}%)  |  "
+        f"{c_core.cancelled_count} / {c_core.total_count} wszystkich core "
+        f"(PL: {fmt_num(c_core.cancelled_pct_all, 1, 'pl')}% | EN: {fmt_num(c_core.cancelled_pct_all, 1, 'en')}%)\n"
+        f"    ALL:  {c_all.cancelled_count} / {c_all.concluded_count} zakończonych "
+        f"(PL: {fmt_num(c_all.cancelled_pct_concluded, 1, 'pl')}% | "
+        f"EN: {fmt_num(c_all.cancelled_pct_concluded, 1, 'en')}%)  |  "
+        f"{c_all.cancelled_count} / {c_all.total_count} wszystkich "
+        f"(PL: {fmt_num(c_all.cancelled_pct_all, 1, 'pl')}% | EN: {fmt_num(c_all.cancelled_pct_all, 1, 'en')}%)"
+    )
+    print("    Wg sektora (core):")
+    for sc_sec in canc["sectors_sorted"]:
+        print(
+            f"      {sc_sec.key:<35s} | unieważnione: {sc_sec.cancelled_count:>2d}/{sc_sec.concluded_count:<2d} zakończ. "
+            f"(PL: {fmt_num(sc_sec.cancelled_pct_concluded, 1, 'pl'):>5s}% | "
+            f"EN: {fmt_num(sc_sec.cancelled_pct_concluded, 1, 'en'):>5s}%) | "
+            f"{sc_sec.cancelled_count:>2d}/{sc_sec.total_count:<2d} ogółem "
+            f"(PL: {fmt_num(sc_sec.cancelled_pct_all, 1, 'pl'):>5s}% | "
+            f"EN: {fmt_num(sc_sec.cancelled_pct_all, 1, 'en'):>5s}%)"
+        )
+
+    temp = kpis["temporal"]
+    hc_h1 = temp["hc_2026_h1"]
+    print(
+        f"\n  b) Fala szpitalna KPO wiosną 2026 r. (`2026 H1`: 2026-01-01..2026-06-30, sektor `Ochrona zdrowia`):\n"
+        f"    Postępowania szpitalne w H1 2026: {hc_h1['h1_proc_count']} / {hc_h1['hc_total_proc_count']} "
+        f"(PL: {fmt_num(hc_h1['h1_proc_pct_of_hc'], 1, 'pl')}% | "
+        f"EN: {fmt_num(hc_h1['h1_proc_pct_of_hc'], 1, 'en')}%)\n"
+        f"    Podpisane umowy szpitalne w H1 2026: {hc_h1['h1_signed_count']} / {hc_h1['hc_total_signed_count']} | "
+        f"{fmt_exact_pln(hc_h1['h1_sum_pln'], 'pl')} z {fmt_exact_pln(hc_h1['hc_total_sum_pln'], 'pl')} "
+        f"(PL: {fmt_mln(hc_h1['h1_sum_pln'], 'pl')}, {fmt_num(hc_h1['h1_spend_pct_of_hc'], 1, 'pl')}% wydatków szpit. | "
+        f"EN: {fmt_mln(hc_h1['h1_sum_pln'], 'en')}, {fmt_num(hc_h1['h1_spend_pct_of_hc'], 1, 'en')}%)\n"
+        f"    Bez konkurenta (`zero_rival` w H1 2026 szpitale): "
+        f"{hc_h1['h1_zero_rival_count']} / {hc_h1['h1_signed_count']} "
+        f"(PL: {fmt_num(hc_h1['h1_zero_rival_pct'], 1, 'pl')}% | "
+        f"EN: {fmt_num(hc_h1['h1_zero_rival_pct'], 1, 'en')}%) | "
+        f"{fmt_exact_pln(hc_h1['h1_zero_rival_sum_pln'], 'pl')} "
+        f"(PL: {fmt_mln(hc_h1['h1_zero_rival_sum_pln'], 'pl')} | EN: {fmt_mln(hc_h1['h1_zero_rival_sum_pln'], 'en')})"
+    )
+
+    print("\n  c) Dynamika kwartalna 2026 r. w core (`2026-Q1` .. `2026-Q4` do 03.11):")
+    for qk, qkpi in temp["quarters_2026"].items():
+        print(
+            f"    {qk} ({qkpi.start_date}..{qkpi.end_date}): "
+            f"{qkpi.proc_count:>2d} post. (szpitale: {qkpi.hc_proc_count:>2d}) | "
+            f"{qkpi.signed_count:>2d} umów ({fmt_exact_pln(qkpi.sum_pln, 'pl'):>16s}) | "
+            f"1 oferta: {qkpi.single_bid_count:>2d}/{qkpi.with_bids_count:<2d} "
+            f"(PL: {fmt_num(qkpi.single_bid_pct, 1, 'pl'):>5s}% | EN: {fmt_num(qkpi.single_bid_pct, 1, 'en'):>5s}%) | "
+            f"zero_rival: {qkpi.zero_rival_count:>2d}/{qkpi.signed_count:<2d}"
+        )
+
+    # 7. EU co-financing
+    print("\n7. WSPÓŁFINANSOWANIE UE / KPO / FERS (`eu == True` WŚRÓD UMÓW CORE)")
     print(sub_hr)
     eu = kpis["eu"]
     print(
@@ -752,8 +1251,8 @@ def print_kpis(kpis: dict[str, Any]) -> None:
         f"EN: {fmt_num(eu['spend_pct'], 1, 'en')}%"
     )
 
-    # 7. Sectors & Top 6 Voivodeships
-    print("\n7. SEKTORY ORAZ TOP 6 WOJEWÓDZTW (CORE)")
+    # 8. Sectors & Top 6 Voivodeships
+    print("\n8. SEKTORY ORAZ TOP 6 WOJEWÓDZTW (CORE)")
     print(sub_hr)
     print("  Sektory:")
     for sec in kpis["sectors"]:
@@ -781,8 +1280,8 @@ def print_kpis(kpis: dict[str, Any]) -> None:
             f"EN: {fmt_mln(prov.sum_pln, 'en'):>9s}{marker}"
         )
 
-    # 8. Recurring vendors in core
-    print("\n8. POWTARZAJĄCY SIĘ WYKONAWCY W CORE (UMOWY >= 2)")
+    # 9. Recurring vendors in core
+    print("\n9. POWTARZAJĄCY SIĘ WYKONAWCY W CORE (UMOWY >= 2)")
     print(sub_hr)
     for v in kpis["recurring_vendors"]:
         variants_note = (
@@ -795,6 +1294,39 @@ def print_kpis(kpis: dict[str, Any]) -> None:
             f"PL: {fmt_mln(v.sum_pln, 'pl')} | EN: {fmt_mln(v.sum_pln, 'en')}) | "
             f"1-ofertowe: {v.single_bid_count} | {v.display_name}{variants_note}"
         )
+
+    # 10. Forensic HTML protocol benchmarks (159 core proceedings)
+    fb = FORENSIC_HTML_BENCHMARKS
+    print("\n10. WSKAŹNIKI FORENSIC Z AUDYTU KART HTML OGŁOSZEŃ BZP (159 POSTĘPOWAŃ CORE)")
+    print(sub_hr)
+    print(
+        f"  Efektywny brak rywala (po odrzuceniach ofert {fmt_num(fb['bid_rejection_rate_pct'], 1, 'pl')}% "
+        f"+ {fb['statutory_sole_source_contracts']} z wolnej ręki na "
+        f"{fmt_num(fb['statutory_sole_source_sum_mln'], 2, 'pl')} mln zł):\n"
+        f"    {fb['effective_zero_rival_contracts']} z {kpis['core_signed_count']} umów | "
+        f"PL: {fmt_num(fb['effective_zero_rival_sum_mln'], 2, 'pl')} mln zł "
+        f"({fmt_num(fb['effective_zero_rival_spend_pct'], 1, 'pl')}%) | "
+        f"EN: {fmt_num(fb['effective_zero_rival_sum_mln'], 2, 'en')}M PLN "
+        f"({fmt_num(fb['effective_zero_rival_spend_pct'], 1, 'en')}%)\n"
+        f"  Brak merytorycznych kryteriów jakości: software "
+        f"PL {fmt_num(fb['zero_quality_criteria_software_pct'], 1, 'pl')}% / "
+        f"EN {fmt_num(fb['zero_quality_criteria_software_pct'], 1, 'en')}% | "
+        f"ogółem PL {fmt_num(fb['zero_quality_criteria_overall_pct'], 1, 'pl')}% / "
+        f"EN {fmt_num(fb['zero_quality_criteria_overall_pct'], 1, 'en')}%\n"
+        f"  Kompresja ceny vs szacunek: tłok ofertowy "
+        f"PL {fmt_num(fb['price_vs_estimate_crowded_pct'], 1, 'pl')}% "
+        f"(-{fmt_num(fb['price_discount_crowded_pct'], 1, 'pl')}%) vs "
+        f"{fmt_num(fb['price_vs_estimate_zero_rival_pct'], 1, 'pl')}% bez rywala\n"
+        f"  Unieważnienia: w {fb['cancelled_with_bids_count']} z {c_core.cancelled_count} złożono co najmniej "
+        f"{fb['cancelled_min_bids']} oferty (EN: at least {fb['cancelled_min_bids']} bids); "
+        f"przekroczenie budżetu (art. 255 pkt 3 Pzp): {fb['cancelled_budget_shock_count']} z {c_core.cancelled_count} "
+        f"(PL: {fmt_num(fb['cancelled_budget_shock_pct'], 1, 'pl')}% | "
+        f"EN: {fmt_num(fb['cancelled_budget_shock_pct'], 1, 'en')}%)\n"
+        f"  Udział MŚP (SME): PL {fmt_num(fb['sme_spend_pct'], 1, 'pl')}% kwoty "
+        f"({fmt_num(fb['sme_contracts_pct'], 1, 'pl')}% umów) | "
+        f"EN {fmt_num(fb['sme_spend_pct'], 1, 'en')}% of spend "
+        f"({fmt_num(fb['sme_contracts_pct'], 1, 'en')}% of contracts)"
+    )
     print(hr)
 
 
@@ -1170,6 +1702,13 @@ def filter_records_by_preset(
     cyr = params.get("cyear", "")
     single = params.get("single") == "1"
     sole = params.get("sole") == "1"
+    btier_raw = params.get("btier", "")
+    if btier_raw not in ALLOWED_PRESET_BTIERS:
+        raise ValueError(
+            f"Unsupported btier={btier_raw!r} in preset {preset_qs!r}; "
+            f"allowed: {sorted(ALLOWED_PRESET_BTIERS)}"
+        )
+    btier = "" if (single or sole) else btier_raw
     eu = params.get("eu") == "1"
     q = params.get("q", "").lower().strip()
     q_folded = _fold_ascii(q)
@@ -1198,6 +1737,10 @@ def filter_records_by_preset(
         if single and r.get("bids") != 1:
             continue
         if sole and not (r.get("status") == "resolved" and r.get("bids") is None):
+            continue
+        if btier == "2-3" and not (r.get("bids") is not None and 2 <= r["bids"] <= 3):
+            continue
+        if btier == "4p" and not (r.get("bids") is not None and r["bids"] >= 4):
             continue
         if eu and not r.get("eu"):
             continue
@@ -2089,6 +2632,11 @@ def _validate_anchors_and_presets(
                         f"[HTML preset] {rel_path}:{el.line}: nieprawidłowy `ymode={val}` "
                         f"(dozwolone: {sorted(ALLOWED_PRESET_YMODES)})."
                     )
+                elif key == "btier" and val not in ALLOWED_PRESET_BTIERS:
+                    errors.append(
+                        f"[HTML preset] {rel_path}:{el.line}: nieprawidłowy `btier={val}` "
+                        f"w `data-bzp-preset=\"{preset}\"` (dozwolone: {sorted(ALLOWED_PRESET_BTIERS - {''})})."
+                    )
                 elif key == "sector" and known_sectors and val not in known_sectors:
                     errors.append(
                         f"[HTML preset] {rel_path}:{el.line}: nieznany sektor `sector={val}`."
@@ -2223,6 +2771,501 @@ def _validate_report_seo_pair(
 
 
 # ---------------------------------------------------------------------------
+# Section D: Competition Partition Invariants, Chapter 02 Deep KPIs & MD Docs
+# ---------------------------------------------------------------------------
+
+
+def _validate_kpi_invariants(kpis: dict[str, Any], errors: list[str]) -> None:
+    """Asserts exact grosz and contract-count partition invariants across competition tiers and cliffs."""
+    comp = kpis["competition"]
+    tiers: dict[str, CompetitionTierKpi] = comp["tiers"]
+    cliff: dict[str, CompetitionSliceKpi] = comp["cliff_170k"]
+    eu_comp: dict[str, CompetitionSliceKpi] = comp["eu_vs_non_eu"]
+
+    partition_sum = (
+        tiers["single_bid"].sum_pln
+        + tiers["sole_source"].sum_pln
+        + tiers["bids_2_3"].sum_pln
+        + tiers["bids_4_plus"].sum_pln
+    )
+    if partition_sum != kpis["core_sum_pln"]:
+        errors.append(
+            f"[KPI inwariant] Suma kwot koszyków konkurencji ({fmt_exact_pln(partition_sum, 'pl')}) "
+            f"!= łączna kwota umów podstawowych ({fmt_exact_pln(kpis['core_sum_pln'], 'pl')})."
+        )
+
+    partition_count = (
+        tiers["single_bid"].signed_count
+        + tiers["sole_source"].signed_count
+        + tiers["bids_2_3"].signed_count
+        + tiers["bids_4_plus"].signed_count
+    )
+    if partition_count != kpis["core_signed_count"]:
+        errors.append(
+            f"[KPI inwariant] Suma liczby umów w koszykach konkurencji ({partition_count}) "
+            f"!= liczba podpisanych umów podstawowych ({kpis['core_signed_count']})."
+        )
+
+    zr_expected_sum = tiers["single_bid"].sum_pln + tiers["sole_source"].sum_pln
+    if tiers["zero_rival"].sum_pln != zr_expected_sum:
+        errors.append(
+            f"[KPI inwariant] `zero_rival` suma ({fmt_exact_pln(tiers['zero_rival'].sum_pln, 'pl')}) "
+            f"!= `single_bid + sole_source` ({fmt_exact_pln(zr_expected_sum, 'pl')})."
+        )
+
+    cliff_count = cliff["below_170k"].with_bids_count + cliff["at_or_above_170k"].with_bids_count
+    if cliff_count != comp["with_bids_count"]:
+        errors.append(
+            f"[KPI inwariant] Suma liczby umów poniżej i od progu 170 tys. zł ({cliff_count}) "
+            f"!= liczba konkurencyjnych umów podstawowych ({comp['with_bids_count']})."
+        )
+
+    cliff_sum = cliff["below_170k"].sum_pln + cliff["at_or_above_170k"].sum_pln
+    if cliff_sum != comp["competitive_sum_pln"]:
+        errors.append(
+            f"[KPI inwariant] Suma kwot poniżej i od progu 170 tys. zł ({fmt_exact_pln(cliff_sum, 'pl')}) "
+            f"!= suma konkurencyjnych umów podstawowych ({fmt_exact_pln(comp['competitive_sum_pln'], 'pl')})."
+        )
+
+    eu_comp_count = eu_comp["eu"].with_bids_count + eu_comp["non_eu"].with_bids_count
+    if eu_comp_count != comp["with_bids_count"]:
+        errors.append(
+            f"[KPI inwariant] Suma liczby konkurencyjnych umów UE + poza UE ({eu_comp_count}) "
+            f"!= liczba konkurencyjnych umów podstawowych ({comp['with_bids_count']})."
+        )
+
+    # Cancellation & concluded partition invariants
+    canc = kpis["cancellations"]
+    c_core: CancellationGroupKpi = canc["core"]
+    if c_core.concluded_count != c_core.resolved_count + c_core.cancelled_count:
+        errors.append(
+            f"[KPI inwariant] `concluded_count` w core ({c_core.concluded_count}) "
+            f"!= `resolved + cancelled` ({c_core.resolved_count + c_core.cancelled_count})."
+        )
+    if c_core.concluded_count + c_core.open_or_pending_count != kpis["core_count"]:
+        errors.append(
+            f"[KPI inwariant] `concluded + open_or_pending` w core "
+            f"({c_core.concluded_count + c_core.open_or_pending_count}) != `core_count` ({kpis['core_count']})."
+        )
+    sec_canc_sum = sum(s.cancelled_count for s in canc["by_sector"].values())
+    sec_concl_sum = sum(s.concluded_count for s in canc["by_sector"].values())
+    if sec_canc_sum != c_core.cancelled_count or sec_concl_sum != c_core.concluded_count:
+        errors.append(
+            f"[KPI inwariant] Niespójność sumy sektorowej unieważnień/zakończonych "
+            f"({sec_canc_sum}/{sec_concl_sum}) względem core ({c_core.cancelled_count}/{c_core.concluded_count})."
+        )
+
+    # 2026 quarterly & H1 healthcare partition invariants
+    temp = kpis["temporal"]
+    q2026: dict[str, QuarterKpi] = temp["quarters_2026"]
+    ny2026: YearKpi = kpis["notice_years"]["2026"]
+    q_proc_sum = sum(q.proc_count for q in q2026.values())
+    q_signed_sum = sum(q.signed_count for q in q2026.values())
+    q_pln_sum = sum((q.sum_pln for q in q2026.values()), Decimal("0"))
+    if q_proc_sum != ny2026.proc_count or q_signed_sum != ny2026.signed_count or q_pln_sum != ny2026.sum_pln:
+        errors.append(
+            f"[KPI inwariant] Suma kwartałów 2026 ({q_proc_sum} post., {q_signed_sum} umów, "
+            f"{fmt_exact_pln(q_pln_sum, 'pl')}) != roczny wynik 2026 ({ny2026.proc_count} post., "
+            f"{ny2026.signed_count} umów, {fmt_exact_pln(ny2026.sum_pln, 'pl')})."
+        )
+
+    hc_h1 = temp["hc_2026_h1"]
+    q_h1_hc_proc = q2026["2026-Q1"].hc_proc_count + q2026["2026-Q2"].hc_proc_count
+    if q_h1_hc_proc != hc_h1["h1_proc_count"]:
+        errors.append(
+            f"[KPI inwariant] Suma postępowań szpitalnych Q1+Q2 2026 ({q_h1_hc_proc}) "
+            f"!= `hc_2026_h1.h1_proc_count` ({hc_h1['h1_proc_count']})."
+        )
+    if not (0 <= hc_h1["h1_zero_rival_count"] <= hc_h1["h1_signed_count"] <= hc_h1["hc_total_signed_count"]):
+        errors.append(
+            f"[KPI inwariant] Niespójność liczebności fali szpitalnej H1 2026: "
+            f"zero_rival={hc_h1['h1_zero_rival_count']}, signed_h1={hc_h1['h1_signed_count']}, "
+            f"total_hc={hc_h1['hc_total_signed_count']}."
+        )
+    if hc_h1["h1_sum_pln"] > hc_h1["hc_total_sum_pln"]:
+        errors.append(
+            f"[KPI inwariant] Suma umów szpitalnych H1 2026 ({fmt_exact_pln(hc_h1['h1_sum_pln'], 'pl')}) "
+            f"> łączna suma ochrony zdrowia ({fmt_exact_pln(hc_h1['hc_total_sum_pln'], 'pl')})."
+        )
+
+
+def _validate_report_competition_prose(
+    rel_path: str,
+    lang: str,
+    doc: HtmlNode,
+    kpis: dict[str, Any],
+    errors: list[str],
+) -> None:
+    """Validates Chapter 02 (#konkurencja / #competition) deep competition KPIs in PL and EN reports."""
+    section_id = "konkurencja" if lang == "pl" else "competition"
+    sec = doc.find_one(attr_id=section_id)
+    if sec is None:
+        errors.append(f"[HTML KPI] {rel_path}: brak sekcji rozdziału 02 `#{section_id}`.")
+        return
+
+    # Normalize inline text without inserting spaces inside <strong>56,0</strong>%
+    txt = re.sub(r"\s+", " ", sec.text(sep="")).strip()
+    comp = kpis["competition"]
+    sw_zr = comp["software_zero_rival"]
+    cliff: dict[str, CompetitionSliceKpi] = comp["cliff_170k"]
+
+    pct_unit = r"(?:%|procent\b)" if lang == "pl" else r"(?:%|per\s*cent\b)"
+
+    zr_pct_s = fmt_num(comp["zero_rival_spend_pct"], 1, lang)
+    zr_mln_s = fmt_mln_num(comp["zero_rival_sum_pln"], lang)
+    sw_zr_pct_s = fmt_num(sw_zr["zero_rival_spend_pct"], 1, lang)
+    below_sb_pct_s = fmt_num(cliff["below_170k"].single_bid_pct, 1, lang)
+    above_sb_pct_s = fmt_num(cliff["at_or_above_170k"].single_bid_pct, 1, lang)
+
+    if not re.search(rf"(?<!\d){re.escape(zr_pct_s)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML KPI] {rel_path} `#{section_id}`: brak udziału kwotowego umów bez konkurenta "
+            f"(`zero_rival` = `{zr_pct_s}%`)."
+        )
+    if not re.search(rf"(?<!\d){re.escape(zr_mln_s)}(?!\d)", txt):
+        errors.append(
+            f"[HTML KPI] {rel_path} `#{section_id}`: brak kwoty umów bez konkurenta w mln "
+            f"(`zero_rival` = `{zr_mln_s}`)."
+        )
+    if not re.search(rf"(?<!\d){re.escape(sw_zr_pct_s)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML KPI] {rel_path} `#{section_id}`: brak udziału kwotowego umów bez konkurenta "
+            f"we wdrożeniach oprogramowania (`software zero_rival` = `{sw_zr_pct_s}%`)."
+        )
+    if not re.search(rf"(?<!\d){re.escape(below_sb_pct_s)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML KPI] {rel_path} `#{section_id}`: brak odsetka 1 oferty poniżej progu 170 tys. zł "
+            f"(`below_170k` = `{below_sb_pct_s}%`)."
+        )
+    if not re.search(rf"(?<!\d){re.escape(above_sb_pct_s)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML KPI] {rel_path} `#{section_id}`: brak odsetka 1 oferty od progu 170 tys. zł wzwyż "
+            f"(`at_or_above_170k` = `{above_sb_pct_s}%`)."
+        )
+
+
+def _validate_report_forensic_prose(
+    rel_path: str,
+    lang: str,
+    doc: HtmlNode,
+    kpis: dict[str, Any],
+    errors: list[str],
+) -> None:
+    """Validates Wave 2 forensic BZP protocol & temporal KPIs across Chapters 02 and 03."""
+    sec_ids = ("konkurencja", "wykonawcy") if lang == "pl" else ("competition", "vendors")
+    secs: list[HtmlNode] = []
+    for sid in sec_ids:
+        el = doc.find_one(attr_id=sid)
+        if el is None:
+            errors.append(f"[HTML KPI] {rel_path}: brak sekcji `#{sid}`.")
+        else:
+            secs.append(el)
+    if not secs:
+        return
+
+    txt = " ".join(re.sub(r"\s+", " ", s.text(sep="")).strip() for s in secs)
+    scope_lbl = " / ".join(f"#{sid}" for sid in sec_ids)
+    pct_unit = r"(?:%|procent\b)" if lang == "pl" else r"(?:%|per\s*cent\b)"
+    fb = FORENSIC_HTML_BENCHMARKS
+    c_core: CancellationGroupKpi = kpis["cancellations"]["core"]
+    hc_h1 = kpis["temporal"]["hc_2026_h1"]
+
+    # 1. Effective zero-surviving-rival share: 60.7% and 19.54M PLN (59 of 110 after 26.3% rejections + 10 sole-source worth 3.46M)
+    eff_zr_pct = fmt_num(fb["effective_zero_rival_spend_pct"], 1, lang)
+    eff_zr_mln = fmt_num(fb["effective_zero_rival_sum_mln"], 2, lang)
+    eff_zr_cnt = fb["effective_zero_rival_contracts"]
+    rej_rate_s = fmt_num(fb["bid_rejection_rate_pct"], 1, lang)
+    stat_ss_mln = fmt_num(fb["statutory_sole_source_sum_mln"], 2, lang)
+    if not re.search(rf"(?<!\d){re.escape(eff_zr_pct)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak efektywnego udziału kwotowego bez rywala "
+            f"po odrzuceniach ofert (`{eff_zr_pct}%`)."
+        )
+    if not re.search(rf"(?<!\d){re.escape(eff_zr_mln)}(?!\d)", txt):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak efektywnej kwoty bez rywala w mln "
+            f"(`{eff_zr_mln}`)."
+        )
+    if not re.search(rf"(?<!\d){eff_zr_cnt}(?!\d)", txt):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak liczby `{eff_zr_cnt}` podpisanych umów "
+            f"bez ocalałego konkurenta."
+        )
+    if not re.search(rf"(?<!\d){re.escape(rej_rate_s)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak odsetka odrzuconych ofert (`{rej_rate_s}%`)."
+        )
+    if not re.search(rf"(?<!\d){re.escape(stat_ss_mln)}(?!\d)", txt):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak łącznej kwoty ustawowej wolnej ręki w mln "
+            f"(`{stat_ss_mln}`)."
+        )
+
+    # 2. Zero substantive quality criteria: 72.2% in AI software and 63.5% overall
+    zq_sw = fmt_num(fb["zero_quality_criteria_software_pct"], 1, lang)
+    zq_all = fmt_num(fb["zero_quality_criteria_overall_pct"], 1, lang)
+    if not re.search(rf"(?<!\d){re.escape(zq_sw)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak odsetka postępowań software bez "
+            f"merytorycznych kryteriów jakości (`{zq_sw}%`)."
+        )
+    if not re.search(rf"(?<!\d){re.escape(zq_all)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak ogólnego odsetka postępowań bez "
+            f"merytorycznych kryteriów jakości (`{zq_all}%`)."
+        )
+
+    # 3. Price compression vs net estimate: 54.0% (or 46.0% / 46% discount) vs 100.0%
+    p_crowd = fmt_num(fb["price_vs_estimate_crowded_pct"], 1, lang)
+    p_disc_1 = fmt_num(fb["price_discount_crowded_pct"], 1, lang)
+    p_disc_0 = str(round_int(fb["price_discount_crowded_pct"]))
+    p_zero = fmt_num(fb["price_vs_estimate_zero_rival_pct"], 1, lang)
+    has_crowd_comp = bool(
+        re.search(rf"(?<!\d){re.escape(p_crowd)}\s*{pct_unit}", txt, re.I)
+        or re.search(rf"(?<!\d){re.escape(p_disc_1)}\s*{pct_unit}", txt, re.I)
+        or re.search(rf"(?<!\d){re.escape(p_disc_0)}\s*{pct_unit}", txt, re.I)
+    )
+    if not has_crowd_comp:
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak wskaźnika kompresji ceny wobec szacunku "
+            f"przy wielu ofertach (`{p_crowd}%` lub `{p_disc_1}%` / `{p_disc_0}%` obniżki)."
+        )
+    if not re.search(rf"(?<!\d){re.escape(p_zero)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak mediany relacji ceny do szacunku "
+            f"przy braku konkurencji (`{p_zero}%`)."
+        )
+
+    # 4. Cancelled tenders statutory breakdown: 22.0% (31 of 141 concluded), 45.2% (14 of 31 budget shock),
+    #    and at least 53 bids across 24 cancelled tenders (explicitly flagging stale 61)
+    canc_concl_pct = fmt_num(c_core.cancelled_pct_concluded, 1, lang)
+    bshock_pct = fmt_num(fb["cancelled_budget_shock_pct"], 1, lang)
+    min_canc_bids = fb["cancelled_min_bids"]
+    stale_canc_bids = fb["cancelled_stale_bids"]
+    if not re.search(rf"(?<!\d){re.escape(canc_concl_pct)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak odsetka unieważnień wśród zakończonych "
+            f"postępowań core (`{canc_concl_pct}%`, tj. {c_core.cancelled_count} ze {c_core.concluded_count})."
+        )
+    if not re.search(rf"(?<!\d){re.escape(bshock_pct)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak udziału przekroczenia budżetu wśród "
+            f"unieważnień (`{bshock_pct}%`, tj. {fb['cancelled_budget_shock_count']} z {c_core.cancelled_count})."
+        )
+    if lang == "pl":
+        if re.search(rf"(?<![\d,\.]){stale_canc_bids}\+?\s*ofert(?:y|ach|ami|om)?\b", txt, re.I):
+            errors.append(
+                f"[HTML forensic] {rel_path} ({scope_lbl}): nieaktualna liczba `{stale_canc_bids} ofert` "
+                f"w unieważnionych postępowaniach (powinno być co najmniej `{min_canc_bids} oferty`)."
+            )
+        if not re.search(rf"(?<![\d,\.]){min_canc_bids}\+?\s*ofert(?:y|ach|ami|om)?\b", txt, re.I):
+            errors.append(
+                f"[HTML forensic] {rel_path} ({scope_lbl}): brak zweryfikowanej dolnej granicy "
+                f"`{min_canc_bids} oferty` / `{min_canc_bids}+ ofert` w unieważnionych postępowaniach."
+            )
+    else:
+        if re.search(rf"(?<![\d,\.]){stale_canc_bids}\+?\s*bids\b", txt, re.I):
+            errors.append(
+                f"[HTML forensic] {rel_path} ({scope_lbl}): nieaktualna liczba `{stale_canc_bids} bids` "
+                f"w unieważnionych postępowaniach (powinno być `at least {min_canc_bids} bids`)."
+            )
+        if not re.search(rf"(?<![\d,\.]){min_canc_bids}\+?\s*bids\b", txt, re.I):
+            errors.append(
+                f"[HTML forensic] {rel_path} ({scope_lbl}): brak zweryfikowanej dolnej granicy "
+                f"`{min_canc_bids} bids` / `{min_canc_bids}+ bids` w unieważnionych postępowaniach."
+            )
+
+    # 5. H1 2026 healthcare zero-rival rate: 84.2% (16 of 19), 26 of 38 (68.4%), and Q3 2026 single-bid 0.0% (0 of 11)
+    hc_zr_pct = fmt_num(hc_h1["h1_zero_rival_pct"], 1, lang)
+    hc_proc_pct = fmt_num(hc_h1["h1_proc_pct_of_hc"], 1, lang)
+    q3_kpi: QuarterKpi = kpis["temporal"]["quarters_2026"]["2026-Q3"]
+    q3_sb_pct = fmt_num(q3_kpi.single_bid_pct, 1, lang)
+    if not re.search(rf"(?<!\d){re.escape(hc_zr_pct)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak odsetka umów szpitalnych bez konkurenta "
+            f"w H1 2026 (`{hc_zr_pct}%`, tj. {hc_h1['h1_zero_rival_count']} z {hc_h1['h1_signed_count']})."
+        )
+    if not re.search(rf"(?<!\d){re.escape(hc_proc_pct)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak udziału H1 2026 w postępowaniach "
+            f"ochrony zdrowia (`{hc_proc_pct}%`, tj. {hc_h1['h1_proc_count']} z {hc_h1['hc_total_proc_count']})."
+        )
+    if not re.search(rf"(?<!\d){re.escape(q3_sb_pct)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak spadku odsetka 1 oferty w 2026-Q3 "
+            f"do `{q3_sb_pct}%` (`0 z {q3_kpi.with_bids_count}`)."
+        )
+
+    # 6. SME (MŚP) share: 93.8% of spend (95.5% of contracts)
+    sme_spend_s = fmt_num(fb["sme_spend_pct"], 1, lang)
+    sme_cnt_s = fmt_num(fb["sme_contracts_pct"], 1, lang)
+    if not re.search(rf"(?<!\d){re.escape(sme_spend_s)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak udziału MŚP (SME) w kwocie umów (`{sme_spend_s}%`)."
+        )
+    if not re.search(rf"(?<!\d){re.escape(sme_cnt_s)}\s*{pct_unit}", txt, re.I):
+        errors.append(
+            f"[HTML forensic] {rel_path} ({scope_lbl}): brak udziału MŚP (SME) w liczbie umów (`{sme_cnt_s}%`)."
+        )
+
+
+def _extract_json_notice_uuids(records: list[dict[str, Any]]) -> set[str]:
+    """Collects all verified 36-char BZP notice UUIDs from JSON (`id`, `url`, `contractNoticeUrl`)."""
+    raw_uuid_re = re.compile(r"^08d[0-9a-f]{5}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
+    uuids: set[str] = set()
+    for r in records:
+        rid = str(r.get("id") or "").strip().lower()
+        if raw_uuid_re.match(rid):
+            uuids.add(rid)
+        for key in ("url", "contractNoticeUrl"):
+            val = str(r.get(key) or "").strip()
+            m = BZP_NOTICE_URL_SCAN_RE.search(val)
+            if m:
+                uuids.add(m.group(1).lower())
+    return uuids
+
+
+def _validate_html_bzp_urls(
+    rel_path: str,
+    raw_html: str,
+    doc: HtmlNode,
+    known_json_uuids: set[str],
+    errors: list[str],
+) -> None:
+    """Validates every ezamowienia.gov.pl URL and BZP notice UUID in an HTML file."""
+    allowed_uuids = known_json_uuids | set(VERIFIED_COMPANION_NOTICE_UUIDS.keys())
+    checked_hrefs: set[str] = set()
+
+    for el in doc.iter_elements():
+        if "href" not in el.attrs:
+            continue
+        href = el.attrs["href"].strip()
+        if "ezamowienia.gov.pl" not in href.lower():
+            continue
+        checked_hrefs.add(href)
+        if href in ALLOWED_EZAMOWIENIA_NON_NOTICE_URLS:
+            continue
+        m = BZP_NOTICE_URL_RE.match(href)
+        if not m:
+            errors.append(
+                f"[HTML URL] {rel_path}:{el.line}: nieprawidłowy format adresu ezamowienia.gov.pl: {href!r} "
+                f"(wymagane `{BZP_URL_PREFIX}08d...` z 36-znakowym małym hex UUID)."
+            )
+            continue
+        uid = m.group(1).lower()
+        if uid not in allowed_uuids:
+            errors.append(
+                f"[HTML BZP UUID] {rel_path}:{el.line}: niezweryfikowany UUID ogłoszenia BZP `{uid}` "
+                f"(brak w `bzp-ai-2024-2026.json` oraz `VERIFIED_COMPANION_NOTICE_UUIDS`)."
+            )
+
+    for raw_u in re.findall(r"https?://[^\s\)\]>\"'`<]+", raw_html):
+        u = raw_u.rstrip(".,;:!?")
+        if "ezamowienia.gov.pl" not in u.lower() or u in checked_hrefs:
+            continue
+        if u in ALLOWED_EZAMOWIENIA_NON_NOTICE_URLS:
+            continue
+        m = BZP_NOTICE_URL_RE.match(u)
+        if not m:
+            errors.append(
+                f"[HTML URL] {rel_path}: nieprawidłowy format adresu ezamowienia.gov.pl: {u!r} "
+                f"(wymagane `{BZP_URL_PREFIX}08d...` z 36-znakowym małym hex UUID)."
+            )
+            continue
+        uid = m.group(1).lower()
+        if uid not in allowed_uuids:
+            errors.append(
+                f"[HTML BZP UUID] {rel_path}: niezweryfikowany UUID ogłoszenia BZP `{uid}` "
+                f"(brak w `bzp-ai-2024-2026.json` oraz `VERIFIED_COMPANION_NOTICE_UUIDS`)."
+            )
+
+
+def _extract_ezamowienia_urls_from_md(raw_md: str) -> list[str]:
+    candidates: list[str] = []
+    for raw_u in re.findall(r"https?://[^\s\)\]>\"'`<]+", raw_md):
+        u = raw_u.rstrip(".,;:!?")
+        if "ezamowienia.gov.pl" in u.lower():
+            candidates.append(u)
+    for md_target in re.findall(r"\]\(\s*([^\s\)\"']+)", raw_md):
+        u = md_target.strip("<>").rstrip(".,;:!?")
+        if "ezamowienia.gov.pl" in u.lower() and not u.lower().startswith(("http://", "https://")):
+            candidates.append(u)
+    return candidates
+
+
+def _validate_markdown_docs(
+    repo_root: Path,
+    kpis: dict[str, Any],
+    known_json_uuids: set[str],
+    errors: list[str],
+) -> None:
+    """Validates editorial Markdown docs (existence, BZP URLs + UUIDs, and key KPIs)."""
+    exp_core_mln_pl = fmt_mln(kpis["core_sum_pln"], "pl")
+    exp_zr_pct_pl = fmt_num(kpis["competition"]["zero_rival_spend_pct"], 1, "pl")
+    exp_eff_zr_pct_pl = fmt_num(FORENSIC_HTML_BENCHMARKS["effective_zero_rival_spend_pct"], 1, "pl")
+    min_canc_bids = FORENSIC_HTML_BENCHMARKS["cancelled_min_bids"]
+    stale_canc_bids = FORENSIC_HTML_BENCHMARKS["cancelled_stale_bids"]
+    allowed_uuids = known_json_uuids | set(VERIFIED_COMPANION_NOTICE_UUIDS.keys())
+
+    for rel_md in MD_REPORT_FILES:
+        fpath = repo_root / Path(rel_md)
+        if not fpath.is_file():
+            errors.append(f"[MD plik] Brak wymaganego pliku dokumentacji: `{rel_md}`.")
+            continue
+
+        raw_md = fpath.read_text(encoding="utf-8")
+        if not raw_md.strip():
+            errors.append(f"[MD plik] Plik dokumentacji jest pusty: `{rel_md}`.")
+            continue
+
+        for u in _extract_ezamowienia_urls_from_md(raw_md):
+            if u in ALLOWED_EZAMOWIENIA_NON_NOTICE_URLS:
+                continue
+            m = BZP_NOTICE_URL_RE.match(u)
+            if not m:
+                errors.append(
+                    f"[MD URL] {rel_md}: nieprawidłowy format adresu ezamowienia.gov.pl: {u!r} "
+                    f"(wymagane `{BZP_URL_PREFIX}08d...` z 36-znakowym hex UUID)."
+                )
+                continue
+            uid = m.group(1).lower()
+            if uid not in allowed_uuids:
+                errors.append(
+                    f"[MD BZP UUID] {rel_md}: niezweryfikowany UUID ogłoszenia BZP `{uid}` "
+                    f"(brak w `bzp-ai-2024-2026.json` oraz `VERIFIED_COMPANION_NOTICE_UUIDS`)."
+                )
+
+        plain_md = re.sub(
+            r"\s+",
+            " ",
+            re.sub(r"[*_`]", "", raw_md.replace("&nbsp;", " ")),
+        ).strip()
+        if not re.search(rf"(?<!\d){re.escape(exp_core_mln_pl)}", plain_md):
+            errors.append(
+                f"[MD KPI] {rel_md}: brak wzmianki o łącznej kwocie umów podstawowych `{exp_core_mln_pl}`."
+            )
+        if not re.search(rf"(?<!\d){re.escape(exp_zr_pct_pl)}\s*(?:%|procent\b)", plain_md, re.I):
+            errors.append(
+                f"[MD KPI] {rel_md}: brak wzmianki o udziale kwotowym umów bez konkurenta `{exp_zr_pct_pl}%`."
+            )
+        if not re.search(rf"(?<!\d){re.escape(exp_eff_zr_pct_pl)}\s*(?:%|procent\b)", plain_md, re.I):
+            errors.append(
+                f"[MD KPI] {rel_md}: brak wzmianki o efektywnym udziale kwotowym bez konkurenta "
+                f"(po odrzuceniach ofert) `{exp_eff_zr_pct_pl}%`."
+            )
+        if re.search(rf"(?<![\d,\.]){stale_canc_bids}\+?\s*(?:ofert(?:y|ach|ami|om)?|bids)\b", plain_md, re.I):
+            errors.append(
+                f"[MD KPI] {rel_md}: nieaktualna liczba `{stale_canc_bids}` ofert/bids w unieważnionych "
+                f"postępowaniach (powinno być `{min_canc_bids}` / `{min_canc_bids}+`)."
+            )
+        if not re.search(rf"(?<![\d,\.]){min_canc_bids}\+?\s*(?:ofert(?:y|ach|ami|om)?|bids)\b", plain_md, re.I):
+            errors.append(
+                f"[MD KPI] {rel_md}: brak zweryfikowanej dolnej granicy `{min_canc_bids}` ofert/bids "
+                f"w unieważnionych postępowaniach."
+            )
+
+
+# ---------------------------------------------------------------------------
 # Full Gate Orchestrator & CLI
 # ---------------------------------------------------------------------------
 
@@ -2246,18 +3289,21 @@ def run_validation_gate(repo_root: Path, json_path: Path) -> tuple[list[str], di
         return errors, None
 
     kpis = compute_kpis(records)
+    _validate_kpi_invariants(kpis, errors)
     known_sectors = {str(r.get("sector")) for r in records if r.get("sector")}
     known_provinces = {str(r.get("province")) for r in records if r.get("province")}
+    known_json_uuids = _extract_json_notice_uuids(records)
 
-    parsed_html: dict[str, tuple[HtmlNode, list[tuple[str, int]], dict[str, list[str]]]] = {}
+    parsed_html: dict[str, tuple[HtmlNode, list[tuple[str, int]], dict[str, list[str]], str]] = {}
     for rel in HTML_FILES:
         fpath = repo_root / Path(rel)
         if not fpath.is_file():
             errors.append(f"[HTML plik] Brak wymaganego pliku HTML: `{rel}`.")
             continue
+        raw_html = fpath.read_text(encoding="utf-8")
         doc, id_occ = parse_html_file(fpath)
         meta_map = _extract_meta_map(doc)
-        parsed_html[rel] = (doc, id_occ, meta_map)
+        parsed_html[rel] = (doc, id_occ, meta_map, raw_html)
 
     # B. KPI consistency across the 6 HTML files
     pl_rep = "pl/lab/przetargi-ai/index.html"
@@ -2270,10 +3316,12 @@ def run_validation_gate(repo_root: Path, json_path: Path) -> tuple[list[str], di
     for rel, lang in ((pl_rep, "pl"), (en_rep, "en")):
         if rel not in parsed_html:
             continue
-        doc, _, meta_map = parsed_html[rel]
+        doc, _, meta_map, _ = parsed_html[rel]
         findings_info[rel] = _validate_report_findings(rel, lang, doc, kpis, errors)
         _validate_report_meta_descriptions(rel, lang, meta_map, kpis, errors)
         noscript_basis[rel] = _validate_report_noscripts(rel, lang, doc, kpis, errors)
+        _validate_report_competition_prose(rel, lang, doc, kpis, errors)
+        _validate_report_forensic_prose(rel, lang, doc, kpis, errors)
         vendor_tables[rel] = _validate_fig_vendors(rel, lang, doc, records, kpis, errors)
 
     # Symmetry of annual basis & #fig-vendors between PL and EN reports
@@ -2304,11 +3352,12 @@ def run_validation_gate(repo_root: Path, json_path: Path) -> tuple[list[str], di
         if rel in parsed_html:
             _validate_home_page(rel, lang, parsed_html[rel][0], kpis, errors)
 
-    # C. Links, presets, anchors & SEO/OG tags
+    # C. Links, presets, anchors, BZP notice UUID integrity & SEO/OG tags
     for rel in HTML_FILES:
         if rel in parsed_html:
-            doc, id_occ, _ = parsed_html[rel]
+            doc, id_occ, _, raw_html = parsed_html[rel]
             _validate_anchors_and_presets(rel, doc, id_occ, known_sectors, known_provinces, errors)
+            _validate_html_bzp_urls(rel, raw_html, doc, known_json_uuids, errors)
 
     if pl_rep in parsed_html and en_rep in parsed_html:
         _validate_report_seo_pair(
@@ -2321,6 +3370,9 @@ def run_validation_gate(repo_root: Path, json_path: Path) -> tuple[list[str], di
             parsed_html[en_rep][2],
             errors,
         )
+
+    # D. Companion Markdown documents (methodology, investigation & press kit)
+    _validate_markdown_docs(repo_root, kpis, known_json_uuids, errors)
 
     return errors, kpis
 
@@ -2375,7 +3427,8 @@ def main(argv: list[str] | None = None) -> int:
         f"ŚLUZA JAKOŚCI BZP — OK (0 błędów) · "
         f"{kpis['all_count']} postępowań ({kpis['core_count']} core, "
         f"{kpis['core_signed_count']} umów, {fmt_mln(kpis['core_sum_pln'], 'pl')} / "
-        f"{fmt_mln(kpis['core_sum_pln'], 'en')}) · zweryfikowano 6 plików HTML i zasoby OG."
+        f"{fmt_mln(kpis['core_sum_pln'], 'en')}) · "
+        f"zweryfikowano {len(HTML_FILES)} plików HTML, {len(MD_REPORT_FILES)} dokumenty MD i zasoby OG."
     )
     return 0
 
